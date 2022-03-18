@@ -1,0 +1,4 @@
+Energie --> Tension DC + Courant DC & Courant AC
+Température --> Température
+Environement --> IRRadiation + Humidité
+Charges --> 8 charges (Turn on & off)
