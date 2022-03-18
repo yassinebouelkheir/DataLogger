@@ -26,20 +26,20 @@
 #include <LiquidCrystal_I2C.h>
 
 
-#define PACKET_TYPE_SENSOR 	   (0)
-#define PACKET_TYPE_CHARGE 	   (1)
+#define PACKET_TYPE_SENSOR     (0)
+#define PACKET_TYPE_CHARGE     (1)
 
-#define CURRENT_TYPE_DC 	   (0)
-#define CURRENT_TYPE_AC		   (1)
+#define CURRENT_TYPE_DC        (0)
+#define CURRENT_TYPE_AC        (1)
 
-#define CHARGE1_RELAY_PIN 	   (0)
-#define CHARGE2_RELAY_PIN 	   (1)
-#define CHARGE3_RELAY_PIN 	   (2)
-#define CHARGE4_RELAY_PIN 	   (3)
-#define CHARGE5_RELAY_PIN 	   (4)
-#define CHARGE6_RELAY_PIN 	   (5)
-#define CHARGE7_RELAY_PIN 	   (6)
-#define CHARGE8_RELAY_PIN 	   (7)
+#define CHARGE1_RELAY_PIN      (0)
+#define CHARGE2_RELAY_PIN      (1)
+#define CHARGE3_RELAY_PIN      (2)
+#define CHARGE4_RELAY_PIN      (3)
+#define CHARGE5_RELAY_PIN      (4)
+#define CHARGE6_RELAY_PIN      (5)
+#define CHARGE7_RELAY_PIN      (6)
+#define CHARGE8_RELAY_PIN      (7)
 
 #define COMMAND1_KEYBOARD_PIN  (8)
 #define COMMAND2_KEYBOARD_PIN  (9)
@@ -53,11 +53,11 @@
  
 #define LCD_1_I2C_PIN_1        (0) 
 #define LCD_1_I2C_PIN_2        (0)
-#define LCD_1_I2C_ADDR 	   	   (0x3F)
+#define LCD_1_I2C_ADDR         (0x3F)
 
 #define LCD_2_I2C_PIN_1        (0) 
-#define LCD_2_I2C_PIN_2 	   (0) 
-#define LCD_2_I2C_ADDR 	   	   (0x3F)
+#define LCD_2_I2C_PIN_2        (0) 
+#define LCD_2_I2C_ADDR         (0x3F)
 
 #define ACS712_CONSTANT_FACTOR (66)
 #define ACS758_CONSTANT_OFFSET (2500)
