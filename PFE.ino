@@ -153,7 +153,7 @@ void loop()
 			LCD_BACKLIGHT_ON = false;
 		}
 	}
-	delay(200);
+	delay(100);
 }
 
 void activePageUpdate(int pin)

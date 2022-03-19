@@ -22,14 +22,51 @@
 #    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
 ##
 
-
+import mysql.connector
 import serial
 import time
+import threading
+import os
 
 arduino_serial = serial.Serial('/dev/ttyAMA0', 9600, timeout=1)
 arduino_serial.flush()
-while True:
-    line = arduino_serial.readline().decode('utf-8').rstrip()
-    
-    arduino_serial.write(b"setcharge ID Value\n")
-    time.sleep(0.1)
+
+db = mysql.connector.connect(host="localhost", user="user", password="pwd")
+
+def receiverHandler()
+	while True:
+		line = arduino_serial.readline().decode('utf-8').rstrip()
+		line.split()
+
+		if line[0] == 'setsensor'
+			cursor = db.cursor()
+			sql = "UPDATE SENSORS SET VALUE = '"+ line[2] +"' WHERE ID = '" + line[1] +"'"
+			cursor.execute(sql)
+			db.commit()
+		elif line[0] == 'setcharge'
+			cursor = db.cursor()
+			sql = "UPDATE CHARGES SET VALUE = '"+ line[2] +"' WHERE ID = '" + line[1] +"'"
+			cursor.execute(sql)
+			db.commit()
+		time.sleep(0.05);
+
+def broadcastHandler()
+	while True:
+		cursor = db.cursor()
+		cursor.execute("SELECT ID, VALUE FROM CHARGES")
+		result = cursor.fetchall()
+		for x in result:
+			arduino_serial.write("setcharge " + result[x][0] + " " + result[x][1]);
+
+		time.sleep(0.05);
+
+if __name__ == "__main__":
+
+	reciever = threading.Thread(target=receiverHandler)
+	broadcast = threading.Thread(target=broadcastHandler)
+
+	reciever.start()
+	broadcast.start()
+
+	reciever.join()
+	broadcast.join()

@@ -2,3 +2,17 @@ Energie --> Tension DC + Courant DC & Courant AC
 Température --> Température
 Environement --> IRRadiation + Humidité
 Charges --> 8 charges (Turn on & off)
+
+
+
+
+
+Database: 
+
+Table SENSORS
+	INT 8BITS --- ID
+	    FLOAT ----- VALUE
+
+Table CHARGES 
+	INT --- ID
+	  BOOL -- VALUE  
