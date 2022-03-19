@@ -35,12 +35,12 @@ db = mysql.connector.connect(host="localhost", user="user", password="pwd")
 
 dbrows = 100*[0]
 
-def receiverHandler()
+def receiverHandler():
 	while True:
 		line = arduino_serial.readline().decode('utf-8').rstrip()
 		line.split()
 
-		if line[0] == 'setsensor'
+		if line[0] == 'setsensor':
 			cursor = db.cursor()
 			sql = "INSERT INTO SENSORS (ID, VALUE, UNIXDATE) VALUES ('"+ line[1] +"', '" + line[2] +"', " + time.time() + ")"
 			cursor.execute(sql)
@@ -53,14 +53,14 @@ def receiverHandler()
 				db.commit()
 				dbrows -= 1
 
-		elif line[0] == 'setcharge'
+		elif line[0] == 'setcharge':
 			cursor = db.cursor()
 			sql = "UPDATE CHARGES SET VALUE = '"+ line[2] +"' WHERE ID = '" + line[1] +"'"
 			cursor.execute(sql)
 			db.commit()
 		time.sleep(0.05);
 
-def broadcastHandler()
+def broadcastHandler():
 	while True:
 		cursor = db.cursor()
 		cursor.execute("SELECT ID, VALUE FROM CHARGES")
