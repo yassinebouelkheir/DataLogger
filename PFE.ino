@@ -43,6 +43,7 @@
 
 #define COMMAND1_KEYBOARD_PIN  (8)
 #define COMMAND2_KEYBOARD_PIN  (9)
+#define COMMAND3_KEYBOARD_PIN  (10)
 
 #define CURRENTDC_SENSOR_PIN   (A0)
 #define CURRENTAC_SENSOR_PIN   (A1)
@@ -54,6 +55,7 @@
 #define LCD_1_I2C_PIN_1        (0) 
 #define LCD_1_I2C_PIN_2        (0)
 #define LCD_1_I2C_ADDR         (0x3F)
+#define LCD_1_TIMEOUT_TIME     (10000) // 10 Seconds
 
 #define LCD_2_I2C_PIN_1        (0) 
 #define LCD_2_I2C_PIN_2        (0) 
@@ -61,10 +63,15 @@
 
 #define ACS712_CONSTANT_FACTOR (66)
 #define ACS758_CONSTANT_OFFSET (2500)
+#define VOLTAGEAC_CONSTANT_EFF (230)
 
 int CURRENTAC_SENSOR_SCALE = 40;
 float CURRENTDC_SENSOR_ZERO = 0.0;    
 float CURRENTAC_SENSOR_ZERO = 0.0;   
+
+int LCD_TIMEOUT_LAST_TIME = 0;
+bool LCD_BACKLIGHT_ON = false;
+int ACTIVE_PAGE = 0;
 
 LiquidCrystal_I2C LCD1(LCD_1_I2C_ADDR, LCD_1_I2C_PIN_1, LCD_1_I2C_PIN_2);
 LiquidCrystal_I2C LCD2(LCD_2_I2C_ADDR, LCD_2_I2C_PIN_1, LCD_2_I2C_PIN_2);
@@ -72,12 +79,14 @@ LiquidCrystal_I2C LCD2(LCD_2_I2C_ADDR, LCD_2_I2C_PIN_1, LCD_2_I2C_PIN_2);
 void setup() 
 {
 	for(int i = 0; i <= 7; i++) pinMode(i, OUTPUT);
-	pinMode(8, INPUT);
-	pinMode(9, INPUT);
+	for(int i = 8; i <= 10; i++) pinMode(i, INPUT);
 
 	LCD1.init();   
 	LCD1.init();
 	LCD1.backlight();
+	LCD_TIMEOUT_LAST_TIME = millis();
+	LCD_BACKLIGHT_ON = true;
+
 	LCD1.clear();
 
 	LCD2.init();   
@@ -124,7 +133,107 @@ void loop()
 		sendValue(PACKET_TYPE_SENSOR, CURRENTAC_SENSOR_PIN, CURRENTAC_SENSOR_VALUE); // Courant AC
 		sendValue(PACKET_TYPE_SENSOR, VOLTAGEDC_SENSOR_PIN, VOLTAGEDC_SENSOR_VALUE); // Tension DC
 	}
-	delay(100);
+
+	// Affichage des mesures sur la LCD Principale
+	displayResults(TEMP_SENSOR_VALUE, HUMIDITY_SENSOR_VALUE, RADIATION_SENSOR_VALUE, CURRENTDC_SENSOR_VALUE, CURRENTAC_SENSOR_VALUE, VOLTAGEDC_SENSOR_VALUE);
+
+	// Affichage des mesures sur la 2éme LCD
+	LCD2.clear();
+	LCD2.setCursor(0, 0);
+	LCD2.print("TensionDC: " + String((int)VOLTAGEDC_SENSOR_VALUE) + " V");
+	LCD2.setCursor(0, 1);
+	LCD2.print("CurrentDC: " + String(CURRENTDC_SENSOR_VALUE, 2) + " A");
+
+	// LCD Backlight Timeout
+	if(LCD_1_TIMEOUT_TIME >= (milis() - LCD_TIMEOUT_LAST_TIME))
+	{
+		if(LCD_BACKLIGHT_ON) 
+		{
+			LCD1.noBacklight();
+			LCD_BACKLIGHT_ON = false;
+		}
+	}
+	delay(200);
+}
+
+void activePageUpdate(int pin)
+{
+	if(digitalRead(COMMAND1_KEYBOARD_PIN))
+	{
+		if(ACTIVE_PAGE < 2) ACTIVE_PAGE += 1;
+		else ACTIVE_PAGE = 2;
+	}
+	else if(digitalRead(COMMAND2_KEYBOARD_PIN))
+	{
+		if(!LCD_BACKLIGHT_ON) 
+		{
+			LCD1.backlight();
+			LCD_TIMEOUT_LAST_TIME = millis();
+			LCD_BACKLIGHT_ON = true;
+		}
+		else 
+		{
+			LCD1.noBacklight();
+			LCD_BACKLIGHT_ON = false;
+		}
+
+	}
+	else if(digitalRead(COMMAND3_KEYBOARD_PIN))
+	{
+		if(ACTIVE_PAGE > 0) ACTIVE_PAGE -= 1;
+		else ACTIVE_PAGE = 0;
+	}
+}
+
+void displayResults(float temp, float humidity, float radiation, float currentdc, float currentac, float voltagedc)
+{
+	switch(ACTIVE_PAGE)
+	{
+		case 0:
+		{
+			LCD1.clear();
+			LCD1.setCursor(0, 0);
+			LCD1.print("     Environment    ");
+			LCD1.setCursor(0, 1);
+			LCD1.print("Temperature: " + String((int)temp) + " °C");
+			LCD1.setCursor(0, 2);
+			LCD1.print("Humidity: " + String((int)humidity) + " %");
+			LCD1.setCursor(0, 3);
+			LCD1.print("Radiation: " + String((int)radiation) + " %");
+			break;
+		}
+		case 1:
+		{
+			LCD1.clear();
+			LCD1.setCursor(0, 0);
+			LCD1.print("     Energy  AC     ");
+			LCD1.setCursor(0, 1);
+			LCD1.print("Voltage AC: "+ VOLTAGEAC_CONSTANT_EFF +" V");
+			LCD1.setCursor(0, 2);
+			LCD1.print("Current AC: " + String(currentac, 2) + " A");
+			LCD1.setCursor(0, 3);
+			LCD1.print("Puissance AC: " + String((VOLTAGEAC_CONSTANT_EFF*currentac)) + " W");
+			break;
+		}
+		case 2:
+		{
+			LCD1.clear();
+			LCD1.setCursor(0, 0);
+			LCD1.print("     Energy  DC     ");
+			LCD1.setCursor(0, 1);
+			LCD1.print("Voltage DC: "+ String(voltagedc, 1) +" V");
+			LCD1.setCursor(0, 2);
+			LCD1.print("Current DC: " + String(currentdc, 2) + " A");
+			LCD1.setCursor(0, 3);
+			LCD1.print("Puissance DC: " + String((voltagedc*currentdc)) + " W");
+			break;
+		}
+		default: 
+		{
+			Serial.print("Error: Select page is invalid. (Page: "+ String(ACTIVE_PAGE) +" )");
+			break;
+		}
+	}
 }
 
 void sendValue(int packettype, int packetid, float value)
@@ -172,15 +281,15 @@ void getChargeCommand()
 
 float getCurrent(int current_sensor_type)
 {
-	int valeur;
-	float moyenne = 0;
+	int CURRENT_SENSOR_RAW;
+	float CURRENT_SENSOR_AVERAGE = 0;
 
 	for( int i = 0; i < 50; i++ )
 	{
-		if(current_sensor_type == CURRENT_TYPE_DC) valeur = analogRead(CURRENTDC_SENSOR_PIN);
-		else valeur = analogRead(CURRENTAC_SENSOR_PIN);
-		moyenne = moyenne + float(valeur);
+		if(current_sensor_type == CURRENT_TYPE_DC) CURRENT_SENSOR_RAW = analogRead(CURRENTDC_SENSOR_PIN);
+		else CURRENT_SENSOR_RAW = analogRead(CURRENTAC_SENSOR_PIN);
+		CURRENT_SENSOR_AVERAGE += float(valeur);
 	}
-	moyenne = moyenne / 50.0;
-	return moyenne;
+	CURRENT_SENSOR_RAW /= 50.0;
+	return CURRENT_SENSOR_RAW;
 }
