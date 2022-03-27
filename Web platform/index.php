@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php
+        session_start();
+        if(!isset($_SESSION["username"])) 
+        {
+            header("Location: login.php");
+            exit();
+        }
+
         $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
         $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 54 ORDER BY `UNIXDATE` ASC LIMIT 10';
@@ -50,6 +57,15 @@
             $humidityrows[] = $row;
         }
         $result->free();
+        $mysqli->close();
+
+        $activesensors = 0;
+        if($humidityrows[9]['VALUE'] > 1) $activesensors++;
+        if($brightnessrows[9]['VALUE'] > 1) $activesensors++;
+        if($voltagedcrows[9]['VALUE'] > 1) $activesensors++;
+        if($currentdcrows[9]['VALUE'] > 1) $activesensors++;
+        if($currentacrows[9]['VALUE'] > 1) $activesensors++;
+        if($temprows[9]['VALUE'] > 1) $activesensors++;
 
         $jsonurl = "https://api.openweathermap.org/data/2.5/weather?lat=34.0337&lon=6.7708&lang=fr&appid=36a1abfb8868c3cc0784a4953f738e70";
         $json = file_get_contents($jsonurl);
@@ -135,9 +151,9 @@
 
                         <ul class="navbar-nav my-lg-0">
                             <li class="nav-item dropdown u-pro">
-                                <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down">Administrateur &nbsp;<i class="fa fa-angle-down"></i></span> </a>
+                                <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down"><?php echo $_SESSION["username"]; ?> &nbsp;<i class="fa fa-angle-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                                    <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
                                 </div>
                             </li>
                         </ul>
@@ -152,11 +168,15 @@
                                 <img src="../assets/images/logo.png" alt="user-img" height="110" width="215">
                             </li>
                             <li class="nav-small-cap">--- MAIN MENU</li>
-                            <li> <a class="waves-effect waves-dark active" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Statistiques <span class="badge badge-pill badge-cyan ml-auto">6</span></span></a>
+                            <li> <a class="waves-effect waves-dark active" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i>
+                                <?php 
+                                    if($activesensors != 6) echo '<span class="hide-menu">Statistiques <span class="badge badge-pill badge-danger ml-auto"> '.$activesensors.' / 6</span></span></a>';
+                                    else echo '<span class="hide-menu">Statistiques <span class="badge badge-pill badge-cyan ml-auto"> '.$activesensors.' / 6</span></span></a>';
+                                ?>
                             </li>
-                            <li> <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Charges <span class="badge badge-pill badge-cyan ml-auto">4</span></span></a>
+                            <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Charges</span></a>
                             </li>
-                            <li> <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Logout</span></a>
+                            <li> <a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Logout</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -171,7 +191,7 @@
                         <div class="col-md-7 align-self-center text-right">
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                                     <li class="breadcrumb-item active">Statistiques</li>
                                 </ol>
                             </div>
@@ -180,7 +200,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card bg-cyan text-white">
-                                <div class="card-body ">
+                                <div class="card-body">
                                     <div class="row weather">
                                         <div class="col-6 m-t-40">
                                             <h3>&nbsp;</h3>
@@ -193,7 +213,7 @@
                                             <h1 class="m-b-"><i class="wi wi-day-cloudy-high"></i></h1>
                                             <?php
                                                 echo '<b class="text-white">'.$skystats.'</b>';
-                                                echo '<br>'.strftime('%H:%M').'</b><p class="op-5">'.mb_strtoupper(strftime('%A %d %B %Y')).'</p>';
+                                                echo '<br>'.(strftime('%H')-2).':'.strftime('%M').'</b><p class="op-5">'.mb_strtoupper(strftime('%A %d %B %Y')).'</p>';
                                             ?>
                                         </div>
                                     </div>
