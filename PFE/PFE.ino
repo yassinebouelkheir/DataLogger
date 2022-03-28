@@ -35,7 +35,7 @@
 #define CHARGE1_RELAY_PIN      (22)
 #define CHARGE2_RELAY_PIN      (23)
 #define CHARGE3_RELAY_PIN      (24)
-#define CHARGE4_RELAY_PIN      (26)
+#define CHARGE4_RELAY_PIN      (25)
 
 #define COMMAND1_KEYBOARD_PIN  (7)
 #define COMMAND2_KEYBOARD_PIN  (8)
