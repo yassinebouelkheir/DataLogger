@@ -29,73 +29,87 @@ import threading
 import os
 
 db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi", database='PFE') 
+arduino = serial.Serial("/dev/ttyUSB0", 9600, timeout=1)
+rowcounts = 22
 
 def receiverHandler():
+	global rowcounts
 	print('Running. Press CTRL-C to exit.')
-	with serial.Serial("/dev/ttyUSB0", 9600, timeout=1) as arduino:
-		time.sleep(0.1) #wait for serial to open
-		if arduino.isOpen():
-			print("{} connected!".format(arduino.port))
-			try:
-				while True:
-					arduino.write(str.encode(' '))
-					while arduino.inWaiting()==0: pass
-					if  arduino.inWaiting()>0: 
-						answer=arduino.readline()
-						decodedanswer = answer.decode().replace('\n', '')
-						print("R: " + decodedanswer)
-						time.sleep(0.5)
-						datasplitted = decodedanswer.split(' ')
+	time.sleep(0.1) #wait for serial to open
+	if arduino.isOpen():
+		print("{} connected!".format(arduino.port))
+		try:
+			while True:
+				cursor = db.cursor()
+				cursor.execute("SELECT ID, VALUE FROM `CHARGES` WHERE ID = " + str(rowcounts))
+				result = cursor.fetchall()
+				rowcounts += 1
+				if rowcounts == 26:
+					rowcounts = 22
+
+				for row in result:
+					arduino.write(str.encode("setcharge " + str(row[0]) + " " +  str(row[1]) + "\n"));
+					print("B: setcharge " + str(row[0]) + " " +  str(row[1]));
+
+				while arduino.inWaiting()==0: pass
+				if  arduino.inWaiting()>0: 
+					answer=arduino.readline()
+					decodedanswer = answer.decode().replace('\n', '')
+					print("R: " + decodedanswer)
+					time.sleep(0.5)
+					datasplitted = decodedanswer.split(' ')
+					
+					if datasplitted[0] == 'setsensor':
+						cursor = db.cursor(buffered=True)
+						cursor.execute("SELECT * FROM `SENSORS` WHERE ID = " + str(datasplitted[1]))
+						time.sleep(0.05)
+						rcount = cursor.rowcount
+						if rcount > 9:
+							cursor = db.cursor(buffered=True)
+							sql = "DELETE FROM SENSORS WHERE ID = "+ str(datasplitted[1]) + " ORDER BY UNIXDATE ASC LIMIT " + str(rcount-9) 
+							cursor.execute(sql)
+							db.commit()
+							
+						cursor = db.cursor(buffered=True)
+						sql = "INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ('"+ str(datasplitted[1]) +"', '" + str(datasplitted[2]) +"', " + str(time.time()) + ")"
+						cursor.execute(sql)
+						db.commit()
+						time.sleep(0.05)
 						
-						if datasplitted[0] == 'setsensor':
+					elif datasplitted[0] == 'setcharge':
 							cursor = db.cursor(buffered=True)
-							cursor.execute("SELECT * FROM `SENSORS` WHERE ID = " + str(datasplitted[1]))
-							time.sleep(0.05)
-							rcount = cursor.rowcount
-							if rcount > 9:
-								cursor = db.cursor(buffered=True)
-								sql = "DELETE FROM SENSORS WHERE ID = "+ str(datasplitted[1]) + " ORDER BY UNIXDATE ASC LIMIT " + str(rcount-9) 
-								cursor.execute(sql)
-								db.commit()
-								
-							cursor = db.cursor(buffered=True)
-							sql = "INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ('"+ str(datasplitted[1]) +"', '" + str(datasplitted[2]) +"', " + str(time.time()) + ")"
+							sql = "UPDATE CHARGES SET VALUE = '"+ str(datasplitted[2]) +"' WHERE ID = '" + str(datasplitted[1]) +"'"
 							cursor.execute(sql)
 							db.commit()
 							time.sleep(0.05)
-							
-						elif datasplitted[0] == 'setcharge':
-								cursor = db.cursor(buffered=True)
-								sql = "UPDATE CHARGES SET VALUE = '"+ str(datasplitted[2]) +"' WHERE ID = '" + str(datasplitted[1]) +"'"
-								cursor.execute(sql)
-								db.commit()
-							
-						time.sleep(0.5)
-			except KeyboardInterrupt:
-				print("KeyboardInterrupt has been caught.")
+						
+					time.sleep(0.5)
+		except KeyboardInterrupt:
+			print("KeyboardInterrupt has been caught.")
 			
 def broadcastHandler():
 	while True:
 		cursor = db.cursor()
-		cursor.execute("SELECT * FROM `CHARGES` ORDER BY `ID` ASC")
+		cursor.execute("SELECT ID, VALUE FROM `CHARGES` WHERE 1")
 		result = cursor.fetchall()
 		for row in result:
-			arduino_serial.write(str.encode("setcharge " + str(row[0]) + " " +  str(row[1]) + "\n"));
-			print("R: setcharge " + str(row[0]) + " " +  str(row[1]) + "\n");
+			arduino.write(str.encode("setcharge " + str(row[0]) + " " +  str(row[1]) + "\n"));
+			print("B: setcharge " + str(row[0]) + " " +  str(row[1]));
+			time.sleep(0.1)
 		
-		time.sleep(0.8)
+		time.sleep(0.5)
 
 if __name__ == "__main__":
 	
 	reciever = threading.Thread(target=receiverHandler)
-	#broadcast = threading.Thread(target=broadcastHandler)
+	broadcast = threading.Thread(target=broadcastHandler)
 	
 	print("Reciever handler is starting....");
 	reciever.start()
 	print("Reciever: OK");
 	print("Broadcast handler is starting...");
-	#broadcast.start()
+	broadcast.start()
 	print("Broadcast: OK");
 	print("Data Logger v1.0 python script - PFE 2021/2022");
 	reciever.join()
-	#broadcast.join()
+	broadcast.join()
