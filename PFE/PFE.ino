@@ -54,7 +54,7 @@
 #define HUMIDITY_SENSOR_PIN    (A5)
  
 #define LCD_1_I2C_ADDR         (0x28)
-#define LCD_1_TIMEOUT_TIME     (10000) // 10 Seconds
+#define LCD_1_TIMEOUT_TIME     (20000) // 20 Seconds
 
 #define LCD_2_I2C_ADDR         (0x27)
 
