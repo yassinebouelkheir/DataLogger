@@ -213,7 +213,7 @@
                                             <h1 class="m-b-"><i class="wi wi-day-cloudy-high"></i></h1>
                                             <?php
                                                 echo '<b class="text-white">'.$skystats.'</b>';
-                                                echo '<br>'.(strftime('%H')-2).':'.strftime('%M').'</b><p class="op-5">'.mb_strtoupper(strftime('%A %d %B %Y')).'</p>';
+                                                echo '<br>'.strftime('%H:%M').'</b><p class="op-5">'.mb_strtoupper(strftime('%A %d %B %Y')).'</p>';
                                             ?>
                                         </div>
                                     </div>
