@@ -31,31 +31,31 @@ import os
 arduino_serial = serial.Serial('/dev/ttyAMA0', 9600, timeout=1)
 arduino_serial.flush()
 
-db = mysql.connector.connect(host="localhost", user="user", password="pwd")
+db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi", database='PFE')
 
-dbrows = 100*[0]
+dbrows = 130*[0]
 
 def receiverHandler():
 	while True:
 		line = arduino_serial.readline().decode('utf-8').rstrip()
-		line.split()
+		datasplitted = line.split(" ")
 
-		if line[0] == 'setsensor':
+		if datasplitted[0] == 'setsensor':
 			cursor = db.cursor()
-			sql = "INSERT INTO SENSORS (ID, VALUE, UNIXDATE) VALUES ('"+ line[1] +"', '" + line[2] +"', " + time.time() + ")"
+			sql = "INSERT INTO SENSORS (ID, VALUE, UNIXDATE) VALUES ('"+ datasplitted[1] +"', '" + datasplitted[2] +"', " + time.time() + ")"
 			cursor.execute(sql)
 			db.commit()
-			dbrows[line[1]] += 1
-			if dbrows[line[1]] == 10:
+			dbrows[datasplitted[1]] += 1
+			if dbrows[datasplitted[1]] == 10:
 				cursor = db.cursor()
-				sql = "DELETE FROM SENSORS WHERE ID = '"+ line[1] +"' ORDER BY UNIXDATE ASC LIMIT 1"
+				sql = "DELETE FROM SENSORS WHERE ID = '"+ datasplitted[1] +"' ORDER BY UNIXDATE ASC LIMIT 1"
 				cursor.execute(sql)
 				db.commit()
 				dbrows -= 1
 
-		elif line[0] == 'setcharge':
+		elif datasplitted[0] == 'setcharge':
 			cursor = db.cursor()
-			sql = "UPDATE CHARGES SET VALUE = '"+ line[2] +"' WHERE ID = '" + line[1] +"'"
+			sql = "UPDATE CHARGES SET VALUE = '"+ datasplitted[2] +"' WHERE ID = '" + datasplitted[1] +"'"
 			cursor.execute(sql)
 			db.commit()
 		time.sleep(0.05);
@@ -63,20 +63,24 @@ def receiverHandler():
 def broadcastHandler():
 	while True:
 		cursor = db.cursor()
-		cursor.execute("SELECT ID, VALUE FROM CHARGES")
+		cursor.execute("SELECT ID, VALUE FROM CHARGES ORDER BY `ID` ASC")
 		result = cursor.fetchall()
-		for x in result:
-			arduino_serial.write("setcharge " + result[x][0] + " " + result[x][1]);
+		for row in result:
+			arduino_serial.write(str.encode("setcharge " + str(row[0]) + " " +  str(row[1])));
 
 		time.sleep(0.05);
 
 if __name__ == "__main__":
-
+	
 	reciever = threading.Thread(target=receiverHandler)
 	broadcast = threading.Thread(target=broadcastHandler)
-
+	
+	print("Reciever handler is starting....");
 	reciever.start()
+	print("Reciever: OK");
+	print("Broadcast handler is starting...");
 	broadcast.start()
-
+	print("Broadcast: OK");
+	print("Data Logger v1.0 python script - PFE 2021/2022");
 	reciever.join()
 	broadcast.join()
