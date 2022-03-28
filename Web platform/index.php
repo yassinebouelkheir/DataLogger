@@ -8,7 +8,7 @@
             exit();
         }
 
-        $mysqli = new mysqli("localhost", "root", "", "PFE");   
+        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
 
         $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 54 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
@@ -71,6 +71,7 @@
         $json = file_get_contents($jsonurl);
 
         $batterie = round((($voltagedcrows[9]['VALUE']-12)*100)/13);
+        if($batterie < 0) $batterie = 0;
         $temperature = round($temprows[9]['VALUE']);
 
         $weather = json_decode($json);
@@ -291,42 +292,42 @@
                                                         echo '<p class="text-danger">TENSION DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger">'.$voltagedcrows[9]['VALUE'].' V</h2>';
+                                                        echo '<h2 class="counter text-danger">'.number_format($voltagedcrows[9]['VALUE'], 1).' V</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.((($voltagedcrows[9]['VALUE']-12)*100)/13).'%; height: 6px;" aria-valuenow="'.((($voltagedcrows[9]['VALUE']-12)*100)/13).'" aria-valuemin="48" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.number_format(((($voltagedcrows[9]['VALUE']-12)*100)/13), 1).'%; height: 6px;" aria-valuenow="'.((($voltagedcrows[9]['VALUE']-12)*100)/13).'" aria-valuemin="48" aria-valuemax="100"></div>';
                                                     }
                                                     else if($voltagedcrows[9]['VALUE'] < 20) 
                                                     {
                                                         echo '<p class="text-primary">TENSION DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary">'.$voltagedcrows[9]['VALUE'].' V</h2>';
+                                                        echo '<h2 class="counter text-primary">'.number_format($voltagedcrows[9]['VALUE'], 1).' V</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.((($voltagedcrows[9]['VALUE']-12)*100)/13).'%; height: 6px;" aria-valuenow="'.((($voltagedcrows[9]['VALUE']-12)*100)/13).'" aria-valuemin="48" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.number_format(((($voltagedcrows[9]['VALUE']-12)*100)/13), 1).'%; height: 6px;" aria-valuenow="'.((($voltagedcrows[9]['VALUE']-12)*100)/13).'" aria-valuemin="48" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
                                                         echo '<p class="text-success">TENSION DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success">'.$voltagedcrows[9]['VALUE'].' V</h2>';
+                                                        echo '<h2 class="counter text-success">'.number_format($voltagedcrows[9]['VALUE'], 1).' V</h2>';
                                                 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.((($voltagedcrows[9]['VALUE']-12)*100)/13).'%; height: 6px;" aria-valuenow="'.((($voltagedcrows[9]['VALUE']-12)*100)/13).'" aria-valuemin="48" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.number_format(((($voltagedcrows[9]['VALUE']-12)*100)/13), 1).'%; height: 6px;" aria-valuenow="'.((($voltagedcrows[9]['VALUE']-12)*100)/13).'" aria-valuemin="48" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -342,47 +343,47 @@
                                             <div>
                                                 <h3><i class="fas fa-exchange-alt"></i></h3>
                                                 <?php
-                                                    if($currentdcrows[9]['VALUE'] > 20)
+                                                    if($currentdcrows[9]['VALUE'] > 20 || $currentdcrows[9]['VALUE'] < 0)
                                                     {
                                                         echo '<p class="text-danger">COURANT DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger">'.$currentdcrows[9]['VALUE'].' A</h2>';
+                                                        echo '<h2 class="counter text-danger">'.number_format($currentdcrows[9]['VALUE'], 1).' A</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.(($currentdcrows[9]['VALUE']*100)/30).'%; height: 6px;" aria-valuenow="'.(($currentdcrows[9]['VALUE']*100)/30).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.number_format((($currentdcrows[9]['VALUE']*100)/30), 1).'%; height: 6px;" aria-valuenow="'.(($currentdcrows[9]['VALUE']*100)/30).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if($currentdcrows[9]['VALUE'] > 15) 
                                                     {
                                                         echo '<p class="text-primary">COURANT DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary">'.$currentdcrows[9]['VALUE'].' A</h2>';
+                                                        echo '<h2 class="counter text-primary">'.number_format($currentdcrows[9]['VALUE'], 1).' A</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.(($currentdcrows[9]['VALUE']*100)/30).'%; height: 6px;" aria-valuenow="'.(($currentdcrows[9]['VALUE']*100)/30).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.number_format((($currentdcrows[9]['VALUE']*100)/30), 1).'%; height: 6px;" aria-valuenow="'.(($currentdcrows[9]['VALUE']*100)/30).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
                                                         echo '<p class="text-success">COURANT DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success">'.$currentdcrows[9]['VALUE'].' A</h2>';
+                                                        echo '<h2 class="counter text-success">'.number_format($currentdcrows[9]['VALUE'], 1).' A</h2>';
                                                 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.(($currentdcrows[9]['VALUE']*100)/30).'%; height: 6px;" aria-valuenow="'.(($currentdcrows[9]['VALUE']*100)/30).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.number_format((($currentdcrows[9]['VALUE']*100)/30), 1).'%; height: 6px;" aria-valuenow="'.(($currentdcrows[9]['VALUE']*100)/30).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -398,47 +399,47 @@
                                             <div>
                                                 <h3><i class="fas fa-exchange-alt"></i></h3>
                                                 <?php
-                                                    if($currentacrows[9]['VALUE'] > 90)
+                                                    if($currentacrows[9]['VALUE'] > 90 || $currentacrows[9]['VALUE'] < 0)
                                                     {
                                                         echo '<p class="text-danger">COURANT AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger">'.$currentacrows[9]['VALUE'].' A</h2>';
+                                                        echo '<h2 class="counter text-danger">'.number_format($currentacrows[9]['VALUE'], 1).' A</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.($currentacrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$currentacrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.number_format(($currentacrows[9]['VALUE']), 1).'%; height: 6px;" aria-valuenow="'.$currentacrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if($currentacrows[9]['VALUE'] > 70) 
                                                     {
                                                         echo '<p class="text-primary">COURANT AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary">'.$currentacrows[9]['VALUE'].' A</h2>';
+                                                        echo '<h2 class="counter text-primary">'.number_format($currentacrows[9]['VALUE'], 1).' A</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.($currentacrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$currentacrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.number_format(($currentacrows[9]['VALUE']), 1).'%; height: 6px;" aria-valuenow="'.$currentacrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
                                                         echo '<p class="text-success">COURANT AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success">'.$currentacrows[9]['VALUE'].' A</h2>';
+                                                        echo '<h2 class="counter text-success">'.number_format($currentacrows[9]['VALUE'], 1).' A</h2>';
                                                 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.($currentacrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$currentacrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.number_format(($currentacrows[9]['VALUE']), 1).'%; height: 6px;" aria-valuenow="'.$currentacrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -515,42 +516,42 @@
                                                         echo '<p class="text-danger">HUMIDITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger">'.$humidityrows[9]['VALUE'].' %</h2>';
+                                                        echo '<h2 class="counter text-danger">'.round($humidityrows[9]['VALUE']).' %</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.($humidityrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$humidityrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.round($humidityrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$humidityrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if($humidityrows[9]['VALUE'] > 70) 
                                                     {
                                                         echo '<p class="text-primary">HUMIDITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary">'.$humidityrows[9]['VALUE'].' %</h2>';
+                                                        echo '<h2 class="counter text-primary">'.round($humidityrows[9]['VALUE']).' %</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.($humidityrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$humidityrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.round($humidityrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$humidityrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
                                                         echo '<p class="text-success">HUMIDITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success">'.$humidityrows[9]['VALUE'].' %</h2>';
+                                                        echo '<h2 class="counter text-success">'.round($humidityrows[9]['VALUE']).' %</h2>';
                                                 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.($humidityrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$humidityrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.round($humidityrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$humidityrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -571,42 +572,42 @@
                                                         echo '<p class="text-danger">LUMINOSITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger">'.$brightnessrows[9]['VALUE'].' %</h2>';
+                                                        echo '<h2 class="counter text-danger">'.round($brightnessrows[9]['VALUE']).' %</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.($brightnessrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$brightnessrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.round($brightnessrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$brightnessrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if($brightnessrows[9]['VALUE'] < 30) 
                                                     {
                                                         echo '<p class="text-primary">LUMINOSITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary">'.$brightnessrows[9]['VALUE'].' %</h2>';
+                                                        echo '<h2 class="counter text-primary">'.round($brightnessrows[9]['VALUE']).' %</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.($brightnessrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$brightnessrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.round($brightnessrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$brightnessrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
                                                         echo '<p class="text-success">LUMINOSITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success">'.$brightnessrows[9]['VALUE'].' %</h2>';
+                                                        echo '<h2 class="counter text-success">'.round($brightnessrows[9]['VALUE']).' %</h2>';
                                                 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.($brightnessrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$brightnessrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.round($brightnessrows[9]['VALUE']).'%; height: 6px;" aria-valuenow="'.$brightnessrows[9]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
