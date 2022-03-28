@@ -200,12 +200,12 @@
                                                             if($rows[3]['VALUE'] == 0)
                                                             {
                                                                 echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=26&value=1'\">Allumer</button>");
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=25&value=1'\">Allumer</button>");
                                                             }
                                                             else
                                                             {
                                                                 echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=26&value=0'\">Éteindre</button>");                                              
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=25&value=0'\">Éteindre</button>");                                              
                                                             }
                                                         ?>
                                                         </div>
