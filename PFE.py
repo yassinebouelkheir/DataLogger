@@ -33,8 +33,10 @@ db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi
 arduino = serial.Serial("/dev/ttyUSB0", 9600, timeout=1)
 
 rowcounts = 22
+lastquerytime = 0
 def receiverHandler():
 	global rowcounts
+	global lastquerytime
 	print('Running. Press CTRL-C to exit.')
 	time.sleep(0.1) #wait for serial to open
 	if arduino.isOpen():
@@ -61,25 +63,35 @@ def receiverHandler():
 					datasplitted = decodedanswer.split(' ')
 					
 					if datasplitted[0] == 'setsensor':
-						cursor = db.cursor(buffered=True)
-						cursor.execute("SELECT * FROM `SENSORS` WHERE ID = " + str(datasplitted[1]))
-						time.sleep(0.025)
-						rcount = cursor.rowcount
-						if rcount > 9:
+						if time.time() < (lastquerytime+120):
 							cursor = db.cursor(buffered=True)
-							sql = "DELETE FROM SENSORS WHERE ID = "+ str(datasplitted[1]) + " ORDER BY UNIXDATE ASC LIMIT " + str(rcount-9) 
+							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+							time.sleep(0.01)
+
+						elif time.time() > (lastquerytime+120):
+							cursor = db.cursor(buffered=True)
+							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+							time.sleep(0.01)
+							cursor = db.cursor(buffered=True)
+							cursor.execute("SELECT * FROM `SENSORS` WHERE ID = " + str(datasplitted[1]))
+							time.sleep(0.025)
+							rcount = cursor.rowcount
+							if rcount > 9:
+								cursor = db.cursor(buffered=True)
+								sql = "DELETE FROM SENSORS WHERE ID = "+ str(datasplitted[1]) + " ORDER BY UNIXDATE ASC LIMIT " + str(rcount-9) 
+								cursor.execute(sql)
+								db.commit()
+								
+							cursor = db.cursor(buffered=True)
+							sql = "INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")"
 							cursor.execute(sql)
 							db.commit()
-							
-						cursor = db.cursor(buffered=True)
-						sql = "INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ('"+ str(datasplitted[1]) +"', '" + str(datasplitted[2]) +"', " + str(time.time()) + ")"
-						cursor.execute(sql)
-						db.commit()
-						time.sleep(0.025)
+							lastquerytime = time.time()
+							time.sleep(0.025)
 						
 					elif datasplitted[0] == 'setcharge':
 							cursor = db.cursor(buffered=True)
-							sql = "UPDATE CHARGES SET VALUE = '"+ str(datasplitted[2]) +"' WHERE ID = '" + str(datasplitted[1]) +"'"
+							sql = "UPDATE CHARGES SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = '" + str(datasplitted[1]) +"'"
 							cursor.execute(sql)
 							db.commit()
 						

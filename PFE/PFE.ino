@@ -43,12 +43,12 @@
 #define COMMAND6_CHARGE3_PIN   (12)
 #define COMMAND6_CHARGE4_PIN   (13)
 
-#define CURRENTDC_SENSOR_PIN   (A0)
-#define CURRENTAC_SENSOR_PIN   (A1)
-#define VOLTAGEDC_SENSOR_PIN   (A2)
-#define TEMP_SENSOR_PIN        (A3)
-#define RADIATION_SENSOR_PIN   (A4)
-#define HUMIDITY_SENSOR_PIN    (A5)
+#define CURRENTDC_SENSOR_PIN   (A0) // 54
+#define CURRENTAC_SENSOR_PIN   (A1) // 55
+#define VOLTAGEDC_SENSOR_PIN   (A2) // 56
+#define TEMP_SENSOR_PIN        (A3) // 57
+#define RADIATION_SENSOR_PIN   (A4) // 58
+#define HUMIDITY_SENSOR_PIN    (A5) // 59
 
 #define LCD_1_I2C_ADDR         (0x28)
 #define LCD_1_TIMEOUT_TIME     (20000) // 20 Seconds
