@@ -57,21 +57,22 @@
             $humidityrows[] = $row;
         }
         $result->free();
-        $mysqli->close();
+        
 
-        $query = 'SELECT * FROM `SENSORS_STATIC` ORDER BY `ID` ASC';
+        $query = 'SELECT * FROM `SENSORS_STATIC` WHERE 1 ORDER BY `ID` ASC';
         $result = $mysqli->query($query) or die($mysqli->error);
         $staticrows = array();
         while($row = $result->fetch_assoc()) {
             $staticrows[] = $row;
         }
         $result->free();
+        $mysqli->close();
 
         $activesensors = 0;
         if($staticrows[0]['VALUE'] > 1) $activesensors++;
         if($staticrows[1]['VALUE'] > 1) $activesensors++;
         if($staticrows[2]['VALUE'] > 1) $activesensors++;
-        if($staticrows[3]['VALUE'] > 1) $activesensors++
+        if($staticrows[3]['VALUE'] > 1) $activesensors++;
         if($staticrows[4]['VALUE'] > 1) $activesensors++;
         if($staticrows[5]['VALUE'] > 1) $activesensors++;
 
