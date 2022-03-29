@@ -34,9 +34,11 @@ arduino = serial.Serial("/dev/ttyUSB0", 9600, timeout=1)
 
 rowcounts = 22
 lastquerytime = 0
+addedrows = 0
 def receiverHandler():
 	global rowcounts
 	global lastquerytime
+	global addedrows 
 	print('Running. Press CTRL-C to exit.')
 	time.sleep(0.1) #wait for serial to open
 	if arduino.isOpen():
@@ -63,12 +65,12 @@ def receiverHandler():
 					datasplitted = decodedanswer.split(' ')
 					
 					if datasplitted[0] == 'setsensor':
-						if time.time() < (lastquerytime+120):
+						if time.time() < lastquerytime:
 							cursor = db.cursor(buffered=True)
 							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
-							time.sleep(0.01)
+							db.commit()
 
-						elif time.time() > (lastquerytime+120):
+						else:
 							cursor = db.cursor(buffered=True)
 							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
 							time.sleep(0.01)
@@ -86,16 +88,20 @@ def receiverHandler():
 							sql = "INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")"
 							cursor.execute(sql)
 							db.commit()
-							lastquerytime = time.time()
+							addedrows += 1
+							if addedrows == 6:
+								lastquerytime = time.time()+120
+								addedrows = 0
+								
 							time.sleep(0.025)
 						
 					elif datasplitted[0] == 'setcharge':
 							cursor = db.cursor(buffered=True)
-							sql = "UPDATE CHARGES SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = '" + str(datasplitted[1]) +"'"
+							sql = "UPDATE CHARGES SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]) +""
 							cursor.execute(sql)
 							db.commit()
 						
-					time.sleep(0.5)
+					time.sleep(0.05)
 		except KeyboardInterrupt:
 			print("KeyboardInterrupt has been caught.")
 			
