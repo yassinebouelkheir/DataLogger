@@ -138,29 +138,28 @@ void loop()
   {
     getChargeCommand();
     sendValue(PACKET_TYPE_SENSOR, TEMP_SENSOR_PIN, TEMP_SENSOR_VALUE); // Température
-    delay(50);
+    delay(10);
 
     getChargeCommand();
     sendValue(PACKET_TYPE_SENSOR, HUMIDITY_SENSOR_PIN, HUMIDITY_SENSOR_VALUE); // Humidité
-    delay(50);
+    delay(10);
 
     getChargeCommand();
     sendValue(PACKET_TYPE_SENSOR, RADIATION_SENSOR_PIN, RADIATION_SENSOR_VALUE); // Radiation
-    delay(50);
+    delay(10);
 
     getChargeCommand();
     sendValue(PACKET_TYPE_SENSOR, CURRENTDC_SENSOR_PIN, CURRENTDC_SENSOR_VALUE); // Courant DC
-    delay(50);
+    delay(10);
 
     getChargeCommand();
     sendValue(PACKET_TYPE_SENSOR, CURRENTAC_SENSOR_PIN, CURRENTAC_SENSOR_VALUE); // Courant AC
-    delay(50);
+    delay(10);
 
     getChargeCommand();
     sendValue(PACKET_TYPE_SENSOR, VOLTAGEDC_SENSOR_PIN, VOLTAGEDC_SENSOR_VALUE); // Tension DC
-    delay(50);
+    delay(10);
   }
-  delay(1000);
 }
 
 /*void activePageUpdate(int pin)
