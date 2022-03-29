@@ -70,10 +70,11 @@ int ACTIVE_PAGE = 0;
 
 void setup()
 {
+  pinMode(52, OUTPUT);
+  digitalWrite(52, LOW);
   for (int i = 0; i <= 7; i++) pinMode(i, OUTPUT);
   for (int i = 22; i <= 25; i++) pinMode(i, OUTPUT);
   for (int i = 8; i <= 10; i++) pinMode(i, INPUT);
-
   /*LCD1.init();
     LCD1.init();
     LCD1.backlight();
@@ -87,6 +88,7 @@ void setup()
     LCD2.backlight();
     LCD2.clear();*/
   Serial.begin(9600);
+  if (Serial.available() > 0) digitalWrite(52, HIGH);
 }
 
 void loop()

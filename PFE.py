@@ -22,6 +22,7 @@
 #    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
 ##
 
+import RPi.GPIO as GPIO
 import mysql.connector
 import serial
 import time
@@ -89,7 +90,12 @@ def receiverHandler():
 
 if __name__ == "__main__":
 	
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setwarnings(False)
+	GPIO.setup(11, GPIO.OUT)
 	reciever = threading.Thread(target=receiverHandler)
 	reciever.start()
 	print("Data Logger v1.0 python script - PFE 2021/2022");
+	GPIO.output(11, GPIO.HIGH)
 	reciever.join()
+	GPIO.output(11, GPIO.LOW)
