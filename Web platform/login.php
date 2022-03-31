@@ -11,7 +11,7 @@
     $BadInfo = 0;
     if (isset($_POST['username'])) 
     {
-        $mysqli = new mysqli("localhost", "root", "", "PFE");
+        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
         $username = stripslashes($_REQUEST['username']);
         $username = mysqli_real_escape_string($mysqli, $username);
 
@@ -21,6 +21,7 @@
         $query = "SELECT * FROM `ACCOUNTS` WHERE username='$username' AND password='" . md5($password) . "'";
         $result = $mysqli->query($query) or die($mysqli->error);
         $rows = mysqli_num_rows($result);
+	$mysqli->close();
         if ($rows != 0) 
         {
             $BadInfo = 0;

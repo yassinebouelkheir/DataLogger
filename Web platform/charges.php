@@ -7,7 +7,7 @@
             header("Location: login.php");
             exit();
         }
-        $mysqli = new mysqli("localhost", "root", "", "PFE");   
+        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
 
         $query = 'SELECT * FROM `CHARGES` WHERE 1 ORDER BY `ID` ASC';
         $result = $mysqli->query($query) or die($mysqli->error);

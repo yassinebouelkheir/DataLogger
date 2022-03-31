@@ -60,7 +60,7 @@
         
 
         $query = 'SELECT * FROM `SENSORS_STATIC` WHERE 1 ORDER BY `ID` ASC';
-        $result = $mysqli->query($query) or die($mysqli->error);
+        $result = $mysqli->query($query);
         $staticrows = array();
         while($row = $result->fetch_assoc()) {
             $staticrows[] = $row;

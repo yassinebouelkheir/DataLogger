@@ -30,7 +30,7 @@ import threading
 import os
 
 db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi", database='PFE') 
-arduino = serial.Serial("/dev/ttyUSB0", 9600, timeout=1)
+arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
 rowcounts = 22
 lastquerytime = 0
@@ -110,10 +110,10 @@ if __name__ == "__main__":
 	
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setwarnings(False)
-	GPIO.setup(11, GPIO.OUT)
+	GPIO.setup(17, GPIO.OUT)
+	GPIO.output(17, GPIO.LOW)
 	reciever = threading.Thread(target=receiverHandler)
 	reciever.start()
 	print("Data Logger v1.0 python script - PFE 2021/2022");
-	GPIO.output(11, GPIO.HIGH)
+	GPIO.output(17, GPIO.HIGH)
 	reciever.join()
-	GPIO.output(11, GPIO.LOW)

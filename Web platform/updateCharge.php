@@ -8,7 +8,7 @@
     
     if (isset($_GET['chargeid']) && isset($_GET['value'])) 
     {
-        $mysqli = new mysqli("localhost", "root", "", "PFE");
+        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
         $chargeid = stripslashes($_GET['chargeid']);
         $chargeid = mysqli_real_escape_string($mysqli, $chargeid);
 
@@ -17,6 +17,7 @@
 
         $query = 'UPDATE `CHARGES` SET `VALUE` = '.$chargevalue.' WHERE `ID` = '.$chargeid;
         $mysqli->query($query) or die($mysqli->error);
+	$mysqli->close();
     }
     header("Location: charges.php");
 ?>
