@@ -111,7 +111,7 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN5</h4>
+                                                        <h4 class="text-center">Relais PIN: IN1</h4>
                                                         <h2 class="text-center">Charge 1</h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
@@ -137,7 +137,7 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN6</h4>
+                                                        <h4 class="text-center">Relais PIN: IN2</h4>
                                                         <h2 class="text-center">Charge 2</h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
@@ -163,7 +163,7 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN7</h4>
+                                                        <h4 class="text-center">Relais PIN: IN3</h4>
                                                         <h2 class="text-center">Charge 3</h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
@@ -191,7 +191,7 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN8</h4>
+                                                        <h4 class="text-center">Relais PIN: IN4</h4>
                                                         <h2 class="text-center">Charge 4</h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
