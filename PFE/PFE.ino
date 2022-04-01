@@ -34,14 +34,14 @@
 #define CHARGE3_RELAY_PIN      (24)
 #define CHARGE4_RELAY_PIN      (25)
 
-#define COMMAND1_KEYBOARD_PIN  (7)
-#define COMMAND2_KEYBOARD_PIN  (8)
-#define COMMAND3_KEYBOARD_PIN  (9)
+#define COMMAND1_KEYBOARD_PIN  (26)
+#define COMMAND2_KEYBOARD_PIN  (27)
+#define COMMAND3_KEYBOARD_PIN  (28)
 
-#define COMMAND4_CHARGE1_PIN   (10)
-#define COMMAND5_CHARGE2_PIN   (11)
-#define COMMAND6_CHARGE3_PIN   (12)
-#define COMMAND6_CHARGE4_PIN   (13)
+#define COMMAND4_CHARGE1_PIN   (29)
+#define COMMAND5_CHARGE2_PIN   (30)
+#define COMMAND6_CHARGE3_PIN   (31)
+#define COMMAND6_CHARGE4_PIN   (32)
 
 #define CURRENTDC_SENSOR_PIN   (A0) // 54
 #define CURRENTAC_SENSOR_PIN   (A1) // 55
@@ -50,8 +50,7 @@
 #define RADIATION_SENSOR_PIN   (A4) // 58
 #define HUMIDITY_SENSOR_PIN    (A5) // 59
 
-#define LCD_1_I2C_ADDR         (0x28)
-#define LCD_1_TIMEOUT_TIME     (20000) // 20 Seconds
+#define LCD_1_I2C_ADDR         (0x3F)
 
 #define LCD_2_I2C_ADDR         (0x27)
 
@@ -61,38 +60,43 @@ float VOLTAGEDC_RESISTOR1 = 30000.0;
 float VOLTAGEDC_RESISTOR2 = 7500.0;
 float VOLTAGEDC_REF_VOLTAGE = 5.0;
 
+int LCD_1_TIMEOUT_TIME = (20*1000);
 int LCD_TIMEOUT_LAST_TIME = 0;
 bool LCD_BACKLIGHT_ON = false;
-int ACTIVE_PAGE = 0;
 
-//LiquidCrystal_I2C LCD1(LCD_1_I2C_ADDR, LCD_1_I2C_PIN_1, LCD_1_I2C_PIN_2);
+int ACTIVE_PAGE = 2;
+
+LiquidCrystal_I2C LCD1(LCD_1_I2C_ADDR, 20, 4);
 //LiquidCrystal_I2C LCD2(LCD_2_I2C_ADDR, LCD_2_I2C_PIN_1, LCD_2_I2C_PIN_2);
 
 void setup()
 {
   pinMode(52, OUTPUT);
+  pinMode(53, OUTPUT);
   digitalWrite(52, LOW);
+  digitalWrite(53, LOW);
   for (int i = 0; i <= 7; i++) pinMode(i, OUTPUT);
-  for (int i = 22; i <= 25; i++) pinMode(i, OUTPUT);
-  for (int i = 8; i <= 10; i++) pinMode(i, INPUT);
-  /*LCD1.init();
-    LCD1.init();
-    LCD1.backlight();
-    LCD_TIMEOUT_LAST_TIME = millis();
-    LCD_BACKLIGHT_ON = true;
-
+  for (int i = 22; i <= 25; i++) { pinMode(i, OUTPUT); digitalWrite(i, HIGH); }
+  for (int i = 26; i <= 32; i++) pinMode(i, INPUT);
+  LCD1.init();
+  LCD1.init();
+  LCD1.backlight();
+  LCD_TIMEOUT_LAST_TIME = millis()+LCD_1_TIMEOUT_TIME;
+  LCD_BACKLIGHT_ON = true;
+  /*
     LCD1.clear();
-
     LCD2.init();
     LCD2.init();
     LCD2.backlight();
-    LCD2.clear();*/
+    LCD2.clear();
+  */
+  digitalWrite(52, HIGH);
   Serial.begin(9600);
-  if (Serial.available() > 0) digitalWrite(52, HIGH);
 }
 
 void loop()
 {
+  digitalWrite(53, LOW);
   // Capteur de Température
   float TEMP_SENSOR_VALUE = (analogRead(TEMP_SENSOR_PIN) * (5.0 / 1023.0 * 100.0));
 
@@ -114,7 +118,7 @@ void loop()
 
 
   // Affichage des mesures sur la LCD Principale
-  //displayResults(TEMP_SENSOR_VALUE, HUMIDITY_SENSOR_VALUE, RADIATION_SENSOR_VALUE, CURRENTDC_SENSOR_VALUE, CURRENTAC_SENSOR_VALUE, VOLTAGEDC_SENSOR_VALUE);
+  displayResults(TEMP_SENSOR_VALUE, HUMIDITY_SENSOR_VALUE, RADIATION_SENSOR_VALUE, CURRENTDC_SENSOR_VALUE, CURRENTAC_SENSOR_VALUE, VOLTAGEDC_SENSOR_VALUE);
 
   // Affichage des mesures sur la 2éme LCD
   /*LCD2.clear();
@@ -122,20 +126,21 @@ void loop()
     LCD2.print("TensionDC: " + String((int)VOLTAGEDC_SENSOR_VALUE) + " V");
     LCD2.setCursor(0, 1);
     LCD2.print("CurrentDC: " + String(CURRENTDC_SENSOR_VALUE, 2) + " A");
-
+  */
     // LCD Backlight Timeout
-    if(LCD_1_TIMEOUT_TIME >= (millis() - LCD_TIMEOUT_LAST_TIME))
+    if(LCD_1_TIMEOUT_TIME < millis())
     {
-    if(LCD_BACKLIGHT_ON)
-    {
-      LCD1.noBacklight();
-      LCD_BACKLIGHT_ON = false;
+      if(LCD_BACKLIGHT_ON)
+      {
+        LCD1.noBacklight();
+        LCD_BACKLIGHT_ON = false;
+      }
     }
-    }*/
-
+  
   // Communication avec le Raspberry Pi
   if (Serial.available() > 0)
   {
+    digitalWrite(53, HIGH);
     getChargeCommand();
     sendValue(PACKET_TYPE_SENSOR, TEMP_SENSOR_PIN, TEMP_SENSOR_VALUE); // Température
     delay(2);
@@ -160,10 +165,12 @@ void loop()
     sendValue(PACKET_TYPE_SENSOR, VOLTAGEDC_SENSOR_PIN, VOLTAGEDC_SENSOR_VALUE); // Tension DC
     delay(2);
   }
+  digitalWrite(53, LOW);
+  activePageUpdate();
 }
 
-/*void activePageUpdate(int pin)
-  {
+void activePageUpdate()
+{
   if(digitalRead(COMMAND1_KEYBOARD_PIN))
   {
     if(ACTIVE_PAGE < 2) ACTIVE_PAGE += 1;
@@ -182,16 +189,15 @@ void loop()
       LCD1.noBacklight();
       LCD_BACKLIGHT_ON = false;
     }
-
   }
   else if(digitalRead(COMMAND3_KEYBOARD_PIN))
   {
     if(ACTIVE_PAGE > 0) ACTIVE_PAGE -= 1;
     else ACTIVE_PAGE = 0;
   }
-  }
+}
 
-  void displayResults(float temp, float humidity, float radiation, float currentdc, float currentac, float voltagedc)
+void displayResults(float temp, float humidity, float radiation, float currentdc, float currentac, float voltagedc)
   {
   switch(ACTIVE_PAGE)
   {
@@ -201,7 +207,7 @@ void loop()
       LCD1.setCursor(0, 0);
       LCD1.print("     Environment    ");
       LCD1.setCursor(0, 1);
-      LCD1.print("Temperature: " + String((int)temp) + " °C");
+      LCD1.print("Temperature: " + String((int)temp) + " C");
       LCD1.setCursor(0, 2);
       LCD1.print("Humidity: " + String((int)humidity) + " %");
       LCD1.setCursor(0, 3);
@@ -240,7 +246,7 @@ void loop()
       break;
     }
   }
-  }*/
+}
 
 void sendValue(int packettype, int packetid, float value)
 {
@@ -286,7 +292,7 @@ void getChargeCommand()
     else if (id < 0) Serial.print("Error: Charge ID cannot be lower than 0.\n");
     else if (value > 1) Serial.print("Error: Charge ID " + String(Buff[1]) + " Value cannot be greater than 1.\n");
     else if (value < 0) Serial.print("Error: Charge ID " + String(Buff[1]) + " Value cannot be lower than 0.\n");
-    else digitalWrite(Buff[1].toInt(), bool(Buff[2].toInt()));
+    else digitalWrite(Buff[1].toInt(), bool(!Buff[2].toInt()));
   }
 }
 
