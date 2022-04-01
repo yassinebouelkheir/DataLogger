@@ -81,6 +81,16 @@
                             </li>
                             <li> <a class="waves-effect waves-dark active" href="charges.php" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Charges<span class="badge badge-pill badge-cyan ml-auto"> <?php echo $activecharge; ?> / 4</span></span></a>
                             </li>
+                            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-cloud-download"></i><span class="hide-menu">Exporter</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="exportData.php?interval=3600&location=0">Dernière heure</a></li>
+                                    <li><a href="exportData.php?interval=86400&location=0">Aujourd'hui</a></li>
+                                    <li><a href="exportData.php?interval=2592000&location=0">Le mois dernier</a></li>
+                                    <li><a href="exportData.php?interval=15552000&location=0">Les 6 derniers mois</a></li>
+                                    <li><a href="exportData.php?interval=31104000&location=0">Cette année</a></li>
+                                    <li><a href="exportData.php?interval=0&location=0">Exporter tout</a></li>
+                                </ul>
+                            </li>
                             <li> <a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Logout</span></a>
                             </li>
                         </ul>

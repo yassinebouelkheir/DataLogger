@@ -21,7 +21,7 @@
         $query = "SELECT * FROM `ACCOUNTS` WHERE username='$username' AND password='" . md5($password) . "'";
         $result = $mysqli->query($query) or die($mysqli->error);
         $rows = mysqli_num_rows($result);
-	$mysqli->close();
+	    $mysqli->close();
         if ($rows != 0) 
         {
             $BadInfo = 0;
