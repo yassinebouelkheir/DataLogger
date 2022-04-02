@@ -51,38 +51,54 @@
         $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple.xlsx');
         $objPHPExcel->setActiveSheetIndex(0);
 
-        $objPHPExcel->getActiveSheet()->setCellValue('E8', strftime('%d/%m/%Y').' '.strftime('%H:%M'));
+        $objPHPExcel->getActiveSheet()->setCellValue('H8', strftime('%d/%m/%Y').' '.strftime('%H:%M'));
 
         if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
         else $query = 'SELECT * FROM `SENSORS` WHERE 1 ORDER BY `UNIXDATE` ASC';
         $result = $mysqli->query($query) or die($mysqli->error);
         $rows = array();
-
+        $k = 0;
         $i = 0;
+
         while($row = $result->fetch_assoc()) 
         {
-            $objPHPExcel->getActiveSheet()->mergeCells('B'.(11+$i).':D'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('E'.(11+$i).':G'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('H'.(11+$i).':J'.(11+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('B'.(11+$i).':C'.(11+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('D'.(11+$i).':E'.(11+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('F'.(11+$i).':G'.(11+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('H'.(11+$i).':I'.(11+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('J'.(11+$i).':K'.(11+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('L'.(11+$i).':M'.(11+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('N'.(11+$i).':O'.(11+$i).'');
             $objPHPExcel->getActiveSheet()->getRowDimension(''.(11+$i).'')->setRowHeight(21);
 
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':J'.(11+$i).'')->applyFromArray(array('borders' => array (
+            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':O'.(11+$i).'')->applyFromArray(array('borders' => array (
                   'allborders' => array (
                     'style' => PHPExcel_Style_Border::BORDER_THICK,
-                    'color' => array('rgb' => '000000'),        // BLACK
+                    'color' => array('rgb' => '000000'),
                   )
                 )
               )
             );
+            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':O'.(11+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':O'.(11+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':H'.(11+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':H'.(11+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+            if($row['ID'] == 56) $objPHPExcel->getActiveSheet()->setCellValue('D'.(11+$i).'', ''.$row['VALUE'].'');
+            if($row['ID'] == 54) $objPHPExcel->getActiveSheet()->setCellValue('F'.(11+$i).'', ''.$row['VALUE'].'');
+            if($row['ID'] == 55) $objPHPExcel->getActiveSheet()->setCellValue('H'.(11+$i).'', ''.$row['VALUE'].'');
+            if($row['ID'] == 57) $objPHPExcel->getActiveSheet()->setCellValue('J'.(11+$i).'', ''.$row['VALUE'].'');
+            if($row['ID'] == 58) $objPHPExcel->getActiveSheet()->setCellValue('L'.(11+$i).'', ''.$row['VALUE'].'');
+            if($row['ID'] == 59) $objPHPExcel->getActiveSheet()->setCellValue('N'.(11+$i).'', ''.$row['VALUE'].'');
 
-            $objPHPExcel->getActiveSheet()->setCellValue('B'.(11+$i).'', ''.getName($row['ID']).'');
-            $objPHPExcel->getActiveSheet()->setCellValue('E'.(11+$i).'', ''.$row['VALUE'].'');
-            $objPHPExcel->getActiveSheet()->setCellValue('H'.(11+$i).'', ''.gmdate("j/m/Y H:i:s", $row['UNIXDATE']).'');
-            $i += 1;
+            if($k == 0) $objPHPExcel->getActiveSheet()->setCellValue('B'.(11+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
+
+            $k += 1;
+            if($k == 6) 
+            {
+              $k = 0;
+              $i += 1;
+            }
         }
+        
         $result->free();
         $mysqli->close();
 
