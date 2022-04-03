@@ -23,7 +23,6 @@
 */
 
 #include <Wire.h>
-
 #include <LiquidCrystal_I2C.h>
 
 
@@ -44,33 +43,52 @@
 #define COMMAND6_CHARGE3_PIN    (31)
 #define COMMAND7_CHARGE4_PIN    (32)
 
+#define LED_STATE_READY_PIN     (33)
+#define LED_STATE_ACT_PIN       (34)
+
 #define CURRENTDC_SENSOR_PIN    (A0) // 54
 #define CURRENTAC_SENSOR_PIN    (A1) // 55
 #define VOLTAGEDC_SENSOR_PIN    (A2) // 56
 #define TEMP_SENSOR_PIN         (A3) // 57
-#define RADIATION_SENSOR_PIN    (A4) // 58
+#define BRIGHTNESS_SENSOR_PIN   (A4) // 58
 #define HUMIDITY_SENSOR_PIN     (A5) // 59
 
-#define LCD_1_I2C_ADDR          (0x3F)
+#define MEASURED_VCC       4.70
+
+#define ACS758_SENSITIVITY 40e-3    
+#define ACS758_NOISE       10e-3   
+#define ACS758_OFFSET_LIM  35e-3    
+#define MAINS_VOLTS_RMS    240    
+#define V_PER_LSB          (MEASURED_VCC/1024.0)
+#define ACS758_NOISE_LSB   (ACS758_NOISE/V_PER_LSB)
+#define MIN_LSB            (ACS758_NOISE_LSB*1.5) 
+
+#define LCD_I2C_ADDR          (0x3F)
 #define VOLTAGEAC_CONSTANT_EFF  (230)
+
+static int ACS758_OFFSET = 512;
 
 float VOLTAGEDC_RESISTOR1 = 30000.0;
 float VOLTAGEDC_RESISTOR2 = 7500.0;
 float VOLTAGEDC_REF_VOLTAGE = 5.0;
 
-int LCD_1_TIMEOUT_TIME = (20 * 1000);
-int LCD_TIMEOUT_LAST_TIME = 0;
+unsigned long LCD_TIMEOUT_TIME = 20000;
+unsigned long LCD_TIMEOUT_LAST_TIME = 0;
 bool LCD_BACKLIGHT_ON = false;
+
+unsigned long COMMAND_TIMEOUT_TIME = 500;
+unsigned long COMMAND_TIMEOUT_LAST_TIME = 0;
+
 bool chargeState[26];
 int ACTIVE_PAGE = 0;
 
-LiquidCrystal_I2C LCD1(LCD_1_I2C_ADDR, 20, 4);
+LiquidCrystal_I2C LCD(LCD_I2C_ADDR, 20, 4);
 
 void setup() {
-    pinMode(52, OUTPUT);
-    pinMode(53, OUTPUT);
-    digitalWrite(52, LOW);
-    digitalWrite(53, LOW);
+    pinMode(LED_STATE_READY_PIN, OUTPUT);
+    pinMode(LED_STATE_ACT_PIN, OUTPUT);
+    digitalWrite(LED_STATE_READY_PIN, LOW);
+    digitalWrite(LED_STATE_ACT_PIN, LOW);
     for (int i = 0; i <= 7; i++) pinMode(i, OUTPUT);
     for (int i = 22; i <= 25; i++) {
         pinMode(i, OUTPUT);
@@ -78,26 +96,32 @@ void setup() {
         chargeState[i] = false;
     }
     for (int i = 26; i <= 32; i++) pinMode(i, INPUT);
-    LCD1.init();
-    LCD1.init();
-    LCD1.backlight();
-    LCD_TIMEOUT_LAST_TIME = millis() + LCD_1_TIMEOUT_TIME;
+    LCD.init();
+    LCD.init();
+    LCD.backlight();
+    LCD_TIMEOUT_LAST_TIME = millis() + LCD_TIMEOUT_TIME;
     LCD_BACKLIGHT_ON = true;
 
-    digitalWrite(52, HIGH);
+    ACS758_GET_OFFSET();
+    digitalWrite(LED_STATE_READY_PIN, HIGH);
     Serial.begin(9600);
 }
 
 void loop() {
-    digitalWrite(53, LOW);
+    digitalWrite(LED_STATE_ACT_PIN, LOW);
+    if(millis() < 2000)
+    {
+        LCD_TIMEOUT_LAST_TIME = 0;
+        COMMAND_TIMEOUT_LAST_TIME = 0;
+    }
     // Capteur de Température
     float TEMP_SENSOR_VALUE = (analogRead(TEMP_SENSOR_PIN) * (5.0 / 1023.0 * 100.0));
 
     // Capteur d'Humidité
     float HUMIDITY_SENSOR_VALUE = ((analogRead(HUMIDITY_SENSOR_PIN) * 100.0) / 1023.0);
 
-    // Capteur de Radiation
-    float RADIATION_SENSOR_VALUE = (100 - ((analogRead(RADIATION_SENSOR_PIN) * 100.0) / 1023));
+    // Capteur de BRIGHTNESS
+    float BRIGHTNESS_SENSOR_VALUE = (100 - ((analogRead(BRIGHTNESS_SENSOR_PIN) * 100.0) / 1023));
 
     // Capteur de Courant DC
     float CURRENTDC_SENSOR_VALUE = getCurrentDC();
@@ -110,19 +134,19 @@ void loop() {
     float VOLTAGEDC_SENSOR_VALUE = VOLTAGEDC_SENSOR_RAW / (VOLTAGEDC_RESISTOR2 / (VOLTAGEDC_RESISTOR1 + VOLTAGEDC_RESISTOR2));
 
     // Affichage des mesures sur la LCD Principale
-    displayResults(TEMP_SENSOR_VALUE, HUMIDITY_SENSOR_VALUE, RADIATION_SENSOR_VALUE, CURRENTDC_SENSOR_VALUE, CURRENTAC_SENSOR_VALUE, VOLTAGEDC_SENSOR_VALUE);
+    displayResults(TEMP_SENSOR_VALUE, HUMIDITY_SENSOR_VALUE, BRIGHTNESS_SENSOR_VALUE, CURRENTDC_SENSOR_VALUE, CURRENTAC_SENSOR_VALUE, VOLTAGEDC_SENSOR_VALUE);
 
     // LCD Backlight Timeout
     if (millis() > LCD_TIMEOUT_LAST_TIME) {
         if (LCD_BACKLIGHT_ON) {
-            LCD1.noBacklight();
+            LCD.noBacklight();
             LCD_BACKLIGHT_ON = false;
         }
     }
 
     // Communication avec le Raspberry Pi
     if (Serial.available() > 0) {
-        digitalWrite(53, HIGH);
+        digitalWrite(LED_STATE_ACT_PIN, HIGH);
         getChargeCommand();
         sendValue(PACKET_TYPE_SENSOR, TEMP_SENSOR_PIN, TEMP_SENSOR_VALUE); // Température
         delay(2);
@@ -132,7 +156,7 @@ void loop() {
         delay(2);
 
         getChargeCommand();
-        sendValue(PACKET_TYPE_SENSOR, RADIATION_SENSOR_PIN, RADIATION_SENSOR_VALUE); // Radiation
+        sendValue(PACKET_TYPE_SENSOR, BRIGHTNESS_SENSOR_PIN, BRIGHTNESS_SENSOR_VALUE); // BRIGHTNESS
         delay(2);
 
         getChargeCommand();
@@ -147,82 +171,114 @@ void loop() {
         sendValue(PACKET_TYPE_SENSOR, VOLTAGEDC_SENSOR_PIN, VOLTAGEDC_SENSOR_VALUE); // Tension DC
         delay(2);
     }
-    digitalWrite(53, LOW);
+    digitalWrite(LED_STATE_ACT_PIN, LOW);
     activePageUpdate();
     chargeUpdate();
 }
 
 void activePageUpdate() {
-    if (digitalRead(COMMAND1_KEYBOARD_PIN)) {
+    if (digitalRead(COMMAND1_KEYBOARD_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
         if (!LCD_BACKLIGHT_ON) {
-            LCD1.backlight();
-            LCD_TIMEOUT_LAST_TIME = millis() + LCD_1_TIMEOUT_TIME;
+            LCD.backlight();
+            LCD_TIMEOUT_LAST_TIME = millis() + LCD_TIMEOUT_TIME;
             LCD_BACKLIGHT_ON = true;
         } else {
-            LCD1.noBacklight();
+            LCD.noBacklight();
             LCD_BACKLIGHT_ON = false;
         }
         if (ACTIVE_PAGE < 2) ACTIVE_PAGE += 1;
         else ACTIVE_PAGE = 2;
-    } else if (digitalRead(COMMAND2_KEYBOARD_PIN)) {
+        COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+    } 
+    else if (digitalRead(COMMAND2_KEYBOARD_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
         if (!LCD_BACKLIGHT_ON) {
-            LCD1.backlight();
-            LCD_TIMEOUT_LAST_TIME = millis() + LCD_1_TIMEOUT_TIME;
+            LCD.backlight();
+            LCD_TIMEOUT_LAST_TIME = millis() + LCD_TIMEOUT_TIME;
             LCD_BACKLIGHT_ON = true;
         } else {
-            LCD1.noBacklight();
+            LCD.noBacklight();
             LCD_BACKLIGHT_ON = false;
         }
-    } else if (digitalRead(COMMAND3_KEYBOARD_PIN)) {
+        COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+    } 
+    else if (digitalRead(COMMAND3_KEYBOARD_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
         if (!LCD_BACKLIGHT_ON) {
-            LCD1.backlight();
-            LCD_TIMEOUT_LAST_TIME = millis() + LCD_1_TIMEOUT_TIME;
+            LCD.backlight();
+            LCD_TIMEOUT_LAST_TIME = millis() + LCD_TIMEOUT_TIME;
             LCD_BACKLIGHT_ON = true;
         } else {
-            LCD1.noBacklight();
+            LCD.noBacklight();
             LCD_BACKLIGHT_ON = false;
         }
         if (ACTIVE_PAGE > 0) ACTIVE_PAGE -= 1;
         else ACTIVE_PAGE = 0;
+        COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
     }
 }
 
-void displayResults(float temp, float humidity, float radiation, float currentdc, float currentac, float voltagedc) {
+void chargeUpdate() {
+  if (digitalRead(COMMAND4_CHARGE1_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
+    sendValue(PACKET_TYPE_CHARGE, CHARGE1_RELAY_PIN, !chargeState[CHARGE1_RELAY_PIN]);
+    digitalWrite(CHARGE1_RELAY_PIN, chargeState[CHARGE1_RELAY_PIN]);
+    chargeState[CHARGE1_RELAY_PIN] = !chargeState[CHARGE1_RELAY_PIN];
+    COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+  }
+  else if (digitalRead(COMMAND5_CHARGE2_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
+    sendValue(PACKET_TYPE_CHARGE, CHARGE2_RELAY_PIN, !chargeState[CHARGE2_RELAY_PIN]);
+    chargeState[CHARGE2_RELAY_PIN] = !chargeState[CHARGE2_RELAY_PIN];
+    digitalWrite(CHARGE2_RELAY_PIN, chargeState[CHARGE2_RELAY_PIN]);
+    COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+  }
+  else if (digitalRead(COMMAND6_CHARGE3_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
+    sendValue(PACKET_TYPE_CHARGE, CHARGE3_RELAY_PIN, !chargeState[CHARGE3_RELAY_PIN]);
+    chargeState[CHARGE3_RELAY_PIN] = !chargeState[CHARGE3_RELAY_PIN];
+    digitalWrite(CHARGE3_RELAY_PIN, chargeState[CHARGE3_RELAY_PIN]);
+    COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+  }
+  else if (digitalRead(COMMAND7_CHARGE4_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
+    sendValue(PACKET_TYPE_CHARGE, CHARGE4_RELAY_PIN, !chargeState[CHARGE4_RELAY_PIN]);
+    chargeState[CHARGE4_RELAY_PIN] = !chargeState[CHARGE4_RELAY_PIN];
+    digitalWrite(CHARGE4_RELAY_PIN, chargeState[CHARGE4_RELAY_PIN]);
+    COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+  }
+}
+
+void displayResults(float temp, float humidity, float BRIGHTNESS, float currentdc, float currentac, float voltagedc) {
     switch (ACTIVE_PAGE) {
     case 0: {
-        LCD1.clear();
-        LCD1.setCursor(0, 0);
-        LCD1.print("     Environment    ");
-        LCD1.setCursor(0, 1);
-        LCD1.print("Temperature: " + String((int) temp) + " C");
-        LCD1.setCursor(0, 2);
-        LCD1.print("Humidity: " + String((int) humidity) + " %");
-        LCD1.setCursor(0, 3);
-        LCD1.print("Radiation: " + String((int) radiation) + " %");
+        LCD.clear();
+        LCD.setCursor(0, 0);
+        LCD.print("     Environment    ");
+        LCD.setCursor(0, 1);
+        LCD.print("Temperature: " + String((int) temp) + " C");
+        LCD.setCursor(0, 2);
+        LCD.print("Humidity: " + String((int) humidity) + " %");
+        LCD.setCursor(0, 3);
+        LCD.print("BRIGHTNESS: " + String((int) BRIGHTNESS) + " %");
         break;
     }
     case 1: {
-        LCD1.clear();
-        LCD1.setCursor(0, 0);
-        LCD1.print("     Energy  AC     ");
-        LCD1.setCursor(0, 1);
-        LCD1.print("Voltage AC: " + String(VOLTAGEAC_CONSTANT_EFF) + " V");
-        LCD1.setCursor(0, 2);
-        LCD1.print("Current AC: " + String(currentac, 2) + " A");
-        LCD1.setCursor(0, 3);
-        LCD1.print("Puissance AC: " + String((VOLTAGEAC_CONSTANT_EFF * currentac)) + " W");
+        LCD.clear();
+        LCD.setCursor(0, 0);
+        LCD.print("     Energy  AC     ");
+        LCD.setCursor(0, 1);
+        LCD.print("Voltage AC: " + String(VOLTAGEAC_CONSTANT_EFF) + " V");
+        LCD.setCursor(0, 2);
+        LCD.print("Current AC: " + String(currentac, 2) + " A");
+        LCD.setCursor(0, 3);
+        LCD.print("Puissance AC: " + String((VOLTAGEAC_CONSTANT_EFF * currentac)) + " W");
         break;
     }
     case 2: {
-        LCD1.clear();
-        LCD1.setCursor(0, 0);
-        LCD1.print("     Energy  DC     ");
-        LCD1.setCursor(0, 1);
-        LCD1.print("Voltage DC: " + String(voltagedc, 1) + " V");
-        LCD1.setCursor(0, 2);
-        LCD1.print("Current DC: " + String(currentdc, 2) + " A");
-        LCD1.setCursor(0, 3);
-        LCD1.print("Puissance DC: " + String((voltagedc * currentdc)) + " W");
+        LCD.clear();
+        LCD.setCursor(0, 0);
+        LCD.print("     Energy  DC     ");
+        LCD.setCursor(0, 1);
+        LCD.print("Voltage DC: " + String(voltagedc, 1) + " V");
+        LCD.setCursor(0, 2);
+        LCD.print("Current DC: " + String(currentdc, 2) + " A");
+        LCD.setCursor(0, 3);
+        LCD.print("Puissance DC: " + String((voltagedc * currentdc)) + " W");
         break;
     }
     default: {
@@ -290,28 +346,50 @@ float getCurrentDC() {
 }
 
 float getCurrentAC() {
+    static unsigned long update_time_was = millis();
+    static float nmax=0, nmin=0, rmax=0, rmin=0, y=ACS758_OFFSET, w=0.4;
+    int a0;
+
+    a0 = analogRead(CURRENTAC_SENSOR_PIN); 
+    delay(1);   
+
+    y = w*a0 + (1-w)*y;
+
+    if (nmax < a0) nmax = a0;   
+    if (nmin > a0) nmin = a0;   
+    if (rmax < y)  rmax = y;    
+    if (rmin > y)  rmin = y;    
+
+    if (millis()-update_time_was > 1000 )  { 
+        update_time_was = millis();
+        int __max  = nmax;
+        int __min  = nmin;
+        nmax = ACS758_OFFSET;
+        nmin = ACS758_OFFSET;
+        int _rmax = rmax;
+        int _rmin = rmin;
+        rmax = ACS758_OFFSET;
+        rmin = ACS758_OFFSET;
+
+        float navgIpeak =( (__max-__min)/2 * V_PER_LSB) / ACS758_SENSITIVITY;
+        float navgIrms  = navgIpeak/sqrt(2);
+        float navgPower = navgIrms * MAINS_VOLTS_RMS;
+
+        if (_rmax-_rmin > MIN_LSB) return navgIpeak; 
+    }
     return 0.0;
 }
 
-void chargeUpdate() {
-  if (digitalRead(COMMAND4_CHARGE1_PIN)) {
-    sendValue(PACKET_TYPE_CHARGE, CHARGE1_RELAY_PIN, !chargeState[CHARGE1_RELAY_PIN]);
-    digitalWrite(CHARGE1_RELAY_PIN, chargeState[CHARGE1_RELAY_PIN]);
-    chargeState[CHARGE1_RELAY_PIN] = !chargeState[CHARGE1_RELAY_PIN];
-  }
-  if (digitalRead(COMMAND5_CHARGE2_PIN)) {
-    sendValue(PACKET_TYPE_CHARGE, CHARGE2_RELAY_PIN, !chargeState[CHARGE2_RELAY_PIN]);
-    chargeState[CHARGE2_RELAY_PIN] = !chargeState[CHARGE2_RELAY_PIN];
-    digitalWrite(CHARGE2_RELAY_PIN, chargeState[CHARGE2_RELAY_PIN]);
-  }
-  if (digitalRead(COMMAND6_CHARGE3_PIN)) {
-    sendValue(PACKET_TYPE_CHARGE, CHARGE3_RELAY_PIN, !chargeState[CHARGE3_RELAY_PIN]);
-    chargeState[CHARGE3_RELAY_PIN] = !chargeState[CHARGE3_RELAY_PIN];
-    digitalWrite(CHARGE3_RELAY_PIN, chargeState[CHARGE3_RELAY_PIN]);
-  }
-  if (digitalRead(COMMAND7_CHARGE4_PIN)) {
-    sendValue(PACKET_TYPE_CHARGE, CHARGE4_RELAY_PIN, !chargeState[CHARGE4_RELAY_PIN]);
-    chargeState[CHARGE4_RELAY_PIN] = !chargeState[CHARGE4_RELAY_PIN];
-    digitalWrite(CHARGE4_RELAY_PIN, chargeState[CHARGE4_RELAY_PIN]);
-  }
+int ACS758_GET_OFFSET(void) {
+    long ACS758_AVG = 0;
+    for (int i=0; i<200; i++) {
+        ACS758_AVG += analogRead(CURRENTAC_SENSOR_PIN);
+        delay(1);
+    }
+   return ACS758_AVG/200;
+}
+
+void assign_max_min(float val, float *pmax, float *pmin) {
+   if (*pmax < val) *pmax = val;
+   if (*pmin > val) *pmin = val;
 }
