@@ -73,17 +73,7 @@ def receiverHandler():
 						else:
 							cursor = db.cursor(buffered=True)
 							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
-							time.sleep(0.01)
-							cursor = db.cursor(buffered=True)
-							cursor.execute("SELECT * FROM `SENSORS` WHERE ID = " + str(datasplitted[1]))
-							time.sleep(0.025)
-							rcount = cursor.rowcount
-							if rcount > 9:
-								cursor = db.cursor(buffered=True)
-								sql = "DELETE FROM SENSORS WHERE ID = "+ str(datasplitted[1]) + " ORDER BY UNIXDATE ASC LIMIT " + str(rcount-9) 
-								cursor.execute(sql)
-								db.commit()
-								
+							time.sleep(0.01)		
 							cursor = db.cursor(buffered=True)
 							sql = "INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")"
 							cursor.execute(sql)
