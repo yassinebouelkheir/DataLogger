@@ -764,7 +764,7 @@
                 </div>
             </div>
             <footer class="footer">
-                © 2022 Data Logger by BOUELKHEIR Yassine
+                © 2022 Data Logger by <a href="https://www.linkedin.com/in/yassine-bouelkheir/">BOUELKHEIR Yassine</a>
             </footer>
         </div>
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
@@ -1103,45 +1103,107 @@
                 success: function (response) {
                     document.getElementById('batterie').innerHTML = response.battery + " %";
                     document.getElementById('batteriewidth').setAttribute("style", "width: " + response.batterywidth + "%; height: 6px;");
-                    if(response.batterie < 20) document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-danger");
-                    else if(response.batterie < 50) document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-primary");
-                    else if(response.batterie >= 50) document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-success");
+                    if(response.batterie < 20) {
+                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('batterie').setAttribute("class", "counter text-danger");
+                    }
+                    else if(response.batterie < 50) {
+                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('batterie').setAttribute("class", "counter text-primary");
+                    }
+                    else if(response.batterie >= 50){
+                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('batterie').setAttribute("class", "counter text-success");
+                    }
 
                     document.getElementById('voltagedc').innerHTML = response.voltagedc + " V";
                     document.getElementById('tensiondcwidth').setAttribute("style", "width: " + response.voltagedcwidth + "%; height: 6px;");
-                    if(response.voltagedc < 14) document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-danger");
-                    else if(response.voltagedc < 20) document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-primary");
-                    else if(response.voltagedc >= 20) document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-success");
+                    if(response.voltagedc < 14) {
+                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('voltagedc').setAttribute("class", "counter text-danger");
+                    }
+                    else if(response.voltagedc < 20) {
+                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('voltagedc').setAttribute("class", "counter text-primary");
+                    }
+                    else if(response.voltagedc >= 20){
+                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('voltagedc').setAttribute("class", "counter text-success");
+                    }
 
                     document.getElementById('currentac').innerHTML = response.currentac + " A";
                     document.getElementById('currentacwidth').setAttribute("style", "width: " + response.cacwidth + "%; height: 6px;");
-                    if(response.currentac < 50) document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-success");
-                    else if(response.currentac < 80) document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-primary");
-                    else if(response.currentac >= 80) document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-danger");
+                    if(response.currentac < 50) {
+                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('currentac').setAttribute("class", "counter text-success");
+                    }
+                    else if(response.currentac < 80) {
+                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('currentac').setAttribute("class", "counter text-primary");
+                    }
+                    else if(response.currentac >= 80) {
+                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('currentac').setAttribute("class", "counter text-danger");
+                    }
 
                     document.getElementById('currentdc').innerHTML = response.currentdc + " A";
                     document.getElementById('currentdcwidth').setAttribute("style", "width: " + response.cdcwidth + "%; height: 6px;");
-                    if(response.currentdc < 15) document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-success");
-                    else if(response.currentdc < 25) document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-primary");
-                    else if(response.currentdc >= 25) document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-danger");
-
+                    if(response.currentdc < 15) {
+                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('currentdc').setAttribute("class", "counter text-success");
+                    }
+                    else if(response.currentdc < 25) {
+                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('currentdc').setAttribute("class", "counter text-primary");
+                    }
+                    else if(response.currentdc >= 25) {
+                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('currentdc').setAttribute("class", "counter text-danger");
+                    }
                     document.getElementById('temperature').innerHTML = response.temperature + " °C";
                     document.getElementById('tempwidth').setAttribute("style", "width: " + response.temwidth + "%; height: 6px;");
-                    if(response.temperature < 25) document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-success");
-                    else if(response.temperature < 37) document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-primary");
-                    else if(response.temperature >= 37) document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-danger");
+                    if(response.temperature < 25) {
+                        document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('temperature').setAttribute("class", "counter text-success");
+                    }
+                    else if(response.temperature < 37) {
+                        document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('temperature').setAttribute("class", "counter text-primary");
+                    }
+                    else if(response.temperature >= 37) {
+                        document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('temperature').setAttribute("class", "counter text-danger");
+                    }
 
                     document.getElementById('humidity').innerHTML = response.humidity + " %";
                     document.getElementById('humiditywidth').setAttribute("style", "width: " + response.humidtywidth + "%; height: 6px;");
-                    if(response.humiditywidth < 25) document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-success");
-                    else if(response.humiditywidth < 50) document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-primary");
-                    else if(response.humiditywidth >= 50) document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-danger");
+                    if(response.humiditywidth < 25) {
+                        document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('humidity').setAttribute("class", "counter text-success");
+                    }
+                    else if(response.humiditywidth < 50) {
+                        document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('humidity').setAttribute("class", "counter text-primary");
+                    }
+                    else if(response.humiditywidth >= 50) {
+                        document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('humidity').setAttribute("class", "counter text-danger");
+                    }
 
                     document.getElementById('brightness').innerHTML = response.brightness + " %";
                     document.getElementById('brightnesswidth').setAttribute("style", "width: " + response.brightneswidth + "%; height: 6px;");
-                    if(response.brightneswidth < 25) document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
-                    else if(response.brightneswidth < 50) document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
-                    else if(response.brightneswidth >= 50) document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
+                    if(response.brightneswidth < 25) {
+                        document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('brightness').setAttribute("class", "counter text-danger");
+                    }
+                    else if(response.brightneswidth < 50) {
+                        document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('brightness').setAttribute("class", "counter text-primary");
+                    }
+                    else if(response.brightneswidth >= 50) {
+                        document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('brightness').setAttribute("class", "counter text-success");
+                    }
                 }
              });
             }

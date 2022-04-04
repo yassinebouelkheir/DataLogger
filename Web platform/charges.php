@@ -255,7 +255,7 @@
                 </div>
             </div>
             <footer class="footer">
-                © 2022 Data Logger by BOUELKHEIR Yassine
+                © 2022 Data Logger by <a href="https://www.linkedin.com/in/yassine-bouelkheir/">BOUELKHEIR Yassine</a>
             </footer>
         </div>
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
