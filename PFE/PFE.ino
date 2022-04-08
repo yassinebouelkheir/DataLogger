@@ -25,7 +25,6 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-
 #define PACKET_TYPE_SENSOR      (0)
 #define PACKET_TYPE_CHARGE      (1)
 
@@ -34,17 +33,13 @@
 #define CHARGE3_RELAY_PIN       (24)
 #define CHARGE4_RELAY_PIN       (25)
 
-#define COMMAND1_KEYBOARD_PIN   (26)
-#define COMMAND2_KEYBOARD_PIN   (27)
-#define COMMAND3_KEYBOARD_PIN   (28)
+#define COMMAND4_CHARGE1_PIN    (26)
+#define COMMAND5_CHARGE2_PIN    (27)
+#define COMMAND6_CHARGE3_PIN    (28)
+#define COMMAND7_CHARGE4_PIN    (29)
 
-#define COMMAND4_CHARGE1_PIN    (29)
-#define COMMAND5_CHARGE2_PIN    (30)
-#define COMMAND6_CHARGE3_PIN    (31)
-#define COMMAND7_CHARGE4_PIN    (32)
-
-#define LED_STATE_READY_PIN     (33)
-#define LED_STATE_ACT_PIN       (34)
+#define LED_STATE_READY_PIN     (30)
+#define LED_STATE_ACT_PIN       (31)
 
 #define CURRENTDC_SENSOR_PIN    (A0) // 54
 #define CURRENTAC_SENSOR_PIN    (A1) // 55
@@ -62,8 +57,6 @@
 #define V_PER_LSB          (MEASURED_VCC/1024.0)
 #define ACS758_NOISE_LSB   (ACS758_NOISE/V_PER_LSB)
 #define MIN_LSB            (ACS758_NOISE_LSB*1.5) 
-
-#define LCD_I2C_ADDR          (0x3F)
 #define VOLTAGEAC_CONSTANT_EFF  (230)
 
 static int ACS758_OFFSET = 512;
@@ -72,35 +65,23 @@ float VOLTAGEDC_RESISTOR1 = 30000.0;
 float VOLTAGEDC_RESISTOR2 = 7500.0;
 float VOLTAGEDC_REF_VOLTAGE = 5.0;
 
-unsigned long LCD_TIMEOUT_TIME = 20000;
-unsigned long LCD_TIMEOUT_LAST_TIME = 0;
-bool LCD_BACKLIGHT_ON = false;
-
 unsigned long COMMAND_TIMEOUT_TIME = 500;
 unsigned long COMMAND_TIMEOUT_LAST_TIME = 0;
 
 bool chargeState[26];
-int ACTIVE_PAGE = 0;
-
-LiquidCrystal_I2C LCD(LCD_I2C_ADDR, 20, 4);
+int charge = 0;
 
 void setup() {
     pinMode(LED_STATE_READY_PIN, OUTPUT);
     pinMode(LED_STATE_ACT_PIN, OUTPUT);
     digitalWrite(LED_STATE_READY_PIN, LOW);
     digitalWrite(LED_STATE_ACT_PIN, LOW);
-    for (int i = 0; i <= 7; i++) pinMode(i, OUTPUT);
     for (int i = 22; i <= 25; i++) {
         pinMode(i, OUTPUT);
         digitalWrite(i, HIGH);
         chargeState[i] = false;
     }
-    for (int i = 26; i <= 32; i++) pinMode(i, INPUT);
-    LCD.init();
-    LCD.init();
-    LCD.backlight();
-    LCD_TIMEOUT_LAST_TIME = millis() + LCD_TIMEOUT_TIME;
-    LCD_BACKLIGHT_ON = true;
+    for (int i = 26; i <= 29; i++) pinMode(i, INPUT);
 
     ACS758_GET_OFFSET();
     digitalWrite(LED_STATE_READY_PIN, HIGH);
@@ -109,11 +90,6 @@ void setup() {
 
 void loop() {
     digitalWrite(LED_STATE_ACT_PIN, LOW);
-    if(millis() < 2000)
-    {
-        LCD_TIMEOUT_LAST_TIME = 0;
-        COMMAND_TIMEOUT_LAST_TIME = 0;
-    }
     // Capteur de Température
     float TEMP_SENSOR_VALUE = (analogRead(TEMP_SENSOR_PIN) * (5.0 / 1023.0 * 100.0));
 
@@ -132,17 +108,6 @@ void loop() {
     // Capteur de Tension DC
     float VOLTAGEDC_SENSOR_RAW = (analogRead(VOLTAGEDC_SENSOR_PIN) * VOLTAGEDC_REF_VOLTAGE) / 1024.0;
     float VOLTAGEDC_SENSOR_VALUE = VOLTAGEDC_SENSOR_RAW / (VOLTAGEDC_RESISTOR2 / (VOLTAGEDC_RESISTOR1 + VOLTAGEDC_RESISTOR2));
-
-    // Affichage des mesures sur la LCD Principale
-    displayResults(TEMP_SENSOR_VALUE, HUMIDITY_SENSOR_VALUE, BRIGHTNESS_SENSOR_VALUE, CURRENTDC_SENSOR_VALUE, CURRENTAC_SENSOR_VALUE, VOLTAGEDC_SENSOR_VALUE);
-
-    // LCD Backlight Timeout
-    if (millis() > LCD_TIMEOUT_LAST_TIME) {
-        if (LCD_BACKLIGHT_ON) {
-            LCD.noBacklight();
-            LCD_BACKLIGHT_ON = false;
-        }
-    }
 
     // Communication avec le Raspberry Pi
     if (Serial.available() > 0) {
@@ -172,120 +137,48 @@ void loop() {
         delay(2);
     }
     digitalWrite(LED_STATE_ACT_PIN, LOW);
-    activePageUpdate();
     chargeUpdate();
 }
 
-void activePageUpdate() {
-    if (digitalRead(COMMAND1_KEYBOARD_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
-        if (!LCD_BACKLIGHT_ON) {
-            LCD.backlight();
-            LCD_TIMEOUT_LAST_TIME = millis() + LCD_TIMEOUT_TIME;
-            LCD_BACKLIGHT_ON = true;
-        } else {
-            LCD.noBacklight();
-            LCD_BACKLIGHT_ON = false;
-        }
-        if (ACTIVE_PAGE < 2) ACTIVE_PAGE += 1;
-        else ACTIVE_PAGE = 2;
-        COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
-    } 
-    else if (digitalRead(COMMAND2_KEYBOARD_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
-        if (!LCD_BACKLIGHT_ON) {
-            LCD.backlight();
-            LCD_TIMEOUT_LAST_TIME = millis() + LCD_TIMEOUT_TIME;
-            LCD_BACKLIGHT_ON = true;
-        } else {
-            LCD.noBacklight();
-            LCD_BACKLIGHT_ON = false;
-        }
-        COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
-    } 
-    else if (digitalRead(COMMAND3_KEYBOARD_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
-        if (!LCD_BACKLIGHT_ON) {
-            LCD.backlight();
-            LCD_TIMEOUT_LAST_TIME = millis() + LCD_TIMEOUT_TIME;
-            LCD_BACKLIGHT_ON = true;
-        } else {
-            LCD.noBacklight();
-            LCD_BACKLIGHT_ON = false;
-        }
-        if (ACTIVE_PAGE > 0) ACTIVE_PAGE -= 1;
-        else ACTIVE_PAGE = 0;
-        COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
-    }
-}
-
 void chargeUpdate() {
-  if (digitalRead(COMMAND4_CHARGE1_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
+  if (digitalRead(COMMAND4_CHARGE1_PIN)) return charge = 1; 
+  if(charge == 1 && !digitalRead(COMMAND4_CHARGE1_PIN)){
     sendValue(PACKET_TYPE_CHARGE, CHARGE1_RELAY_PIN, !chargeState[CHARGE1_RELAY_PIN]);
     digitalWrite(CHARGE1_RELAY_PIN, chargeState[CHARGE1_RELAY_PIN]);
     chargeState[CHARGE1_RELAY_PIN] = !chargeState[CHARGE1_RELAY_PIN];
     COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+    charge = 0;
+    Serial.print("Exec 1");
+    return;
   }
-  else if (digitalRead(COMMAND5_CHARGE2_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
+  if (digitalRead(COMMAND5_CHARGE2_PIN)) return charge = 2; 
+  if(charge == 2 && !digitalRead(COMMAND5_CHARGE2_PIN)){
     sendValue(PACKET_TYPE_CHARGE, CHARGE2_RELAY_PIN, !chargeState[CHARGE2_RELAY_PIN]);
     chargeState[CHARGE2_RELAY_PIN] = !chargeState[CHARGE2_RELAY_PIN];
     digitalWrite(CHARGE2_RELAY_PIN, chargeState[CHARGE2_RELAY_PIN]);
     COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+    charge = 0;
+    Serial.print("Exec 2");
+    return ;
   }
-  else if (digitalRead(COMMAND6_CHARGE3_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
+  if (digitalRead(COMMAND6_CHARGE3_PIN)) return charge = 3; 
+  if(charge == 3 && !digitalRead(COMMAND6_CHARGE3_PIN)){
     sendValue(PACKET_TYPE_CHARGE, CHARGE3_RELAY_PIN, !chargeState[CHARGE3_RELAY_PIN]);
     chargeState[CHARGE3_RELAY_PIN] = !chargeState[CHARGE3_RELAY_PIN];
     digitalWrite(CHARGE3_RELAY_PIN, chargeState[CHARGE3_RELAY_PIN]);
     COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+    charge = 0;
+    return;
   }
-  else if (digitalRead(COMMAND7_CHARGE4_PIN) && millis() > COMMAND_TIMEOUT_LAST_TIME) {
+  if (digitalRead(COMMAND7_CHARGE4_PIN)) return charge = 4; 
+  if(charge == 4 && !digitalRead(COMMAND7_CHARGE4_PIN)){
     sendValue(PACKET_TYPE_CHARGE, CHARGE4_RELAY_PIN, !chargeState[CHARGE4_RELAY_PIN]);
     chargeState[CHARGE4_RELAY_PIN] = !chargeState[CHARGE4_RELAY_PIN];
     digitalWrite(CHARGE4_RELAY_PIN, chargeState[CHARGE4_RELAY_PIN]);
     COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+    charge = 0;
+    return;
   }
-}
-
-void displayResults(float temp, float humidity, float BRIGHTNESS, float currentdc, float currentac, float voltagedc) {
-    switch (ACTIVE_PAGE) {
-    case 0: {
-        LCD.clear();
-        LCD.setCursor(0, 0);
-        LCD.print("     Environment    ");
-        LCD.setCursor(0, 1);
-        LCD.print("Temperature: " + String((int) temp) + " C");
-        LCD.setCursor(0, 2);
-        LCD.print("Humidity: " + String((int) humidity) + " %");
-        LCD.setCursor(0, 3);
-        LCD.print("BRIGHTNESS: " + String((int) BRIGHTNESS) + " %");
-        break;
-    }
-    case 1: {
-        LCD.clear();
-        LCD.setCursor(0, 0);
-        LCD.print("     Energy  AC     ");
-        LCD.setCursor(0, 1);
-        LCD.print("Voltage AC: " + String(VOLTAGEAC_CONSTANT_EFF) + " V");
-        LCD.setCursor(0, 2);
-        LCD.print("Current AC: " + String(currentac, 2) + " A");
-        LCD.setCursor(0, 3);
-        LCD.print("Puissance AC: " + String((VOLTAGEAC_CONSTANT_EFF * currentac)) + " W");
-        break;
-    }
-    case 2: {
-        LCD.clear();
-        LCD.setCursor(0, 0);
-        LCD.print("     Energy  DC     ");
-        LCD.setCursor(0, 1);
-        LCD.print("Voltage DC: " + String(voltagedc, 1) + " V");
-        LCD.setCursor(0, 2);
-        LCD.print("Current DC: " + String(currentdc, 2) + " A");
-        LCD.setCursor(0, 3);
-        LCD.print("Puissance DC: " + String((voltagedc * currentdc)) + " W");
-        break;
-    }
-    default: {
-        Serial.print("Error: Select page is invalid. (Page: " + String(ACTIVE_PAGE) + " )");
-        break;
-    }
-    }
 }
 
 void sendValue(int packettype, int packetid, float value) {
