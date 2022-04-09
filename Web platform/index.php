@@ -32,7 +32,7 @@
             exit();
         }
 
-        $mysqli = new mysqli("localhost", "root", "", "PFE");   
+        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
 
         $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 54 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);

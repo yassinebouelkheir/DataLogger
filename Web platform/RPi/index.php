@@ -11,7 +11,7 @@
     {
       $page = 54;
     }
-    $mysqli = new mysqli("localhost", "root", "", "PFE");
+    $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
     if($page == 60) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 58 LIMIT 1';
     else $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = '.$page.' LIMIT 1';
 
