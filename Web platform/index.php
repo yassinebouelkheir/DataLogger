@@ -895,6 +895,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex m-b-40 align-items-center no-block">
+                                        <h5 class="card-title ">IRRADIATION</h5>
+                                        <div class="ml-auto">
+                                            <ul class="list-inline font-12">
+                                                <li><i class="fa fa-circle text-warning"></i> Irradiation moyenne: <?php echo getaverage(((pow((($brightnessrows*1023)/100),2)/10)/(50))); ?> %</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div id="morris-area-chart6" style="height: 340px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="footer">
@@ -1226,6 +1243,57 @@
                     , lineWidth: 3
                     , hideHover: 'auto'
                     , lineColors: ['#fec107']
+                    , resize: true
+                });
+                Morris.Area({
+                    element: 'morris-area-chart6'
+                    , data: [{
+                            period: <?php echo "'".SHM($brightnessrows[0]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[0]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }, {
+                            period: <?php echo "'".SHM($brightnessrows[1]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[1]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }, {
+                            period: <?php echo "'".SHM($brightnessrows[2]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[2]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }, {
+                            period: <?php echo "'".SHM($brightnessrows[3]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[3]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }, {
+                            period: <?php echo "'".SHM($brightnessrows[4]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[4]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }, {
+                            period: <?php echo "'".SHM($brightnessrows[5]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[5]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }
+                        , {
+                            period: <?php echo "'".SHM($brightnessrows[6]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[6]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($brightnessrows[7]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[7]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($brightnessrows[8]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[8]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($brightnessrows[9]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((pow((($brightnessrows[9]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                    }]
+                    , xkey: 'period'
+                    , ykeys: ['Irradiation']
+                    , labels: ['IRRADIATION']
+                    , parseTime: false
+                    , pointSize: 3
+                    , fillOpacity: 0
+                    , pointStrokeColors: ['#0000ff']
+                    , behaveLikeLine: true
+                    , gridLineColor: '#e0e0e0'
+                    , lineWidth: 3
+                    , hideHover: 'auto'
+                    , lineColors: ['#0000ff']
                     , resize: true
                 });
             }); 
