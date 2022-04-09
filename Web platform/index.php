@@ -32,7 +32,7 @@
             exit();
         }
 
-        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
+        $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
         $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 54 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
@@ -440,6 +440,26 @@
                                     <div class="col-md-12">
                                         <div class="d-flex no-block align-items-center">
                                             <div>
+                                                <h3><i class="fas fa-bolt"></i></h3>
+                                                <p class="text-success">TENSION AC</p>
+                                            </div>
+                                            <div class="ml-auto"><h2 class="counter text-success" id="voltageac">220 V</h2></div>
+                                            </div>
+                                            </div>
+                                            <div class="col-12">
+                                            <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" id="tensionacwidth" style="width: 100%; height: 6px;" aria-valuenow="220" aria-valuemin="48" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div>
                                                 <h3><i class="fas fa-exchange-alt"></i></h3>
                                                 <?php
                                                     if($staticrows[1]['VALUE'] > 90 || $staticrows[1]['VALUE'] < 0)
@@ -490,6 +510,8 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="card-group">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -500,7 +522,7 @@
                                                 <?php
                                                     if($temperature > 50)
                                                     {
-                                                        echo '<p class="text-danger">TEMPÉRATURE</p>';
+                                                        echo '<p class="text-danger">TEMPÉRATURE AMBIENT</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="temperature">'.$temperature.' °C</h2>';
@@ -514,7 +536,7 @@
                                                     }
                                                     else if($temperature > 35) 
                                                     {
-                                                        echo '<p class="text-primary">TEMPÉRATURE</p>';
+                                                        echo '<p class="text-primary">TEMPÉRATURE AMBIENT</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="temperature">'.$temperature.' °C</h2>';
@@ -528,7 +550,63 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">TEMPÉRATURE</p>';
+                                                        echo '<p class="text-success">TEMPÉRATURE AMBIENT</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-success" id="temperature">'.$temperature.' °C</h2>';
+                                                
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="tempwidth" style="width: '.(($temperature*100)/60).'%; height: 6px;" aria-valuenow="'.(($temperature*100)/60).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div>
+                                                <h3><i class="fas fa-thermometer-three-quarters"></i></h3>
+                                                <?php
+                                                    if($temperature > 50)
+                                                    {
+                                                        echo '<p class="text-danger">TEMPÉRATURE DES PANNEAUX</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-danger" id="temperature">'.$temperature.' °C</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="tempwidth" style="width: '.(($temperature*100)/60).'%; height: 6px;" aria-valuenow="'.(($temperature*100)/60).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                                    else if($temperature > 35) 
+                                                    {
+                                                        echo '<p class="text-primary">TEMPÉRATURE DES PANNEAUX</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-primary" id="temperature">'.$temperature.' °C</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="tempwidth" style="width: '.(($temperature*100)/60).'%; height: 6px;" aria-valuenow="'.(($temperature*100)/60).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                                    else 
+                                                    {
+                                                        echo '<p class="text-success">TEMPÉRATURE DES PANNEAUX</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="temperature">'.$temperature.' °C</h2>';
@@ -651,6 +729,62 @@
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
                                                         echo '<div class="progress-bar bg-success" role="progressbar" id="brightnesswidth" style="width: '.round($staticrows[4]['VALUE']).'%; height: 6px;" aria-valuenow="'.$staticrows[4]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div>
+                                                <h3><i class="wi wi-earthquake"></i></h3>
+                                                <?php
+                                                    if($staticrows[4]['VALUE'] < 15)
+                                                    {
+                                                        echo '<p class="text-danger">IRRADIATION</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-danger" id="irradiation">'.number_format(((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1).' %</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="irradiationwidth" style="width: '.$staticrows[4]['VALUE'].'%; height: 6px;" aria-valuenow="'.((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                                    else if($staticrows[4]['VALUE'] < 30) 
+                                                    {
+                                                        echo '<p class="text-primary">IRRADIATION</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-primary" id="irradiation">'.number_format(((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1);
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="irradiationwidth" style="width: '.$staticrows[4]['VALUE'].'%; height: 6px;" aria-valuenow="'.((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                                    else 
+                                                    {
+                                                        echo '<p class="text-success">IRRADIATION</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-success" id="irradiation">'.number_format(((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1).' W/m²</h2>';
+                                                
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="irradiationwidth" style="width: '.$staticrows[4]['VALUE'].'%; height: 6px;" aria-valuenow="'.((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>

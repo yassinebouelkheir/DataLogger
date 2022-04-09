@@ -4,21 +4,24 @@
       $val = $_GET["value"];
       $page = $_GET["page"];
       $page += $val;
-      if($page < 54) $page = 59;
-      if($page > 59) $page = 54;
+      if($page < 54) $page = 60;
+      if($page > 60) $page = 54;
     }
     else
     {
       $page = 54;
     }
     $mysqli = new mysqli("localhost", "root", "", "PFE");
-    $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = '.$page.' LIMIT 1';
+    if($page == 60) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 58 LIMIT 1';
+    else $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = '.$page.' LIMIT 1';
+
     $result = $mysqli->query($query);
     $rows = array();
     while($row = $result->fetch_assoc()) {
       $rows[] = $row;
     }
 
+    if($page == 60) $rows[0]['VALUE'] = number_format(((pow((($rows[0]['VALUE']*1023)/100),2)/10)/(50)), 1);
     $result->free();
     $mysqli->close();
 ?>
@@ -65,6 +68,10 @@
                                 echo 'Humidité';
                                 break;
                               }
+                              case 60:{
+                                echo 'Irradiation';
+                                break;
+                              }
                             }
                           ?></h3>
                 
@@ -96,6 +103,10 @@
                               }
                               case 59:{
                                 echo ' %';
+                                break;
+                              }
+                              case 60:{
+                                echo ' W/m²';
                                 break;
                               }
                             }
@@ -158,6 +169,10 @@
                               }
                               case 59:{
                                 echo 'Humidité';
+                                break;
+                              }
+                              case 60:{
+                                echo 'Irradiation';
                                 break;
                               }
                             }
