@@ -522,7 +522,7 @@
                                                 <?php
                                                     if($temperature > 50)
                                                     {
-                                                        echo '<p class="text-danger">TEMPÉRATURE AMBIENT</p>';
+                                                        echo '<p class="text-danger">TEMPÉRATURE AMBIENTE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="temperature">'.$temperature.' °C</h2>';
@@ -536,7 +536,7 @@
                                                     }
                                                     else if($temperature > 35) 
                                                     {
-                                                        echo '<p class="text-primary">TEMPÉRATURE AMBIENT</p>';
+                                                        echo '<p class="text-primary">TEMPÉRATURE AMBIENTE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="temperature">'.$temperature.' °C</h2>';
@@ -550,7 +550,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">TEMPÉRATURE AMBIENT</p>';
+                                                        echo '<p class="text-success">TEMPÉRATURE AMBIENTE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="temperature">'.$temperature.' °C</h2>';
@@ -903,7 +903,7 @@
                                         <h5 class="card-title ">IRRADIATION</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-warning"></i> Irradiation moyenne: <?php echo getaverage(((pow((($brightnessrows*1023)/100),2)/10)/(50))); ?> %</li>
+                                                <li><i class="fa fa-circle text-info"></i> Irradiation moyenne: <?php echo number_format(((pow(((getaverage($brightnessrows)*1023)/100),2)/10)/(50)), 1); ?> W/m²</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1245,42 +1245,43 @@
                     , lineColors: ['#fec107']
                     , resize: true
                 });
+
                 Morris.Area({
                     element: 'morris-area-chart6'
                     , data: [{
                             period: <?php echo "'".SHM($brightnessrows[0]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[0]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[0]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }, {
                             period: <?php echo "'".SHM($brightnessrows[1]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[1]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[1]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }, {
                             period: <?php echo "'".SHM($brightnessrows[2]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[2]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[2]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }, {
                             period: <?php echo "'".SHM($brightnessrows[3]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[3]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[3]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }, {
                             period: <?php echo "'".SHM($brightnessrows[4]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[4]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }, {
                             period: <?php echo "'".SHM($brightnessrows[5]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[5]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[5]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }
                         , {
                             period: <?php echo "'".SHM($brightnessrows[6]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[6]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[6]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }
                     ,{
                             period: <?php echo "'".SHM($brightnessrows[7]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[7]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[7]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }
                     ,{
                             period: <?php echo "'".SHM($brightnessrows[8]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[8]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[8]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }
                     ,{
                             period: <?php echo "'".SHM($brightnessrows[9]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo ((pow((($brightnessrows[9]['VALUE']*1023)/100),2)/10)/(50)); ?>
+                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[9]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['Irradiation']
