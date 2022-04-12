@@ -23,7 +23,6 @@
 */
 
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
 
 #define PACKET_TYPE_SENSOR      (0)
 #define PACKET_TYPE_CHARGE      (1)
@@ -33,10 +32,10 @@
 #define CHARGE3_RELAY_PIN       (24)
 #define CHARGE4_RELAY_PIN       (25)
 
-#define COMMAND4_CHARGE1_PIN    (26)
-#define COMMAND5_CHARGE2_PIN    (27)
-#define COMMAND6_CHARGE3_PIN    (28)
-#define COMMAND7_CHARGE4_PIN    (29)
+#define COMMAND1_CHARGE_PIN     (26)
+#define COMMAND2_CHARGE_PIN     (27)
+#define COMMAND3_CHARGE_PIN     (28)
+#define COMMAND4_CHARGE_PIN     (29)
 
 #define LED_STATE_READY_PIN     (30)
 #define LED_STATE_ACT_PIN       (31)
@@ -48,16 +47,16 @@
 #define BRIGHTNESS_SENSOR_PIN   (A4) // 58
 #define HUMIDITY_SENSOR_PIN     (A5) // 59
 
-#define MEASURED_VCC       4.70
+#define MEASURED_VCC            (4.70)
 
-#define ACS758_SENSITIVITY 40e-3    
-#define ACS758_NOISE       10e-3   
-#define ACS758_OFFSET_LIM  35e-3    
-#define MAINS_VOLTS_RMS    240    
-#define V_PER_LSB          (MEASURED_VCC/1024.0)
-#define ACS758_NOISE_LSB   (ACS758_NOISE/V_PER_LSB)
-#define MIN_LSB            (ACS758_NOISE_LSB*1.5) 
-#define VOLTAGEAC_CONSTANT_EFF  (230)
+#define ACS758_SENSITIVITY      (40e-3)    
+#define ACS758_NOISE            (10e-3)   
+#define ACS758_OFFSET_LIM       (35e-3)    
+#define MAINS_VOLTS_RMS         (220)    
+#define V_PER_LSB               (MEASURED_VCC/1024.0)
+#define ACS758_NOISE_LSB        (ACS758_NOISE/V_PER_LSB)
+#define MIN_LSB                 (ACS758_NOISE_LSB*1.5) 
+#define VOLTAGEAC_CONSTANT_EFF  (220)
 
 static int ACS758_OFFSET = 512;
 
@@ -65,17 +64,17 @@ float VOLTAGEDC_RESISTOR1 = 30000.0;
 float VOLTAGEDC_RESISTOR2 = 7500.0;
 float VOLTAGEDC_REF_VOLTAGE = 5.0;
 
-unsigned long COMMAND_TIMEOUT_TIME = 500;
+unsigned long COMMAND_TIMEOUT_TIME = 700;
 unsigned long COMMAND_TIMEOUT_LAST_TIME = 0;
 
 bool chargeState[26];
-int charge = 0;
 
 void setup() {
     pinMode(LED_STATE_READY_PIN, OUTPUT);
     pinMode(LED_STATE_ACT_PIN, OUTPUT);
     digitalWrite(LED_STATE_READY_PIN, LOW);
     digitalWrite(LED_STATE_ACT_PIN, LOW);
+    
     for (int i = 22; i <= 25; i++) {
         pinMode(i, OUTPUT);
         digitalWrite(i, HIGH);
@@ -89,15 +88,17 @@ void setup() {
 }
 
 void loop() {
+    if(millis() < 500) COMMAND_TIMEOUT_LAST_TIME = 0;
+    chargeUpdate();
     digitalWrite(LED_STATE_ACT_PIN, LOW);
     // Capteur de Température
     float TEMP_SENSOR_VALUE = (analogRead(TEMP_SENSOR_PIN) * (5.0 / 1023.0 * 100.0));
 
     // Capteur d'Humidité
-    float HUMIDITY_SENSOR_VALUE = ((analogRead(HUMIDITY_SENSOR_PIN) * 100.0) / 1023.0);
+    float HUMIDITY_SENSOR_VALUE = ((analogRead(HUMIDITY_SENSOR_PIN)) * (100 - 10) / (1023) + 10);
 
-    // Capteur de BRIGHTNESS
-    float BRIGHTNESS_SENSOR_VALUE = (100 - ((analogRead(BRIGHTNESS_SENSOR_PIN) * 100.0) / 1023));
+    // Capteur de Luminosité
+    float BRIGHTNESS_SENSOR_VALUE = 100 - (((analogRead(HUMIDITY_SENSOR_PIN)) * (100 - 15) / (1023) + 15));
 
     // Capteur de Courant DC
     float CURRENTDC_SENSOR_VALUE = getCurrentDC();
@@ -109,6 +110,8 @@ void loop() {
     float VOLTAGEDC_SENSOR_RAW = (analogRead(VOLTAGEDC_SENSOR_PIN) * VOLTAGEDC_REF_VOLTAGE) / 1024.0;
     float VOLTAGEDC_SENSOR_VALUE = VOLTAGEDC_SENSOR_RAW / (VOLTAGEDC_RESISTOR2 / (VOLTAGEDC_RESISTOR1 + VOLTAGEDC_RESISTOR2));
 
+    chargeUpdate();
+    
     // Communication avec le Raspberry Pi
     if (Serial.available() > 0) {
         digitalWrite(LED_STATE_ACT_PIN, HIGH);
@@ -140,44 +143,40 @@ void loop() {
     chargeUpdate();
 }
 
-void chargeUpdate() {
-  if (digitalRead(COMMAND4_CHARGE1_PIN)) return charge = 1; 
-  if(charge == 1 && !digitalRead(COMMAND4_CHARGE1_PIN)){
-    sendValue(PACKET_TYPE_CHARGE, CHARGE1_RELAY_PIN, !chargeState[CHARGE1_RELAY_PIN]);
-    digitalWrite(CHARGE1_RELAY_PIN, chargeState[CHARGE1_RELAY_PIN]);
-    chargeState[CHARGE1_RELAY_PIN] = !chargeState[CHARGE1_RELAY_PIN];
-    COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
-    charge = 0;
-    Serial.print("Exec 1");
-    return;
-  }
-  if (digitalRead(COMMAND5_CHARGE2_PIN)) return charge = 2; 
-  if(charge == 2 && !digitalRead(COMMAND5_CHARGE2_PIN)){
-    sendValue(PACKET_TYPE_CHARGE, CHARGE2_RELAY_PIN, !chargeState[CHARGE2_RELAY_PIN]);
-    chargeState[CHARGE2_RELAY_PIN] = !chargeState[CHARGE2_RELAY_PIN];
-    digitalWrite(CHARGE2_RELAY_PIN, chargeState[CHARGE2_RELAY_PIN]);
-    COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
-    charge = 0;
-    Serial.print("Exec 2");
-    return ;
-  }
-  if (digitalRead(COMMAND6_CHARGE3_PIN)) return charge = 3; 
-  if(charge == 3 && !digitalRead(COMMAND6_CHARGE3_PIN)){
-    sendValue(PACKET_TYPE_CHARGE, CHARGE3_RELAY_PIN, !chargeState[CHARGE3_RELAY_PIN]);
-    chargeState[CHARGE3_RELAY_PIN] = !chargeState[CHARGE3_RELAY_PIN];
-    digitalWrite(CHARGE3_RELAY_PIN, chargeState[CHARGE3_RELAY_PIN]);
-    COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
-    charge = 0;
-    return;
-  }
-  if (digitalRead(COMMAND7_CHARGE4_PIN)) return charge = 4; 
-  if(charge == 4 && !digitalRead(COMMAND7_CHARGE4_PIN)){
-    sendValue(PACKET_TYPE_CHARGE, CHARGE4_RELAY_PIN, !chargeState[CHARGE4_RELAY_PIN]);
-    chargeState[CHARGE4_RELAY_PIN] = !chargeState[CHARGE4_RELAY_PIN];
-    digitalWrite(CHARGE4_RELAY_PIN, chargeState[CHARGE4_RELAY_PIN]);
-    COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
-    charge = 0;
-    return;
+void chargeUpdate() { 
+  if(millis() > COMMAND_TIMEOUT_LAST_TIME) {
+    if(digitalRead(COMMAND1_CHARGE_PIN)) {
+      sendValue(PACKET_TYPE_CHARGE, CHARGE1_RELAY_PIN, !chargeState[CHARGE1_RELAY_PIN]);
+      chargeState[CHARGE1_RELAY_PIN] = !chargeState[CHARGE1_RELAY_PIN];
+      digitalWrite(CHARGE1_RELAY_PIN, chargeState[CHARGE1_RELAY_PIN]);
+      COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+      Serial.print("Exec 1");
+      return;
+    }
+    else if(digitalRead(COMMAND2_CHARGE_PIN)) {
+      sendValue(PACKET_TYPE_CHARGE, CHARGE2_RELAY_PIN, !chargeState[CHARGE2_RELAY_PIN]);
+      chargeState[CHARGE2_RELAY_PIN] = !chargeState[CHARGE2_RELAY_PIN];
+      digitalWrite(CHARGE2_RELAY_PIN, chargeState[CHARGE2_RELAY_PIN]);
+      COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+      Serial.print("Exec 2");
+      return ;
+    }
+    else if(digitalRead(COMMAND3_CHARGE_PIN)) {
+      sendValue(PACKET_TYPE_CHARGE, CHARGE3_RELAY_PIN, !chargeState[CHARGE3_RELAY_PIN]);
+      chargeState[CHARGE3_RELAY_PIN] = !chargeState[CHARGE3_RELAY_PIN];
+      digitalWrite(CHARGE3_RELAY_PIN, chargeState[CHARGE3_RELAY_PIN]);
+      COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+      Serial.print("Exec 3");
+      return;
+    }
+    else if(digitalRead(COMMAND4_CHARGE_PIN)) {
+      sendValue(PACKET_TYPE_CHARGE, CHARGE4_RELAY_PIN, !chargeState[CHARGE4_RELAY_PIN]);
+      chargeState[CHARGE4_RELAY_PIN] = !chargeState[CHARGE4_RELAY_PIN];
+      digitalWrite(CHARGE4_RELAY_PIN, chargeState[CHARGE4_RELAY_PIN]);
+      COMMAND_TIMEOUT_LAST_TIME = millis() + COMMAND_TIMEOUT_TIME;
+      Serial.print("Exec 4");
+      return;
+    }
   }
 }
 
@@ -232,7 +231,7 @@ float getCurrentDC() {
         delay(3);
     }
     CURRENT_SENSOR_FILTERED = CURRENT_SENSOR_SAMPLE / 150.0;
-    CURRENT_SENSOR_VALUE = (2.5 - (CURRENT_SENSOR_FILTERED * (5.0 / 1024.0))) / 0.066;
+    CURRENT_SENSOR_VALUE = (2.5 - (CURRENT_SENSOR_FILTERED * (5.0 / 1023.0))) / 0.066;
     if (CURRENT_SENSOR_VALUE > 30) CURRENT_SENSOR_VALUE = 30.0;
     if (CURRENT_SENSOR_VALUE < 0) CURRENT_SENSOR_VALUE = 0.0;
     return CURRENT_SENSOR_VALUE;
