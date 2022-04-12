@@ -32,7 +32,7 @@
             exit();
         }
 
-        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
+        $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
         $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 54 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
@@ -322,6 +322,8 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="card-group">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -440,6 +442,64 @@
                                     <div class="col-md-12">
                                         <div class="d-flex no-block align-items-center">
                                             <div>
+                                                <h3><i class="fas fa-exchange-alt"></i></h3>
+                                                <?php
+                                                    if(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']) > 600)
+                                                    {
+                                                        echo '<p class="text-danger">PUISSANCE DC</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-danger" id="currentdc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                                    else if(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']) > 300) 
+                                                    {
+                                                        echo '<p class="text-primary">PUISSANCE DC</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-primary" id="currentdc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                                    else 
+                                                    {
+                                                        echo '<p class="text-success">PUISSANCE DC</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-success" id="currentdc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div>
                                                 <h3><i class="fas fa-bolt"></i></h3>
                                                 <p class="text-success">TENSION AC</p>
                                             </div>
@@ -503,6 +563,62 @@
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
                                                         echo '<div class="progress-bar bg-success" role="progressbar" id="currentacwidth" style="width: '.number_format(($staticrows[1]['VALUE']), 1).'%; height: 6px;" aria-valuenow="'.$staticrows[1]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div>
+                                                <h3><i class="fas fa-exchange-alt"></i></h3>
+                                                <?php
+                                                    if(($staticrows[1]['VALUE']*220) > 18000)
+                                                    {
+                                                        echo '<p class="text-danger">PUISSANCE AC</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-danger" id="currentdc">'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                                    else if(($staticrows[1]['VALUE']*220) > 10000) 
+                                                    {
+                                                        echo '<p class="text-primary">PUISSANCE AC</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-primary" id="currentdc">'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                    }
+                                                    else 
+                                                    {
+                                                        echo '<p class="text-success">PUISSANCE AC</p>';
+                                                        echo '</div>';
+                                                        echo '<div class="ml-auto">';
+                                                        echo '<h2 class="counter text-success" id="currentdc">'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col-12">';
+                                                        echo '<div class="progress">';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
