@@ -51,7 +51,7 @@
         $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple.xlsx');
         $objPHPExcel->setActiveSheetIndex(0);
 
-        $objPHPExcel->getActiveSheet()->setCellValue('H8', strftime('%d/%m/%Y').' '.strftime('%H:%M'));
+        $objPHPExcel->getActiveSheet()->setCellValue('I10', strftime('%d/%m/%Y').' '.strftime('%H:%M'));
 
         if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
         else $query = 'SELECT * FROM `SENSORS` WHERE 1 ORDER BY `UNIXDATE` ASC';
@@ -59,19 +59,24 @@
         $rows = array();
         $k = 0;
         $i = 0;
-
+        $lastvalueVoltage = -1;
+        $lastvalueCurrent = -1;
+        $lastvalueCurrentAC = -1;
         while($row = $result->fetch_assoc()) 
         {
-            $objPHPExcel->getActiveSheet()->mergeCells('B'.(11+$i).':C'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('D'.(11+$i).':E'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('F'.(11+$i).':G'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('H'.(11+$i).':I'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('J'.(11+$i).':K'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('L'.(11+$i).':M'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('N'.(11+$i).':O'.(11+$i).'');
-            $objPHPExcel->getActiveSheet()->getRowDimension(''.(11+$i).'')->setRowHeight(21);
+            $objPHPExcel->getActiveSheet()->mergeCells('B'.(13+$i).':C'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('D'.(13+$i).':E'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('F'.(13+$i).':G'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('H'.(13+$i).':I'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('J'.(13+$i).':K'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('L'.(13+$i).':M'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('N'.(13+$i).':O'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('P'.(13+$i).':Q'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('R'.(13+$i).':S'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->mergeCells('T'.(13+$i).':U'.(13+$i).'');
+            $objPHPExcel->getActiveSheet()->getRowDimension(''.(13+$i).'')->setRowHeight(21);
 
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':O'.(11+$i).'')->applyFromArray(array('borders' => array (
+            $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->applyFromArray(array('borders' => array (
                   'allborders' => array (
                     'style' => PHPExcel_Style_Border::BORDER_THICK,
                     'color' => array('rgb' => '000000'),
@@ -79,17 +84,31 @@
                 )
               )
             );
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':O'.(11+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(11+$i).':O'.(11+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-            if($row['ID'] == 56) $objPHPExcel->getActiveSheet()->setCellValue('D'.(11+$i).'', ''.$row['VALUE'].'');
-            if($row['ID'] == 54) $objPHPExcel->getActiveSheet()->setCellValue('F'.(11+$i).'', ''.$row['VALUE'].'');
-            if($row['ID'] == 55) $objPHPExcel->getActiveSheet()->setCellValue('H'.(11+$i).'', ''.$row['VALUE'].'');
-            if($row['ID'] == 57) $objPHPExcel->getActiveSheet()->setCellValue('J'.(11+$i).'', ''.$row['VALUE'].'');
-            if($row['ID'] == 58) $objPHPExcel->getActiveSheet()->setCellValue('L'.(11+$i).'', ''.$row['VALUE'].'');
-            if($row['ID'] == 59) $objPHPExcel->getActiveSheet()->setCellValue('N'.(11+$i).'', ''.$row['VALUE'].'');
+            if($row['ID'] == 56) { $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', ''.$row['VALUE'].' V'); $lastvalueVoltage = $row['VALUE']; }
+            if($row['ID'] == 54) { $objPHPExcel->getActiveSheet()->setCellValue('F'.(13+$i).'', ''.$row['VALUE'].' A'); $lastvalueCurrent = $row['VALUE']; }
+            if($row['ID'] == 55) { $objPHPExcel->getActiveSheet()->setCellValue('J'.(13+$i).'', ''.$row['VALUE'].' A'); $lastvalueCurrentAC = $row['VALUE']; }
+            if($row['ID'] == 57) $objPHPExcel->getActiveSheet()->setCellValue('N'.(13+$i).'', ''.$row['VALUE'].' °C');
+            if($row['ID'] == 58) { 
+              $objPHPExcel->getActiveSheet()->setCellValue('P'.(13+$i).'', ''.$row['VALUE'].' %');
+              $objPHPExcel->getActiveSheet()->setCellValue('R'.(13+$i).'', ''.number_format(((pow((($row['VALUE']*1023)/100),2)/10)/(50)), 2).' W/m²');
+            }
+            if($row['ID'] == 59) $objPHPExcel->getActiveSheet()->setCellValue('T'.(13+$i).'', ''.$row['VALUE'].' %');
 
-            if($k == 0) $objPHPExcel->getActiveSheet()->setCellValue('B'.(11+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
+            if($lastvalueVoltage != -1 && $lastvalueCurrent != -1) {
+              $objPHPExcel->getActiveSheet()->setCellValue('H'.(13+$i).'', ''.number_format(($lastvalueVoltage*$lastvalueCurrent), 2) .' W');
+              $lastvalueVoltage = -1;
+              $lastvalueCurrent = -1;
+            }
+
+            if($lastvalueCurrentAC != -1) {
+              $objPHPExcel->getActiveSheet()->setCellValue('L'.(13+$i).'', ''.number_format(($lastvalueCurrentAC*220), 2).' W');
+              $lastvalueCurrentAC = -1;
+            }
+
+            if($k == 0) $objPHPExcel->getActiveSheet()->setCellValue('B'.(13+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
 
             $k += 1;
             if($k == 6) 

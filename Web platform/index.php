@@ -449,42 +449,42 @@
                                                         echo '<p class="text-danger">PUISSANCE DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger" id="currentdc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-danger">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']) > 300) 
                                                     {
                                                         echo '<p class="text-primary">PUISSANCE DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary" id="currentdc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-primary">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
                                                         echo '<p class="text-success">PUISSANCE DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success" id="currentdc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-success">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -583,42 +583,42 @@
                                                         echo '<p class="text-danger">PUISSANCE AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger" id="currentdc">'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-danger" >'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if(($staticrows[1]['VALUE']*220) > 10000) 
                                                     {
                                                         echo '<p class="text-primary">PUISSANCE AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary" id="currentdc">'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-primary" >'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
                                                         echo '<p class="text-success">PUISSANCE AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success" id="currentdc">'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-success" >'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="currentdcwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -948,6 +948,23 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
+                                        <h5 class="card-title ">PUISSANCE DC</h5>
+                                        <div class="ml-auto">
+                                            <ul class="list-inline font-12">
+                                                <li><i class="fa fa-circle text-info"></i> Puissance DC moyenne: <?php echo (getaverage($currentdcrows)*getaverage($voltagedcrows));?> W</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div id="morris-area-chart7" style="height: 340px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex m-b-40 align-items-center no-block">
                                         <h5 class="card-title ">COURANT AC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
@@ -956,6 +973,23 @@
                                         </div>
                                     </div>
                                     <div id="morris-area-chart2" style="height: 340px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex m-b-40 align-items-center no-block">
+                                        <h5 class="card-title ">PUISSANCE AC</h5>
+                                        <div class="ml-auto">
+                                            <ul class="list-inline font-12">
+                                                <li><i class="fa fa-circle text-info"></i> Puissance AC moyenne: <?php echo (getaverage($currentacrows)*220); ?> W</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div id="morris-area-chart8" style="height: 340px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -1413,7 +1447,109 @@
                     , lineColors: ['#0000ff']
                     , resize: true
                 });
-            }); 
+            });
+            Morris.Area({
+                element: 'morris-area-chart7'
+                , data: [{
+                        period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[0]['VALUE']*$voltagedcrows[0]['VALUE']; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[1]['VALUE']*$voltagedcrows[1]['VALUE']; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[2]['VALUE']*$voltagedcrows[2]['VALUE']; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[3]['VALUE']*$voltagedcrows[3]['VALUE']; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[4]['VALUE']*$voltagedcrows[4]['VALUE']; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentdcrows[5]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[5]['VALUE']*$voltagedcrows[5]['VALUE']; ?>
+                }
+                    , {
+                        period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[6]['VALUE']*$voltagedcrows[6]['VALUE']; ?>
+                }
+                ,{
+                        period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[7]['VALUE']*$voltagedcrows[7]['VALUE']; ?>
+                }
+                ,{
+                        period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[8]['VALUE']*$voltagedcrows[8]['VALUE']; ?>
+                }
+                ,{
+                        period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentdcrows[9]['VALUE']*$voltagedcrows[9]['VALUE']; ?>
+                }]
+                , xkey: 'period'
+                , ykeys: ['Irradiation']
+                , labels: ['PUISSANCE DC']
+                , parseTime: false
+                , pointSize: 3
+                , fillOpacity: 0
+                , pointStrokeColors: ['#0000ff']
+                , behaveLikeLine: true
+                , gridLineColor: '#e0e0e0'
+                , lineWidth: 3
+                , hideHover: 'auto'
+                , lineColors: ['#0000ff']
+                , resize: true
+            });
+            Morris.Area({
+                element: 'morris-area-chart8'
+                , data: [{
+                        period: <?php echo "'".SHM($currentacrows[0]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[0]['VALUE']*220; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentacrows[1]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[1]['VALUE']*220; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentacrows[2]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[2]['VALUE']*220; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentacrows[3]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[3]['VALUE']*220; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentacrows[4]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[4]['VALUE']*220; ?>
+                }, {
+                        period: <?php echo "'".SHM($currentacrows[5]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[5]['VALUE']*220; ?>
+                }
+                    , {
+                        period: <?php echo "'".SHM($currentacrows[6]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[6]['VALUE']*220; ?>
+                }
+                ,{
+                        period: <?php echo "'".SHM($currentacrows[7]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[7]['VALUE']*220; ?>
+                }
+                ,{
+                        period: <?php echo "'".SHM($currentacrows[8]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[8]['VALUE']*220; ?>
+                }
+                ,{
+                        period: <?php echo "'".SHM($currentacrows[9]['UNIXDATE'])."'"; ?>
+                        , Irradiation: <?php echo $currentacrows[9]['VALUE']*220; ?>
+                }]
+                , xkey: 'period'
+                , ykeys: ['Irradiation']
+                , labels: ['PUISSANCE AC']
+                , parseTime: false
+                , pointSize: 3
+                , fillOpacity: 0
+                , pointStrokeColors: ['#0000ff']
+                , behaveLikeLine: true
+                , gridLineColor: '#e0e0e0'
+                , lineWidth: 3
+                , hideHover: 'auto'
+                , lineColors: ['#0000ff']
+                , resize: true
+            });
             function refresh() {
             $.ajax({
                 url: './updateStaticValues.php',

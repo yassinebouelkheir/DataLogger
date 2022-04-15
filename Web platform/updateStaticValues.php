@@ -18,7 +18,7 @@
     $data['batterywidth'] = $batterie;
 
     $data['voltagedc'] = $staticrows[2]['VALUE'];
-    $data['voltagedcwidth'] = (($staticrows[2]['VALUE']-12)*100);
+    $data['voltagedcwidth'] = ((($staticrows[2]['VALUE']-12)*100)/13);
 
     $data['currentac'] = number_format($staticrows[1]['VALUE'], 1);
     $data['cacwidth'] = $staticrows[1]['VALUE'];
