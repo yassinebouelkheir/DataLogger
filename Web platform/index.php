@@ -276,7 +276,7 @@
                                                 <?php
                                                     if($batterie < 20)
                                                     {
-                                                        echo '<p class="text-danger">BATTERIE</p>';
+                                                        echo '<p class="text-danger" id="batterietitle">BATTERIE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="batterie">'.$batterie.' %</h2>';
@@ -290,7 +290,7 @@
                                                     }
                                                     else if($batterie < 40) 
                                                     {
-                                                        echo '<p class="text-primary">BATTERIE</p>';
+                                                        echo '<p class="text-primary" id="batterietitle">BATTERIE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="batterie">'.$batterie.' %</h2>';
@@ -304,7 +304,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">BATTERIE</p>';
+                                                        echo '<p class="text-success" id="batterietitle">BATTERIE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="batterie">'.$batterie.' %</h2>';
@@ -334,7 +334,7 @@
                                                 <?php
                                                     if($staticrows[5]['VALUE'] < 15)
                                                     {
-                                                        echo '<p class="text-danger">TENSION DC</p>';
+                                                        echo '<p class="text-danger" id="voltagedctitle">TENSION DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="voltagedc">'.number_format($staticrows[2]['VALUE'], 1).' V</h2>';
@@ -348,7 +348,7 @@
                                                     }
                                                     else if($staticrows[2]['VALUE'] < 20) 
                                                     {
-                                                        echo '<p class="text-primary">TENSION DC</p>';
+                                                        echo '<p class="text-primary" id="voltagedctitle">TENSION DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="voltagedc">'.number_format($staticrows[2]['VALUE'], 1).' V</h2>';
@@ -362,7 +362,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">TENSION DC</p>';
+                                                        echo '<p class="text-success" id="voltagedctitle">TENSION DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="voltagedc">'.number_format($staticrows[2]['VALUE'], 1).' V</h2>';
@@ -390,7 +390,7 @@
                                                 <?php
                                                     if($staticrows[0]['VALUE'] > 20 || $staticrows[0]['VALUE'] < 0)
                                                     {
-                                                        echo '<p class="text-danger">COURANT DC</p>';
+                                                        echo '<p class="text-danger" id="currentdctitle">COURANT DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="currentdc">'.number_format($staticrows[0]['VALUE'], 1).' A</h2>';
@@ -404,7 +404,7 @@
                                                     }
                                                     else if($staticrows[0]['VALUE'] > 15) 
                                                     {
-                                                        echo '<p class="text-primary">COURANT DC</p>';
+                                                        echo '<p class="text-primary" id="currentdctitle">COURANT DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="currentdc">'.number_format($staticrows[0]['VALUE'], 1).' A</h2>';
@@ -418,7 +418,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">COURANT DC</p>';
+                                                        echo '<p class="text-success" id="currentdctitle">COURANT DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="currentdc">'.number_format($staticrows[0]['VALUE'], 1).' A</h2>';
@@ -446,45 +446,45 @@
                                                 <?php
                                                     if(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']) > 600)
                                                     {
-                                                        echo '<p class="text-danger">PUISSANCE DC</p>';
+                                                        echo '<p class="text-danger" id="puissancedctitle">PUISSANCE DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-danger" id="puissancedc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="puissancedcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']) > 300) 
                                                     {
-                                                        echo '<p class="text-primary">PUISSANCE DC</p>';
+                                                        echo '<p class="text-primary" id="puissancedctitle">PUISSANCE DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-primary" id="puissancedc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="puissancedcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">PUISSANCE DC</p>';
+                                                        echo '<p class="text-success" id="puissancedctitle">PUISSANCE DC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-success" id="puissancedc">'.number_format(($staticrows[0]['VALUE']*$staticrows[2]['VALUE']), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="puissancedcwidth" style="width: '.number_format(((($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100)/720), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[0]['VALUE']*$staticrows[2]['VALUE'])*100/720).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -524,7 +524,7 @@
                                                 <?php
                                                     if($staticrows[1]['VALUE'] > 90 || $staticrows[1]['VALUE'] < 0)
                                                     {
-                                                        echo '<p class="text-danger">COURANT AC</p>';
+                                                        echo '<p class="text-danger" id="currentactitle">COURANT AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="currentac">'.number_format($staticrows[1]['VALUE'], 1).' A</h2>';
@@ -538,7 +538,7 @@
                                                     }
                                                     else if($staticrows[1]['VALUE'] > 70) 
                                                     {
-                                                        echo '<p class="text-primary">COURANT AC</p>';
+                                                        echo '<p class="text-primary" id="currentactitle">COURANT AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="currentac">'.number_format($staticrows[1]['VALUE'], 1).' A</h2>';
@@ -552,7 +552,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">COURANT AC</p>';
+                                                        echo '<p class="text-success" id="currentactitle">COURANT AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="currentac">'.number_format($staticrows[1]['VALUE'], 1).' A</h2>';
@@ -580,45 +580,45 @@
                                                 <?php
                                                     if(($staticrows[1]['VALUE']*220) > 18000)
                                                     {
-                                                        echo '<p class="text-danger">PUISSANCE AC</p>';
+                                                        echo '<p class="text-danger" id="puissanceactitle">PUISSANCE AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger" >'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-danger" id="puissanceac">'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if(($staticrows[1]['VALUE']*220) > 10000) 
                                                     {
-                                                        echo '<p class="text-primary">PUISSANCE AC</p>';
+                                                        echo '<p class="text-primary" id="puissanceactitle">PUISSANCE AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary" >'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-primary" id="puissanceac" >'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">PUISSANCE AC</p>';
+                                                        echo '<p class="text-success" id="puissanceactitle">PUISSANCE AC</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-success" >'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
+                                                        echo '<h2 class="counter text-success" id="puissanceac" >'.number_format(($staticrows[1]['VALUE']*220), 1).' W</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -638,7 +638,7 @@
                                                 <?php
                                                     if($temperature > 50)
                                                     {
-                                                        echo '<p class="text-danger">TEMPÉRATURE AMBIENTE</p>';
+                                                        echo '<p class="text-danger" id="temptitle">TEMPÉRATURE AMBIENTE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="temperature">'.$temperature.' °C</h2>';
@@ -652,7 +652,7 @@
                                                     }
                                                     else if($temperature > 35) 
                                                     {
-                                                        echo '<p class="text-primary">TEMPÉRATURE AMBIENTE</p>';
+                                                        echo '<p class="text-primary" id="temptitle">TEMPÉRATURE AMBIENTE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="temperature">'.$temperature.' °C</h2>';
@@ -666,7 +666,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">TEMPÉRATURE AMBIENTE</p>';
+                                                        echo '<p class="text-success" id="temptitle">TEMPÉRATURE AMBIENTE</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="temperature">'.$temperature.' °C</h2>';
@@ -750,7 +750,7 @@
                                                 <?php
                                                     if($staticrows[5]['VALUE'] > 90)
                                                     {
-                                                        echo '<p class="text-danger">HUMIDITÉ</p>';
+                                                        echo '<p class="text-danger" id="humiditytitle">HUMIDITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="humidity">'.round($staticrows[5]['VALUE']).' %</h2>';
@@ -764,7 +764,7 @@
                                                     }
                                                     else if($staticrows[5]['VALUE'] > 70) 
                                                     {
-                                                        echo '<p class="text-primary">HUMIDITÉ</p>';
+                                                        echo '<p class="text-primary" id="humiditytitle">HUMIDITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="humidity">'.round($staticrows[5]['VALUE']).' %</h2>';
@@ -778,7 +778,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">HUMIDITÉ</p>';
+                                                        echo '<p class="text-success" id="humiditytitle">HUMIDITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="humidity">'.round($staticrows[5]['VALUE']).' %</h2>';
@@ -806,7 +806,7 @@
                                                 <?php
                                                     if($staticrows[4]['VALUE'] < 15)
                                                     {
-                                                        echo '<p class="text-danger">LUMINOSITÉ</p>';
+                                                        echo '<p class="text-danger" id="brightnesstitle">LUMINOSITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-danger" id="brightness">'.round($staticrows[4]['VALUE']).' %</h2>';
@@ -820,7 +820,7 @@
                                                     }
                                                     else if($staticrows[4]['VALUE'] < 30) 
                                                     {
-                                                        echo '<p class="text-primary">LUMINOSITÉ</p>';
+                                                        echo '<p class="text-primary" id="brightnesstitle">LUMINOSITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-primary" id="brightness">'.round($staticrows[4]['VALUE']).' %</h2>';
@@ -834,7 +834,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">LUMINOSITÉ</p>';
+                                                        echo '<p class="text-success" id="brightnesstitle">LUMINOSITÉ</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="brightness">'.round($staticrows[4]['VALUE']).' %</h2>';
@@ -860,12 +860,12 @@
                                             <div>
                                                 <h3><i class="wi wi-earthquake"></i></h3>
                                                 <?php
-                                                    if($staticrows[4]['VALUE'] < 15)
+                                                    if($staticrows[4]['VALUE'] < 250)
                                                     {
-                                                        echo '<p class="text-danger">IRRADIATION</p>';
+                                                        echo '<p class="text-danger" id="irradiationtitle">IRRADIATION</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-danger" id="irradiation">'.number_format(((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1).' %</h2>';
+                                                        echo '<h2 class="counter text-danger" id="irradiation">'.number_format(((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1).' W/m²</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
@@ -874,12 +874,12 @@
                                                         echo '<div class="progress">';
                                                         echo '<div class="progress-bar bg-danger" role="progressbar" id="irradiationwidth" style="width: '.$staticrows[4]['VALUE'].'%; height: 6px;" aria-valuenow="'.((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
-                                                    else if($staticrows[4]['VALUE'] < 30) 
+                                                    else if($staticrows[4]['VALUE'] < 700) 
                                                     {
-                                                        echo '<p class="text-primary">IRRADIATION</p>';
+                                                        echo '<p class="text-primary" id="irradiationtitle">IRRADIATION</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
-                                                        echo '<h2 class="counter text-primary" id="irradiation">'.number_format(((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1);
+                                                        echo '<h2 class="counter text-primary" id="irradiation">'.number_format(((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1).' W/m²</h2>';
 
                                                         echo '</div>';
                                                         echo '</div>';
@@ -890,7 +890,7 @@
                                                     }
                                                     else 
                                                     {
-                                                        echo '<p class="text-success">IRRADIATION</p>';
+                                                        echo '<p class="text-success" id="irradiationtitle">IRRADIATION</p>';
                                                         echo '</div>';
                                                         echo '<div class="ml-auto">';
                                                         echo '<h2 class="counter text-success" id="irradiation">'.number_format(((pow((($staticrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1).' W/m²</h2>';
@@ -1561,14 +1561,17 @@
                     if(response.batterie < 20) {
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('batterie').setAttribute("class", "counter text-danger");
+                        document.getElementById('batterietitle').setAttribute("class", "text-danger");
                     }
                     else if(response.batterie < 50) {
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('batterie').setAttribute("class", "counter text-primary");
+                        document.getElementById('batterietitle').setAttribute("class", "text-primary");
                     }
                     else if(response.batterie >= 50){
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('batterie').setAttribute("class", "counter text-success");
+                        document.getElementById('batterietitle').setAttribute("class", "text-success");
                     }
 
                     document.getElementById('voltagedc').innerHTML = response.voltagedc + " V";
@@ -1576,14 +1579,35 @@
                     if(response.voltagedc < 14) {
                         document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('voltagedc').setAttribute("class", "counter text-danger");
+                        document.getElementById('voltagedctitle').setAttribute("class", "text-danger");
                     }
                     else if(response.voltagedc < 20) {
                         document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('voltagedc').setAttribute("class", "counter text-primary");
+                        document.getElementById('voltagedctitle').setAttribute("class", "text-primary");
                     }
                     else if(response.voltagedc >= 20){
                         document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('voltagedc').setAttribute("class", "counter text-success");
+                        document.getElementById('voltagedctitle').setAttribute("class", "text-success");
+                    }
+
+                    document.getElementById('puissancedc').innerHTML = (response.voltagedc*response.currentdc) + " W";
+                    document.getElementById('puissancedcwidth').setAttribute("style", "width: " + ((response.voltagedc*response.currentdc)*100)/720 + "%; height: 6px;");
+                    if((response.voltagedc*response.currentdc) > 600) {
+                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('puissancedc').setAttribute("class", "counter text-danger");
+                        document.getElementById('puissancedctitle').setAttribute("class", "text-danger");
+                    }
+                    else if((response.voltagedc*response.currentdc) > 300) {
+                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('puissancedc').setAttribute("class", "counter text-primary");
+                        document.getElementById('puissancedctitle').setAttribute("class", "text-primary");
+                    }
+                    else {
+                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('puissancedc').setAttribute("class", "counter text-success");
+                        document.getElementById('puissancedctitle').setAttribute("class", "text-success");
                     }
 
                     document.getElementById('currentac').innerHTML = response.currentac + " A";
@@ -1591,43 +1615,71 @@
                     if(response.currentac < 50) {
                         document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('currentac').setAttribute("class", "counter text-success");
+                        document.getElementById('currentactitle').setAttribute("class", "text-success");
                     }
                     else if(response.currentac < 80) {
                         document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('currentac').setAttribute("class", "counter text-primary");
+                        document.getElementById('currentactitle').setAttribute("class", "text-primary");
                     }
                     else if(response.currentac >= 80) {
                         document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('currentac').setAttribute("class", "counter text-danger");
+                        document.getElementById('currentactitle').setAttribute("class", "text-danger");
                     }
 
-                    document.getElementById('currentdc').innerHTML = response.currentdc + " A";
+                    document.getElementById('puissanceac').innerHTML = (response.currentac*220) + " W";
+                    document.getElementById('puissanceacwidth').setAttribute("style", "width: " + ((response.currentac*220)*100)/22000 + "%; height: 6px;");
+                    if((response.currentac*220) > 18000) {
+                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('puissanceac').setAttribute("class", "counter text-danger");
+                        document.getElementById('puissanceactitle').setAttribute("class", "text-danger");
+                    }
+                    else if((response.currentac*220) > 10000) {
+                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('puissanceac').setAttribute("class", "counter text-primary");
+                        document.getElementById('puissanceactitle').setAttribute("class", "text-primary");
+                    }
+                    else {
+                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('puissanceac').setAttribute("class", "counter text-success");
+                        document.getElementById('puissanceactitle').setAttribute("class", "text-success");
+                    }
+
+                    document.getElementById('currentdc').innerHTML = response.currentdc.toFixed(1); + " A";
                     document.getElementById('currentdcwidth').setAttribute("style", "width: " + response.cdcwidth + "%; height: 6px;");
                     if(response.currentdc < 15) {
                         document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('currentdc').setAttribute("class", "counter text-success");
+                        document.getElementById('currentdctitle').setAttribute("class", "text-success");
                     }
                     else if(response.currentdc < 25) {
                         document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('currentdc').setAttribute("class", "counter text-primary");
+                        document.getElementById('currentdctitle').setAttribute("class", "text-primary");
                     }
                     else if(response.currentdc >= 25) {
                         document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('currentdc').setAttribute("class", "counter text-danger");
+                        document.getElementById('currentdctitle').setAttribute("class", "text-danger");
                     }
+
                     document.getElementById('temperature').innerHTML = response.temperature + " °C";
                     document.getElementById('tempwidth').setAttribute("style", "width: " + response.temwidth + "%; height: 6px;");
                     if(response.temperature < 25) {
                         document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('temperature').setAttribute("class", "counter text-success");
+                        document.getElementById('temptitle').setAttribute("class", "text-success");
                     }
                     else if(response.temperature < 37) {
                         document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('temperature').setAttribute("class", "counter text-primary");
+                        document.getElementById('temptitle').setAttribute("class", "text-primary");
                     }
                     else if(response.temperature >= 37) {
                         document.getElementById('tempwidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('temperature').setAttribute("class", "counter text-danger");
+                        document.getElementById('temptitle').setAttribute("class", "text-danger");
                     }
 
                     document.getElementById('humidity').innerHTML = response.humidity + " %";
@@ -1635,14 +1687,17 @@
                     if(response.humiditywidth < 25) {
                         document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('humidity').setAttribute("class", "counter text-success");
+                        document.getElementById('humiditytitle').setAttribute("class", "text-success");
                     }
                     else if(response.humiditywidth < 50) {
                         document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('humidity').setAttribute("class", "counter text-primary");
+                        document.getElementById('humiditytitle').setAttribute("class", "text-primary");
                     }
                     else if(response.humiditywidth >= 50) {
                         document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('humidity').setAttribute("class", "counter text-danger");
+                        document.getElementById('humiditytitle').setAttribute("class", "text-danger");
                     }
 
                     document.getElementById('brightness').innerHTML = response.brightness + " %";
@@ -1650,14 +1705,35 @@
                     if(response.brightneswidth < 25) {
                         document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('brightness').setAttribute("class", "counter text-danger");
+                        document.getElementById('brightnesstitle').setAttribute("class", "text-danger");
                     }
                     else if(response.brightneswidth < 50) {
                         document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('brightness').setAttribute("class", "counter text-primary");
+                        document.getElementById('brightnesstitle').setAttribute("class", "text-primary");
                     }
                     else if(response.brightneswidth >= 50) {
                         document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('brightness').setAttribute("class", "counter text-success");
+                        document.getElementById('brightnesstitle').setAttribute("class", "text-success");
+                    }
+
+                    document.getElementById('irradiation').innerHTML = ((Math.pow(((response.brightness*1023)/100),2)/10)/(50)).toFixed(1); + " W/m²";
+                    document.getElementById('irradiationwidth').setAttribute("style", "width: " + ((Math.pow(((response.brightness*1023)/100),2)/10)/(50)) + "%; height: 6px;");
+                    if(((Math.pow(((response.brightness*1023)/100),2)/10)/(50)) < 700) {
+                        document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('irradiation').setAttribute("class", "counter text-danger");
+                        document.getElementById('irradiationtitle').setAttribute("class", "text-danger");
+                    }
+                    else if(((Math.pow(((response.brightness*1023)/100),2)/10)/(50)) < 250) {
+                        document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('irradiation').setAttribute("class", "counter text-primary");
+                        document.getElementById('irradiationtitle').setAttribute("class", "text-primary");
+                    }
+                    else  {
+                        document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('irradiation').setAttribute("class", "counter text-success");
+                        document.getElementById('irradiationtitle').setAttribute("class", "text-success");
                     }
                 }
              });

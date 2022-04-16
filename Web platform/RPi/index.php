@@ -4,8 +4,8 @@
       $val = $_GET["value"];
       $page = $_GET["page"];
       $page += $val;
-      if($page < 54) $page = 60;
-      if($page > 60) $page = 54;
+      if($page < 54) $page = 62;
+      if($page > 62) $page = 54;
     }
     else
     {
@@ -13,6 +13,8 @@
     }
     $mysqli = new mysqli("localhost", "root", "", "PFE");
     if($page == 60) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 58 LIMIT 1';
+    else if($page == 61) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 55 LIMIT 1';
+    else if($page == 62) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 56 LIMIT 1';
     else $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = '.$page.' LIMIT 1';
 
     $result = $mysqli->query($query);
@@ -20,8 +22,27 @@
     while($row = $result->fetch_assoc()) {
       $rows[] = $row;
     }
+    $result->free();
 
     if($page == 60) $rows[0]['VALUE'] = number_format(((pow((($rows[0]['VALUE']*1023)/100),2)/10)/(50)), 1);
+    if($page == 61) $rows[0]['VALUE'] = number_format(($rows[0]['VALUE']*220), 1);
+    if($page == 62){
+      $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 54 LIMIT 1';
+      $result = $mysqli->query($query);
+      $rows1 = array();
+      while($row = $result->fetch_assoc()) {
+        $rows1[] = $row;
+      }
+      $result->free();
+      $rows[0]['VALUE'] = ($rows[0]['VALUE']*$rows1[0]['VALUE']);
+    }
+
+    $query = 'SELECT * FROM `CHARGES` WHERE 1 ORDER BY `ID` ASC';
+    $result = $mysqli->query($query) or die($mysqli->error);
+    $chargesrows = array();
+    while($row = $result->fetch_assoc()) {
+      $chargesrows[] = $row;
+    }
     $result->free();
     $mysqli->close();
 ?>
@@ -72,6 +93,14 @@
                                 echo 'Irradiation';
                                 break;
                               }
+                              case 61:{
+                                echo 'Puissance AC';
+                                break;
+                              }
+                              case 62:{
+                                echo 'Puissance DC';
+                                break;
+                              }
                             }
                           ?></h3>
                 
@@ -109,14 +138,37 @@
                                 echo ' W/m²';
                                 break;
                               }
+                              case 61:{
+                                echo ' W';
+                                break;
+                              }
+                              case 62:{
+                                echo ' W';
+                                break;
+                              }
                             }
                           ?>      
                           </h1></h4>
                     
                     <button type="submit" class="btn btn-primary" onclick= "location.href='index.php?value=-1&page=<?php echo $page; ?>'"><span class="glyphicon glyphicon-arrow-left"></span> Précédent</button>
-                    <button type="submit" class="btn btn-success" onclick= "location.href='index.php?value=1&page=<?php echo $page; ?>'">Suivant <span class="glyphicon glyphicon-arrow-right"></span></button>
+                    <button type="submit" class="btn btn-success" onclick= "location.href='index.php?value=1&page=<?php echo $page; ?>'">Suivant <span class="glyphicon glyphicon-arrow-right"></span></button><br></br><br>
+
+                    <h4>Modifier l'état des charges : <h1 class="text-center text-primary"> 
+                    <?php 
+                        if($chargesrows[0]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=22&value=1\'"><span class="glyphicon glyphicon-cog"></span> C1 : OFF</button> ';    
+                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=22&value=0\'"><span class="glyphicon glyphicon-cog"></span> C1 : ON</button> '; 
+
+                        if($chargesrows[1]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=23&value=1\'"><span class="glyphicon glyphicon-cog"></span> C2 : OFF</button> ';    
+                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=23&value=0\'"><span class="glyphicon glyphicon-cog"></span> C2 : ON</button> ';
+                        echo '<br></br>';
+
+                        if($chargesrows[2]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=24&value=1\'"><span class="glyphicon glyphicon-cog"></span> C3 : OFF</button> ';    
+                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=24&value=0\'"><span class="glyphicon glyphicon-cog"></span> C3 : ON</button> ';
+
+                        if($chargesrows[3]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=25&value=1\'"><span class="glyphicon glyphicon-cog"></span> C4 : OFF</button> ';    
+                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=25&value=0\'"><span class="glyphicon glyphicon-cog"></span> C4 : ON</button> ';
+                    ?>
                     </div>
-                
             </div>
             <div class="col-md-9">
                 <div class="box box-success">
@@ -173,6 +225,14 @@
                               }
                               case 60:{
                                 echo 'Irradiation';
+                                break;
+                              }
+                              case 61:{
+                                echo 'Puissance AC';
+                                break;
+                              }
+                              case 62:{
+                                echo 'Puissance DC';
                                 break;
                               }
                             }
