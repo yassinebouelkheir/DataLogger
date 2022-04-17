@@ -220,7 +220,12 @@
                                     <li><a href="exportData.php?interval=0&location=1">Exporter tout</a></li>
                                 </ul>
                             </li>
-                            <li> <a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Logout</span></a>
+                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Logout</span></a>
+                            </li>
+                            <br></br><br></br><br></br><br>
+                            <br></br><br></br><br></br></br><br>
+                            <li class="user-pro text-center">
+                                <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="111" width="150">
                             </li>
                         </ul>
                     </nav>
