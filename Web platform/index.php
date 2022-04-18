@@ -539,7 +539,7 @@
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="currentacwidth" style="width: '.number_format(($staticrows[1]['VALUE']), 1).'%; height: 6px;" aria-valuenow="'.$staticrows[1]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="currentacwidth" style="width: '.number_format((($staticrows[1]['VALUE']*100)/30), 1).'%; height: 6px;" aria-valuenow="'.$staticrows[1]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else if($staticrows[1]['VALUE'] > 70) 
                                                     {
@@ -553,7 +553,7 @@
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="currentacwidth" style="width: '.number_format(($staticrows[1]['VALUE']), 1).'%; height: 6px;" aria-valuenow="'.$staticrows[1]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="currentacwidth" style="width: '.number_format((($staticrows[1]['VALUE']*100)/30), 1).'%; height: 6px;" aria-valuenow="'.$staticrows[1]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
@@ -567,7 +567,7 @@
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="currentacwidth" style="width: '.number_format(($staticrows[1]['VALUE']), 1).'%; height: 6px;" aria-valuenow="'.$staticrows[1]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="currentacwidth" style="width: '.number_format((($staticrows[1]['VALUE']*100)/30), 1).'%; height: 6px;" aria-valuenow="'.$staticrows[1]['VALUE'].'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -583,7 +583,7 @@
                                             <div>
                                                 <h3><i class="fas fa-exchange-alt"></i></h3>
                                                 <?php
-                                                    if(($staticrows[1]['VALUE']*220) > 18000)
+                                                    if(($staticrows[1]['VALUE']*220) > 650)
                                                     {
                                                         echo '<p class="text-danger" id="puissanceactitle">PUISSANCE AC</p>';
                                                         echo '</div>';
@@ -595,9 +595,9 @@
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-danger" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/1000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/1000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
-                                                    else if(($staticrows[1]['VALUE']*220) > 10000) 
+                                                    else if(($staticrows[1]['VALUE']*220) > 500) 
                                                     {
                                                         echo '<p class="text-primary" id="puissanceactitle">PUISSANCE AC</p>';
                                                         echo '</div>';
@@ -609,7 +609,7 @@
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-primary" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/1000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/1000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                                     else 
                                                     {
@@ -623,7 +623,7 @@
                                                         echo '</div>';
                                                         echo '<div class="col-12">';
                                                         echo '<div class="progress">';
-                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/22000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/22000).'" aria-valuemin="0" aria-valuemax="100"></div>';
+                                                        echo '<div class="progress-bar bg-success" role="progressbar" id="puissanceacwidth" style="width: '.number_format(((($staticrows[1]['VALUE']*220)*100)/1000), 1).'%; height: 6px;" aria-valuenow="'.(($staticrows[1]['VALUE']*220)/1000).'" aria-valuemin="0" aria-valuemax="100"></div>';
                                                     }
                                             ?>
                                         </div>
@@ -1634,13 +1634,13 @@
                     }
 
                     document.getElementById('puissanceac').innerHTML = (response.currentac*220) + " W";
-                    document.getElementById('puissanceacwidth').setAttribute("style", "width: " + ((response.currentac*220)*100)/22000 + "%; height: 6px;");
-                    if((response.currentac*220) > 18000) {
+                    document.getElementById('puissanceacwidth').setAttribute("style", "width: " + ((response.currentac*220)*100)/1000 + "%; height: 6px;");
+                    if((response.currentac*220) > 650) {
                         document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('puissanceac').setAttribute("class", "counter text-danger");
                         document.getElementById('puissanceactitle').setAttribute("class", "text-danger");
                     }
-                    else if((response.currentac*220) > 10000) {
+                    else if((response.currentac*220) > 500) {
                         document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('puissanceac').setAttribute("class", "counter text-primary");
                         document.getElementById('puissanceactitle').setAttribute("class", "text-primary");
