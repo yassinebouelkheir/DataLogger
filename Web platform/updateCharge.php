@@ -22,17 +22,10 @@
    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
 -->
 
-<?php
-    session_start();
-    if(!isset($_SESSION["username"])) 
-    {
-        header("Location: login.php");
-        exit();
-    }
-    
+<?php    
     if (isset($_GET['chargeid']) && isset($_GET['value'])) 
     {
-        $mysqli = new mysqli("localhost", "root", "", "PFE");
+        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
         $chargeid = stripslashes($_GET['chargeid']);
         $chargeid = mysqli_real_escape_string($mysqli, $chargeid);
 

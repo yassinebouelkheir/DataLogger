@@ -100,10 +100,10 @@ if __name__ == "__main__":
 	
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setwarnings(False)
-	GPIO.setup(17, GPIO.OUT)
-	GPIO.output(17, GPIO.LOW)
+	GPIO.setup(37, GPIO.OUT)
+	GPIO.output(37, GPIO.LOW)
 	reciever = threading.Thread(target=receiverHandler)
 	reciever.start()
 	print("Data Logger v1.0 python script - PFE 2021/2022");
-	GPIO.output(17, GPIO.HIGH)
+	GPIO.output(37, GPIO.HIGH)
 	reciever.join()

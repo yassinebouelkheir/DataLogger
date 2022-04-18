@@ -11,7 +11,7 @@
     {
       $page = 54;
     }
-    $mysqli = new mysqli("localhost", "root", "", "PFE");
+    $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
     if($page == 60) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 58 LIMIT 1';
     else if($page == 61) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 55 LIMIT 1';
     else if($page == 62) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 56 LIMIT 1';
@@ -153,20 +153,20 @@
                     <button type="submit" class="btn btn-primary" onclick= "location.href='index.php?value=-1&page=<?php echo $page; ?>'"><span class="glyphicon glyphicon-arrow-left"></span> Précédent</button>
                     <button type="submit" class="btn btn-success" onclick= "location.href='index.php?value=1&page=<?php echo $page; ?>'">Suivant <span class="glyphicon glyphicon-arrow-right"></span></button><br></br><br>
 
-                    <h4>Modifier l'état des charges : <h1 class="text-center text-primary"> 
+                    <h4>Modifier l'état des charges: <h1 class="text-center text-primary"> 
                     <?php 
-                        if($chargesrows[0]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=22&value=1\'"><span class="glyphicon glyphicon-cog"></span> C1 : OFF</button> ';    
-                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=22&value=0\'"><span class="glyphicon glyphicon-cog"></span> C1 : ON</button> '; 
+                        if($chargesrows[0]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=22&value=1\'"><span class="glyphicon glyphicon-cog"></span> C1 : Éteint</button> ';    
+                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=22&value=0\'"><span class="glyphicon glyphicon-cog"></span> C1 : Allumé</button> '; 
 
-                        if($chargesrows[1]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=23&value=1\'"><span class="glyphicon glyphicon-cog"></span> C2 : OFF</button> ';    
-                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=23&value=0\'"><span class="glyphicon glyphicon-cog"></span> C2 : ON</button> ';
-                        echo '<br></br>';
+                        if($chargesrows[1]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=23&value=1\'"><span class="glyphicon glyphicon-cog"></span> C2 : Éteint</button> ';    
+                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=23&value=0\'"><span class="glyphicon glyphicon-cog"></span> C2 : Allumé</button> ';
+                        echo '<br>';
 
-                        if($chargesrows[2]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=24&value=1\'"><span class="glyphicon glyphicon-cog"></span> C3 : OFF</button> ';    
-                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=24&value=0\'"><span class="glyphicon glyphicon-cog"></span> C3 : ON</button> ';
+                        if($chargesrows[2]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=24&value=1\'"><span class="glyphicon glyphicon-cog"></span> C3 : Éteint</button> ';    
+                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=24&value=0\'"><span class="glyphicon glyphicon-cog"></span> C3 : Allumé</button> ';
 
-                        if($chargesrows[3]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=25&value=1\'"><span class="glyphicon glyphicon-cog"></span> C4 : OFF</button> ';    
-                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=25&value=0\'"><span class="glyphicon glyphicon-cog"></span> C4 : ON</button> ';
+                        if($chargesrows[3]['VALUE'] == 0) echo '<button type="submit" class="btn btn-danger" onclick= "location.href=\'updateCharge.php?chargeid=25&value=1\'"><span class="glyphicon glyphicon-cog"></span> C4 : Éteint</button> ';    
+                        else echo '<button type="submit" class="btn btn-success" onclick= "location.href=\'updateCharge.php?chargeid=25&value=0\'"><span class="glyphicon glyphicon-cog"></span> C4 : Allumé</button> ';
                     ?>
                     </div>
             </div>
@@ -187,7 +187,6 @@
       <footer class="footer text-center">
         © 2022 Data Logger by <a href="https://www.linkedin.com/in/yassine-bouelkheir/">BOUELKHEIR Yassine</a>
       </footer>
-      <br>
     </div>
     <?php include('data.php'); ?>
     <script>

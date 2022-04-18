@@ -1,6 +1,6 @@
 <?php
 
-    $mysqli = new mysqli("localhost", "root", "", "PFE"); 
+    $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE"); 
     $query = 'SELECT * FROM `SENSORS_STATIC` WHERE 1 ORDER BY `ID` ASC';
     $result = $mysqli->query($query);
     $staticrows = array();
