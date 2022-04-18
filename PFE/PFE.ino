@@ -30,7 +30,7 @@
 #define CHARGE4_RELAY_PIN       (25)
 
 #define CURRENT_TYPE_DC         (1)
-#define CURRENT_TYPE_AC         (1)
+#define CURRENT_TYPE_AC         (0)
 
 #define LED_STATE_READY_PIN     (30)
 #define LED_STATE_ACT_PIN       (31)
