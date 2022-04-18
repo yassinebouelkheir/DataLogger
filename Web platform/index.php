@@ -155,7 +155,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
         <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="author" content="BOUELKHEIR Yassine">
+        <meta http-equiv="refresh" content="90">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - PFE 2021/2022</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
