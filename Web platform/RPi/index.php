@@ -52,7 +52,7 @@
       <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
       <meta name="author" content="BOUELKHEIR Yassine">
-      <meta http-equiv="refresh" content="90">
+      <meta http-equiv="refresh" content="60">
       <title>RPi - Data Logger v1.0</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

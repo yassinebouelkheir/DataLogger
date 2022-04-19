@@ -101,6 +101,10 @@
                             <li class="user-pro">
                                 <img src="../assets/images/logo.png" alt="user-img" height="110" width="215">
                             </li>
+                            <br>
+                            <li class="user-pro text-center">
+                                <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="111" width="150">
+                            </li>
                             <li class="nav-small-cap">--- MAIN MENU</li>
                             <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="icon-speedometer"></i>
                                 <span class="hide-menu">Statistiques </span></a>

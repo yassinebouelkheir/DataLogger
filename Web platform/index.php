@@ -202,6 +202,10 @@
                             <li class="user-pro">
                                 <img src="../assets/images/logo.png" alt="user-img" height="110" width="215">
                             </li>
+                            <br>
+                            <li class="user-pro text-center">
+                                <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="111" width="150">
+                            </li>
                             <li class="nav-small-cap">--- MAIN MENU</li>
                             <li> <a class="waves-effect waves-dark active" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i>
                                 <?php 
@@ -222,11 +226,6 @@
                                 </ul>
                             </li>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Logout</span></a>
-                            </li>
-                            <br></br><br></br><br></br><br>
-                            <br></br><br></br><br></br></br><br>
-                            <li class="user-pro text-center">
-                                <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="111" width="150">
                             </li>
                         </ul>
                     </nav>
