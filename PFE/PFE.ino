@@ -23,6 +23,8 @@
 */
 
 #include <Wire.h>
+#include <DHT.h>
+#include <DHT_U.h>
 
 #define CHARGE1_RELAY_PIN       (22)
 #define CHARGE2_RELAY_PIN       (23)
@@ -46,6 +48,8 @@ float VOLTAGEDC_RESISTOR1 = 30000.0;
 float VOLTAGEDC_RESISTOR2 = 7500.0;
 float VOLTAGEDC_REF_VOLTAGE = 5.0;
 
+DHT dht(TEMP_SENSOR_PIN, DHT11);
+
 void setup() {
     pinMode(LED_STATE_READY_PIN, OUTPUT);
     pinMode(LED_STATE_ACT_PIN, OUTPUT);
@@ -58,6 +62,7 @@ void setup() {
     }
     for (int i = 26; i <= 29; i++) pinMode(i, INPUT);
 
+    dht.begin();
     digitalWrite(LED_STATE_READY_PIN, HIGH);
     Serial.begin(9600);
 }
@@ -67,7 +72,7 @@ void loop() {
     digitalWrite(LED_STATE_ACT_PIN, LOW);
     
     // Capteur de Température
-    float TEMP_SENSOR_VALUE = (analogRead(TEMP_SENSOR_PIN) * (5.0 / 1023.0 * 100.0));
+    float TEMP_SENSOR_VALUE = dht.readTemperature();
 
     // Capteur d'Humidité
     float HUMIDITY_SENSOR_VALUE = ((analogRead(HUMIDITY_SENSOR_PIN)) * (100 - 10) / (1023) + 10);
@@ -76,10 +81,10 @@ void loop() {
     float BRIGHTNESS_SENSOR_VALUE = 100 - (((analogRead(HUMIDITY_SENSOR_PIN)) * (100 - 15) / (1023) + 15));
 
     // Capteur de Courant DC
-    float CURRENTDC_SENSOR_VALUE = getCurrent(CURRENT_TYPE_DC);
+    float CURRENTDC_SENSOR_VALUE = (getCurrent(CURRENT_TYPE_DC));
 
     // Capteur de Courant AC
-    float CURRENTAC_SENSOR_VALUE = getCurrent(CURRENT_TYPE_AC);
+    float CURRENTAC_SENSOR_VALUE = ((getCurrent(CURRENT_TYPE_AC) - 1.0) < 0) ? (0.00) : (getCurrent(CURRENT_TYPE_AC)-1.0);
 
     // Capteur de Tension DC
     float VOLTAGEDC_SENSOR_RAW = (analogRead(VOLTAGEDC_SENSOR_PIN) * VOLTAGEDC_REF_VOLTAGE) / 1024.0;
@@ -149,13 +154,15 @@ void getChargeCommand() {
 }
 
 float getCurrent(bool type) {
-    float voltage_raw;
-    if(type == CURRENT_TYPE_DC) voltage_raw = (5.0 / 1023.0)*analogRead(CURRENTDC_SENSOR_PIN);
-    else voltage_raw = (5.0 / 1023.0)*analogRead(CURRENTAC_SENSOR_PIN);
-    
-    float voltage =  voltage_raw - 2.5 + 0.012 ;
+    float voltage_raw = 0;
+    for(int i = 0; i < 1000; i++){ 
+      if(type == CURRENT_TYPE_DC) voltage_raw += (5.0 / 1023.0)*analogRead(CURRENTDC_SENSOR_PIN);
+      else voltage_raw += ((5.0 / 1023.0)*analogRead(CURRENTAC_SENSOR_PIN));
+    }
+    voltage_raw /= 1000;
+    float voltage =  voltage_raw - 2.5 + 0.012;
     float current = voltage / 0.066;
-   
-    if(abs(current) > 0.1) return current;
+
+    if(abs(current) > 0.05) return abs(current);
     else return 0.0;
 }

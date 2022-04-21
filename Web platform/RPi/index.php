@@ -57,7 +57,7 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <script src="dist/Chart.js"></script>
+      <script src="dist/chart.js"></script>
   </head>
   <body style="background-image:url(/assets/images/login.png); background-position: top; background-size: cover;">
     <div class="container" style="background: rgba(255,255,255,0.7);">
@@ -288,7 +288,7 @@
       $.ajax({
           url: './updateStaticValues.php',
           type: 'post',
-          data, 'page=' + <?php echo $page; ?> + '',
+          data: 'page=<?php echo ''.$page.''; ?>',
           dataType: "json",
           success: function (response) {
             document.getElementById('updateVal').innerHTML = response.value;
