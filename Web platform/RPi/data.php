@@ -1,5 +1,5 @@
 <?php
-    $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
+    $mysqli = new mysqli("localhost", "root", "", "PFE");
  
     if ($mysqli->connect_error) {
         die("Connection failed: " . $mysqli->connect_error);

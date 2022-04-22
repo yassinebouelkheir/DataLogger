@@ -31,7 +31,7 @@
             header("Location: login.php");
             exit();
         }
-        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
+        $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
         $query = 'SELECT * FROM `CHARGES` WHERE 1 ORDER BY `ID` ASC';
         $result = $mysqli->query($query) or die($mysqli->error);
@@ -55,7 +55,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="author" content="BOUELKHEIR Yassine">
-        <meta http-equiv="refresh" content="60">
+        <!-- <meta http-equiv="refresh" content="90"> -->
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - Charges</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">

@@ -32,7 +32,7 @@
             exit();
         }
 
-        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
+        $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
         $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 54 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
@@ -156,7 +156,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
         <meta name="description" content="">
         <meta name="author" content="BOUELKHEIR Yassine">
-        <meta http-equiv="refresh" content="90">
+        <!-- <meta http-equiv="refresh" content="90"> -->
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - PFE 2021/2022</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">

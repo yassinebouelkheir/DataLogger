@@ -44,7 +44,7 @@
 
     if (isset($_GET['interval'])) 
     {
-        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
+        $mysqli = new mysqli("localhost", "root", "", "PFE");
         $interval = stripslashes($_GET['interval']);
         $interval = mysqli_real_escape_string($mysqli, $interval);
 

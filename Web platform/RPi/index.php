@@ -11,7 +11,7 @@
     {
       $page = 54;
     }
-    $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
+    $mysqli = new mysqli("localhost", "root", "", "PFE");
     if($page == 60) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 58 LIMIT 1';
     else if($page == 61) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 55 LIMIT 1';
     else if($page == 62) $query = 'SELECT * FROM `SENSORS_STATIC` WHERE ID = 56 LIMIT 1';
@@ -52,7 +52,7 @@
       <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
       <meta name="author" content="BOUELKHEIR Yassine">
-      <meta http-equiv="refresh" content="60">
+      <!-- <meta http-equiv="refresh" content="90"> -->
       <title>RPi - Data Logger v1.0</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

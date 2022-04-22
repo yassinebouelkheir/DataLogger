@@ -35,7 +35,7 @@
     $BadInfo = 0;
     if (isset($_POST['username'])) 
     {
-        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
+        $mysqli = new mysqli("localhost", "root", "", "PFE");
         $username = stripslashes($_REQUEST['username']);
         $username = mysqli_real_escape_string($mysqli, $username);
 
