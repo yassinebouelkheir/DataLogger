@@ -14,10 +14,10 @@
 -->
 
 <!--
-   ScriptName    : index.php
+   ScriptName    : courantfort.php
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 18/03/2022
+   Created       : 25/04/2022
    License       : GNU General v3.0
    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
 -->
@@ -34,22 +34,21 @@
 
         $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 54 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 55 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
-        $currentdcrows = array();
+        $currentacrows = array();
         while($row = $result->fetch_assoc()) {
-            $currentdcrows[] = $row;
+            $currentacrows[] = $row;
         }
         $result->free();
 
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 56 ORDER BY `UNIXDATE` ASC LIMIT 10';
-        $result = $mysqli->query($query);
-        $voltagedcrows = array();
-        while($row = $result->fetch_assoc()) {
-            $voltagedcrows[] = $row;
+        /*$query = 'SELECT * FROM `SENSORS` WHERE `ID` = 56 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $result = $mysqli->query($query);*/
+        $voltageacrows = array();
+        for($i = 0; $i < 10; $i++) {
+            $voltageacrows[$i]['VALUE'] = 220;
         }
-        $result->free();
         $mysqli->close();
 
         $jsonurl = "https://api.openweathermap.org/data/2.5/weather?lat=34.0337&lon=6.7708&lang=fr&appid=36a1abfb8868c3cc0784a4953f738e70";
@@ -115,7 +114,7 @@
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">Data logger v2.0 - Courant Faible</p>
+                <p class="loader__label">Data logger v2.0 - Courant Fort</p>
             </div>
         </div>
         <div id="main-wrapper">
@@ -154,11 +153,11 @@
                             </li>
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
-                                <a class="waves-effect waves-dark active" href="index.php" aria-expanded="false"><i class="fas fa-bolt"></i>
+                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-bolt"></i>
                                 <span class="hide-menu">Courant Faible</span></a>
                             </li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
+                                <a class="waves-effect waves-dark active" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
                                 <span class="hide-menu">Courant Fort</span></a>
                             </li>
                             <li> 
@@ -197,7 +196,7 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Courant Faible</li>
+                                    <li class="breadcrumb-item active">Courant Fort</li>
                                 </ol>
                             </div>
                         </div>
@@ -233,41 +232,17 @@
                                     <div class="col-md-12">
                                         <div class="d-flex no-block align-items-center">
                                             <div>
-                                                <h3><i class="fas fa-battery-three-quarters"></i></h3>
-                                                <p class="text-danger" id="batterietitle">BATTERIE</p>
-                                            </div>
-                                            <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="batterie">0%</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" id="batteriewidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-group">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="d-flex no-block align-items-center">
-                                            <div>
                                                 <h3><i class="fas fa-bolt"></i></h3>
-                                                <p class="text-danger" id="voltagedctitle">TENSION DC</p>
+                                                <p class="text-danger" id="voltageactitle">TENSION AC</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="voltagedc">0.0 V</h2>
+                                                <h2 class="counter text-danger" id="voltageac">0.0 V</h2>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" id="tensiondcwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-danger" role="progressbar" id="voltageacwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -280,16 +255,16 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-exchange-alt"></i></h3>
-                                                <p class="text-danger" id="currentdctitle">COURANT DC</p>
+                                                <p class="text-danger" id="currentactitle">COURANT AC</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="currentdc">0.0 A</h2>
+                                                <h2 class="counter text-danger" id="currentac">0.0 A</h2>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" id="currentdcwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-danger" role="progressbar" id="currentacwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -302,16 +277,16 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-fire"></i></h3>
-                                                    <p class="text-danger" id="puissancedctitle">PUISSANCE DC</p>
+                                                    <p class="text-danger" id="puissanceactitle">PUISSANCE AC</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="puissancedc">0.0 W</h2>
+                                                <h2 class="counter text-danger" id="puissanceac">0.0 W</h2>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="puissancedcwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" id="puissanceacwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -323,10 +298,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">TENSION DC</h5>
+                                        <h5 class="card-title ">TENSION AC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-purple"></i> Tension moyenne: <?php echo getaverage($voltagedcrows); ?> V</li>
+                                                <li><i class="fa fa-circle text-purple"></i> Tension moyenne: <?php echo getaverage($voltageacrows); ?> V</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -340,10 +315,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">COURANT DC</h5>
+                                        <h5 class="card-title ">COURANT AC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-primary"></i> Courant DC moyenne: <?php echo getaverage($currentdcrows); ?> A</li>
+                                                <li><i class="fa fa-circle text-primary"></i> COURANT AC moyenne: <?php echo getaverage($currentacrows); ?> A</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -357,10 +332,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">PUISSANCE DC</h5>
+                                        <h5 class="card-title ">PUISSANCE AC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Puissance DC moyenne: <?php echo (getaverage($currentdcrows)*getaverage($voltagedcrows));?> W</li>
+                                                <li><i class="fa fa-circle text-info"></i> Puissance AC moyenne: <?php echo (getaverage($currentacrows)*getaverage($voltageacrows));?> W</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -392,45 +367,45 @@
                 Morris.Area({
                     element: 'morris-area-chart'
                     , data: [{
-                            period: <?php echo "'".SHM($voltagedcrows[0]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[0]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[0]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($voltagedcrows[1]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[1]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[1]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($voltagedcrows[2]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[2]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[2]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($voltagedcrows[3]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[3]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[3]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[3]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($voltagedcrows[4]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[4]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[4]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($voltagedcrows[5]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[5]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[5]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[5]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($voltagedcrows[6]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[6]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[6]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($voltagedcrows[7]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[7]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[7]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($voltagedcrows[8]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[8]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[8]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($voltagedcrows[9]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[9]['UNIXDATE'])."'"; ?>
+                            , voltageac: <?php echo $voltageacrows[9]['VALUE']; ?>
                     }]
                     , xkey: 'period'
-                    , ykeys: ['tensiondc']
-                    , labels: ['Tension DC']
+                    , ykeys: ['voltageac']
+                    , labels: ['Tension AC']
                     , parseTime: false
-                    , ymax: 25
+                    , ymax: 440
                     , pointSize: 3
                     , fillOpacity: 0
                     , pointStrokeColors: ['#ab8ce4']
@@ -445,43 +420,43 @@
                 Morris.Area({
                     element: 'morris-area-chart1'
                     , data: [{
-                            period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[0]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[0]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[1]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[1]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[2]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[2]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[3]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[3]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[3]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[4]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[4]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[5]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[5]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[5]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[5]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[6]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[6]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[7]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[7]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[8]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[8]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentacrows[9]['UNIXDATE'])."'"; ?>
+                            , currentac: <?php echo $currentacrows[9]['VALUE']; ?>
                     }]
                     , xkey: 'period'
-                    , ykeys: ['currentdc']
-                    , labels: ['Courant DC']
+                    , ykeys: ['currentac']
+                    , labels: ['Courant AC']
                     , parseTime: false
                     , pointSize: 3
                     , fillOpacity: 0
@@ -496,43 +471,43 @@
             Morris.Area({
                 element: 'morris-area-chart7'
                 , data: [{
-                        period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[0]['VALUE']*$voltagedcrows[0]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[0]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[0]['VALUE']*$voltageacrows[0]['VALUE']; ?>
                 }, {
-                        period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[1]['VALUE']*$voltagedcrows[1]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[1]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[1]['VALUE']*$voltageacrows[1]['VALUE']; ?>
                 }, {
-                        period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[2]['VALUE']*$voltagedcrows[2]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[2]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[2]['VALUE']*$voltageacrows[2]['VALUE']; ?>
                 }, {
-                        period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[3]['VALUE']*$voltagedcrows[3]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[3]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[3]['VALUE']*$voltageacrows[3]['VALUE']; ?>
                 }, {
-                        period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[4]['VALUE']*$voltagedcrows[4]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[4]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[4]['VALUE']*$voltageacrows[4]['VALUE']; ?>
                 }, {
-                        period: <?php echo "'".SHM($currentdcrows[5]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[5]['VALUE']*$voltagedcrows[5]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[5]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[5]['VALUE']*$voltageacrows[5]['VALUE']; ?>
                 }
                     , {
-                        period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[6]['VALUE']*$voltagedcrows[6]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[6]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[6]['VALUE']*$voltageacrows[6]['VALUE']; ?>
                 }
                 ,{
-                        period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[7]['VALUE']*$voltagedcrows[7]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[7]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[7]['VALUE']*$voltageacrows[7]['VALUE']; ?>
                 }
                 ,{
-                        period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[8]['VALUE']*$voltagedcrows[8]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[8]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[8]['VALUE']*$voltageacrows[8]['VALUE']; ?>
                 }
                 ,{
-                        period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[9]['VALUE']*$voltagedcrows[9]['VALUE']; ?>
+                        period: <?php echo "'".SHM($currentacrows[9]['UNIXDATE'])."'"; ?>
+                        , puissanceac: <?php echo $currentacrows[9]['VALUE']*$voltageacrows[9]['VALUE']; ?>
                 }]
                 , xkey: 'period'
-                , ykeys: ['puissancedc']
-                , labels: ['PUISSANCE DC']
+                , ykeys: ['puissanceac']
+                , labels: ['PUISSANCE AC']
                 , parseTime: false
                 , pointSize: 3
                 , fillOpacity: 0
@@ -551,76 +526,59 @@
                 type: 'post',
                 dataType: "json",
                 success: function (response) {
-                    document.getElementById('batterie').innerHTML = response.battery + " %";
-                    document.getElementById('batteriewidth').setAttribute("style", "width: " + response.batterywidth + "%; height: 6px;");
-                    if(response.batterie < 20) {
-                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-danger");
-                        document.getElementById('batterie').setAttribute("class", "counter text-danger");
-                        document.getElementById('batterietitle').setAttribute("class", "text-danger");
+
+                    document.getElementById('voltageac').innerHTML = "220 V";
+                    document.getElementById('voltageacwidth').setAttribute("style", "width: 100%; height: 6px;");
+                    /*if(response.voltageac < 14) {
+                        document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('voltageac').setAttribute("class", "counter text-danger");
+                        document.getElementById('voltageactitle').setAttribute("class", "text-danger");
                     }
-                    else if(response.batterie < 50) {
-                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-primary");
-                        document.getElementById('batterie').setAttribute("class", "counter text-primary");
-                        document.getElementById('batterietitle').setAttribute("class", "text-primary");
+                    else if(response.voltageac < 20) {
+                        document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('voltageac').setAttribute("class", "counter text-primary");
+                        document.getElementById('voltageactitle').setAttribute("class", "text-primary");
+                    }
+                    else {*/
+                        document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('voltageac').setAttribute("class", "counter text-success");
+                        document.getElementById('voltageactitle').setAttribute("class", "text-success");
+                    //}
+
+                    document.getElementById('currentac').innerHTML = response.currentac + " A";
+                    document.getElementById('currentacwidth').setAttribute("style", "width: " + response.cacwidth*100/4 + "%; height: 6px;");
+                    if(response.currentac < 1) {
+                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('currentac').setAttribute("class", "counter text-success");
+                        document.getElementById('currentactitle').setAttribute("class", "text-success");
+                    }
+                    else if(response.currentac < 2.75) {
+                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('currentac').setAttribute("class", "counter text-primary");
+                        document.getElementById('currentactitle').setAttribute("class", "text-primary");
                     }
                     else {
-                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-success");
-                        document.getElementById('batterie').setAttribute("class", "counter text-success");
-                        document.getElementById('batterietitle').setAttribute("class", "text-success");
+                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('currentac').setAttribute("class", "counter text-danger");
+                        document.getElementById('currentactitle').setAttribute("class", "text-danger");
                     }
 
-                    document.getElementById('voltagedc').innerHTML = response.voltagedc + " V";
-                    document.getElementById('tensiondcwidth').setAttribute("style", "width: " + response.voltagedcwidth + "%; height: 6px;");
-                    if(response.voltagedc < 14) {
-                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-danger");
-                        document.getElementById('voltagedc').setAttribute("class", "counter text-danger");
-                        document.getElementById('voltagedctitle').setAttribute("class", "text-danger");
+                    document.getElementById('puissanceac').innerHTML = (220*response.currentac) + " W";
+                    document.getElementById('puissanceacwidth').setAttribute("style", "width: " + ((220*response.currentac)*100)/1000 + "%; height: 6px;");
+                    if((220*response.currentac) > 600) {
+                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('puissanceac').setAttribute("class", "counter text-danger");
+                        document.getElementById('puissanceactitle').setAttribute("class", "text-danger");
                     }
-                    else if(response.voltagedc < 20) {
-                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-primary");
-                        document.getElementById('voltagedc').setAttribute("class", "counter text-primary");
-                        document.getElementById('voltagedctitle').setAttribute("class", "text-primary");
+                    else if((220*response.currentac) < 600) {
+                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('puissanceac').setAttribute("class", "counter text-primary");
+                        document.getElementById('puissanceactitle').setAttribute("class", "text-primary");
                     }
-                    else if(response.voltagedc >= 20){
-                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-success");
-                        document.getElementById('voltagedc').setAttribute("class", "counter text-success");
-                        document.getElementById('voltagedctitle').setAttribute("class", "text-success");
-                    }
-
-                    document.getElementById('currentdc').innerHTML = response.currentdc + " A";
-                    document.getElementById('currentdcwidth').setAttribute("style", "width: " + response.cdcwidth + "%; height: 6px;");
-                    if(response.currentdc < 15) {
-                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-success");
-                        document.getElementById('currentdc').setAttribute("class", "counter text-success");
-                        document.getElementById('currentdctitle').setAttribute("class", "text-success");
-                    }
-                    else if(response.currentdc < 25) {
-                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-primary");
-                        document.getElementById('currentdc').setAttribute("class", "counter text-primary");
-                        document.getElementById('currentdctitle').setAttribute("class", "text-primary");
-                    }
-                    else if(response.currentdc >= 25) {
-                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-danger");
-                        document.getElementById('currentdc').setAttribute("class", "counter text-danger");
-                        document.getElementById('currentdctitle').setAttribute("class", "text-danger");
-                    }
-
-                    document.getElementById('puissancedc').innerHTML = (response.voltagedc*response.currentdc) + " W";
-                    document.getElementById('puissancedcwidth').setAttribute("style", "width: " + ((response.voltagedc*response.currentdc)*100)/720 + "%; height: 6px;");
-                    if((response.voltagedc*response.currentdc) > 600) {
-                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-danger");
-                        document.getElementById('puissancedc').setAttribute("class", "counter text-danger");
-                        document.getElementById('puissancedctitle').setAttribute("class", "text-danger");
-                    }
-                    else if((response.voltagedc*response.currentdc) > 300) {
-                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-primary");
-                        document.getElementById('puissancedc').setAttribute("class", "counter text-primary");
-                        document.getElementById('puissancedctitle').setAttribute("class", "text-primary");
-                    }
-                    else {
-                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-success");
-                        document.getElementById('puissancedc').setAttribute("class", "counter text-success");
-                        document.getElementById('puissancedctitle').setAttribute("class", "text-success");
+                    else if((220*response.currentac) < 200) {
+                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('puissanceac').setAttribute("class", "counter text-success");
+                        document.getElementById('puissanceactitle').setAttribute("class", "text-success");
                     }
                 }});
             }

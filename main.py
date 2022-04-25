@@ -16,7 +16,7 @@
 ## 
 #    ScriptName    : PFE.py
 #    Author        : BOUELKHEIR Yassine
-#    Version       : 1.0
+#    Version       : 2.0
 #    Created       : 18/03/2022
 #    License       : GNU General v3.0
 #    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
@@ -33,12 +33,96 @@ db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
 rowcounts = 22
-lastquerytime = 0
-addedrows = 0
+lastquerytime = [0,0,0,0,0,0,0,0]
+
+def getquerytime(x, y=0):
+	global lastquerytime
+	if y == 0
+		if x == 54 :
+			return lastquerytime[0]
+		elif x == 56: # DC
+			return lastquerytime[1]
+		elif x == 55: # DC
+			return lastquerytime[2]
+		elif x == 60: # AC
+			return lastquerytime[3]
+		elif x == 57: # AC
+			return lastquerytime[4]
+		elif x == 61: # Temp
+			return lastquerytime[5]
+		elif x == 58: # Brightness
+			return lastquerytime[6]
+		elif x == 59: # Humidity
+			return lastquerytime[7]
+		elif x == 62: # Wind Speed
+			return lastquerytime[8]
+	elif y == 1
+		if x == 54 : # DC
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 1 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[0] = time.time() + row[0];
+				break;
+		elif x == 56: # DC
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 1 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[1] = time.time() + row[0];
+				break;
+		elif x == 55: # AC
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 2 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[2] = time.time() + row[0];
+				break;
+		elif x == 60: # AC
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 2 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[3] = time.time() + row[0];
+				break;
+		elif x == 57: # Temp
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 3 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[4] = time.time() + row[0];
+				break;
+		elif x == 61: # Temp
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 3 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[5] = time.time() + row[0];
+				break;
+		elif x == 58: # Brightness
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 4 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[6] = time.time() + row[0];
+				break;
+		elif x == 59: # Humidity
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 5 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[7] = time.time() + row[0];
+				break;
+		elif x == 62: # Wind Speed
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[8] = time.time() + row[0];
+				break;
+
 def receiverHandler():
 	global rowcounts
-	global lastquerytime
-	global addedrows 
 	print('Running. Press CTRL-C to exit.')
 	time.sleep(0.1) #wait for serial to open
 	if arduino.isOpen():
@@ -65,7 +149,7 @@ def receiverHandler():
 					datasplitted = decodedanswer.split(' ')
 					
 					if datasplitted[0] == 'setsensor':
-						if time.time() < lastquerytime:
+						if time.time() < getquerytime(datasplitted[1]):
 							cursor = db.cursor(buffered=True)
 							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
 							db.commit()
@@ -78,11 +162,7 @@ def receiverHandler():
 							sql = "INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")"
 							cursor.execute(sql)
 							db.commit()
-							addedrows += 1
-							if addedrows == 6:
-								lastquerytime = time.time()+120
-								addedrows = 0
-								
+							getquerytime(datasplitted[1], 1)
 							time.sleep(0.025)
 						
 					elif datasplitted[0] == 'setcharge':

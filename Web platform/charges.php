@@ -16,7 +16,7 @@
 <!--
    ScriptName    : charges.php
    Author        : BOUELKHEIR Yassine
-   Version       : 1.0
+   Version       : 2.0
    Created       : 18/03/2022
    License       : GNU General v3.0
    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
@@ -55,7 +55,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="author" content="BOUELKHEIR Yassine">
-        <!-- <meta http-equiv="refresh" content="90"> -->
+        <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - Charges</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
@@ -99,34 +99,41 @@
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
                             <li class="user-pro">
-                                <img src="../assets/images/logo.png" alt="user-img" height="110" width="215">
+                                <img src="../assets/images/logo.png" alt="user-img" height="110" width="210">
                             </li>
-                            <br>
                             <li class="user-pro text-center">
-                                <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="111" width="150">
+                                <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="120" width="140" style="margin-right: 13px;">
                             </li>
-                            <li class="nav-small-cap">--- MAIN MENU</li>
-                            <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="icon-speedometer"></i>
-                                <span class="hide-menu">Statistiques </span></a>
+                            <li class="nav-small-cap">--- Menu Principal</li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-bolt"></i>
+                                <span class="hide-menu">Courant Faible</span></a>
                             </li>
-                            <li> <a class="waves-effect waves-dark active" href="charges.php" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Charges<span class="badge badge-pill badge-cyan ml-auto"> <?php echo $activecharge; ?> / 4</span></span></a>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
+                                <span class="hide-menu">Courant Fort</span></a>
                             </li>
-                            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-cloud-download"></i><span class="hide-menu">Exporter</span></a>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
+                                <span class="hide-menu">Météorologie</span></a>
+                            </li>
+                            <li> <a class="waves-effect waves-dark active" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> Charges</span></a>
+                            </li>
+                            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-download"></i><span class="hide-menu"> Exporter</span></a>
                                 <ul aria-expanded="false" class="collapse">
-                                    <li><a href="exportData.php?interval=3600&location=0">Dernière heure</a></li>
-                                    <li><a href="exportData.php?interval=86400&location=0">Aujourd'hui</a></li>
-                                    <li><a href="exportData.php?interval=2592000&location=0">Le mois dernier</a></li>
-                                    <li><a href="exportData.php?interval=15552000&location=0">Les 6 derniers mois</a></li>
-                                    <li><a href="exportData.php?interval=31104000&location=0">Cette année</a></li>
-                                    <li><a href="exportData.php?interval=0&location=0">Exporter tout</a></li>
+                                    <li><a href="exportData.php?interval=3600&location=1">Dernière heure</a></li>
+                                    <li><a href="exportData.php?interval=86400&location=1">Aujourd'hui</a></li>
+                                    <li><a href="exportData.php?interval=2592000&location=1">Le mois dernier</a></li>
+                                    <li><a href="exportData.php?interval=15552000&location=1">Les 6 derniers mois</a></li>
+                                    <li><a href="exportData.php?interval=31104000&location=1">Cette année</a></li>
+                                    <li><a href="exportData.php?interval=0&location=1">Exporter tout</a></li>
                                 </ul>
                             </li>
-                            <li> <a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Logout</span></a>
+                            <li><a class="waves-effect waves-dark" href="userhistory.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> History</span></a>
                             </li>
-                            <br></br><br></br><br></br><br>
-                            <br></br><br></br><br></br></br><br>
-                            <li class="user-pro text-center">
-                                <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="111" width="150">
+                            <li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a>
+                            </li>
+                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> Déconnexion</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -136,7 +143,7 @@
                 <div class="container-fluid">
                     <div class="row page-titles">
                         <div class="col-md-5 align-self-center">
-                            <h4 class="text-themecolor">Data Logger v1.0</h4>
+                            <h4 class="text-themecolor">Data Logger v2.0</h4>
                         </div>
                         <div class="col-md-7 align-self-center text-right">
                             <div class="d-flex justify-content-end align-items-center">
@@ -157,7 +164,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN1</h4>
-                                                        <h2 class="text-center">Charge 1</h2>
+                                                        <h3 class="text-center"><strong><?php echo  $rows[0]['NAME'] ?></strong></h3>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -183,7 +190,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN2</h4>
-                                                        <h2 class="text-center">Charge 2</h2>
+                                                        <h3 class="text-center"><strong><?php echo  $rows[1]['NAME'] ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -209,7 +216,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN3</h4>
-                                                        <h2 class="text-center">Charge 3</h2>
+                                                        <h3 class="text-center"><strong><?php echo  $rows[2]['NAME'] ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -237,7 +244,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN4</h4>
-                                                        <h2 class="text-center">Charge 4</h2>
+                                                        <h3 class="text-center"><strong><?php echo  $rows[3]['NAME'] ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -263,10 +270,126 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row pricing-plan">
+                                        <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
+                                            <div class="pricing-box">
+                                                <div class="pricing-body">
+                                                    <div class="pricing-header">
+                                                        <h4 class="text-center">Relais PIN: IN5</h4>
+                                                        <h3 class="text-center"><strong><?php echo  $rows[4]['NAME'] ?></strong></h2>
+                                                        <p class="uppercase text-success">Disponible</p>
+                                                    </div>
+                                                    <div class="price-table-content">
+                                                        <?php 
+                                                            if($rows[4]['VALUE'] == 0)
+                                                            {
+                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=26&value=1'\">Allumer</button>");
+                                                            }
+                                                            else
+                                                            {
+                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=26&value=0'\">Éteindre</button>");                                                               
+                                                            }
+                                                        ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
+                                            <div class="pricing-box">
+                                                <div class="pricing-body">
+                                                    <div class="pricing-header">
+                                                        <h4 class="text-center">Relais PIN: IN6</h4>
+                                                        <h3 class="text-center"><strong><?php echo  $rows[5]['NAME'] ?></strong></h2>
+                                                        <p class="uppercase text-success">Disponible</p>
+                                                    </div>
+                                                    <div class="price-table-content">
+                                                        <?php 
+                                                            if($rows[5]['VALUE'] == 0)
+                                                            {
+                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=27&value=1'\">Allumer</button>");
+                                                            }
+                                                            else
+                                                            {
+                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=27&value=0'\">Éteindre</button>");                                                            
+                                                            }
+                                                        ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
+                                            <div class="pricing-box">
+                                                <div class="pricing-body">
+                                                    <div class="pricing-header">
+                                                        <h4 class="text-center">Relais PIN: IN7</h4>
+                                                        <h3 class="text-center"><strong><?php echo  $rows[6]['NAME'] ?></strong></h2>
+                                                        <p class="uppercase text-success">Disponible</p>
+                                                    </div>
+                                                    <div class="price-table-content">
+                                                        <?php 
+                                                            if($rows[6]['VALUE'] == 0)
+                                                            {
+                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
+
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=28&value=1'\">Allumer</button>");
+                                                            }
+                                                            else
+                                                            {
+                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
+
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=28&value=0'\">Éteindre</button>");                                                           
+                                                            }
+                                                        ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
+                                            <div class="pricing-box">
+                                                <div class="pricing-body">
+                                                    <div class="pricing-header">
+                                                        <h4 class="text-center">Relais PIN: IN8</h4>
+                                                        <h3 class="text-center"><strong><?php echo  $rows[7]['NAME'] ?></strong></h2>
+                                                        <p class="uppercase text-success">Disponible</p>
+                                                    </div>
+                                                    <div class="price-table-content">
+                                                        <?php 
+                                                            if($rows[7]['VALUE'] == 0)
+                                                            {
+                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=29&value=1'\">Allumer</button>");
+                                                            }
+                                                            else
+                                                            {
+                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["username"] == "admin") echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=29&value=0'\">Éteindre</button>");                                              
+                                                            }
+                                                        ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="footer">
-                © 2022 Data Logger by <a href="https://www.linkedin.com/in/yassine-bouelkheir/">BOUELKHEIR Yassine</a>
+                © 2022 Data Logger v2.0 by <a href="https://www.linkedin.com/in/yassine-bouelkheir/">BOUELKHEIR Yassine</a>
             </footer>
         </div>
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>

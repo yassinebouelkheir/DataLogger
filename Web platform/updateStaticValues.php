@@ -17,7 +17,7 @@
     $data['battery'] = $batterie;
     $data['batterywidth'] = $batterie;
 
-    $data['voltagedc'] = $staticrows[2]['VALUE'];
+    $data['voltagedc'] = number_format($staticrows[2]['VALUE'], 1);
     $data['voltagedcwidth'] = ((($staticrows[2]['VALUE']-12)*100)/13);
 
     $data['currentac'] = number_format($staticrows[1]['VALUE'], 1);
@@ -26,13 +26,13 @@
     $data['currentdc'] = number_format($staticrows[0]['VALUE'], 1);
     $data['cdcwidth'] = (($staticrows[0]['VALUE']*100)/30);
 
-    $data['temperature'] = $temperature;
+    $data['temperature'] = number_format($temperature, 0);
     $data['temwidth'] = (($temperature*100)/60);
 
-    $data['brightness'] = round($staticrows[4]['VALUE']);
+    $data['brightness'] = number_format(round($staticrows[4]['VALUE']), 0);
     $data['brightneswidth'] = $staticrows[4]['VALUE'];
 
-    $data['humidity'] = round($staticrows[5]['VALUE']);
+    $data['humidity'] = number_format(round($staticrows[5]['VALUE']), 0);
     $data['humidtywidth'] = $staticrows[5]['VALUE'];
 	echo json_encode($data);
 

@@ -44,9 +44,13 @@ cd LCD-show/
 sudo dpkg -i -B xinput-calibrator_0.7.5-1_armhf.deb
 
 cd LCD-show/
-sudo ./rotate.sh 90
+sudo ./rotate.sh 0
 
 mkdir /home/pi/.config/lxsession
 mkdir /home/pi/.config/lxsession/LXDE-pi
 cp /etc/xdg/lxsession/LXDE-pi/autostart /home/pi/.config/lxsession/LXDE-pi/
 nano /home/pi/.config/lxsession/LXDE-pi/autostart
+
+
+
+

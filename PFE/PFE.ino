@@ -37,12 +37,14 @@
 #define LED_STATE_READY_PIN     (30)
 #define LED_STATE_ACT_PIN       (31)
 
-#define CURRENTDC_SENSOR_PIN    (A0) // 54
-#define CURRENTAC_SENSOR_PIN    (A1) // 55
-#define VOLTAGEDC_SENSOR_PIN    (A2) // 56
-#define TEMP_SENSOR_PIN         (A3) // 57
-#define BRIGHTNESS_SENSOR_PIN   (A4) // 58
-#define HUMIDITY_SENSOR_PIN     (A5) // 59
+#define CURRENTDC_SENSOR_PIN    (54)
+#define CURRENTAC_SENSOR_PIN    (55)
+#define VOLTAGEDC_SENSOR_PIN    (56)
+#define TEMP_SENSOR_PIN         (57)
+#define BRIGHTNESS_SENSOR_PIN   (58)
+#define HUMIDITY_SENSOR_PIN     (59)
+#define VOLTAGEAC_SENSOR_PIN    (60)
+#define WINDMETER_SENSOR_PIN    (62)
 
 float VOLTAGEDC_RESISTOR1 = 30000.0;
 float VOLTAGEDC_RESISTOR2 = 7500.0;
