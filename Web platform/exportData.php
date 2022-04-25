@@ -45,6 +45,28 @@
     if (isset($_GET['interval'])) 
     {
         $mysqli = new mysqli("localhost", "root", "", "PFE");
+
+        $query = 'SELECT * FROM `EXPORTATIONTYPE` WHERE 1 LIMIT 1';
+        $result = $mysqli->query($query) or die($mysqli->error);
+        $exporttyperows = array();
+        while($row = $result->fetch_assoc()) {
+            $exporttyperows[] = $row;
+        }
+        $result->free();
+        if($exporttyperows[0]['TYPE'] == 0)
+        {
+          echo '<html>
+                  <head>
+                    <meta http-equiv="refresh" content="2; url=index.php"/>
+                  </head>
+                  <body>
+                    <h1>Exportation des données est désactivé pour le moment.</h1>
+                    <h2>Merci de contacter votre administrateur pour tout information.</h2>
+                  </body>
+                </html>';
+          die();
+        }
+
         $interval = stripslashes($_GET['interval']);
         $interval = mysqli_real_escape_string($mysqli, $interval);
 
@@ -138,13 +160,21 @@
         $objPHPExcel->getActiveSheet()->getPageMargins()->setRight(0.6);
         $objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.6);
         $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(1.9);
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="DataLogger_'.strftime('%d-%m-%Y').'.xlsx"');
-        header('Cache-Control: max-age=0');
-        $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
-        $writer = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
-        ob_end_clean();
-        $writer->save('php://output');
+
+        if($exporttyperows[0]['TYPE'] == 1)
+        {
+          header('Content-Type: application/vnd.ms-excel');
+          header('Content-Disposition: attachment;filename="DataLogger_'.strftime('%d-%m-%Y').'.xlsx"');
+          header('Cache-Control: max-age=0');
+          $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
+          $writer = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
+          ob_end_clean();
+          $writer->save('php://output');
+        }
+        else if($exporttyperows[0]['TYPE'] == 2)
+        {
+          echo "PDF Test";
+        }
         exit();
     }
 ?>

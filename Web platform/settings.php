@@ -26,27 +26,277 @@
 <html lang="en">
     <?php
         session_start();
-        if(!isset($_SESSION["username"])) 
+        if(!isset($_SESSION["username"]) || $_SESSION["username"] != "admin") 
         {
             header("Location: login.php");
             exit();
         }
-        $mysqli = new mysqli("localhost", "root", "", "PFE");   
+
+        $mysqli = new mysqli("localhost", "root", "", "PFE");
+
+        $errormessage1 = "";
+        $errormessage2 = "";
+        $errormessage3 = "";
+        $errormessage4 = "";
+        $errormessage5 = "";
+        $errormessage6 = "";
+
+        if(!empty($_POST["updatetime1"]) && 
+            !empty($_POST["updatetime2"]) && 
+            !empty($_POST["updatetime3"]) && 
+            !empty($_POST["updatetime4"]) && 
+            !empty($_POST["updatetime5"]) && 
+            !empty($_POST["updatetime6"]))
+        {
+            if(($_POST["updatetime1"] < 1) || 
+            ($_POST["updatetime2"] < 1) || 
+            ($_POST["updatetime3"] < 1) || 
+            ($_POST["updatetime4"] < 1) || 
+            ($_POST["updatetime5"] < 1) || 
+            ($_POST["updatetime6"] < 1))
+            {
+                $errormessage4 =  "Le temps d'enregistrement ne peut pas être inférieur à 1 minute."; 
+            }
+            else
+            {
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime1"].' WHERE ID = 1';
+                $mysqli->query($query) or die($mysqli->error); 
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime2"].' WHERE ID = 2';
+                $mysqli->query($query) or die($mysqli->error);
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime3"].' WHERE ID = 3';
+                $mysqli->query($query) or die($mysqli->error);
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime4"].' WHERE ID = 4';
+                $mysqli->query($query) or die($mysqli->error);
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime5"].' WHERE ID = 5';
+                $mysqli->query($query) or die($mysqli->error);
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime6"].' WHERE ID = 6';
+                $mysqli->query($query) or die($mysqli->error);
+            }     
+        } 
+
+        if(!empty($_POST["chargename1"]) && 
+            !empty($_POST["chargename2"]) && 
+            !empty($_POST["chargename3"]) && 
+            !empty($_POST["chargename4"]) && 
+            !empty($_POST["chargename5"]) && 
+            !empty($_POST["chargename6"]) && 
+            !empty($_POST["chargename7"]) && 
+            !empty($_POST["chargename8"]))
+        {
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename1"]."' WHERE ID = 22";
+            $mysqli->query($query) or die($mysqli->error); 
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename2"]."' WHERE ID = 23";
+            $mysqli->query($query) or die($mysqli->error);
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename3"]."' WHERE ID = 24";
+            $mysqli->query($query) or die($mysqli->error);
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename4"]."' WHERE ID = 25";
+            $mysqli->query($query) or die($mysqli->error);
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename5"]."' WHERE ID = 26";
+            $mysqli->query($query) or die($mysqli->error);
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename6"]."' WHERE ID = 27";
+            $mysqli->query($query) or die($mysqli->error);
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename7"]."' WHERE ID = 28";
+            $mysqli->query($query) or die($mysqli->error);     
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename8"]."' WHERE ID = 29";
+            $mysqli->query($query) or die($mysqli->error);      
+        } 
+
+        if(!empty($_POST['ExportationFormat']))
+        {
+            switch($_POST['ExportationFormat'])
+            {
+                case 1:
+                {
+                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);                     
+                    break;
+                }
+                case 2:
+                {
+                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 2 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);                     
+                    break;
+                }
+                default: 
+                {
+                    $errormessage6 = "Votre choix n'est pas valide, veuillez réessayer.";
+                    break;
+                }
+            }
+        }
+
+        if(!empty($_POST['ExportationFormat']))
+        {
+            switch($_POST['ExportationFormat'])
+            {
+                case 1:
+                {
+                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);                     
+                    break;
+                }
+                case 2:
+                {
+                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 2 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);                     
+                    break;
+                }
+                default: 
+                {
+                    $errormessage6 = "Votre choix n'est pas valide, veuillez réessayer.";
+                    break;
+                }
+            }
+        }
+
+        if(!empty($_POST['InputLowLevel']))
+        {
+            switch($_POST['InputLowLevel'])
+            {
+                case 1:
+                {
+                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 0 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);                     
+                    break;
+                }
+                case 2:
+                {
+                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);                     
+                    break;
+                }
+                case 3:
+                {
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 1' WHERE ID = 22";
+                    $mysqli->query($query) or die($mysqli->error); 
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 2' WHERE ID = 23";
+                    $mysqli->query($query) or die($mysqli->error);
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 3' WHERE ID = 24";
+                    $mysqli->query($query) or die($mysqli->error);
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 4' WHERE ID = 25";
+                    $mysqli->query($query) or die($mysqli->error);
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 5' WHERE ID = 26";
+                    $mysqli->query($query) or die($mysqli->error);
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 6' WHERE ID = 27";
+                    $mysqli->query($query) or die($mysqli->error);
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 7' WHERE ID = 28";
+                    $mysqli->query($query) or die($mysqli->error);     
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 8' WHERE ID = 29";
+                    $mysqli->query($query) or die($mysqli->error);       
+
+                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);   
+
+                    $query = "UPDATE `SENSORS_STATIC` SET `VALUE` = 0 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);       
+
+                    $query = "UPDATE `UPDATETIME` SET `TIME` = 2 WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);
+
+                    $query = "DELETE FROM `SENSORS` WHERE 1";
+                    $mysqli->query($query) or die($mysqli->error);
+                    $query = "INSERT INTO `SENSORS` (`ID`, `VALUE`, `UNIXDATE`) VALUES
+                        (57, 0, 1648582167),
+                        (59, 0, 1648582167),
+                        (58, 0, 1648582168),
+                        (54, 0, 1648582168),
+                        (55, 0, 1648582168),
+                        (56, 0, 1648582168),
+                        (57, 0, 1648582168),
+                        (59, 0, 1648582168),
+                        (58, 0, 1648582168),
+                        (54, 0, 1648582168),
+                        (55, 0, 1648582168),
+                        (56, 0, 1648582169),
+                        (57, 0, 1648582169),
+                        (59, 0, 1648582169),
+                        (58, 0, 1648582169),
+                        (54, 0, 1648582169),
+                        (55, 0, 1648582169),
+                        (56, 0, 1648582169),
+                        (57, 0, 1648582169),
+                        (59, 0, 1648582170),
+                        (58, 0, 1648582170),
+                        (54, 0, 1648582170),
+                        (55, 0, 1648582170),
+                        (56, 0, 1648582170),
+                        (57, 0, 1648582170),
+                        (59, 0, 1648582170),
+                        (58, 0, 1648582170),
+                        (54, 0, 1648582171),
+                        (55, 0, 1648582171),
+                        (56, 0, 1648582171),
+                        (57, 0, 1648582171),
+                        (59, 0, 1648582171),
+                        (58, 0, 1648582171),
+                        (54, 0, 1648582171),
+                        (55, 0, 1648582171),
+                        (56, 0, 1648582171),
+                        (57, 0, 1648582172),
+                        (59, 0, 1648582172),
+                        (58, 0, 1648582172),
+                        (54, 0, 1648582172),
+                        (55, 0, 1648582172),
+                        (56, 0, 1648582172),
+                        (57, 0, 1648582172),
+                        (59, 0, 1648582173),
+                        (58, 0, 1648582173),
+                        (54, 0, 1648582173),
+                        (55, 0, 1648582173),
+                        (56, 0, 1648582173),
+                        (57, 0, 1648582173),
+                        (59, 0, 1648582173),
+                        (58, 0, 1648582173),
+                        (54, 0, 1648582173),
+                        (55, 0, 1648582174),
+                        (56, 0, 1648582174),
+                        (57, 0, 1648582174),
+                        (59, 0, 1648582174),
+                        (58, 0, 1648582174),
+                        (54, 0, 1648582174),
+                        (55, 0, 1648582174),
+                        (56, 0, 1648582174);";
+                    $mysqli->query($query) or die($mysqli->error);         
+                    break;
+                }
+                case 4:
+                {
+                    // Restart                    
+                    break;
+                }
+                default: 
+                {
+                    $errormessage6 = "Votre choix n'est pas valide, veuillez réessayer.";
+                    break;
+                }
+            }
+        }
 
         $query = 'SELECT * FROM `CHARGES` WHERE 1 ORDER BY `ID` ASC';
         $result = $mysqli->query($query) or die($mysqli->error);
-        $rows = array();
+        $chargesrows = array();
         while($row = $result->fetch_assoc()) {
-            $rows[] = $row;
+            $chargesrows[] = $row;
         }
         $result->free();
-        $mysqli->close();
-        $activecharge = 0;
 
-        for($i = 0; $i < 4; $i++)
-        {
-            if($rows[$i]['VALUE'] == 1) $activecharge++;
+        $query = 'SELECT * FROM `UPDATETIME` WHERE 1 ORDER BY `ID` ASC';
+        $result = $mysqli->query($query) or die($mysqli->error);
+        $updatetimerows = array();
+        while($row = $result->fetch_assoc()) {
+            $updatetimerows[] = $row;
         }
+        $result->free();
+
+        $query = 'SELECT * FROM `EXPORTATIONTYPE` WHERE 1 LIMIT 1';
+        $result = $mysqli->query($query) or die($mysqli->error);
+        $exporttyperows = array();
+        while($row = $result->fetch_assoc()) {
+            $exporttyperows[] = $row;
+        }
+        $result->free();
+
+        $mysqli->close();
     ?>
     <head>
         <meta charset="utf-8">
@@ -72,27 +322,27 @@
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">Data logger - Charges</p>
+                <p class="loader__label">Data logger v2.0 - Paramètres</p>
             </div>
         </div>
         <div id="main-wrapper">
             <header class="topbar">
                 <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="settings.php">
                             <span>  
                     </div>
                     <div class="navbar-collapse">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="index.php"><i class="ti-reload"></i></a> </li>
-                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="index.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="settings.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="settings.php"><i class="ti-reload"></i></a> </li>
                         </ul>
 
                         <ul class="navbar-nav my-lg-0">
                             <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down"><?php echo $_SESSION["username"]; ?> &nbsp;<i class="fa fa-angle-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Déconnexion</a>
                                 </div>
                             </li>
                         </ul>
@@ -134,10 +384,11 @@
                                     <li><a href="exportData.php?interval=0&location=1">Exporter tout</a></li>
                                 </ul>
                             </li>
-                            <li><a class="waves-effect waves-dark" href="userhistory.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> History</span></a>
-                            </li>
-                            <li><a class="waves-effect waves-dark active" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a>
-                            </li>
+                            <?php 
+                                if($_SESSION["username"] == "admin") {
+                                    echo'<li><a class="waves-effect waves-dark active" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a></li>';
+                                }
+                            ?>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> Déconnexion</span></a>
                             </li>
                         </ul>
@@ -163,115 +414,44 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Ajouter un nouveau utilisateur</h4>
-                                    <form class="mt-4">
-                                        <div class="form-group">
-                                            <label for="InputNewUser">Nom d'utilisateur</label>
-                                            <input type="text" class="form-control" id="InputNewUser" placeholder="Veuillez saisir un nom d'utilisateur">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="InputNewPassowrd">Mot de passe</label>
-                                            <input type="password" class="form-control" id="InputNewPassowrd" placeholder="Veuillez saisir un mot de passe" autocomplete="on">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Type d'utilisateur</label>
-                                            <select class="custom-select col-12" id="InputPermission">
-                                                <option selected>Selectioner..</option>
-                                                <option value="1">Utilisateur</option>
-                                                <option value="2">Administrateur</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-info">Ajouter</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Réinitialiser le mot de passe</h4>
-                                    <form class="mt-4">
-                                        <div class="form-group">
-                                            <label>Nom d'utilisateur</label>
-                                            <select class="custom-select col-12" id="InputPasswordUser">
-                                                <option selected>Selectioner..</option>
-                                                <option value="1">Utilisateur</option>
-                                                <option value="2">Administrateur</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="InputInitPassowrd">Nouveau Mot de passe</label>
-                                            <input type="password" class="form-control" id="InputInitPassowrd" placeholder="Veuillez saisir un mot de passe" autocomplete="on">
-                                        </div>
-                                        <button type="submit" class="btn btn-info">Réinitialiser</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Supprimer un utilisateur</h4>
-                                    <form class="mt-4">
-                                        <div class="form-group">
-                                            <label>Nom d'utilisateur</label>
-                                            <select class="custom-select col-12" id="InputDeleteUser">
-                                                <option selected>Selectioner..</option>
-                                                <option value="1">Utilisateur</option>
-                                                <option value="2">Administrateur</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
                                     <h4 class="card-title">Modifier le temps d'enregistrement</h4>
                                     <h5 class="card-subtitle"> Veuillez entrer le temps d'enregistrement en minutes. </h5>
-                                    <form class="form">
+                                    <h5 class="card-subtitle text-danger"> <?php echo $errormessage4; ?> </h5>
+                                    <form action="settings.php" method="post" class="form">
                                         <div class="form-group mt-5 row">
                                             <label for="updatetime1" class="col-2 col-form-label">Courant Faible</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="2" id="updatetime1">
+                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[0]['TIME'] ?>" id="updatetime1" name="updatetime1">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="updatetime2" class="col-2 col-form-label">Courant Fort</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="2" id="updatetime2">
+                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[1]['TIME'] ?>" id="updatetime2" name="updatetime2">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="updatetime3" class="col-2 col-form-label">Température</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="2" id="updatetime3">
+                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[2]['TIME'] ?>" id="updatetime3" name="updatetime3">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="updatetime4" class="col-2 col-form-label">Luminosité</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="2" id="updatetime4">
+                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[3]['TIME'] ?>" id="updatetime4" name="updatetime4">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="updatetime5" class="col-2 col-form-label">Humidité</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="2" id="updatetime5">
+                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[4]['TIME'] ?>" id="updatetime5" name="updatetime5">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="updatetime6" class="col-2 col-form-label">Vitesse du vent</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="2" id="updatetime6">
+                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[5]['TIME'] ?>" id="updatetime6" name="updatetime6">
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-success">Mise à jour</button>
@@ -286,53 +466,54 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Modifier les noms des charges</h4>
                                     <h5 class="card-subtitle"> Veuillez ne pas dépassez 24 lettres. </h5>
-                                    <form class="form">
+                                    <h5 class="card-subtitle text-danger"> <?php echo $errormessage5; ?> </h5>
+                                    <form action="settings.php" method="post" class="form">
                                         <div class="form-group mt-5 row">
                                             <label for="chargename1" class="col-2 col-form-label">Relais PIN: IN1</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="Charge X" id="chargename1">
+                                                <input class="form-control" type="search" value="<?php echo $chargesrows[0]['NAME'] ?>" id="chargename1" name="chargename1">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="chargename2" class="col-2 col-form-label">Relais PIN: IN2</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="Charge X" id="chargename2">
+                                                <input class="form-control" type="search" value="<?php echo $chargesrows[1]['NAME'] ?>" id="chargename2" name="chargename2">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="chargename3" class="col-2 col-form-label">Relais PIN: IN3</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="Charge X" id="chargename3">
+                                                <input class="form-control" type="search" value="<?php echo $chargesrows[2]['NAME'] ?>" id="chargename3" name="chargename3">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="chargename4" class="col-2 col-form-label">Relais PIN: IN4</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="Charge X" id="chargename4">
+                                                <input class="form-control" type="search" value="<?php echo $chargesrows[3]['NAME'] ?>" id="chargename4" name="chargename4">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="chargename5" class="col-2 col-form-label">Relais PIN: IN5</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="Charge X" id="chargename5">
+                                                <input class="form-control" type="search" value="<?php echo $chargesrows[4]['NAME'] ?>" id="chargename5" name="chargename5">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="chargename6" class="col-2 col-form-label">Relais PIN: IN6</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="Charge X" id="chargename6">
+                                                <input class="form-control" type="search" value="<?php echo $chargesrows[5]['NAME'] ?>" id="chargename6" name="chargename6">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="chargename7" class="col-2 col-form-label">Relais PIN: IN7</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="Charge X" id="chargename7">
+                                                <input class="form-control" type="search" value="<?php echo $chargesrows[6]['NAME'] ?>" id="chargename7" name="chargename7">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="chargename8" class="col-2 col-form-label">Relais PIN: IN8</label>
                                             <div class="col-10">
-                                                <input class="form-control" type="search" value="Charge X" id="chargename8">
+                                                <input class="form-control" type="search" value="<?php echo $chargesrows[7]['NAME'] ?>" id="chargename8" name="chargename8">
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-success">Mise à jour</button>
@@ -346,12 +527,13 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Exportation</h4>
-                                    <h5 class="card-subtitle"> Changer le format de fichier généré par le plateforme. </h5>
-                                    <form class="mt-4">
+                                    <h5 class="card-subtitle text-info"> <strong>Format d'exportation actuelle: <strong><?php if($exporttyperows[0]['TYPE'] == 1) echo 'Excel'; else if($exporttyperows[0]['TYPE'] == 2) echo 'PDF'; else echo 'Exportation des données est Désactivé'; ?></strong></strong> </h5>
+                                    <h5 class="card-subtitle text-danger"> <?php echo $errormessage6; ?> </h5>
+                                    <form action="settings.php" method="post" class="mt-4">
                                         <div class="form-group">
                                             <label>Format de fichier</label>
-                                            <select class="custom-select col-12" id="InputPasswordUser">
-                                                <option selected>Selectioner..</option>
+                                            <select class="custom-select col-12" id="ExportationFormat" name="ExportationFormat">
+                                                <option value="0" selected>Selectioner..</option>
                                                 <option value="1">Excel</option>
                                                 <option value="2">PDF</option>
                                             </select>
@@ -367,15 +549,16 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Paramètres de niveau bas</h4>
-                                    <h5 class="card-subtitle"> S'il vous plaît soyez prudent avant d'effectuer une commande ici. </h5>
-                                    <form class="mt-4">
+                                    <h5 class="card-subtitle text-danger"> <strong>S'il vous plaît soyez prudent avant d'effectuer une commande ici.</strong> </h5>
+                                    <form action="settings.php" method="post" class="mt-4">
                                         <div class="form-group">
                                             <label>Format de fichier</label>
-                                            <select class="custom-select col-12" id="InputPasswordUser">
-                                                <option selected>Selectioner..</option>
-                                                <option value="1">Redémarrez la plateforme</option>
-                                                <option value="2">Exporter la base de données</option>
+                                            <select class="custom-select col-12" id="InputLowLevel" name="InputLowLevel">
+                                                <option value="0" selected>Selectioner..</option>
+                                                <option value="1">Désactiver l'exportation des données</option>
+                                                <option value="2">Activer l'exportation des données</option>
                                                 <option value="3">Vider la base de données</option>
+                                                <option value="4">Redémarrez la plateforme</option>
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-danger">Exécuter</button>
@@ -393,11 +576,8 @@
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="dist/js/waves.js"></script>
         <script src="dist/js/sidebarmenu.js"></script>
         <script src="dist/js/custom.min.js"></script>
-        <script src="../assets/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
-        <script src="../assets/node_modules/toast-master/js/jquery.toast.js"></script>
         <script src="../assets/node_modules/switchery/dist/switchery.min.js"></script>
     </body>
 </html>

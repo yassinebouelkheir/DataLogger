@@ -51,9 +51,16 @@
         }
         $result->free();
         $mysqli->close();
+        
+        $arrContextOptions=array(
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
+        ); 
 
         $jsonurl = "https://api.openweathermap.org/data/2.5/weather?lat=34.0337&lon=6.7708&lang=fr&appid=36a1abfb8868c3cc0784a4953f738e70";
-        $json = file_get_contents($jsonurl);
+        $json = file_get_contents($jsonurl, false, stream_context_create($arrContextOptions));
 
         setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
         $weather = json_decode($json);
@@ -107,7 +114,6 @@
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - PFE 2021/2022</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
-        <link href="../assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
         <link href="dist/css/style.min.css" rel="stylesheet">
         <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
     </head>
@@ -122,7 +128,7 @@
             <header class="topbar">
                 <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="index.php">
                             <span>  
                     </div>
                     <div class="navbar-collapse">
@@ -135,7 +141,7 @@
                             <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down"><?php echo $_SESSION["username"]; ?> &nbsp;<i class="fa fa-angle-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Déconnexion</a>
                                 </div>
                             </li>
                         </ul>
@@ -177,10 +183,11 @@
                                     <li><a href="exportData.php?interval=0&location=1">Exporter tout</a></li>
                                 </ul>
                             </li>
-                            <li><a class="waves-effect waves-dark" href="userhistory.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> History</span></a>
-                            </li>
-                            <li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a>
-                            </li>
+                            <?php 
+                                if($_SESSION["username"] == "admin") {
+                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a></li>';
+                                }
+                            ?>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> Déconnexion</span></a>
                             </li>
                         </ul>
@@ -378,14 +385,10 @@
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="dist/js/waves.js"></script>
         <script src="dist/js/sidebarmenu.js"></script>
         <script src="dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/raphael/raphael-min.js"></script>
         <script src="../assets/node_modules/morrisjs/morris.min.js"></script>
-        <script src="../assets/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
-        <script src="../assets/node_modules/toast-master/js/jquery.toast.js"></script>
-        <script src="../assets/node_modules/toast-master/js/jquery.toast.js"></script>
         <script type="text/javascript">
             $(function () {
                 "use strict";
