@@ -34,7 +34,7 @@
 
         $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 57 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 5 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query);
         $temprows = array();
         while($row = $result->fetch_assoc()) {
@@ -42,7 +42,15 @@
         }
         $result->free();
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 58 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 6 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $result = $mysqli->query($query);
+        $temp1rows = array();
+        while($row = $result->fetch_assoc()) {
+            $temp1rows[] = $row;
+        }
+        $result->free();
+
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 7 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query);
         $brightnessrows = array();
         while($row = $result->fetch_assoc()) {
@@ -50,12 +58,18 @@
         }
         $result->free();
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 59 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 8 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query);
         $humidityrows = array();
-        $windspeedrows = array();
         while($row = $result->fetch_assoc()) {
             $humidityrows[] = $row;
+        }
+        $result->free();
+
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 9 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $result = $mysqli->query($query);
+        $windspeedrows = array();
+        while($row = $result->fetch_assoc()) {
             $windspeedrows[] = $row;
         }
         $result->free();
@@ -67,7 +81,6 @@
                 "verify_peer_name"=>false,
             ),
         ); 
-
         $jsonurl = "https://api.openweathermap.org/data/2.5/weather?lat=34.0337&lon=6.7708&lang=fr&appid=36a1abfb8868c3cc0784a4953f738e70";
         $json = file_get_contents($jsonurl, false, stream_context_create($arrContextOptions));
 
@@ -468,7 +481,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">VITESSE DU VENT</h5>
+                                        <h5 class="card-title">VITESSE DU VENT</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
                                                 <li><i class="fa fa-circle text-warning"></i> Vitesse moyenne: <?php echo number_format(getaverage($windspeedrows), 0);?> KM/H</li>
@@ -550,39 +563,39 @@
                 Morris.Area({
                     element: 'morris-area-chart1'
                     , data: [{
-                            period: <?php echo "'".SHM($temprows[0]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[0]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[0]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temprows[1]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[1]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[1]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temprows[2]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[2]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[2]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temprows[3]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[3]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[3]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[3]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temprows[4]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[4]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[4]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temprows[5]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[5]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[5]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[5]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($temprows[6]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[6]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[6]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temprows[7]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[7]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[7]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temprows[8]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[8]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[8]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temprows[9]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[9]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[9]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['temp']
@@ -813,7 +826,7 @@
                     dataType: "json",
                     success: function (response) {
                         document.getElementById('temppanneauvalue').innerHTML = response.temperature + " °C";
-                        document.getElementById('temppanneauwidth').setAttribute("style", "width: " + response.temwidth + "%; height: 6px;");
+                        document.getElementById('temppanneauwidth').setAttribute("style", "width: " + response.tempwidth + "%; height: 6px;");
                         if(response.temperature < 25) {
                             document.getElementById('temppanneauwidth').setAttribute("class", "progress-bar bg-success");
                             document.getElementById('temppanneauvalue').setAttribute("class", "counter text-success");
@@ -830,19 +843,19 @@
                             document.getElementById('temppanneau').setAttribute("class", "text-danger");
                         }
 
-                        document.getElementById('tempambiantvalue').innerHTML = response.temperature + " °C";
-                        document.getElementById('tempambiantwidth').setAttribute("style", "width: " + response.temwidth + "%; height: 6px;");
-                        if(response.temperature < 25) {
+                        document.getElementById('tempambiantvalue').innerHTML = response.temperature1 + " °C";
+                        document.getElementById('tempambiantwidth').setAttribute("style", "width: " + response.temp1width + "%; height: 6px;");
+                        if(response.temperature1 < 25) {
                             document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-success");
                             document.getElementById('tempambiantvalue').setAttribute("class", "counter text-success");
                             document.getElementById('tempambiant').setAttribute("class", "text-success");
                         }
-                        else if(response.temperature < 37) {
+                        else if(response.temperature1 < 37) {
                             document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-primary");
                             document.getElementById('tempambiantvalue').setAttribute("class", "counter text-primary");
                             document.getElementById('tempambiant').setAttribute("class", "text-primary");
                         }
-                        else if(response.temperature >= 37) {
+                        else if(response.temperature1 >= 37) {
                             document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('tempambiantvalue').setAttribute("class", "counter text-danger");
                             document.getElementById('tempambiant').setAttribute("class", "text-danger");
@@ -900,6 +913,24 @@
                             document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-success");
                             document.getElementById('irradiationvalue').setAttribute("class", "counter text-success");
                             document.getElementById('irradiation').setAttribute("class", "text-success");
+                        }
+
+                        document.getElementById('windspeedvalue').innerHTML = response.windspeed + " KM/H";
+                        document.getElementById('windspeedwidth').setAttribute("style", "width: " + response.windspeedwidth + "%; height: 6px;");
+                        if(response.windspeed < 10) {
+                            document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('windspeedvalue').setAttribute("class", "counter text-success");
+                            document.getElementById('windspeed').setAttribute("class", "text-success");
+                        }
+                        else if(response.windspeed < 20) {
+                            document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('windspeedvalue').setAttribute("class", "counter text-primary");
+                            document.getElementById('windspeed').setAttribute("class", "text-primary");
+                        }
+                        else if(response.windspeed >= 20) {
+                            document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('windspeedvalue').setAttribute("class", "counter text-danger");
+                            document.getElementById('windspeed').setAttribute("class", "text-danger");
                         }
                         
                     }

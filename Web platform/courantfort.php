@@ -34,7 +34,7 @@
 
         $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 55 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 3 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
         $currentacrows = array();
         while($row = $result->fetch_assoc()) {
@@ -111,7 +111,7 @@
         <meta name="author" content="BOUELKHEIR Yassine">
         <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-        <title>Data logger - PFE 2021/2022</title>
+        <title>Data logger - Courant Fort</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
         <link href="dist/css/style.min.css" rel="stylesheet">
         <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
@@ -573,12 +573,12 @@
                         document.getElementById('puissanceac').setAttribute("class", "counter text-danger");
                         document.getElementById('puissanceactitle').setAttribute("class", "text-danger");
                     }
-                    else if((220*response.currentac) < 600) {
+                    else if((220*response.currentac) < 600 && (220*response.currentac) > 200) {
                         document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('puissanceac').setAttribute("class", "counter text-primary");
                         document.getElementById('puissanceactitle').setAttribute("class", "text-primary");
                     }
-                    else if((220*response.currentac) < 200) {
+                    else if((220*response.currentac) <= 200) {
                         document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('puissanceac').setAttribute("class", "counter text-success");
                         document.getElementById('puissanceactitle').setAttribute("class", "text-success");

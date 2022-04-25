@@ -32,93 +32,94 @@ import os
 db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi", database='PFE') 
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
-rowcounts = 22
+rowcounts = 1
 lastquerytime = [0,0,0,0,0,0,0,0]
 
 def getquerytime(x, y=0):
 	global lastquerytime
 	if y == 0
-		if x == 54 :
+		if x == 1 :
 			return lastquerytime[0]
-		elif x == 56: # DC
+		elif x == 2: # DC
 			return lastquerytime[1]
-		elif x == 55: # DC
+		elif x == 3: # DC
 			return lastquerytime[2]
-		elif x == 60: # AC
+		elif x == 4: # AC
 			return lastquerytime[3]
-		elif x == 57: # AC
+		elif x == 5: # AC
 			return lastquerytime[4]
-		elif x == 61: # Temp
+		elif x == 6: # Temp
 			return lastquerytime[5]
-		elif x == 58: # Brightness
+		elif x == 7: # Brightness
 			return lastquerytime[6]
-		elif x == 59: # Humidity
+		elif x == 8: # Humidity
 			return lastquerytime[7]
-		elif x == 62: # Wind Speed
+		elif x == 9: # Wind Speed
 			return lastquerytime[8]
+
 	elif y == 1
-		if x == 54 : # DC
+		if x == 1 : # DC
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 1 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[0] = time.time() + row[0];
+				lastquerytime[0] = time.time() + row[0]*1000
 				break;
-		elif x == 56: # DC
+		elif x == 2: # DC
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 1 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[1] = time.time() + row[0];
+				lastquerytime[1] = time.time() + row[0]*1000
 				break;
-		elif x == 55: # AC
+		elif x == 3: # AC
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 2 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[2] = time.time() + row[0];
+				lastquerytime[2] = time.time() + row[0]*1000
 				break;
-		elif x == 60: # AC
+		elif x == 4: # AC
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 2 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[3] = time.time() + row[0];
+				lastquerytime[3] = time.time() + row[0]*1000
 				break;
-		elif x == 57: # Temp
+		elif x == 5: # Temp 1 
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 3 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[4] = time.time() + row[0];
+				lastquerytime[4] = time.time() + row[0]*1000
 				break;
-		elif x == 61: # Temp
+		elif x == 6: # Temp 2
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 3 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[5] = time.time() + row[0];
+				lastquerytime[5] = time.time() + row[0]*1000
 				break;
-		elif x == 58: # Brightness
+		elif x == 7: # Brightness
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 4 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[6] = time.time() + row[0];
+				lastquerytime[6] = time.time() + row[0]*1000
 				break;
-		elif x == 59: # Humidity
+		elif x == 8: # Humidity
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 5 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[7] = time.time() + row[0];
+				lastquerytime[7] = time.time() + row[0]*1000
 				break;
-		elif x == 62: # Wind Speed
+		elif x == 9: # Wind Speed
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[8] = time.time() + row[0];
+				lastquerytime[8] = time.time() + row[0]*1000
 				break;
 
 def receiverHandler():
@@ -134,8 +135,8 @@ def receiverHandler():
 				cursor.execute("SELECT ID, VALUE FROM `CHARGES` WHERE ID = " + str(rowcounts))
 				result = cursor.fetchall()
 				rowcounts += 1
-				if rowcounts == 26:
-					rowcounts = 22
+				if rowcounts == 9:
+					rowcounts = 1
 				for row in result:
 					arduino.write(str.encode("setcharge " + str(row[0]) + " " +  str(row[1]) + "\n"));
 					print("B: setcharge " + str(row[0]) + " " +  str(row[1]));
@@ -184,6 +185,6 @@ if __name__ == "__main__":
 	GPIO.output(37, GPIO.LOW)
 	reciever = threading.Thread(target=receiverHandler)
 	reciever.start()
-	print("Data Logger v1.0 python script - PFE 2021/2022");
+	print("Data Logger v2.0 python script - PFE 2021/2022");
 	GPIO.output(37, GPIO.HIGH)
 	reciever.join()

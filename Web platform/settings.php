@@ -83,21 +83,21 @@
             !empty($_POST["chargename7"]) && 
             !empty($_POST["chargename8"]))
         {
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename1"]."' WHERE ID = 22";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename1"]."' WHERE ID = 1";
             $mysqli->query($query) or die($mysqli->error); 
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename2"]."' WHERE ID = 23";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename2"]."' WHERE ID = 2";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename3"]."' WHERE ID = 24";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename3"]."' WHERE ID = 3";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename4"]."' WHERE ID = 25";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename4"]."' WHERE ID = 4";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename5"]."' WHERE ID = 26";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename5"]."' WHERE ID = 5";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename6"]."' WHERE ID = 27";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename6"]."' WHERE ID = 6";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename7"]."' WHERE ID = 28";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename7"]."' WHERE ID = 7";
             $mysqli->query($query) or die($mysqli->error);     
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename8"]."' WHERE ID = 29";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename8"]."' WHERE ID = 8";
             $mysqli->query($query) or die($mysqli->error);      
         } 
 
@@ -167,21 +167,21 @@
                 }
                 case 3:
                 {
-                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 1' WHERE ID = 22";
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 1' WHERE ID = 1";
                     $mysqli->query($query) or die($mysqli->error); 
-                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 2' WHERE ID = 23";
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 2' WHERE ID = 2";
                     $mysqli->query($query) or die($mysqli->error);
-                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 3' WHERE ID = 24";
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 3' WHERE ID = 3";
                     $mysqli->query($query) or die($mysqli->error);
-                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 4' WHERE ID = 25";
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 4' WHERE ID = 4";
                     $mysqli->query($query) or die($mysqli->error);
-                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 5' WHERE ID = 26";
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 5' WHERE ID = 5";
                     $mysqli->query($query) or die($mysqli->error);
-                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 6' WHERE ID = 27";
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 6' WHERE ID = 6";
                     $mysqli->query($query) or die($mysqli->error);
-                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 7' WHERE ID = 28";
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 7' WHERE ID = 7";
                     $mysqli->query($query) or die($mysqli->error);     
-                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 8' WHERE ID = 29";
+                    $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 8' WHERE ID = 8";
                     $mysqli->query($query) or die($mysqli->error);       
 
                     $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
@@ -196,66 +196,96 @@
                     $query = "DELETE FROM `SENSORS` WHERE 1";
                     $mysqli->query($query) or die($mysqli->error);
                     $query = "INSERT INTO `SENSORS` (`ID`, `VALUE`, `UNIXDATE`) VALUES
-                        (57, 0, 1648582167),
-                        (59, 0, 1648582167),
-                        (58, 0, 1648582168),
-                        (54, 0, 1648582168),
-                        (55, 0, 1648582168),
-                        (56, 0, 1648582168),
-                        (57, 0, 1648582168),
-                        (59, 0, 1648582168),
-                        (58, 0, 1648582168),
-                        (54, 0, 1648582168),
-                        (55, 0, 1648582168),
-                        (56, 0, 1648582169),
-                        (57, 0, 1648582169),
-                        (59, 0, 1648582169),
-                        (58, 0, 1648582169),
-                        (54, 0, 1648582169),
-                        (55, 0, 1648582169),
-                        (56, 0, 1648582169),
-                        (57, 0, 1648582169),
-                        (59, 0, 1648582170),
-                        (58, 0, 1648582170),
-                        (54, 0, 1648582170),
-                        (55, 0, 1648582170),
-                        (56, 0, 1648582170),
-                        (57, 0, 1648582170),
-                        (59, 0, 1648582170),
-                        (58, 0, 1648582170),
-                        (54, 0, 1648582171),
-                        (55, 0, 1648582171),
-                        (56, 0, 1648582171),
-                        (57, 0, 1648582171),
-                        (59, 0, 1648582171),
-                        (58, 0, 1648582171),
-                        (54, 0, 1648582171),
-                        (55, 0, 1648582171),
-                        (56, 0, 1648582171),
-                        (57, 0, 1648582172),
-                        (59, 0, 1648582172),
-                        (58, 0, 1648582172),
-                        (54, 0, 1648582172),
-                        (55, 0, 1648582172),
-                        (56, 0, 1648582172),
-                        (57, 0, 1648582172),
-                        (59, 0, 1648582173),
-                        (58, 0, 1648582173),
-                        (54, 0, 1648582173),
-                        (55, 0, 1648582173),
-                        (56, 0, 1648582173),
-                        (57, 0, 1648582173),
-                        (59, 0, 1648582173),
-                        (58, 0, 1648582173),
-                        (54, 0, 1648582173),
-                        (55, 0, 1648582174),
-                        (56, 0, 1648582174),
-                        (57, 0, 1648582174),
-                        (59, 0, 1648582174),
-                        (58, 0, 1648582174),
-                        (54, 0, 1648582174),
-                        (55, 0, 1648582174),
-                        (56, 0, 1648582174);";
+                        (1, 0, 1648582167),
+                        (1, 0, 1648582167),
+                        (1, 0, 1648582168),
+                        (1, 0, 1648582168),
+                        (1, 0, 1648582168),
+                        (1, 0, 1648582168),
+                        (1, 0, 1648582168),
+                        (1, 0, 1648582168),
+                        (1, 0, 1648582168),
+                        (1, 0, 1648582168),
+                        (2, 0, 1648582168),
+                        (2, 0, 1648582169),
+                        (2, 0, 1648582169),
+                        (2, 0, 1648582169),
+                        (2, 0, 1648582169),
+                        (2, 0, 1648582169),
+                        (2, 0, 1648582169),
+                        (2, 0, 1648582169),
+                        (2, 0, 1648582169),
+                        (2, 0, 1648582170),
+                        (3, 0, 1648582170),
+                        (3, 0, 1648582170),
+                        (3, 0, 1648582170),
+                        (3, 0, 1648582170),
+                        (3, 0, 1648582170),
+                        (3, 0, 1648582170),
+                        (3, 0, 1648582170),
+                        (3, 0, 1648582171),
+                        (3, 0, 1648582171),
+                        (3, 0, 1648582171),
+                        (4, 0, 1648582171),
+                        (4, 0, 1648582171),
+                        (4, 0, 1648582171),
+                        (4, 0, 1648582171),
+                        (4, 0, 1648582171),
+                        (4, 0, 1648582171),
+                        (4, 0, 1648582172),
+                        (4, 0, 1648582172),
+                        (4, 0, 1648582172),
+                        (4, 0, 1648582172),
+                        (5, 0, 1648582172),
+                        (5, 0, 1648582172),
+                        (5, 0, 1648582172),
+                        (5, 0, 1648582173),
+                        (5, 0, 1648582173),
+                        (5, 0, 1648582173),
+                        (5, 0, 1648582173),
+                        (5, 0, 1648582173),
+                        (5, 0, 1648582173),
+                        (5, 0, 1648582173),
+                        (6, 0, 1648582173),
+                        (6, 0, 1648582173),
+                        (6, 0, 1648582174),
+                        (6, 0, 1648582174),
+                        (6, 0, 1648582174),
+                        (6, 0, 1648582174),
+                        (6, 0, 1648582174),
+                        (6, 0, 1648582174),
+                        (6, 0, 1648582174),
+                        (6, 0, 1648582174),
+                        (7, 0, 1648582173),
+                        (7, 0, 1648582173),
+                        (7, 0, 1648582174),
+                        (7, 0, 1648582174),
+                        (7, 0, 1648582174),
+                        (7, 0, 1648582174),
+                        (7, 0, 1648582174),
+                        (7, 0, 1648582174),
+                        (7, 0, 1648582174),
+                        (7, 0, 1648582174),
+                        (8, 0, 1648582173),
+                        (8, 0, 1648582173),
+                        (8, 0, 1648582174),
+                        (8, 0, 1648582174),
+                        (8, 0, 1648582174),
+                        (8, 0, 1648582174),
+                        (8, 0, 1648582174),
+                        (8, 0, 1648582174),
+                        (8, 0, 1648582174),
+                        (8, 0, 1648582174),
+                        (9, 0, 1648582173),
+                        (9, 0, 1648582173),
+                        (9, 0, 1648582174),
+                        (9, 0, 1648582174),
+                        (9, 0, 1648582174),
+                        (9, 0, 1648582174),
+                        (9, 0, 1648582174),
+                        (9, 0, 1648582174),
+                        (9, 0, 1648582174),
+                        (9, 0, 1648582174);";
                     $mysqli->query($query) or die($mysqli->error);         
                     break;
                 }

@@ -34,7 +34,7 @@
 
         $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 54 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 1 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
         $currentdcrows = array();
         while($row = $result->fetch_assoc()) {
@@ -43,7 +43,7 @@
         $result->free();
 
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 56 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 2 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query);
         $voltagedcrows = array();
         while($row = $result->fetch_assoc()) {
@@ -112,7 +112,7 @@
         <meta name="author" content="BOUELKHEIR Yassine">
         <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-        <title>Data logger - PFE 2021/2022</title>
+        <title>Data logger - Courant Faible</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
         <link href="dist/css/style.min.css" rel="stylesheet">
         <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
@@ -556,17 +556,17 @@
                 success: function (response) {
                     document.getElementById('batterie').innerHTML = response.battery + " %";
                     document.getElementById('batteriewidth').setAttribute("style", "width: " + response.batterywidth + "%; height: 6px;");
-                    if(response.batterie < 20) {
+                    if(response.batterie <= 20) {
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('batterie').setAttribute("class", "counter text-danger");
                         document.getElementById('batterietitle').setAttribute("class", "text-danger");
                     }
-                    else if(response.batterie < 50) {
+                    else if(response.batterie <= 50) {
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('batterie').setAttribute("class", "counter text-primary");
                         document.getElementById('batterietitle').setAttribute("class", "text-primary");
                     }
-                    else {
+                    else if(response.batterie > 50){
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('batterie').setAttribute("class", "counter text-success");
                         document.getElementById('batterietitle').setAttribute("class", "text-success");

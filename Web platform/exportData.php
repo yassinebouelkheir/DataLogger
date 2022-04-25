@@ -34,12 +34,15 @@
 
     function getName($pin)
     {
-        if($pin == 54) return 'Courant DC';
-        if($pin == 55) return 'Courant AC'; 
-        if($pin == 56) return 'Tension DC'; 
-        if($pin == 57) return 'Température'; 
-        if($pin == 58) return 'Luminosité'; 
-        if($pin == 59) return 'Humidité'; 
+        if($pin == 1) return 'Courant DC';
+        if($pin == 2) return 'Tension DC';
+        if($pin == 3) return 'Courant AC';  
+        if($pin == 4) return 'Tension AC'; 
+        if($pin == 5) return 'Température Ambiante';
+        if($pin == 6) return 'Température du panneau'; 
+        if($pin == 7) return 'Luminosité'; 
+        if($pin == 8) return 'Humidité'; 
+        if($pin == 9) return 'Vitesse du vent'; 
     } 
 
     if (isset($_GET['interval'])) 

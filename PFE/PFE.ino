@@ -16,120 +16,135 @@
 /*
    ScriptName    : PFE.ino
    Author        : BOUELKHEIR Yassine
-   Version       : 1.0
+   Version       : 2.0
    Created       : 18/03/2022
    License       : GNU General v3.0
    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
 */
 
-#include <Wire.h>
-#include <DHT.h>
-#include <DHT_U.h>
+#define LED_STATE_READY_PIN     (2)
+#define LED_STATE_ACT_PIN       (3)
 
-#define CHARGE1_RELAY_PIN       (22)
-#define CHARGE2_RELAY_PIN       (23)
-#define CHARGE3_RELAY_PIN       (24)
-#define CHARGE4_RELAY_PIN       (25)
 
-#define CURRENT_TYPE_DC         (1)
-#define CURRENT_TYPE_AC         (0)
+#define CURRENTDC_SENSOR_ID     (1)
+#define VOLTAGEDC_SENSOR_ID     (2)
 
-#define LED_STATE_READY_PIN     (30)
-#define LED_STATE_ACT_PIN       (31)
+#define CURRENTAC_SENSOR_ID     (3)
+#define VOLTAGEAC_SENSOR_ID     (4)
 
-#define CURRENTDC_SENSOR_PIN    (54)
-#define CURRENTAC_SENSOR_PIN    (55)
-#define VOLTAGEDC_SENSOR_PIN    (56)
-#define TEMP_SENSOR_PIN         (57)
-#define BRIGHTNESS_SENSOR_PIN   (58)
-#define HUMIDITY_SENSOR_PIN     (59)
-#define VOLTAGEAC_SENSOR_PIN    (60)
-#define WINDMETER_SENSOR_PIN    (62)
+#define TEMPERATURE1_SENSOR_ID  (5)
+#define TEMPERATURE2_SENSOR_ID  (6)
 
-float VOLTAGEDC_RESISTOR1 = 30000.0;
-float VOLTAGEDC_RESISTOR2 = 7500.0;
-float VOLTAGEDC_REF_VOLTAGE = 5.0;
+#define BRIGHTNESS_SENSOR_ID    (7)
+#define HUMIDITY_SENSOR_ID      (8)
+#define WINDMETER_SENSOR_ID     (9)
 
-DHT dht(TEMP_SENSOR_PIN, DHT11);
 
-void setup() {
+#define CHARGE1_RELAY_ID        (1)
+#define CHARGE2_RELAY_ID        (2)
+#define CHARGE3_RELAY_ID        (3)
+#define CHARGE4_RELAY_ID        (4)
+#define CHARGE5_RELAY_ID        (5)
+#define CHARGE6_RELAY_ID        (6)
+#define CHARGE7_RELAY_ID        (7)
+#define CHARGE8_RELAY_ID        (8)
+
+
+void setup() 
+{
     pinMode(LED_STATE_READY_PIN, OUTPUT);
     pinMode(LED_STATE_ACT_PIN, OUTPUT);
-    digitalWrite(LED_STATE_READY_PIN, LOW);
     digitalWrite(LED_STATE_ACT_PIN, LOW);
-    
-    for (int i = 22; i <= 25; i++) {
-        pinMode(i, OUTPUT);
-        digitalWrite(i, HIGH);
-    }
-    for (int i = 26; i <= 29; i++) pinMode(i, INPUT);
 
-    dht.begin();
     digitalWrite(LED_STATE_READY_PIN, HIGH);
     Serial.begin(9600);
 }
 
-void loop() {
-
+void loop() 
+{
     digitalWrite(LED_STATE_ACT_PIN, LOW);
     
     // Capteur de Température
-    float TEMP_SENSOR_VALUE = dht.readTemperature();
+    float TEMP1_SENSOR_VALUE = 1.0;
+
+    // Capteur de Température
+    float TEMP2_SENSOR_VALUE = 2.0;
 
     // Capteur d'Humidité
-    float HUMIDITY_SENSOR_VALUE = ((analogRead(HUMIDITY_SENSOR_PIN)) * (100 - 10) / (1023) + 10);
+    float HUMIDITY_SENSOR_VALUE = 3.0;
 
     // Capteur de Luminosité
-    float BRIGHTNESS_SENSOR_VALUE = 100 - (((analogRead(HUMIDITY_SENSOR_PIN)) * (100 - 15) / (1023) + 15));
+    float BRIGHTNESS_SENSOR_VALUE = 4.0;
 
     // Capteur de Courant DC
-    float CURRENTDC_SENSOR_VALUE = (getCurrent(CURRENT_TYPE_DC));
+    float CURRENTDC_SENSOR_VALUE = 5.0;
 
     // Capteur de Courant AC
-    float CURRENTAC_SENSOR_VALUE = ((getCurrent(CURRENT_TYPE_AC) - 1.0) < 0) ? (0.00) : (getCurrent(CURRENT_TYPE_AC)-1.0);
+    float CURRENTAC_SENSOR_VALUE = 6.0;
 
     // Capteur de Tension DC
-    float VOLTAGEDC_SENSOR_RAW = (analogRead(VOLTAGEDC_SENSOR_PIN) * VOLTAGEDC_REF_VOLTAGE) / 1024.0;
-    float VOLTAGEDC_SENSOR_VALUE = VOLTAGEDC_SENSOR_RAW / (VOLTAGEDC_RESISTOR2 / (VOLTAGEDC_RESISTOR1 + VOLTAGEDC_RESISTOR2));
+    float VOLTAGEDC_SENSOR_VALUE = 7.0;
 
-    
+    // Capteur de Tension AC
+    float VOLTAGEAC_SENSOR_VALUE = 8.0;
+
+    // Capteur de Vitesse du vent
+    float WINDSPEED_SENSOR_VALUE = 9.0;
+
+
     // Communication avec le Raspberry Pi
-    if (Serial.available() > 0) {
+    if (Serial.available() > 0) 
+    {
         digitalWrite(LED_STATE_ACT_PIN, HIGH);
-        getChargeCommand();
-        sendValue(TEMP_SENSOR_PIN, TEMP_SENSOR_VALUE); // Température
-        delay(2);
 
         getChargeCommand();
-        sendValue(HUMIDITY_SENSOR_PIN, HUMIDITY_SENSOR_VALUE); // Humidité
-        delay(2);
+        sendValue(TEMP1_SENSOR_ID, TEMP_SENSOR_VALUE); // Température
+        delay(0.75);
 
         getChargeCommand();
-        sendValue(BRIGHTNESS_SENSOR_PIN, BRIGHTNESS_SENSOR_VALUE); // BRIGHTNESS
-        delay(2);
+        sendValue(TEMP2_SENSOR_ID, TEMP_SENSOR_VALUE); // Température
+        delay(0.75);
 
         getChargeCommand();
-        sendValue(CURRENTDC_SENSOR_PIN, CURRENTDC_SENSOR_VALUE); // Courant DC
-        delay(2);
+        sendValue(HUMIDITY_SENSOR_ID, HUMIDITY_SENSOR_VALUE); // Humidité
+        delay(0.75);
 
         getChargeCommand();
-        sendValue(CURRENTAC_SENSOR_PIN, CURRENTAC_SENSOR_VALUE); // Courant AC
-        delay(2);
+        sendValue(BRIGHTNESS_SENSOR_ID, BRIGHTNESS_SENSOR_VALUE); // Luminosité
+        delay(0.75);
 
         getChargeCommand();
-        sendValue(VOLTAGEDC_SENSOR_PIN, VOLTAGEDC_SENSOR_VALUE); // Tension DC
-        delay(2);
+        sendValue(CURRENTDC_SENSOR_ID, CURRENTDC_SENSOR_VALUE); // Courant DC
+        delay(0.75);
+
+        getChargeCommand();
+        sendValue(CURRENTAC_SENSOR_ID, CURRENTAC_SENSOR_VALUE); // Courant AC
+        delay(0.75);
+
+        getChargeCommand();
+        sendValue(VOLTAGEDC_SENSOR_ID, VOLTAGEDC_SENSOR_VALUE); // Tension DC
+        delay(0.75);
+
+        getChargeCommand();
+        sendValue(VOLTAGEAC_SENSOR_ID, VOLTAGEDC_SENSOR_VALUE); // Tension AC
+        delay(0.75);
+
+        getChargeCommand();
+        sendValue(WINDMETER_SENSOR_ID, WINDSPEED_SENSOR_VALUE); // Vitesse du vent
+        delay(0.75);
     }
     digitalWrite(LED_STATE_ACT_PIN, LOW);
 }
 
-void sendValue(int packetid, float value) {
+void sendValue(int packetid, float value) 
+{
     if (value > 255) Serial.print("Error: Sensor ID " + String(packetid) + " Value cannot be greater than 255.\n");
     else if (value < -255) Serial.print("Error: Sensor ID " + String(packetid) + " Value cannot be lower than -255.\n");
     else Serial.print("setsensor " + String(packetid) + " " + String(value) + "\n");
 }
 
-void getChargeCommand() {
+void getChargeCommand() 
+{
     String Buff[10];
     int StringCount = 0;
     String data = Serial.readStringUntil('\n');
@@ -153,18 +168,4 @@ void getChargeCommand() {
           digitalWrite(Buff[1].toInt(), bool(!Buff[2].toInt()));
         }
     }
-}
-
-float getCurrent(bool type) {
-    float voltage_raw = 0;
-    for(int i = 0; i < 1000; i++){ 
-      if(type == CURRENT_TYPE_DC) voltage_raw += (5.0 / 1023.0)*analogRead(CURRENTDC_SENSOR_PIN);
-      else voltage_raw += ((5.0 / 1023.0)*analogRead(CURRENTAC_SENSOR_PIN));
-    }
-    voltage_raw /= 1000;
-    float voltage =  voltage_raw - 2.5 + 0.012;
-    float current = voltage / 0.066;
-
-    if(abs(current) > 0.05) return abs(current);
-    else return 0.0;
 }
