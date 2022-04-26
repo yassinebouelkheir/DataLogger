@@ -75,22 +75,6 @@
         $result->free();
         $mysqli->close();
 
-        $arrContextOptions=array(
-            "ssl"=>array(
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
-            ),
-        ); 
-        $jsonurl = "https://api.openweathermap.org/data/2.5/weather?lat=34.0337&lon=6.7708&lang=fr&appid=36a1abfb8868c3cc0784a4953f738e70";
-        $json = file_get_contents($jsonurl, false, stream_context_create($arrContextOptions));
-
-        setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
-        $weather = json_decode($json);
-        $kelvin = $weather->main->temp;
-        $celcius = round($kelvin - 277.15);
-        $skystats = $weather->weather[0]->description;
-        $skystats = mb_strtoupper($skystats);
-
         function getaverage($a)
         {
             $average = 0;
@@ -193,6 +177,16 @@
                                 <a class="waves-effect waves-dark active" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
                                 <span class="hide-menu">Météorologie</span></a>
                             </li>
+                            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-home"></i><span class="hide-menu"> Smart House</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="smarthouse/node1.php">Node 1</a></li>
+                                    <li><a href="smarthouse/node2.php">Node 2</a></li>
+                                    <li><a href="smarthouse/node3.php">Node 3</a></li>
+                                    <li><a href="smarthouse/node4.php">Node 4</a></li>
+                                    <li><a href="smarthouse/node5.php">Node 5</a></li>
+                                    <li><a href="smarthouse/node6.php">Node 6</a></li>
+                                </ul>
+                            </li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> Charges</span></a>
                             </li>
                             <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-download"></i><span class="hide-menu"> Exporter</span></a>
@@ -228,30 +222,6 @@
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                                     <li class="breadcrumb-item active">Météorologie</li>
                                 </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card bg-cyan text-white">
-                                <div class="card-body">
-                                    <div class="row weather">
-                                        <div class="col-6 m-t-40">
-                                            <h3>&nbsp;</h3>
-                                            <?php
-                                                echo '<div class="display-4">'.$celcius.'<sup>°C</sup></div>';
-                                            ?>
-                                            <p class="text-white">SALÉ, MAROC</p>
-                                        </div>
-                                        <div class="col-6 text-right">
-                                            <h1 class="m-b-"><i class="wi wi-day-cloudy-high"></i></h1>
-                                            <?php
-                                                echo '<b class="text-white">'.$skystats.'</b>';
-                                                echo '<br>'.strftime('%H:%M').'</b><p class="op-5">'.mb_strtoupper(strftime('%A %d %B %Y')).'</p>';
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -309,10 +279,10 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-sun"></i></h3>
-                                                    <p class="text-danger" id="brightness">LUMINOSITÉ</p>
+                                                    <p class="text-danger" id="brightness">FLUX LUMINEUX</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="brightnessvalue">0.0 %</h2>
+                                                <h2 class="counter text-danger" id="brightnessvalue">0.0 LUX</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -353,10 +323,10 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-tint"></i></h3>
-                                                    <p class="text-danger" id="humidity">HUMIDITÉ</p>
+                                                    <p class="text-danger" id="humidity">HUMIDITÉ RELATIVE</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="humidityvalue">0.0 %</h2>
+                                                <h2 class="counter text-danger" id="humidityvalue">0.0 %RH</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -368,29 +338,75 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="d-flex no-block align-items-center">
-                                            <div>
-                                                <h3><i class="fas fa-umbrella"></i></h3>
-                                                    <p class="text-danger" id="windspeed">VITESSE DU VENT</p>
+                    </div>
+                        <div class="card-group">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="d-flex no-block align-items-center">
+                                                <div>
+                                                    <h3><i class="fas fa-tachometer-alt"></i></h3>
+                                                        <p class="text-danger" id="windspeed">VITESSE DU VENT (AVAL)</p>
+                                                </div>
+                                                <div class="ml-auto">
+                                                    <h2 class="counter text-danger" id="windspeedvalue">0.0 KM/H</h2>
+                                                </div>
                                             </div>
-                                            <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="windspeedvalue">0.0 KM/H</h2>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="progress">
+                                            <div class="progress-bar bg-danger" role="progressbar" id="windspeedwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="windspeedwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="d-flex no-block align-items-center">
+                                                <div>
+                                                    <h3><i class="fas fa-tachometer-alt"></i></h3>
+                                                        <p class="text-danger" id="windspeedinv">VITESSE DU VENT (AMON)</p>
+                                                </div>
+                                                <div class="ml-auto">
+                                                    <h2 class="counter text-danger" id="windspeedinvvalue">0.0 KM/H</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="progress">
+                                            <div class="progress-bar bg-danger" role="progressbar" id="windspeedinvwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="d-flex no-block align-items-center">
+                                                <div>
+                                                    <h3><i class="fas fa-rocket"></i></h3>
+                                                        <p class="text-danger" id="turbine">TURBINE</p>
+                                                </div>
+                                                <div class="ml-auto">
+                                                    <h2 class="counter text-danger" id="turbinevalue">0.0 TR/MIN</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="progress">
+                                            <div class="progress-bar bg-danger" role="progressbar" id="turbinewidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="card">
@@ -430,10 +446,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">LUMINOSITÉ</h5>
+                                        <h5 class="card-title ">FLUX LUMINEUX</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Luminosité moyenne: <?php echo (number_format(getaverage($brightnessrows), 0));?> %</li>
+                                                <li><i class="fa fa-circle text-info"></i> Flux lumineux moyenne: <?php echo (number_format(getaverage($brightnessrows), 0));?> LUX</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -464,10 +480,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">HUMIDITÉ</h5>
+                                        <h5 class="card-title ">HUMIDITÉ RELATIVE</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Humidité moyenne: <?php echo number_format(getaverage($humidityrows), 0);?> %</li>
+                                                <li><i class="fa fa-circle text-info"></i> Humidité moyenne: <?php echo number_format(getaverage($humidityrows), 0);?> %RH</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -481,7 +497,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title">VITESSE DU VENT</h5>
+                                        <h5 class="card-title ">VITESSE DU VENT (AVAL)</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
                                                 <li><i class="fa fa-circle text-warning"></i> Vitesse moyenne: <?php echo number_format(getaverage($windspeedrows), 0);?> KM/H</li>
@@ -861,7 +877,7 @@
                             document.getElementById('tempambiant').setAttribute("class", "text-danger");
                         }
 
-                        document.getElementById('humidityvalue').innerHTML = response.humidity + " %";
+                        document.getElementById('humidityvalue').innerHTML = response.humidity + " %RH";
                         document.getElementById('humiditywidth').setAttribute("style", "width: " + response.humidtywidth + "%; height: 6px;");
                         if(response.humidity < 25) {
                             document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-success");
@@ -879,19 +895,20 @@
                             document.getElementById('humidity').setAttribute("class", "text-danger");
                         }
 
-                        document.getElementById('brightnessvalue').innerHTML = response.brightness + " %";
+                        if(response.brightness > 0) document.getElementById('brightnessvalue').innerHTML = ((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)  + " LUX";
+                        else document.getElementById('brightnessvalue').innerHTML = "0 LUX";
                         document.getElementById('brightnesswidth').setAttribute("style", "width: " + response.brightneswidth + "%; height: 6px;");
-                        if(response.brightness < 25) {
+                        if(response.brightneswidth < 25) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-danger");
                             document.getElementById('brightness').setAttribute("class", "text-danger");
                         }
-                        else if(response.brightness < 50) {
+                        else if(response.brightneswidth < 40) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-primary");
                             document.getElementById('brightness').setAttribute("class", "text-primary");
                         }
-                        else if(response.brightness >= 50) {
+                        else if(response.brightneswidth >= 40) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-success");
                             document.getElementById('brightness').setAttribute("class", "text-success");
@@ -915,7 +932,7 @@
                             document.getElementById('irradiation').setAttribute("class", "text-success");
                         }
 
-                        document.getElementById('windspeedvalue').innerHTML = response.windspeed + " KM/H";
+                        document.getElementById('windspeedvalue').innerHTML = (response.windspeed*1).toFixed(0) + " KM/H";
                         document.getElementById('windspeedwidth').setAttribute("style", "width: " + response.windspeedwidth + "%; height: 6px;");
                         if(response.windspeed < 10) {
                             document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-success");

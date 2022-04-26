@@ -51,23 +51,6 @@
         }
         $mysqli->close();
 
-        $arrContextOptions=array(
-            "ssl"=>array(
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
-            ),
-        ); 
-
-        $jsonurl = "https://api.openweathermap.org/data/2.5/weather?lat=34.0337&lon=6.7708&lang=fr&appid=36a1abfb8868c3cc0784a4953f738e70";
-        $json = file_get_contents($jsonurl, false, stream_context_create($arrContextOptions));
-
-        setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
-        $weather = json_decode($json);
-        $kelvin = $weather->main->temp;
-        $celcius = round($kelvin - 277.15);
-        $skystats = $weather->weather[0]->description;
-        $skystats = mb_strtoupper($skystats);
-
         function getaverage($a)
         {
             $average = 0;
@@ -170,6 +153,16 @@
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
                                 <span class="hide-menu">Météorologie</span></a>
                             </li>
+                            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-home"></i><span class="hide-menu"> Smart House</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="smarthouse/node1.php">Node 1</a></li>
+                                    <li><a href="smarthouse/node2.php">Node 2</a></li>
+                                    <li><a href="smarthouse/node3.php">Node 3</a></li>
+                                    <li><a href="smarthouse/node4.php">Node 4</a></li>
+                                    <li><a href="smarthouse/node5.php">Node 5</a></li>
+                                    <li><a href="smarthouse/node6.php">Node 6</a></li>
+                                </ul>
+                            </li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> Charges</span></a>
                             </li>
                             <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-download"></i><span class="hide-menu"> Exporter</span></a>
@@ -205,30 +198,6 @@
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                                     <li class="breadcrumb-item active">Courant Fort</li>
                                 </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card bg-cyan text-white">
-                                <div class="card-body">
-                                    <div class="row weather">
-                                        <div class="col-6 m-t-40">
-                                            <h3>&nbsp;</h3>
-                                            <?php
-                                                echo '<div class="display-4">'.$celcius.'<sup>°C</sup></div>';
-                                            ?>
-                                            <p class="text-white">SALÉ, MAROC</p>
-                                        </div>
-                                        <div class="col-6 text-right">
-                                            <h1 class="m-b-"><i class="wi wi-day-cloudy-high"></i></h1>
-                                            <?php
-                                                echo '<b class="text-white">'.$skystats.'</b>';
-                                                echo '<br>'.strftime('%H:%M').'</b><p class="op-5">'.mb_strtoupper(strftime('%A %d %B %Y')).'</p>';
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

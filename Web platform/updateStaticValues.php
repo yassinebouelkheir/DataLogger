@@ -37,7 +37,12 @@
     $data['brightness'] = number_format(round($staticrows[6]['VALUE']), 0);
     $data['brightneswidth'] = $staticrows[6]['VALUE'];
 
-    $data['humidity'] = number_format(round($staticrows[7]['VALUE']), 0);
+    if($staticrows[7]['VALUE'] == 0) $data['humidity'] = 0.0;
+    else  {
+        $staticrows[7]['VALUE'] = 161.0 * $staticrows[7]['VALUE'] / 5.0 - 25.8;
+        $staticrows[7]['VALUE'] = $staticrows[7]['VALUE'] / (1.0546 - 0.0026 * $temperature);
+        $data['humidity'] = number_format(round($staticrows[7]['VALUE']), 0);
+    }
     $data['humidtywidth'] = $staticrows[7]['VALUE'];
 
     $data['windspeed'] = number_format(round($staticrows[8]['VALUE']), 0);
