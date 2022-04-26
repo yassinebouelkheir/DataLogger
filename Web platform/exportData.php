@@ -112,15 +112,15 @@
             $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-            if($row['ID'] == 56) { $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', ''.$row['VALUE'].' V'); $lastvalueVoltage = $row['VALUE']; }
-            if($row['ID'] == 54) { $objPHPExcel->getActiveSheet()->setCellValue('F'.(13+$i).'', ''.$row['VALUE'].' A'); $lastvalueCurrent = $row['VALUE']; }
-            if($row['ID'] == 55) { $objPHPExcel->getActiveSheet()->setCellValue('J'.(13+$i).'', ''.$row['VALUE'].' A'); $lastvalueCurrentAC = $row['VALUE']; }
-            if($row['ID'] == 57) $objPHPExcel->getActiveSheet()->setCellValue('N'.(13+$i).'', ''.$row['VALUE'].' °C');
-            if($row['ID'] == 58) { 
+            if($row['ID'] == 2) { $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', ''.$row['VALUE'].' V'); $lastvalueVoltage = $row['VALUE']; }
+            if($row['ID'] == 1) { $objPHPExcel->getActiveSheet()->setCellValue('F'.(13+$i).'', ''.$row['VALUE'].' A'); $lastvalueCurrent = $row['VALUE']; }
+            if($row['ID'] == 3) { $objPHPExcel->getActiveSheet()->setCellValue('J'.(13+$i).'', ''.$row['VALUE'].' A'); $lastvalueCurrentAC = $row['VALUE']; }
+            if($row['ID'] == 5) $objPHPExcel->getActiveSheet()->setCellValue('N'.(13+$i).'', ''.$row['VALUE'].' °C');
+            if($row['ID'] == 7) { 
               $objPHPExcel->getActiveSheet()->setCellValue('P'.(13+$i).'', ''.$row['VALUE'].' %');
               $objPHPExcel->getActiveSheet()->setCellValue('R'.(13+$i).'', ''.number_format(((pow((($row['VALUE']*1023)/100),2)/10)/(50)), 2).' W/m²');
             }
-            if($row['ID'] == 59) $objPHPExcel->getActiveSheet()->setCellValue('T'.(13+$i).'', ''.$row['VALUE'].' %');
+            if($row['ID'] == 8) $objPHPExcel->getActiveSheet()->setCellValue('T'.(13+$i).'', ''.$row['VALUE'].' %');
 
             if($lastvalueVoltage != -1 && $lastvalueCurrent != -1) {
               $objPHPExcel->getActiveSheet()->setCellValue('H'.(13+$i).'', ''.number_format(($lastvalueVoltage*$lastvalueCurrent), 2) .' W');
