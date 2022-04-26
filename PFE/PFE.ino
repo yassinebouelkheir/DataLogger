@@ -98,11 +98,11 @@ void loop()
         digitalWrite(LED_STATE_ACT_PIN, HIGH);
 
         getChargeCommand();
-        sendValue(TEMPERATURE1_SENSOR_ID, TEMP1_SENSOR_VALUE); // Température
+        sendValue(TEMP1_SENSOR_ID, TEMP_SENSOR_VALUE); // Température
         delay(0.75);
 
         getChargeCommand();
-        sendValue(TEMPERATURE2_SENSOR_ID, TEMP2_SENSOR_VALUE); // Température
+        sendValue(TEMP2_SENSOR_ID, TEMP_SENSOR_VALUE); // Température
         delay(0.75);
 
         getChargeCommand();
