@@ -73,8 +73,23 @@
             $windspeedrows[] = $row;
         }
         $result->free();
-        $mysqli->close();
 
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 10 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $result = $mysqli->query($query);
+        $windspeedinvrows = array();
+        while($row = $result->fetch_assoc()) {
+            $windspeedinvrows[] = $row;
+        }
+        $result->free();
+
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 11 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $result = $mysqli->query($query);
+        $turbinerows = array();
+        while($row = $result->fetch_assoc()) {
+            $turbinerows[] = $row;
+        }
+        $result->free();
+        $mysqli->close();
         function getaverage($a)
         {
             $average = 0;
@@ -500,11 +515,45 @@
                                         <h5 class="card-title ">VITESSE DU VENT (AVAL)</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-warning"></i> Vitesse moyenne: <?php echo number_format(getaverage($windspeedrows), 0);?> KM/H</li>
+                                                <li><i class="fa fa-circle text-primary"></i> Vitesse moyenne: <?php echo number_format(getaverage($windspeedrows), 0);?> KM/H</li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div id="morris-area-chart5" style="height: 340px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex m-b-40 align-items-center no-block">
+                                        <h5 class="card-title ">VITESSE DU VENT (AMON)</h5>
+                                        <div class="ml-auto">
+                                            <ul class="list-inline font-12">
+                                                <li><i class="fa fa-circle text-purple"></i> Vitesse moyenne: <?php echo number_format(getaverage($windspeedinvrows), 0);?> KM/H</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div id="morris-area-chart6" style="height: 340px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex m-b-40 align-items-center no-block">
+                                        <h5 class="card-title ">VITESSE DU TURBINE</h5>
+                                        <div class="ml-auto">
+                                            <ul class="list-inline font-12">
+                                                <li><i class="fa fa-circle text-info"></i> Vitesse moyenne: <?php echo number_format(getaverage($turbinerows), 0);?> KM/H</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div id="morris-area-chart7" style="height: 340px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -835,6 +884,112 @@
                     , lineColors: ['#fb9678']
                     , resize: true
                 });
+
+                Morris.Area({
+                    element: 'morris-area-chart6'
+                    , data: [{
+                            period: <?php echo "'".SHM($windspeedinvrows[0]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[0]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }, {
+                            period: <?php echo "'".SHM($windspeedinvrows[1]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[1]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }, {
+                            period: <?php echo "'".SHM($windspeedinvrows[2]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[2]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }, {
+                            period: <?php echo "'".SHM($windspeedinvrows[3]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[3]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }, {
+                            period: <?php echo "'".SHM($windspeedinvrows[4]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }, {
+                            period: <?php echo "'".SHM($windspeedinvrows[5]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[5]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }
+                        , {
+                            period: <?php echo "'".SHM($windspeedinvrows[6]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[6]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($windspeedinvrows[7]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[7]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($windspeedinvrows[8]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[8]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($windspeedrows[9]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[9]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                    }]
+                    , xkey: 'period'
+                    , ykeys: ['Vitesse']
+                    , labels: ['Vitesse du vent']
+                    , parseTime: false
+                    , ymax: 25
+                    , pointSize: 3
+                    , fillOpacity: 0
+                    , pointStrokeColors: ['#ab8ce4']
+                    , behaveLikeLine: true
+                    , gridLineColor: '#e0e0e0'
+                    , lineWidth: 3
+                    , hideHover: 'auto'
+                    , lineColors: ['#ab8ce4']
+                    , resize: true
+                });
+
+                Morris.Area({
+                    element: 'morris-area-chart7'
+                    , data: [{
+                            period: <?php echo "'".SHM($turbinerows[0]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[0]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($turbinerows[1]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[1]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($turbinerows[2]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[2]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($turbinerows[3]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[3]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($turbinerows[4]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[4]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($turbinerows[5]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[5]['VALUE']; ?>
+                    }
+                        , {
+                            period: <?php echo "'".SHM($turbinerows[6]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[6]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($turbinerows[7]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[7]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($turbinerows[8]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[8]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($turbinerows[9]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[9]['VALUE']; ?>
+                    }]
+                    , xkey: 'period'
+                    , ykeys: ['vitesseamon']
+                    , labels: ['Vitesse']
+                    , parseTime: false
+                    , pointSize: 3
+                    , fillOpacity: 0
+                    , pointStrokeColors: ['#0000ff']
+                    , behaveLikeLine: true
+                    , gridLineColor: '#e0e0e0'
+                    , lineWidth: 3
+                    , hideHover: 'auto'
+                    , lineColors: ['#0000ff']
+                    , resize: true
+                });
+            
             function refresh() {
                 $.ajax({
                     url: './updateStaticValues.php',
@@ -948,6 +1103,42 @@
                             document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('windspeedvalue').setAttribute("class", "counter text-danger");
                             document.getElementById('windspeed').setAttribute("class", "text-danger");
+                        }
+
+                        document.getElementById('windspeedinvvalue').innerHTML = (response.windspeedinv*1).toFixed(0) + " KM/H";
+                        document.getElementById('windspeedinvwidth').setAttribute("style", "width: " + response.windspeedinvwidth + "%; height: 6px;");
+                        if(response.windspeedwidth < 10) {
+                            document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-success");
+                            document.getElementById('windspeedinv').setAttribute("class", "text-success");
+                        }
+                        else if(response.windspeedwidth < 20) {
+                            document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-primary");
+                            document.getElementById('windspeedinv').setAttribute("class", "text-primary");
+                        }
+                        else if(response.windspeedwidth >= 20) {
+                            document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-danger");
+                            document.getElementById('windspeedinv').setAttribute("class", "text-danger");
+                        }
+
+                        document.getElementById('turbinevalue').innerHTML = (response.turbine*1).toFixed(0) + " KM/H";
+                        document.getElementById('turbinewidth').setAttribute("style", "width: " + response.turbinewidth + "%; height: 6px;");
+                        if(response.windspeedwidth < 25) {
+                            document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('turbinevalue').setAttribute("class", "counter text-success");
+                            document.getElementById('turbine').setAttribute("class", "text-success");
+                        }
+                        else if(response.windspeedwidth < 40) {
+                            document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('turbinevalue').setAttribute("class", "counter text-primary");
+                            document.getElementById('turbine').setAttribute("class", "text-primary");
+                        }
+                        else if(response.windspeedwidth >= 40) {
+                            document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('turbinevalue').setAttribute("class", "counter text-danger");
+                            document.getElementById('turbine').setAttribute("class", "text-danger");
                         }
                         
                     }

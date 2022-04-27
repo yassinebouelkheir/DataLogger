@@ -47,6 +47,12 @@
 
     $data['windspeed'] = number_format(round($staticrows[8]['VALUE']), 0);
     $data['windspeedwidth'] = round((($staticrows[8]['VALUE'])*100)/40);
+
+    $data['windspeedinv'] = number_format(round($staticrows[9]['VALUE']), 0);
+    $data['windspeedinvwidth'] = round((($staticrows[9]['VALUE'])*100)/40);
+
+    $data['turbine'] = number_format(round($staticrows[10]['VALUE']), 0);
+    $data['turbinewidth'] = round(($staticrows[10]['VALUE']));
 	echo json_encode($data);
 
 ?>
