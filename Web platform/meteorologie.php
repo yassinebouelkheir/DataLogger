@@ -204,16 +204,6 @@
                             </li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> Charges</span></a>
                             </li>
-                            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-download"></i><span class="hide-menu"> Exporter</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="exportData.php?interval=3600&location=1">Dernière heure</a></li>
-                                    <li><a href="exportData.php?interval=86400&location=1">Aujourd'hui</a></li>
-                                    <li><a href="exportData.php?interval=2592000&location=1">Le mois dernier</a></li>
-                                    <li><a href="exportData.php?interval=15552000&location=1">Les 6 derniers mois</a></li>
-                                    <li><a href="exportData.php?interval=31104000&location=1">Cette année</a></li>
-                                    <li><a href="exportData.php?interval=0&location=1">Exporter tout</a></li>
-                                </ul>
-                            </li>
                             <?php 
                                 if($_SESSION["username"] == "admin") {
                                     echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a></li>';

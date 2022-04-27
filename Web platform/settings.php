@@ -434,16 +434,6 @@
                             </li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> Charges</span></a>
                             </li>
-                            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-download"></i><span class="hide-menu"> Exporter</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="exportData.php?interval=3600&location=1">Dernière heure</a></li>
-                                    <li><a href="exportData.php?interval=86400&location=1">Aujourd'hui</a></li>
-                                    <li><a href="exportData.php?interval=2592000&location=1">Le mois dernier</a></li>
-                                    <li><a href="exportData.php?interval=15552000&location=1">Les 6 derniers mois</a></li>
-                                    <li><a href="exportData.php?interval=31104000&location=1">Cette année</a></li>
-                                    <li><a href="exportData.php?interval=0&location=1">Exporter tout</a></li>
-                                </ul>
-                            </li>
                             <?php 
                                 if($_SESSION["username"] == "admin") {
                                     echo'<li><a class="waves-effect waves-dark active" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a></li>';
@@ -586,10 +576,31 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Exportation</h4>
-                                    <h5 class="card-subtitle text-info"> <strong>Format d'exportation actuelle: <strong><?php if($exporttyperows[0]['TYPE'] == 1) echo 'Excel'; else if($exporttyperows[0]['TYPE'] == 2) echo 'PDF'; else echo 'Exportation des données est Désactivé'; ?></strong></strong> </h5>
+                                    <h4 class="card-title">Exportation des données</h4>
                                     <h5 class="card-subtitle text-danger"> <?php echo $errormessage6; ?> </h5>
                                     <form action="settings.php" method="post" class="mt-4">
+                                        <div class="form-group">
+                                            <label>Type des données</label>
+                                            <select class="custom-select col-12" id="ExportationType" name="ExportationType">
+                                                <option value="0" selected>Selectioner..</option>
+                                                <option value="1">Courant Faible</option>
+                                                <option value="2">Courant Fort</option>
+                                                <option value="3">Météorologie</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Interval d'enregistrement</label>
+                                            <select class="custom-select col-12" id="ExportationType" name="ExportationType">
+                                                <option value="0" selected>Selectioner..</option>
+                                                <option value="3">60 minutes</option>
+                                                <option value="1">24 Heures</option>
+                                                <option value="2">7 Jours</option>
+                                                <option value="3">30 Jours</option>
+                                                <option value="4">3 Mois</option>
+                                                <option value="5">12 Mois</option>
+                                                <option value="6">Tout les données</option>
+                                            </select>
+                                        </div>
                                         <div class="form-group">
                                             <label>Format de fichier</label>
                                             <select class="custom-select col-12" id="ExportationFormat" name="ExportationFormat">
@@ -598,7 +609,7 @@
                                                 <option value="2">PDF</option>
                                             </select>
                                         </div>
-                                        <button type="submit" class="btn btn-success">Mise à jour</button>
+                                        <button type="submit" class="btn btn-info">Exporter</button>
                                     </form>
                                 </div>
                             </div>
