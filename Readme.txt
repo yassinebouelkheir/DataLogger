@@ -1,3 +1,5 @@
+*** To SETUP RASPBERRY ***
+
 ALT+F12
 
 sudo apt-get install raspberrypi-ui-mods xinit xserver-xorg
