@@ -14,7 +14,7 @@
 */
 
 /*
-   ScriptName    : Arduino_Puissance.ino
+   ScriptName    : Arduino_WindPuissance.ino
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
    Created       : 18/03/2022

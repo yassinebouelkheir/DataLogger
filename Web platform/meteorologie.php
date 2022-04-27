@@ -1113,7 +1113,7 @@
                             document.getElementById('windspeedinv').setAttribute("class", "text-danger");
                         }
 
-                        document.getElementById('turbinevalue').innerHTML = (response.turbine*1).toFixed(0) + " KM/H";
+                        document.getElementById('turbinevalue').innerHTML = (response.turbine*1).toFixed(0) + " TR/MIN";
                         document.getElementById('turbinewidth').setAttribute("style", "width: " + response.turbinewidth + "%; height: 6px;");
                         if(response.windspeedwidth < 25) {
                             document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-success");

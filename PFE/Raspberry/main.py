@@ -14,7 +14,7 @@
 ##
 
 ## 
-#    ScriptName    : PFE.py
+#    ScriptName    : main.py
 #    Author        : BOUELKHEIR Yassine
 #    Version       : 2.0
 #    Created       : 18/03/2022
