@@ -101,52 +101,14 @@
             $mysqli->query($query) or die($mysqli->error);      
         } 
 
-        if(!empty($_POST['ExportationFormat']))
+        if(!empty($_POST['UserPwdChange']) && !empty($_POST['UserPwd']))
         {
-            switch($_POST['ExportationFormat'])
-            {
-                case 1:
-                {
-                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
-                    $mysqli->query($query) or die($mysqli->error);                     
-                    break;
-                }
-                case 2:
-                {
-                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 2 WHERE 1";
-                    $mysqli->query($query) or die($mysqli->error);                     
-                    break;
-                }
-                default: 
-                {
-                    $errormessage6 = "Votre choix n'est pas valide, veuillez réessayer.";
-                    break;
-                }
-            }
+
         }
 
-        if(!empty($_POST['ExportationFormat']))
+        if(!empty($_POST['ExportationFormat']) && !empty($_POST['ExportationInterval']) && !empty($_POST['ExportationType']))
         {
-            switch($_POST['ExportationFormat'])
-            {
-                case 1:
-                {
-                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
-                    $mysqli->query($query) or die($mysqli->error);                     
-                    break;
-                }
-                case 2:
-                {
-                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 2 WHERE 1";
-                    $mysqli->query($query) or die($mysqli->error);                     
-                    break;
-                }
-                default: 
-                {
-                    $errormessage6 = "Votre choix n'est pas valide, veuillez réessayer.";
-                    break;
-                }
-            }
+
         }
 
         if(!empty($_POST['InputLowLevel']))
@@ -154,18 +116,6 @@
             switch($_POST['InputLowLevel'])
             {
                 case 1:
-                {
-                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 0 WHERE 1";
-                    $mysqli->query($query) or die($mysqli->error);                     
-                    break;
-                }
-                case 2:
-                {
-                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
-                    $mysqli->query($query) or die($mysqli->error);                     
-                    break;
-                }
-                case 3:
                 {
                     $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 1' WHERE ID = 1";
                     $mysqli->query($query) or die($mysqli->error); 
@@ -182,10 +132,7 @@
                     $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 7' WHERE ID = 7";
                     $mysqli->query($query) or die($mysqli->error);     
                     $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 8' WHERE ID = 8";
-                    $mysqli->query($query) or die($mysqli->error);       
-
-                    $query = "UPDATE `EXPORTATIONTYPE` SET `TYPE` = 1 WHERE 1";
-                    $mysqli->query($query) or die($mysqli->error);   
+                    $mysqli->query($query) or die($mysqli->error);        
 
                     $query = "UPDATE `SENSORS_STATIC` SET `VALUE` = 0 WHERE 1";
                     $mysqli->query($query) or die($mysqli->error);       
@@ -309,7 +256,7 @@
                     $mysqli->query($query) or die($mysqli->error);         
                     break;
                 }
-                case 4:
+                case 2:
                 {
                     // Restart                    
                     break;
@@ -335,14 +282,6 @@
         $updatetimerows = array();
         while($row = $result->fetch_assoc()) {
             $updatetimerows[] = $row;
-        }
-        $result->free();
-
-        $query = 'SELECT * FROM `EXPORTATIONTYPE` WHERE 1 LIMIT 1';
-        $result = $mysqli->query($query) or die($mysqli->error);
-        $exporttyperows = array();
-        while($row = $result->fetch_assoc()) {
-            $exporttyperows[] = $row;
         }
         $result->free();
 
@@ -464,6 +403,31 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
+                                    <h4 class="card-title">Réinitialisation de mot de passe</h4>
+                                    <h5 class="card-subtitle text-danger"> <strong>S'il vous plaît soyez prudent et saisir un mot de passe dont vous souviendrez.</strong> </h5>
+                                    <form action="settings.php" method="post" class="mt-4">
+                                        <div class="form-group">
+                                            <label>Utilisateur</label>
+                                            <select class="custom-select col-12" id="UserPwdChange" name="UserPwdChange">
+                                                <option value="0" selected>Selectioner..</option>
+                                                <option value="1">admin</option>
+                                                <option value="2">user</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="UserPwd">Nouveau mot de passe</label>
+                                            <input type="password" class="form-control" id="UserPwd" placeholder="Mot de passe">
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">Mise à jour</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
                                     <h4 class="card-title">Modifier le temps d'enregistrement</h4>
                                     <h5 class="card-subtitle"> Veuillez entrer le temps d'enregistrement en minutes. </h5>
                                     <h5 class="card-subtitle text-danger"> <?php echo $errormessage4; ?> </h5>
@@ -577,6 +541,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Exportation des données</h4>
+                                    <h5 class="card-subtitle">Ici vous pouvez obtenir un fichier Excel ou PDF de toutes les données de la base de données</h5>
                                     <h5 class="card-subtitle text-danger"> <?php echo $errormessage6; ?> </h5>
                                     <form action="settings.php" method="post" class="mt-4">
                                         <div class="form-group">
@@ -590,7 +555,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Interval d'enregistrement</label>
-                                            <select class="custom-select col-12" id="ExportationType" name="ExportationType">
+                                            <select class="custom-select col-12" id="ExportationInterval" name="ExportationInterval">
                                                 <option value="0" selected>Selectioner..</option>
                                                 <option value="3">60 minutes</option>
                                                 <option value="1">24 Heures</option>
@@ -626,10 +591,8 @@
                                             <label>Format de fichier</label>
                                             <select class="custom-select col-12" id="InputLowLevel" name="InputLowLevel">
                                                 <option value="0" selected>Selectioner..</option>
-                                                <option value="1">Désactiver l'exportation des données</option>
-                                                <option value="2">Activer l'exportation des données</option>
-                                                <option value="3">Vider la base de données</option>
-                                                <option value="4">Redémarrez la plateforme</option>
+                                                <option value="1">Vider la base de données</option>
+                                                <option value="2">Redémarrez la plateforme</option>
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-danger">Exécuter</button>

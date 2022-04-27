@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 28 avr. 2022 à 00:37
+-- Généré le : jeu. 28 avr. 2022 à 00:49
 -- Version du serveur :  10.4.16-MariaDB
 -- Version de PHP : 7.4.12
 
@@ -66,23 +66,6 @@ INSERT INTO `charges` (`ID`, `NAME`, `VALUE`) VALUES
 (6, 'Charge 6', 0),
 (7, 'Charge 7', 0),
 (8, 'Charge 8', 0);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `exportationtype`
---
-
-CREATE TABLE `exportationtype` (
-  `TYPE` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Déchargement des données de la table `exportationtype`
---
-
-INSERT INTO `exportationtype` (`TYPE`) VALUES
-(1);
 
 -- --------------------------------------------------------
 
