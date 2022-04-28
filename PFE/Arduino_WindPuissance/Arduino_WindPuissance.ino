@@ -22,12 +22,52 @@
    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
 */
 
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+
+RF24 radio(9, 10);       
+const byte address[6] = "14863";
+
 void setup() 
 {
-
+   Serial.begin(9600);
+   radio.begin();                  
+   radio.openWritingPipe(address); 
+   radio.setPALevel(RF24_PA_MAX); 
+   radio.stopListening();          
 }
 
-void loop() 
-{
+void loop()
+{  
+   char data[24];
+   char str_temp[6];
 
+
+   double COURANTDC_VALUE = 0.00;
+   dtostrf(COURANTDC_VALUE, 1, 2, str_temp);
+   sprintf(data, "setsensor 1 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+   delay(1);
+
+
+   double TENSIONDC_VALUE = ((analogRead(A1)*5.0)/1024.0)/(7500.0/(37500.0));
+   dtostrf(TENSIONDC_VALUE, 4, 2, str_temp);
+   sprintf(data, "setsensor 2 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+   delay(1);
+
+
+   double COURANTAC_VALUE = 0.00;
+   dtostrf(COURANTAC_VALUE, 4, 2, str_temp);
+   sprintf(data, "setsensor 3 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+   delay(1);
+
+
+   double TENSIONAC_VALUE = 0.00;
+   dtostrf(TENSIONAC_VALUE, 4, 2, str_temp);
+   sprintf(data, "setsensor 4 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+   delay(1);
 }

@@ -28,6 +28,9 @@
     $data['currentac'] = number_format($staticrows[2]['VALUE'], 1);
     $data['cacwidth'] = $staticrows[2]['VALUE'];
 
+    $data['voltageac'] = number_format($staticrows[3]['VALUE'], 1);
+    $data['voltageacidth'] = (($staticrows[3]['VALUE']*100)/230);
+
     $data['temperature'] = number_format($temperature, 0);
     $data['tempwidth'] = (($temperature*100)/60);
 
