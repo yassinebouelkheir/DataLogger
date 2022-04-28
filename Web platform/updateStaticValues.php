@@ -35,13 +35,13 @@
     $data['temp1width'] = (($temperature1*100)/60);
 
     $data['brightness'] = number_format(round($staticrows[6]['VALUE']), 0);
-    $data['brightneswidth'] = $staticrows[6]['VALUE'];
+    $data['brightneswidth'] = 1000-$staticrows[6]['VALUE'];
 
     if($staticrows[7]['VALUE'] == 0) $data['humidity'] = 0.0;
     else  {
         $staticrows[7]['VALUE'] = 161.0 * $staticrows[7]['VALUE'] / 5.0 - 25.8;
         $staticrows[7]['VALUE'] = $staticrows[7]['VALUE'] / (1.0546 - 0.0026 * $temperature);
-        $data['humidity'] = number_format(round($staticrows[7]['VALUE']), 0);
+        $data['humidity'] = number_format(round($staticrows[7]['VALUE']/10.0), 0);
     }
     $data['humidtywidth'] = $staticrows[7]['VALUE'];
 

@@ -1043,17 +1043,17 @@
                         if(response.brightness > 0) document.getElementById('brightnessvalue').innerHTML = ((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)  + " LUX";
                         else document.getElementById('brightnessvalue').innerHTML = "0 LUX";
                         document.getElementById('brightnesswidth').setAttribute("style", "width: " + response.brightneswidth + "%; height: 6px;");
-                        if(response.brightneswidth < 25) {
+                        if((response.brightneswidth/10.0) < 25) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-danger");
                             document.getElementById('brightness').setAttribute("class", "text-danger");
                         }
-                        else if(response.brightneswidth < 40) {
+                        else if((response.brightneswidth/10.0) < 40) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-primary");
                             document.getElementById('brightness').setAttribute("class", "text-primary");
                         }
-                        else if(response.brightneswidth >= 40) {
+                        else if((response.brightneswidth/10.0) >= 40) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-success");
                             document.getElementById('brightness').setAttribute("class", "text-success");
