@@ -22,12 +22,104 @@
    Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
 */
 
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+
+RF24 radio(9, 10);       
+const byte address1[6] = "14863";
+const byte address2[6] = "26957";
+
 void setup() 
 {
+   Serial.begin(9600);
+   radio.begin();
 
+   radio.openWritingPipe(address1);
+   radio.openReadingPipe(1, address2);
+
+   radio.setPALevel(RF24_PA_MAX); 
+   radio.startListening();  
 }
 
 void loop() 
 {
+   char data[24];
+   char str_temp[6];
 
+   radio.stopListening();
+
+   double COURANTDC_VALUE = getCurrentDC();
+   dtostrf(COURANTDC_VALUE, 1, 2, str_temp);
+   sprintf(data, "setsensor 1 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+   delay(1);
+
+
+   double TENSIONDC_VALUE = ((analogRead(A1)*5.0)/1024.0)/(7500.0/(37500.0));
+   dtostrf(TENSIONDC_VALUE, 4, 2, str_temp);
+   sprintf(data, "setsensor 2 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+   delay(1);
+
+
+   double COURANTAC_VALUE = getCurrentAC();
+   dtostrf(COURANTAC_VALUE, 4, 2, str_temp);
+   sprintf(data, "setsensor 3 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+   delay(1);
+
+   radio.startListening();
+   delay(1);
+
+   if(radio.avaliable())
+   {
+      char text[32] = {''};
+      radio.read(&text, sizeof(text));
+
+      String data = String(text); 
+      if (data.length() > 1) {
+        int id, value;
+        while (data.length() > 0) {
+            int index = data.indexOf(' ');
+            if (index == -1) {
+                Buff[StringCount++] = data;
+                break;
+            } else {
+                Buff[StringCount++] = data.substring(0, index);
+                data = data.substring(index + 1);
+            }
+        }
+        digitalWrite(Buff[1].toInt(), bool(!Buff[2].toInt()));
+        Serial.println("Data recieved");
+      }
+   }
+}
+
+double getCurrentDC()
+{
+   float voltage_raw = 0;
+   for(int i = 0; i < 1000; i++){ 
+      voltage_raw += (5.0 / 1023.0)*analogRead(A0);
+   }
+   voltage_raw /= 1000;
+   float voltage =  voltage_raw - 2.5 + 0.012;
+   float current = voltage / 0.066;
+
+   if(abs(current) > 0.05) return abs(current);
+   else return 0.0;
+}
+
+double getCurrentAC()
+{
+   float voltage_raw = 0;
+   for(int i = 0; i < 1000; i++){ 
+      voltage_raw += (5.0 / 1023.0)*analogRead(A2);
+   }
+   voltage_raw /= 1000;
+   float voltage =  voltage_raw - 2.5 + 0.012;
+   float current = voltage / 0.066;
+
+   if(abs(current) > 0.05) return abs(current);
+   else return 0.0;
 }
