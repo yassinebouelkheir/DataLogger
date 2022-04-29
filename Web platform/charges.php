@@ -115,16 +115,6 @@
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
                                 <span class="hide-menu">Météorologie</span></a>
                             </li>
-                            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-home"></i><span class="hide-menu"> Smart House</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="smarthouse/node1.php">Node 1</a></li>
-                                    <li><a href="smarthouse/node2.php">Node 2</a></li>
-                                    <li><a href="smarthouse/node3.php">Node 3</a></li>
-                                    <li><a href="smarthouse/node4.php">Node 4</a></li>
-                                    <li><a href="smarthouse/node5.php">Node 5</a></li>
-                                    <li><a href="smarthouse/node6.php">Node 6</a></li>
-                                </ul>
-                            </li>
                             <li> <a class="waves-effect waves-dark active" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> Charges</span></a>
                             </li>
                             <?php 
