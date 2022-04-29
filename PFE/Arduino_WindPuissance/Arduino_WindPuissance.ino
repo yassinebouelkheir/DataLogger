@@ -29,13 +29,24 @@
 RF24 radio(9, 10);       
 const byte address[6] = "14863";
 
+long prevT;
+
+float velocity = 0;
+float deltaT;
+float R1=30000.0;
+float R2=7500.0;
+
 void setup() 
 {
    Serial.begin(9600);
    radio.begin();                  
    radio.openWritingPipe(address); 
    radio.setPALevel(RF24_PA_MAX); 
-   radio.stopListening();          
+   radio.stopListening();
+
+   pinMode(2, INPUT);
+   pinMode(4, OUTPUT);
+   attachInterrupt(digitalPinToInterrupt(2), readEncoder,RISING);
 }
 
 void loop()
@@ -43,31 +54,47 @@ void loop()
    char data[24];
    char str_temp[6];
 
-
-   double COURANTDC_VALUE = 0.00;
-   dtostrf(COURANTDC_VALUE, 1, 2, str_temp);
-   sprintf(data, "setsensor 1 %s", str_temp);
+   double value1 = analogRead(A0);
+   double vOUT1  = (value1 *5.0)/1024.0;
+   double vIN1   = vOUT1/(R2/(R1+R2));
+   double V1     = 4.6+(0.2480485*vIN1)+(0*pow(vIN1,2))+(0*pow(vIN1,3));
+   if(V1 < 4.7) V1=0;
+   
+   double value2 = analogRead(A1);
+   double vOUT2  = (value2 *5.0)/1024.0;
+   double vIN2   = vOUT2/(R2/(R1 + R2));
+   double V2     = -4.876997*pow(10,-2)+(0.5189756*vIN2)+(0*pow(vIN2,2))+(0*pow(vIN2,3));
+   if(V2 < 0) V2=0;
+   
+   int sensorValue = analogRead(A2); 
+   if(sensorValue > 500) digitalWrite(4,HIGH);
+   else digitalWrite(4,LOW);
+  
+   if (deltaT>5||deltaT<0.08) velocity = 0;
+  
+   dtostrf(V1, 1, 2, str_temp);
+   sprintf(data, "setsensor 9 %s", str_temp);
    radio.write(&data, sizeof(data));             
    delay(1);
 
-
-   double TENSIONDC_VALUE = ((analogRead(A1)*5.0)/1024.0)/(7500.0/(37500.0));
-   dtostrf(TENSIONDC_VALUE, 4, 2, str_temp);
-   sprintf(data, "setsensor 2 %s", str_temp);
+   dtostrf(V2, 1, 2, str_temp);
+   sprintf(data, "setsensor 10 %s", str_temp);
    radio.write(&data, sizeof(data));             
    delay(1);
 
-
-   double COURANTAC_VALUE = 0.00;
-   dtostrf(COURANTAC_VALUE, 4, 2, str_temp);
-   sprintf(data, "setsensor 3 %s", str_temp);
+   dtostrf(velocity, 1, 2, str_temp);
+   sprintf(data, "setsensor 11 %s", str_temp);
    radio.write(&data, sizeof(data));             
    delay(1);
+}
 
+void readEncoder()
+{
+  long currT = micros();
+  deltaT = ((float) (currT - prevT))/1.0e6;
+   
+  velocity = 1/deltaT;
+  velocity = velocity*60;
 
-   double TENSIONAC_VALUE = 0.00;
-   dtostrf(TENSIONAC_VALUE, 4, 2, str_temp);
-   sprintf(data, "setsensor 4 %s", str_temp);
-   radio.write(&data, sizeof(data));             
-   delay(1);
+  prevT=currT;
 }
