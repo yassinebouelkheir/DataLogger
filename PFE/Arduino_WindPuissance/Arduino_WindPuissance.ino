@@ -54,17 +54,17 @@ void loop()
    char data[24];
    char str_temp[6];
 
-   double value1 = analogRead(A0);
-   double vOUT1  = (value1 *5.0)/1024.0;
-   double vIN1   = vOUT1/(R2/(R1+R2));
-   double V1     = 4.6+(0.2480485*vIN1)+(0*pow(vIN1,2))+(0*pow(vIN1,3));
-   if(V1 < 4.7) V1=0;
+   double value = analogRead(A0);
+   double vOUT  = (value*5.0)/1024.0;
+   double vIN   = vOUT/(R2/(R1+R2));
+   double V1     = 4.6+(0.2480485*vIN)+(0*pow(vIN,2))+(0*pow(vIN,3));
+   if(V1 < 4.7) V1 = 0;
    
-   double value2 = analogRead(A1);
-   double vOUT2  = (value2 *5.0)/1024.0;
-   double vIN2   = vOUT2/(R2/(R1 + R2));
-   double V2     = -4.876997*pow(10,-2)+(0.5189756*vIN2)+(0*pow(vIN2,2))+(0*pow(vIN2,3));
-   if(V2 < 0) V2=0;
+   value = analogRead(A1);
+   vOUT  = (value*5.0)/1024.0;
+   vIN   = vOUT/(R2/(R1+R2));
+   V2     = -4.876997*pow(10,-2)+(0.5189756*vIN)+(0*pow(vIN,2))+(0*pow(vIN,3));
+   if(V2 < 0) V2 = 0;
    
    int sensorValue = analogRead(A2); 
    if(sensorValue > 500) digitalWrite(4,HIGH);
