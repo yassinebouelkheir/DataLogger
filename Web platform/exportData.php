@@ -164,7 +164,7 @@
         $objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.6);
         $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(1.9);
 
-        if($exporttyperows[0]['TYPE'] == 1)
+        if($_GET['type'] == 1)
         {
           header('Content-Type: application/vnd.ms-excel');
           header('Content-Disposition: attachment;filename="DataLogger_'.strftime('%d-%m-%Y').'.xlsx"');
@@ -174,7 +174,7 @@
           ob_end_clean();
           $writer->save('php://output');
         }
-        else if($exporttyperows[0]['TYPE'] == 2)
+        else if($_GET['TYPE'] == 2)
         {
           echo "PDF Test";
         }

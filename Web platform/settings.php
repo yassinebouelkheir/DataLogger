@@ -115,7 +115,37 @@
 
         if(!empty($_POST['ExportationFormat']) && !empty($_POST['ExportationInterval']) && !empty($_POST['ExportationType']))
         {
-
+            switch($ExportationInterval)
+            {
+                case 1: {
+                    header("Location: exportData.php?interval=3600&type=1");
+                    break;
+                }
+                case 2: {
+                    header("Location: exportData.php?interval=86400&type=1");
+                    break;
+                }
+                case 3: {
+                    header("Location: exportData.php?interval=2592000&type=1");
+                    break;
+                }
+                case 4: {
+                    header("Location: exportData.php?interval=15552000&type=1");
+                    break;
+                }
+                case 5: {
+                    header("Location: exportData.php?interval=31104000&type=1");
+                    break;
+                }
+                case 6: {
+                    header("Location: exportData.php?interval=0&type=1");
+                    break;
+                }
+                default: {
+                    $errormessage6 = "Une erreur s'est produite lors du traitement de votre demande, veuillez réessayer plus tard.";
+                    break;
+                }
+            }
         }
 
         if(!empty($_POST['InputLowLevel']))
@@ -266,11 +296,6 @@
                 case 2:
                 {
                     // Restart                    
-                    break;
-                }
-                default: 
-                {
-                    $errormessage6 = "Une erreur s'est produite lors du traitement de votre demande, veuillez réessayer plus tard.";
                     break;
                 }
             }
@@ -560,13 +585,13 @@
                                             <label>Interval d'enregistrement</label>
                                             <select class="custom-select col-12" id="ExportationInterval" name="ExportationInterval">
                                                 <option value="0" selected>Selectioner..</option>
-                                                <option value="3">60 minutes</option>
-                                                <option value="1">24 Heures</option>
-                                                <option value="2">7 Jours</option>
-                                                <option value="3">30 Jours</option>
-                                                <option value="4">3 Mois</option>
-                                                <option value="5">12 Mois</option>
-                                                <option value="6">Tout les données</option>
+                                                <option value="1">60 minutes</option>
+                                                <option value="2">24 Heures</option>
+                                                <option value="3">7 Jours</option>
+                                                <option value="4">30 Jours</option>
+                                                <option value="5">3 Mois</option>
+                                                <option value="6">12 Mois</option>
+                                                <option value="7">Tout les données</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
