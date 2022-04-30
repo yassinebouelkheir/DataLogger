@@ -60,6 +60,7 @@
         <title>Data logger - Charges</title>
         <link href="dist/css/style.min.css" rel="stylesheet">
         <link href="dist/css/pages/pricing-page.css" rel="stylesheet">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout">
         <div class="preloader">
@@ -104,12 +105,16 @@
                             </li>
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-bolt"></i>
+                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-solar-panel"></i>
                                 <span class="hide-menu">Courant Faible</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
                                 <span class="hide-menu">Courant Fort</span></a>
+                            </li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
+                                <span class="hide-menu">Éolienne</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>

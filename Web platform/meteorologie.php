@@ -137,6 +137,7 @@
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
         <link href="dist/css/style.min.css" rel="stylesheet">
         <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout">
         <div class="preloader">
@@ -181,12 +182,16 @@
                             </li>
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-bolt"></i>
+                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-solar-panel"></i>
                                 <span class="hide-menu">Courant Faible</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
                                 <span class="hide-menu">Courant Fort</span></a>
+                            </li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
+                                <span class="hide-menu">Éolienne</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark active" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
@@ -295,7 +300,7 @@
                                     <div class="col-md-12">
                                         <div class="d-flex no-block align-items-center">
                                             <div>
-                                                <h3><i class="fas fa-bullseye"></i></h3>
+                                                <h3><i class="fas fa-atom"></i></h3>
                                                     <p class="text-danger" id="irradiation">IRRADIATION</p>
                                             </div>
                                             <div class="ml-auto">
@@ -1032,18 +1037,18 @@
 
                         if(response.brightness > 0) document.getElementById('brightnessvalue').innerHTML = ((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)  + " LUX";
                         else document.getElementById('brightnessvalue').innerHTML = "0 LUX";
-                        document.getElementById('brightnesswidth').setAttribute("style", "width: " + response.brightneswidth + "%; height: 6px;");
-                        if((response.brightneswidth/10.0) < 25) {
+                        document.getElementById('brightnesswidth').setAttribute("style", "width: " + (1000-response.brightneswidth) + "%; height: 6px;");
+                        if((1000-response.brightneswidth/10.0) < 25) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-danger");
                             document.getElementById('brightness').setAttribute("class", "text-danger");
                         }
-                        else if((response.brightneswidth/10.0) < 40) {
+                        else if((1000-response.brightneswidth/10.0) < 40) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-primary");
                             document.getElementById('brightness').setAttribute("class", "text-primary");
                         }
-                        else if((response.brightneswidth/10.0) >= 40) {
+                        else if((1000-response.brightneswidth/10.0) >= 40) {
                             document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
                             document.getElementById('brightnessvalue').setAttribute("class", "counter text-success");
                             document.getElementById('brightness').setAttribute("class", "text-success");

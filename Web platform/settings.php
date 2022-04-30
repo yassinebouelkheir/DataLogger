@@ -103,7 +103,14 @@
 
         if(!empty($_POST['UserPwdChange']) && !empty($_POST['UserPwd']))
         {
-
+            if(strlen($_POST['UserPwd']) < 4) $errormessage3 = "le mot de passe doit contenir au moins 4 caractères.";
+            else if($_POST['UserPwdChange'] > 2 || $_POST['UserPwdChange'] < 1) $errormessage3 = "Une erreur s'est produite lors du traitement de votre demande, veuillez réessayer plus tard.";
+            else 
+            {
+                if($_POST['UserPwdChange'] == 1) $query = "UPDATE `ACCOUNTS` SET `PASSWORD` = '".md5($_POST['UserPwd'])."' WHERE `USERNAME` = 'admin'";
+                else if($_POST['UserPwdChange'] == 2) $query = "UPDATE `ACCOUNTS` SET `PASSWORD` = '".md5($_POST['UserPwd'])."' WHERE `USERNAME` = 'user'";
+                $mysqli->query($query) or die($mysqli->error);  
+            }
         }
 
         if(!empty($_POST['ExportationFormat']) && !empty($_POST['ExportationInterval']) && !empty($_POST['ExportationType']))
@@ -263,7 +270,7 @@
                 }
                 default: 
                 {
-                    $errormessage6 = "Votre choix n'est pas valide, veuillez réessayer.";
+                    $errormessage6 = "Une erreur s'est produite lors du traitement de votre demande, veuillez réessayer plus tard.";
                     break;
                 }
             }
@@ -306,6 +313,7 @@
         <link href="../assets/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
         <link href="../assets/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
         <link href="dist/css/style.min.css" rel="stylesheet">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout">
         <div class="preloader">
@@ -350,12 +358,16 @@
                             </li>
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-bolt"></i>
+                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-solar-panel"></i>
                                 <span class="hide-menu">Courant Faible</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
                                 <span class="hide-menu">Courant Fort</span></a>
+                            </li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
+                                <span class="hide-menu">Éolienne</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
@@ -395,6 +407,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Réinitialisation de mot de passe</h4>
                                     <h5 class="card-subtitle text-danger"> <strong>S'il vous plaît soyez prudent et saisir un mot de passe dont vous souviendrez.</strong> </h5>
+                                    <h5 class="card-subtitle text-danger"> <?php echo $errormessage3; ?> </h5>
                                     <form action="settings.php" method="post" class="mt-4">
                                         <div class="form-group">
                                             <label>Utilisateur</label>
