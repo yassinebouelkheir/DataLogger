@@ -24,7 +24,6 @@
 
 import RPi.GPIO as GPIO
 import mysql.connector
-import serial
 import time
 import threading
 import os
@@ -54,7 +53,11 @@ def getquerytime(x, y=0):
 			return lastquerytime[6]
 		elif x == 8: # Humidity
 			return lastquerytime[7]
-		elif x == 9: # Wind Speed
+		elif x == 9: # Wind Speed 1
+			return lastquerytime[8]
+		elif x == 10: # Wind Speed 2
+			return lastquerytime[8]
+		elif x == 11: # Turbine
 			return lastquerytime[8]
 
 	elif y == 1
@@ -115,6 +118,20 @@ def getquerytime(x, y=0):
 				lastquerytime[7] = time.time() + row[0]*1000
 				break;
 		elif x == 9: # Wind Speed
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[8] = time.time() + row[0]*1000
+				break;
+		elif x == 10: # Wind Speed
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[8] = time.time() + row[0]*1000
+				break;
+		elif x == 11: # Wind Speed
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
 			result = cursor.fetchall()
