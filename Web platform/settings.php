@@ -71,6 +71,8 @@
                 $mysqli->query($query) or die($mysqli->error);
                 $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime6"].' WHERE ID = 6';
                 $mysqli->query($query) or die($mysqli->error);
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime7"].' WHERE ID = 7';
+                $mysqli->query($query) or die($mysqli->error);
             }     
         } 
 
@@ -118,27 +120,31 @@
             switch($ExportationInterval)
             {
                 case 1: {
-                    header("Location: exportData.php?interval=3600&type=1");
+                    header("Location: exportData.php?interval=3600&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 2: {
-                    header("Location: exportData.php?interval=86400&type=1");
+                    header("Location: exportData.php?interval=86400&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 3: {
-                    header("Location: exportData.php?interval=2592000&type=1");
+                    header("Location: exportData.php?interval=604800&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 4: {
-                    header("Location: exportData.php?interval=15552000&type=1");
+                    header("Location: exportData.php?interval=2419200&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 5: {
-                    header("Location: exportData.php?interval=31104000&type=1");
+                    header("Location: exportData.php?interval=7257600&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 6: {
-                    header("Location: exportData.php?interval=0&type=1");
+                    header("Location: exportData.php?interval=29030400&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
+                    break;
+                }
+                case 7: {
+                    header("Location: exportData.php?interval=0&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
                     break;
                 }
                 default: {
@@ -383,7 +389,7 @@
                             </li>
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-solar-panel"></i>
+                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
                                 <span class="hide-menu">Courant Faible</span></a>
                             </li>
                             <li> 
@@ -444,7 +450,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="UserPwd">Nouveau mot de passe</label>
-                                            <input type="password" class="form-control" id="UserPwd" placeholder="Mot de passe">
+                                            <input type="password" class="form-control" id="UserPwd" name="UserPwd" placeholder="Mot de passe">
                                         </div>
                                         <button type="submit" class="btn btn-danger">Mise à jour</button>
                                     </form>
@@ -473,13 +479,19 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label for="updatetime7" class="col-2 col-form-label">Éolienne</label>
+                                            <div class="col-10">
+                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[6]['TIME'] ?>" id="updatetime6" name="updatetime7">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label for="updatetime3" class="col-2 col-form-label">Température</label>
                                             <div class="col-10">
                                                 <input class="form-control" type="search" value="<?php echo $updatetimerows[2]['TIME'] ?>" id="updatetime3" name="updatetime3">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="updatetime4" class="col-2 col-form-label">Luminosité</label>
+                                            <label for="updatetime4" class="col-2 col-form-label">Énergie lumineuse</label>
                                             <div class="col-10">
                                                 <input class="form-control" type="search" value="<?php echo $updatetimerows[3]['TIME'] ?>" id="updatetime4" name="updatetime4">
                                             </div>
@@ -578,7 +590,8 @@
                                                 <option value="0" selected>Selectioner..</option>
                                                 <option value="1">Courant Faible</option>
                                                 <option value="2">Courant Fort</option>
-                                                <option value="3">Météorologie</option>
+                                                <option value="3">Éolienne</option>
+                                                <option value="4">Météorologie</option>
                                             </select>
                                         </div>
                                         <div class="form-group">

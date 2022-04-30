@@ -49,31 +49,13 @@
     {
         $mysqli = new mysqli("localhost", "root", "", "PFE");
 
-        $query = 'SELECT * FROM `EXPORTATIONTYPE` WHERE 1 LIMIT 1';
-        $result = $mysqli->query($query) or die($mysqli->error);
-        $exporttyperows = array();
-        while($row = $result->fetch_assoc()) {
-            $exporttyperows[] = $row;
-        }
-        $result->free();
-        if($exporttyperows[0]['TYPE'] == 0)
-        {
-          echo '<html>
-                  <head>
-                    <meta http-equiv="refresh" content="2; url=index.php"/>
-                  </head>
-                  <body>
-                    <h1>Exportation des données est désactivé pour le moment.</h1>
-                    <h2>Merci de contacter votre administrateur pour tout information.</h2>
-                  </body>
-                </html>';
-          die();
-        }
-
         $interval = stripslashes($_GET['interval']);
         $interval = mysqli_real_escape_string($mysqli, $interval);
 
-        $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple.xlsx');
+        $type = stripslashes($_GET['type']);
+        $format = stripslashes($_GET['format']);
+
+        $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple_'.$type.'.xlsx');
         $objPHPExcel->setActiveSheetIndex(0);
 
         $objPHPExcel->getActiveSheet()->setCellValue('I10', strftime('%d/%m/%Y').' '.strftime('%H:%M'));
@@ -109,6 +91,7 @@
                 )
               )
             );
+
             $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
@@ -159,12 +142,13 @@
 
         $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
         $objPHPExcel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
-        $objPHPExcel->getActiveSheet()->getPageMargins()->setTop(1.9);
-        $objPHPExcel->getActiveSheet()->getPageMargins()->setRight(0.6);
-        $objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.6);
-        $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(1.9);
+        $objPHPExcel->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
+        $objPHPExcel->getActiveSheet()->getPageMargins()->setTop(1.91);
+        $objPHPExcel->getActiveSheet()->getPageMargins()->setRight(1.78);
+        $objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(1.78);
+        $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(1.91);
 
-        if($_GET['type'] == 1)
+        if($format == 1)
         {
           header('Content-Type: application/vnd.ms-excel');
           header('Content-Disposition: attachment;filename="DataLogger_'.strftime('%d-%m-%Y').'.xlsx"');
@@ -174,7 +158,7 @@
           ob_end_clean();
           $writer->save('php://output');
         }
-        else if($_GET['TYPE'] == 2)
+        else if($format == 2)
         {
           echo "PDF Test";
         }

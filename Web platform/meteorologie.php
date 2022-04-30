@@ -182,7 +182,7 @@
                             </li>
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-solar-panel"></i>
+                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
                                 <span class="hide-menu">Courant Faible</span></a>
                             </li>
                             <li> 

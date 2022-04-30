@@ -95,7 +95,7 @@
         <meta name="author" content="BOUELKHEIR Yassine">
         <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-        <title>Data logger - Courant Faible</title>
+        <title>Data logger - Éolienne</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
         <link href="dist/css/style.min.css" rel="stylesheet">
         <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
@@ -105,20 +105,20 @@
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">Data logger v2.0 - Courant Faible</p>
+                <p class="loader__label">Data logger v2.0 - Éolienne</p>
             </div>
         </div>
         <div id="main-wrapper">
             <header class="topbar">
                 <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.php">
+                        <a class="navbar-brand" href="eolienne.php">
                             <span>  
                     </div>
                     <div class="navbar-collapse">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="index.php"><i class="ti-reload"></i></a> </li>
-                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="index.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="eolienne.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="eolienne.php"><i class="ti-reload"></i></a> </li>
                         </ul>
 
                         <ul class="navbar-nav my-lg-0">
@@ -144,7 +144,7 @@
                             </li>
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
-                                <a class="waves-effect waves-dark active" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
+                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
                                 <span class="hide-menu">Courant Faible</span></a>
                             </li>
                             <li> 
@@ -152,7 +152,7 @@
                                 <span class="hide-menu">Courant Fort</span></a>
                             </li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
+                                <a class="waves-effect waves-dark active" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
                                 <span class="hide-menu">Éolienne</span></a>
                             </li>
                             <li> 
@@ -182,32 +182,8 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Courant Faible</li>
+                                    <li class="breadcrumb-item active">Éolienne</li>
                                 </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-group">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="d-flex no-block align-items-center">
-                                            <div>
-                                                <h3><i class="fas fa-battery-three-quarters"></i></h3>
-                                                <p class="text-danger" id="batterietitle">BATTERIE</p>
-                                            </div>
-                                            <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="batterie">0%</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" id="batteriewidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -508,24 +484,7 @@
                 type: 'post',
                 dataType: "json",
                 success: function (response) {
-                    document.getElementById('batterie').innerHTML = response.battery + " %";
-                    document.getElementById('batteriewidth').setAttribute("style", "width: " + response.batterywidth + "%; height: 6px;");
-                    if(response.batterie <= 20) {
-                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-danger");
-                        document.getElementById('batterie').setAttribute("class", "counter text-danger");
-                        document.getElementById('batterietitle').setAttribute("class", "text-danger");
-                    }
-                    else if(response.batterie <= 50) {
-                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-primary");
-                        document.getElementById('batterie').setAttribute("class", "counter text-primary");
-                        document.getElementById('batterietitle').setAttribute("class", "text-primary");
-                    }
-                    else if(response.batterie > 50){
-                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-success");
-                        document.getElementById('batterie').setAttribute("class", "counter text-success");
-                        document.getElementById('batterietitle').setAttribute("class", "text-success");
-                    }
-
+                    
                     document.getElementById('voltagedc').innerHTML = response.voltagedc + " V";
                     document.getElementById('tensiondcwidth').setAttribute("style", "width: " + response.voltagedcwidth + "%; height: 6px;");
                     if(response.voltagedc < 14) {
