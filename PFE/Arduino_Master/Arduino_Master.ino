@@ -15,7 +15,14 @@ void setup()
     radio.disableAckPayload();
     
     radio.setPALevel(RF24_PA_MAX);
-    radio.stopListening();      
+    radio.stopListening(); 
+
+    for(int i = 2; i <= 4; i++)
+    {
+        pinMode(i, OUTPUT);
+        digitalWrite(i, LOW);
+    }
+    digitalWrite(2, HIGH);
 }
 void loop()
 {   
@@ -23,23 +30,26 @@ void loop()
     delay(10);
     char data[24];
     char str_temp[6];
+
+    digitalWrite(4, HIGH);
+    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
+    radio.write(&data, sizeof(data));             
+    delay(1);
+
+    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
+    radio.write(&data, sizeof(data));             
+    delay(1);
+
+    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
+    radio.write(&data, sizeof(data));             
+    delay(1);
+
+    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
+    radio.write(&data, sizeof(data));             
+    delay(1);
+    digitalWrite(4, LOW);
     
-    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
-    radio.write(&data, sizeof(data));             
-    delay(1);
-
-    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
-    radio.write(&data, sizeof(data));             
-    delay(1);
-
-    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
-    radio.write(&data, sizeof(data));             
-    delay(1);
-
-    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
-    radio.write(&data, sizeof(data));             
-    delay(1);
-    
+    digitalWrite(3, HIGH);
     radio.startListening();
     delay(13);
     if (radio.available()) 
@@ -48,4 +58,5 @@ void loop()
         radio.read(&text, sizeof(text));
         Serial.println(text);
     }
+    digitalWrite(3, LOW);
 }
