@@ -18,9 +18,7 @@ void setup()
     radio.stopListening();      
 }
 void loop()
-{  
-    bool rslt = false;
-    
+{   
     radio.stopListening();
     delay(10);
     char data[24];
