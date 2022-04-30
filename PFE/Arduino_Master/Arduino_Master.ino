@@ -30,24 +30,9 @@ void loop()
     delay(10);
     char data[24];
     char str_temp[6];
-
-    digitalWrite(4, HIGH);
-    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
-    radio.write(&data, sizeof(data));             
+             
+    getChargeCommand();
     delay(1);
-
-    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
-    radio.write(&data, sizeof(data));             
-    delay(1);
-
-    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
-    radio.write(&data, sizeof(data));             
-    delay(1);
-
-    sprintf(data, "setcharge %d %d", random(0, 7), random(0, 2));
-    radio.write(&data, sizeof(data));             
-    delay(1);
-    digitalWrite(4, LOW);
     
     digitalWrite(3, HIGH);
     radio.startListening();
@@ -59,4 +44,27 @@ void loop()
         Serial.println(text);
     }
     digitalWrite(3, LOW);
+}
+void getChargeCommand() {
+    String Buff[10];
+    int StringCount = 0;
+    String data = Serial.readStringUntil('\n');
+    if (data.length() > 1) {
+        digitalWrite(4, HIGH);
+        while (data.length() > 0) {
+            int index = data.indexOf(' ');
+            if (index == -1) {
+                Buff[StringCount++] = data;
+                break;
+            } else {
+                Buff[StringCount++] = data.substring(0, index);
+                data = data.substring(index + 1);
+            }
+        }
+        char datax[24];
+        sprintf(datax, "setcharge %i %i", int(Buff[1].toInt()), bool(Buff[2].toInt()));
+        radio.write(&datax, sizeof(datax));
+        Serial.println(datax);
+        digitalWrite(4, LOW);
+    }
 }
