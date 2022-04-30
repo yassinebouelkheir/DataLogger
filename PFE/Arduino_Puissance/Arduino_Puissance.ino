@@ -32,52 +32,39 @@ const byte address2[6] = "26957";
 
 void setup() 
 {
-   Serial.begin(9600);
+   //Serial.begin(9600);
    radio.begin();
-
+   
    radio.openWritingPipe(address1);
    radio.openReadingPipe(1, address2);
-
+   radio.disableAckPayload();
+   
    radio.setPALevel(RF24_PA_MAX); 
-   radio.startListening();  
+   radio.stopListening(); 
+   
+   for(int i = 1; i <= 8; i++)
+   {
+      pinMode(i, OUTPUT);
+      digitalWrite(i, LOW);
+   }
 }
 
 void loop() 
 {
    char data[24];
    char str_temp[6];
-
-   radio.stopListening();
-
-   double COURANTDC_VALUE = getCurrentDC();
-   dtostrf(COURANTDC_VALUE, 1, 2, str_temp);
-   sprintf(data, "setsensor 1 %s", str_temp);
-   radio.write(&data, sizeof(data));             
-   delay(1);
-
-
-   double TENSIONDC_VALUE = ((analogRead(A1)*5.0)/1024.0)/(7500.0/(37500.0));
-   dtostrf(TENSIONDC_VALUE, 4, 2, str_temp);
-   sprintf(data, "setsensor 2 %s", str_temp);
-   radio.write(&data, sizeof(data));             
-   delay(1);
-
-
-   double COURANTAC_VALUE = getCurrentAC();
-   dtostrf(COURANTAC_VALUE, 4, 2, str_temp);
-   sprintf(data, "setsensor 3 %s", str_temp);
-   radio.write(&data, sizeof(data));             
-   delay(1);
-
    radio.startListening();
-   delay(1);
+   delay(15);
 
-   if(radio.avaliable())
+   if(radio.available())
    {
-      char text[32] = {''};
+      char text[32];
       radio.read(&text, sizeof(text));
 
+      String Buff[10];
+      int StringCount = 0;
       String data = String(text); 
+      //Serial.println(data);
       if (data.length() > 1) {
         int id, value;
         while (data.length() > 0) {
@@ -91,9 +78,26 @@ void loop()
             }
         }
         digitalWrite(Buff[1].toInt(), bool(!Buff[2].toInt()));
-        Serial.println("Data recieved");
       }
    }
+   
+   radio.stopListening();
+   delay(10);
+   
+   double COURANTDC_VALUE = getCurrentDC();
+   dtostrf(COURANTDC_VALUE, 1, 2, str_temp);
+   sprintf(data, "setsensor 1 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+
+   double TENSIONDC_VALUE = ((analogRead(A1)*5.0)/1024.0)/(7500.0/(37500.0));
+   dtostrf(TENSIONDC_VALUE, 4, 2, str_temp);
+   sprintf(data, "setsensor 2 %s", str_temp);
+   radio.write(&data, sizeof(data));             
+
+   double COURANTAC_VALUE = getCurrentAC();
+   dtostrf(COURANTAC_VALUE, 4, 2, str_temp);
+   sprintf(data, "setsensor 3 %s", str_temp);
+   radio.write(&data, sizeof(data));             
 }
 
 double getCurrentDC()
