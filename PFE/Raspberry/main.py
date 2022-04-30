@@ -24,6 +24,7 @@
 
 import RPi.GPIO as GPIO
 import mysql.connector
+import serial
 import time
 import threading
 import os
@@ -131,7 +132,7 @@ def getquerytime(x, y=0):
 			for row in result:
 				lastquerytime[8] = time.time() + row[0]*1000
 				break;
-		elif x == 11: # Wind Speed
+		elif x == 11: # Turbine
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
 			result = cursor.fetchall()
@@ -142,7 +143,7 @@ def getquerytime(x, y=0):
 def receiverHandler():
 	global rowcounts
 	print('Running. Press CTRL-C to exit.')
-	time.sleep(0.1) #wait for serial to open
+	time.sleep(0.1) 
 	if arduino.isOpen():
 		print("{} connected!".format(arduino.port))
 		time.sleep(5)
@@ -181,15 +182,7 @@ def receiverHandler():
 							cursor.execute(sql)
 							db.commit()
 							getquerytime(datasplitted[1], 1)
-							time.sleep(0.025)
-						
-					elif datasplitted[0] == 'setcharge':
-							cursor = db.cursor(buffered=True)
-							sql = "UPDATE CHARGES SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]) +""
-							cursor.execute(sql)
-							db.commit()
-						
-					time.sleep(0.05)
+							time.sleep(0.025)						
 		except KeyboardInterrupt:
 			print("KeyboardInterrupt has been caught.")
 			

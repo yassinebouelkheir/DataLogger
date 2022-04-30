@@ -64,7 +64,6 @@ void getChargeCommand() {
         char datax[24];
         sprintf(datax, "setcharge %i %i", int(Buff[1].toInt()), bool(Buff[2].toInt()));
         radio.write(&datax, sizeof(datax));
-        Serial.println(datax);
         digitalWrite(4, LOW);
     }
 }
