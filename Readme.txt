@@ -53,6 +53,7 @@ mkdir /home/pi/.config/lxsession/LXDE-pi
 cp /etc/xdg/lxsession/LXDE-pi/autostart /home/pi/.config/lxsession/LXDE-pi/
 nano /home/pi/.config/lxsession/LXDE-pi/autostart
 
+www-data ALL=(root) NOPASSWD: /sbin/reboot
 
 
 
