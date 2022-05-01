@@ -1054,14 +1054,14 @@
                             document.getElementById('brightness').setAttribute("class", "text-success");
                         }
 
-                        document.getElementById('irradiationvalue').innerHTML = ((Math.pow(((response.brightness*1023)/100),2)/10)/(50)).toFixed(0) + " W/m²";
-                        document.getElementById('irradiationwidth').setAttribute("style", "width: " + (((Math.pow(((response.brightness*1023)/100),2)/10)/(50))/10) + "%; height: 6px;");
-                        if(((Math.pow(((response.brightness*1023)/100),2)/10)/(50)) < 400) {
+                        document.getElementById('irradiationvalue').innerHTML = ((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)).toFixed(0) + " W/m²";
+                        document.getElementById('irradiationwidth').setAttribute("style", "width: " + (((Math.pow((((response.brightness)*1023)/100),2)/10)/(50))/10) + "%; height: 6px;");
+                        if(((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)) < 400) {
                             document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('irradiationvalue').setAttribute("class", "counter text-danger");
                             document.getElementById('irradiation').setAttribute("class", "text-danger");
                         }
-                        else if(((Math.pow(((response.brightness*1023)/100),2)/10)/(50)) < 700) {
+                        else if(((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)) < 700) {
                             document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-primary");
                             document.getElementById('irradiationvalue').setAttribute("class", "counter text-primary");
                             document.getElementById('irradiation').setAttribute("class", "text-primary");

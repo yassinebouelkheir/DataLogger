@@ -115,36 +115,36 @@
             }
         }
 
-        if(!empty($_POST['ExportationFormat']) && !empty($_POST['ExportationInterval']) && !empty($_POST['ExportationType']))
+        if(!empty($_POST['ExportationInterval']) && !empty($_POST['ExportationType']))
         {
-            switch($ExportationInterval)
+            switch($_POST['ExportationInterval'])
             {
                 case 1: {
-                    header("Location: exportData.php?interval=3600&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=3600&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 2: {
-                    header("Location: exportData.php?interval=86400&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=86400&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 3: {
-                    header("Location: exportData.php?interval=604800&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=604800&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 4: {
-                    header("Location: exportData.php?interval=2419200&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=2419200&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 5: {
-                    header("Location: exportData.php?interval=7257600&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=7257600&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 6: {
-                    header("Location: exportData.php?interval=29030400&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=29030400&type=".$_POST['ExportationType']);
                     break;
                 }
                 case 7: {
-                    header("Location: exportData.php?interval=0&format=".$_POST['ExportationFormat']."&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=0&type=".$_POST['ExportationType']);
                     break;
                 }
                 default: {
@@ -321,7 +321,7 @@
                 }
                 case 2:
                 {
-                    // Restart                    
+                    exec('sudo /sbin/reboot');                    
                     break;
                 }
             }
@@ -612,6 +612,7 @@
                                                 <option value="2">Courant Fort</option>
                                                 <option value="3">Éolienne</option>
                                                 <option value="4">Météorologie</option>
+                                                <option value="5">Vitesse du vent</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -625,14 +626,6 @@
                                                 <option value="5">3 Mois</option>
                                                 <option value="6">12 Mois</option>
                                                 <option value="7">Tout les données</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Format de fichier</label>
-                                            <select class="custom-select col-12" id="ExportationFormat" name="ExportationFormat">
-                                                <option value="0" selected>Selectioner..</option>
-                                                <option value="1">Excel</option>
-                                                <option value="2">PDF</option>
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-info">Exporter</button>

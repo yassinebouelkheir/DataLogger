@@ -31,19 +31,7 @@
     }
     
     require('classes/PHPExcel.php');
-
-    function getName($pin)
-    {
-        if($pin == 1) return 'Courant DC';
-        if($pin == 2) return 'Tension DC';
-        if($pin == 3) return 'Courant AC';  
-        if($pin == 4) return 'Tension AC'; 
-        if($pin == 5) return 'Température Ambiante';
-        if($pin == 6) return 'Température du panneau'; 
-        if($pin == 7) return 'Luminosité'; 
-        if($pin == 8) return 'Humidité'; 
-        if($pin == 9) return 'Vitesse du vent'; 
-    } 
+    require_once 'classes/PHPExcel/IOFactory.php';
 
     if (isset($_GET['interval'])) 
     {
@@ -53,115 +41,328 @@
         $interval = mysqli_real_escape_string($mysqli, $interval);
 
         $type = stripslashes($_GET['type']);
-        $format = stripslashes($_GET['format']);
 
-        $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple_'.$type.'.xlsx');
+        if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple_'.$type.'.xlsx');
+        else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple_1.xlsx');
+        else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple_'.($type-1).'.xlsx');
+
         $objPHPExcel->setActiveSheetIndex(0);
+        $objPHPExcel->getActiveSheet()->setCellValue('B9', strftime('%d/%m/%Y').' '.strftime('%H:%M'));
 
-        $objPHPExcel->getActiveSheet()->setCellValue('I10', strftime('%d/%m/%Y').' '.strftime('%H:%M'));
-
-        if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
-        else $query = 'SELECT * FROM `SENSORS` WHERE 1 ORDER BY `UNIXDATE` ASC';
-        $result = $mysqli->query($query) or die($mysqli->error);
-        $rows = array();
-        $k = 0;
-        $i = 0;
-        $lastvalueVoltage = -1;
-        $lastvalueCurrent = -1;
-        $lastvalueCurrentAC = -1;
-        while($row = $result->fetch_assoc()) 
+        switch($type)
         {
-            $objPHPExcel->getActiveSheet()->mergeCells('B'.(13+$i).':C'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('D'.(13+$i).':E'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('F'.(13+$i).':G'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('H'.(13+$i).':I'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('J'.(13+$i).':K'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('L'.(13+$i).':M'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('N'.(13+$i).':O'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('P'.(13+$i).':Q'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('R'.(13+$i).':S'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->mergeCells('T'.(13+$i).':U'.(13+$i).'');
-            $objPHPExcel->getActiveSheet()->getRowDimension(''.(13+$i).'')->setRowHeight(21);
-
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->applyFromArray(array('borders' => array (
-                  'allborders' => array (
-                    'style' => PHPExcel_Style_Border::BORDER_THICK,
-                    'color' => array('rgb' => '000000'),
-                  )
-                )
-              )
-            );
-
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $objPHPExcel->getActiveSheet()->getStyle('B'.(13+$i).':U'.(13+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-
-            if($row['ID'] == 2) { $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', ''.$row['VALUE'].' V'); $lastvalueVoltage = $row['VALUE']; }
-            if($row['ID'] == 1) { $objPHPExcel->getActiveSheet()->setCellValue('F'.(13+$i).'', ''.$row['VALUE'].' A'); $lastvalueCurrent = $row['VALUE']; }
-            if($row['ID'] == 3) { $objPHPExcel->getActiveSheet()->setCellValue('J'.(13+$i).'', ''.$row['VALUE'].' A'); $lastvalueCurrentAC = $row['VALUE']; }
-            if($row['ID'] == 5) $objPHPExcel->getActiveSheet()->setCellValue('N'.(13+$i).'', ''.$row['VALUE'].' °C');
-            if($row['ID'] == 7) { 
-              $objPHPExcel->getActiveSheet()->setCellValue('P'.(13+$i).'', ''.$row['VALUE'].' %');
-              $objPHPExcel->getActiveSheet()->setCellValue('R'.(13+$i).'', ''.number_format(((pow((($row['VALUE']*1023)/100),2)/10)/(50)), 2).' W/m²');
-            }
-            if($row['ID'] == 8) $objPHPExcel->getActiveSheet()->setCellValue('T'.(13+$i).'', ''.$row['VALUE'].' %');
-
-            if($lastvalueVoltage != -1 && $lastvalueCurrent != -1) {
-              $objPHPExcel->getActiveSheet()->setCellValue('H'.(13+$i).'', ''.number_format(($lastvalueVoltage*$lastvalueCurrent), 2) .' W');
-              $lastvalueVoltage = -1;
-              $lastvalueCurrent = -1;
-            }
-
-            if($lastvalueCurrentAC != -1) {
-              $objPHPExcel->getActiveSheet()->setCellValue('L'.(13+$i).'', ''.number_format(($lastvalueCurrentAC*220), 2).' W');
-              $lastvalueCurrentAC = -1;
-            }
-
-            if($k == 0) $objPHPExcel->getActiveSheet()->setCellValue('B'.(13+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
-
-            $k += 1;
-            if($k == 6) 
+            case 1:
             {
-              $k = 0;
-              $i += 1;
-            }
-        }
-        
-        $result->free();
-        $mysqli->close();
+                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Courant Faible');
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=1 OR ID=2) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID=1 OR ID=2 ORDER BY `UNIXDATE` ASC';
 
-        for($j = 0; $j < 300; $j++)
-        {
-            $objPHPExcel->getActiveSheet()->getStyle('A'.$j.':BZ'.$j.'')->applyFromArray(
-            array(
-                'fill' => array(
-                  'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                  'color' => array('rgb' => 'FFFFFF')
-                ),
-            ));
+                $result = $mysqli->query($query) or die($mysqli->error);
+                $rows = array();
+
+                $k = 0;
+                $i = 0;
+                $volt = 0.0;
+                $ampere = 0.0;
+                while($row = $result->fetch_assoc()) 
+                {
+                    $objPHPExcel->getActiveSheet()->mergeCells('A'.(12+$i).':C'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('D'.(12+$i).':E'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('F'.(12+$i).':G'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('H'.(12+$i).':I'.(12+$i).'');
+
+                    if($k == 0) 
+                    {
+                        $objPHPExcel->getActiveSheet()->setCellValue('A'.(12+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
+                        $objPHPExcel->getActiveSheet()->setCellValue('F'.(12+$i).'', number_format($row['VALUE'], 1).' A');
+                        $ampere = $row['VALUE'];
+                    }
+                    else if($k == 1) 
+                    {
+                        $objPHPExcel->getActiveSheet()->setCellValue('D'.(12+$i).'', number_format($row['VALUE'], 1).' V');
+                        $volt = $row['VALUE'];
+                    }
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->applyFromArray(array('borders' => array (
+                          'allborders' => array (
+                            'style' => PHPExcel_Style_Border::BORDER_THICK,
+                            'color' => array('rgb' => '000000'),
+                          )
+                        )
+                      )
+                    );
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $k += 1;
+                    if($k == 2) 
+                    { 
+                        $objPHPExcel->getActiveSheet()->setCellValue('H'.(12+$i).'', number_format(($volt*$ampere), 1).' W');
+                        $k = 0; 
+                        $i += 1; 
+                    }
+                }
+
+                for($z = 1; $z < ($i+12); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+                
+                $result->free();
+                $mysqli->close();
+                break;
+            }
+            case 2:
+            {
+                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Courant Fort');
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=3 OR ID=4) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID=3 OR ID=4 ORDER BY `UNIXDATE` ASC';
+
+                $result = $mysqli->query($query) or die($mysqli->error);
+                $rows = array();
+
+                $k = 0;
+                $i = 0;
+                $volt = 0.0;
+                $ampere = 0.0;
+                while($row = $result->fetch_assoc()) 
+                {
+                    $objPHPExcel->getActiveSheet()->mergeCells('A'.(12+$i).':C'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('D'.(12+$i).':E'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('F'.(12+$i).':G'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('H'.(12+$i).':I'.(12+$i).'');
+
+                    if($k == 0) 
+                    {
+                        $objPHPExcel->getActiveSheet()->setCellValue('A'.(12+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
+                        $objPHPExcel->getActiveSheet()->setCellValue('F'.(12+$i).'', number_format($row['VALUE'], 1).' A');
+                        $ampere = $row['VALUE'];
+                    }
+                    else if($k == 1) 
+                    {
+                        $objPHPExcel->getActiveSheet()->setCellValue('D'.(12+$i).'', number_format($row['VALUE'], 1).' V');
+                        $volt = $row['VALUE'];
+                    }
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->applyFromArray(array('borders' => array (
+                          'allborders' => array (
+                            'style' => PHPExcel_Style_Border::BORDER_THICK,
+                            'color' => array('rgb' => '000000'),
+                          )
+                        )
+                      )
+                    );
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $k += 1;
+                    if($k == 2) 
+                    { 
+                        $objPHPExcel->getActiveSheet()->setCellValue('H'.(12+$i).'', number_format(($volt*$amper), 1).' W');
+                        $k = 0; 
+                        $i += 1; 
+                    }
+                }
+
+                for($z = 1; $z < ($i+12); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+
+                $result->free();
+                $mysqli->close();
+                break;
+            }
+            case 3:
+            {
+                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Éolienne');
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=3 OR ID=4) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID=3 OR ID=4 ORDER BY `UNIXDATE` ASC';
+
+                $result = $mysqli->query($query) or die($mysqli->error);
+                $rows = array();
+
+                $k = 0;
+                $i = 0;
+                $volt = 0.0;
+                $ampere = 0.0;
+                while($row = $result->fetch_assoc()) 
+                {
+                    $objPHPExcel->getActiveSheet()->mergeCells('A'.(12+$i).':C'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('D'.(12+$i).':E'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('F'.(12+$i).':G'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('H'.(12+$i).':I'.(12+$i).'');
+
+                    if($k == 0) 
+                    {
+                        $objPHPExcel->getActiveSheet()->setCellValue('A'.(12+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
+                        $objPHPExcel->getActiveSheet()->setCellValue('F'.(12+$i).'', number_format($row['VALUE'], 1).' A');
+                        $ampere = $row['VALUE'];
+                    }
+                    else if($k == 1) 
+                    {
+                        $objPHPExcel->getActiveSheet()->setCellValue('D'.(12+$i).'', number_format($row['VALUE'], 1).' V');
+                        $volt = $row['VALUE'];
+                    }
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->applyFromArray(array('borders' => array (
+                          'allborders' => array (
+                            'style' => PHPExcel_Style_Border::BORDER_THICK,
+                            'color' => array('rgb' => '000000'),
+                          )
+                        )
+                      )
+                    );
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $k += 1;
+                    if($k == 2) 
+                    { 
+                        $objPHPExcel->getActiveSheet()->setCellValue('H'.(12+$i).'', number_format(($volt*$amper), 1).' W');
+                        $k = 0; 
+                        $i += 1; 
+                    }
+                }
+
+                for($z = 1; $z < ($i+12); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+
+                $result->free();
+                $mysqli->close();
+                break;
+            }
+            case 4:
+            {
+                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Météorologie');
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID > 4 AND ID < 9) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID > 4 AND ID < 9 ORDER BY `UNIXDATE` ASC';
+
+                $result = $mysqli->query($query) or die($mysqli->error);
+                $rows = array();
+
+                $k = 0;
+                $i = 0;
+                $tempamb = 0;
+                while($row = $result->fetch_assoc()) 
+                {
+                    $objPHPExcel->getActiveSheet()->mergeCells('A'.(13+$i).':B'.(13+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('F'.(13+$i).':G'.(13+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('H'.(13+$i).':I'.(13+$i).'');
+
+                    if($k == 0) 
+                    {
+                        $objPHPExcel->getActiveSheet()->setCellValue('A'.(13+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
+                        $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
+                        $tempamb = $row['VALUE'];
+                    }
+                    else if($k == 1) $objPHPExcel->getActiveSheet()->setCellValue('E'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
+                    else if($k == 2) {
+                        $data = number_format(((2500/($row['VALUE']*0.0048828125)-500)/10), 1);
+                        if($data < 0) $data = 0;
+                        $objPHPExcel->getActiveSheet()->setCellValue('F'.(13+$i).'', $data.' LUX');
+
+                        $data = number_format(((pow((($row['VALUE']*1023)/100),2)/10)/(50)), 1);
+                        if($data < 0) $data = 0;
+                        $objPHPExcel->getActiveSheet()->setCellValue('H'.(13+$i).'', $data.' W/m²');
+                    }
+                    else if($k == 3) {
+                        $row['VALUE'] = 161.0 * $row['VALUE'] / 5.0 - 25.8;
+                        $row['VALUE'] = $row['VALUE'] / (1.0546 - 0.0026 * $tempamb);
+                        $data = number_format(round($row['VALUE']/10.0), 0);
+                        if($data < 0) $data = 0;
+                        $objPHPExcel->getActiveSheet()->setCellValue('C'.(13+$i).'', $data.' %');
+                    }
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(13+$i).':I'.(13+$i).'')->applyFromArray(array('borders' => array (
+                          'allborders' => array (
+                            'style' => PHPExcel_Style_Border::BORDER_THICK,
+                            'color' => array('rgb' => '000000'),
+                          )
+                        )
+                      )
+                    );
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(13+$i).':I'.(13+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(13+$i).':I'.(13+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $k += 1;
+                    if($k == 4) 
+                    { 
+                        $k = 0; 
+                        $i += 1; 
+                    }
+                }
+
+                for($z = 1; $z < ($i+13); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+                
+                $result->free();
+                $mysqli->close();
+                break;
+            }
+            case 5:
+            {
+                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Vitesse du vent');
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID > 8 AND ID < 12) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID > 8 AND ID < 12 ORDER BY `UNIXDATE` ASC';
+
+                $result = $mysqli->query($query) or die($mysqli->error);
+                $rows = array();
+
+                $k = 0;
+                $i = 0;
+                while($row = $result->fetch_assoc()) 
+                {
+                    $objPHPExcel->getActiveSheet()->mergeCells('A'.(12+$i).':C'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('D'.(12+$i).':E'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('F'.(12+$i).':G'.(12+$i).'');
+                    $objPHPExcel->getActiveSheet()->mergeCells('H'.(12+$i).':I'.(12+$i).'');
+
+                    if($k == 0) 
+                    {
+                        $objPHPExcel->getActiveSheet()->setCellValue('A'.(12+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
+                        $objPHPExcel->getActiveSheet()->setCellValue('D'.(12+$i).'', number_format($row['VALUE'], 1).' KM/H');
+                    }
+                    else if($k == 1) $objPHPExcel->getActiveSheet()->setCellValue('F'.(12+$i).'', number_format($row['VALUE'], 1).' KM/H');
+                    else if($k == 2) $objPHPExcel->getActiveSheet()->setCellValue('H'.(12+$i).'', number_format($row['VALUE'], 1).' TR/MIN');
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->applyFromArray(array('borders' => array (
+                          'allborders' => array (
+                            'style' => PHPExcel_Style_Border::BORDER_THICK,
+                            'color' => array('rgb' => '000000'),
+                          )
+                        )
+                      )
+                    );
+
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.(12+$i).':I'.(12+$i).'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    $k += 1;
+                    if($k == 3) 
+                    { 
+                        $k = 0; 
+                        $i += 1; 
+                    }
+                }
+
+                for($z = 1; $z < ($i+12); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+                
+                $result->free();
+                $mysqli->close();
+                break;
+            }
         }
 
         $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
         $objPHPExcel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
         $objPHPExcel->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
-        $objPHPExcel->getActiveSheet()->getPageMargins()->setTop(1.91);
-        $objPHPExcel->getActiveSheet()->getPageMargins()->setRight(1.78);
-        $objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(1.78);
-        $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(1.91);
 
-        if($format == 1)
-        {
-          header('Content-Type: application/vnd.ms-excel');
-          header('Content-Disposition: attachment;filename="DataLogger_'.strftime('%d-%m-%Y').'.xlsx"');
-          header('Cache-Control: max-age=0');
-          $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
-          $writer = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
-          ob_end_clean();
-          $writer->save('php://output');
-        }
-        else if($format == 2)
-        {
-          echo "PDF Test";
-        }
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="DataLogger_'.strftime('%d-%m-%Y').'.xlsx"');
+        header('Cache-Control: max-age=0');
+    
+        $objPHPExcel->getActiveSheet()->setShowGridlines(false);
+        $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
+        $writer = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
+        ob_end_clean();
+        $writer->save('php://output');
         exit();
     }
 ?>
