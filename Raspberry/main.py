@@ -32,7 +32,6 @@ import os
 db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi", database='PFE') 
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
-rowcounts = 1
 lastquerytime = [0,0,0,0,0,0,0,0,0]
 
 def getquerytime(x, y=0):
@@ -159,7 +158,7 @@ def getquerytime(x, y=0):
 				break;
 
 def receiverHandler():
-	global rowcounts
+	global lastquerytime
 	print('Running. Press CTRL-C to exit.')
 	time.sleep(0.1) 
 	if arduino.isOpen():
@@ -167,22 +166,19 @@ def receiverHandler():
 		time.sleep(5)
 		try:
 			while True:
-				cursor = db.cursor()
-				cursor.execute("SELECT ID, VALUE FROM `CHARGES` WHERE ID = " + str(rowcounts))
+				cursor = db.cursor(buffered=True)
+				cursor.execute("SELECT ID, VALUE FROM `CHARGES` WHERE 1 ORDER BY `ID` ASC")
 				result = cursor.fetchall()
-				rowcounts += 1
-				if rowcounts == 9:
-					rowcounts = 1
 				for row in result:
 					arduino.write(str.encode("setcharge " + str(row[0]) + " " +  str(row[1]) + "\n"));
-					print("B: setcharge " + str(row[0]) + " " +  str(row[1]));
+					print("R: setcharge " + str(row[0]) + " " +  str(row[1]));
 
 				while arduino.inWaiting()==0: pass
 				if  arduino.inWaiting()>0: 
 					answer=arduino.readline()
 					decodedanswer = answer.decode(errors='ignore').replace('\n', '')
-					print("R: " + decodedanswer)
-					time.sleep(0.025)
+					print("A: " + decodedanswer)
+					time.sleep(0.02)
 					datasplitted = decodedanswer.split(' ')
 					
 					if datasplitted[0] == 'setsensor':
@@ -194,13 +190,13 @@ def receiverHandler():
 						else:
 							cursor = db.cursor(buffered=True)
 							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+							db.commit()
 							time.sleep(0.01)		
 							cursor = db.cursor(buffered=True)
-							sql = "INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")"
-							cursor.execute(sql)
+							cursor.execute("INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")")
 							db.commit()
 							getquerytime(datasplitted[1], 1)
-							time.sleep(0.025)						
+							time.sleep(0.01)						
 		except KeyboardInterrupt:
 			print("KeyboardInterrupt has been caught.")
 			
