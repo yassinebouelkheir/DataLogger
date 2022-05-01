@@ -34,7 +34,7 @@
 
         $query = 'UPDATE `CHARGES` SET `VALUE` = '.$chargevalue.' WHERE `ID` = '.$chargeid;
         $mysqli->query($query) or die($mysqli->error);
-	      $mysqli->close();
+        $mysqli->close();
     }
     header("Location: charges.php");
 ?>

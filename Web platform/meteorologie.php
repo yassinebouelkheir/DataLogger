@@ -975,163 +975,163 @@
                     , resize: true
                 });
             
-            function refresh() {
-                $.ajax({
-                    url: './updateStaticValues.php',
-                    type: 'post',
-                    dataType: "json",
-                    success: function (response) {
-                        document.getElementById('temppanneauvalue').innerHTML = response.temperature + " °C";
-                        document.getElementById('temppanneauwidth').setAttribute("style", "width: " + response.tempwidth + "%; height: 6px;");
-                        if(response.temperature < 25) {
-                            document.getElementById('temppanneauwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('temppanneauvalue').setAttribute("class", "counter text-success");
-                            document.getElementById('temppanneau').setAttribute("class", "text-success");
-                        }
-                        else if(response.temperature < 37) {
-                            document.getElementById('temppanneauwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('temppanneauvalue').setAttribute("class", "counter text-primary");
-                            document.getElementById('temppanneau').setAttribute("class", "text-primary");
-                        }
-                        else if(response.temperature >= 37) {
-                            document.getElementById('temppanneauwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('temppanneauvalue').setAttribute("class", "counter text-danger");
-                            document.getElementById('temppanneau').setAttribute("class", "text-danger");
-                        }
+                function refresh() {
+                    $.ajax({
+                        url: './updateStaticValues.php',
+                        type: 'post',
+                        dataType: "json",
+                        success: function (response) {
+                            document.getElementById('temppanneauvalue').innerHTML = response.temperature + " °C";
+                            document.getElementById('temppanneauwidth').setAttribute("style", "width: " + response.tempwidth + "%; height: 6px;");
+                            if(response.temperature < 25) {
+                                document.getElementById('temppanneauwidth').setAttribute("class", "progress-bar bg-success");
+                                document.getElementById('temppanneauvalue').setAttribute("class", "counter text-success");
+                                document.getElementById('temppanneau').setAttribute("class", "text-success");
+                            }
+                            else if(response.temperature < 37) {
+                                document.getElementById('temppanneauwidth').setAttribute("class", "progress-bar bg-primary");
+                                document.getElementById('temppanneauvalue').setAttribute("class", "counter text-primary");
+                                document.getElementById('temppanneau').setAttribute("class", "text-primary");
+                            }
+                            else if(response.temperature >= 37) {
+                                document.getElementById('temppanneauwidth').setAttribute("class", "progress-bar bg-danger");
+                                document.getElementById('temppanneauvalue').setAttribute("class", "counter text-danger");
+                                document.getElementById('temppanneau').setAttribute("class", "text-danger");
+                            }
 
-                        document.getElementById('tempambiantvalue').innerHTML = response.temperature1 + " °C";
-                        document.getElementById('tempambiantwidth').setAttribute("style", "width: " + response.temp1width + "%; height: 6px;");
-                        if(response.temperature1 < 25) {
-                            document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('tempambiantvalue').setAttribute("class", "counter text-success");
-                            document.getElementById('tempambiant').setAttribute("class", "text-success");
-                        }
-                        else if(response.temperature1 < 37) {
-                            document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('tempambiantvalue').setAttribute("class", "counter text-primary");
-                            document.getElementById('tempambiant').setAttribute("class", "text-primary");
-                        }
-                        else if(response.temperature1 >= 37) {
-                            document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('tempambiantvalue').setAttribute("class", "counter text-danger");
-                            document.getElementById('tempambiant').setAttribute("class", "text-danger");
-                        }
+                            document.getElementById('tempambiantvalue').innerHTML = response.temperature1 + " °C";
+                            document.getElementById('tempambiantwidth').setAttribute("style", "width: " + response.temp1width + "%; height: 6px;");
+                            if(response.temperature1 < 25) {
+                                document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-success");
+                                document.getElementById('tempambiantvalue').setAttribute("class", "counter text-success");
+                                document.getElementById('tempambiant').setAttribute("class", "text-success");
+                            }
+                            else if(response.temperature1 < 37) {
+                                document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-primary");
+                                document.getElementById('tempambiantvalue').setAttribute("class", "counter text-primary");
+                                document.getElementById('tempambiant').setAttribute("class", "text-primary");
+                            }
+                            else if(response.temperature1 >= 37) {
+                                document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-danger");
+                                document.getElementById('tempambiantvalue').setAttribute("class", "counter text-danger");
+                                document.getElementById('tempambiant').setAttribute("class", "text-danger");
+                            }
 
-                        document.getElementById('humidityvalue').innerHTML = response.humidity + " %RH";
-                        document.getElementById('humiditywidth').setAttribute("style", "width: " + response.humidtywidth + "%; height: 6px;");
-                        if(response.humidity < 25) {
-                            document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('humidityvalue').setAttribute("class", "counter text-success");
-                            document.getElementById('humidity').setAttribute("class", "text-success");
-                        }
-                        else if(response.humidity < 50) {
-                            document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('humidityvalue').setAttribute("class", "counter text-primary");
-                            document.getElementById('humidity').setAttribute("class", "text-primary");
-                        }
-                        else if(response.humidity >= 50) {
-                            document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('humidityvalue').setAttribute("class", "counter text-danger");
-                            document.getElementById('humidity').setAttribute("class", "text-danger");
-                        }
+                            document.getElementById('humidityvalue').innerHTML = response.humidity + " %RH";
+                            document.getElementById('humiditywidth').setAttribute("style", "width: " + response.humidtywidth + "%; height: 6px;");
+                            if(response.humidity < 25) {
+                                document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-success");
+                                document.getElementById('humidityvalue').setAttribute("class", "counter text-success");
+                                document.getElementById('humidity').setAttribute("class", "text-success");
+                            }
+                            else if(response.humidity < 50) {
+                                document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-primary");
+                                document.getElementById('humidityvalue').setAttribute("class", "counter text-primary");
+                                document.getElementById('humidity').setAttribute("class", "text-primary");
+                            }
+                            else if(response.humidity >= 50) {
+                                document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-danger");
+                                document.getElementById('humidityvalue').setAttribute("class", "counter text-danger");
+                                document.getElementById('humidity').setAttribute("class", "text-danger");
+                            }
 
-                        if(response.brightness > 0) document.getElementById('brightnessvalue').innerHTML = ((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)  + " LUX";
-                        else document.getElementById('brightnessvalue').innerHTML = "0 LUX";
-                        document.getElementById('brightnesswidth').setAttribute("style", "width: " + (1000-response.brightneswidth) + "%; height: 6px;");
-                        if((1000-response.brightneswidth/10.0) < 25) {
-                            document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('brightnessvalue').setAttribute("class", "counter text-danger");
-                            document.getElementById('brightness').setAttribute("class", "text-danger");
-                        }
-                        else if((1000-response.brightneswidth/10.0) < 40) {
-                            document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('brightnessvalue').setAttribute("class", "counter text-primary");
-                            document.getElementById('brightness').setAttribute("class", "text-primary");
-                        }
-                        else if((1000-response.brightneswidth/10.0) >= 40) {
-                            document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('brightnessvalue').setAttribute("class", "counter text-success");
-                            document.getElementById('brightness').setAttribute("class", "text-success");
-                        }
+                            if(response.brightness > 0) document.getElementById('brightnessvalue').innerHTML = ((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)  + " LUX";
+                            else document.getElementById('brightnessvalue').innerHTML = "0 LUX";
+                            document.getElementById('brightnesswidth').setAttribute("style", "width: " + (1000-response.brightneswidth) + "%; height: 6px;");
+                            if((1000-response.brightneswidth/10.0) < 25) {
+                                document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
+                                document.getElementById('brightnessvalue').setAttribute("class", "counter text-danger");
+                                document.getElementById('brightness').setAttribute("class", "text-danger");
+                            }
+                            else if((1000-response.brightneswidth/10.0) < 40) {
+                                document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
+                                document.getElementById('brightnessvalue').setAttribute("class", "counter text-primary");
+                                document.getElementById('brightness').setAttribute("class", "text-primary");
+                            }
+                            else if((1000-response.brightneswidth/10.0) >= 40) {
+                                document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
+                                document.getElementById('brightnessvalue').setAttribute("class", "counter text-success");
+                                document.getElementById('brightness').setAttribute("class", "text-success");
+                            }
 
-                        document.getElementById('irradiationvalue').innerHTML = ((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)).toFixed(0) + " W/m²";
-                        document.getElementById('irradiationwidth').setAttribute("style", "width: " + (((Math.pow((((response.brightness)*1023)/100),2)/10)/(50))/10) + "%; height: 6px;");
-                        if(((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)) < 400) {
-                            document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('irradiationvalue').setAttribute("class", "counter text-danger");
-                            document.getElementById('irradiation').setAttribute("class", "text-danger");
-                        }
-                        else if(((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)) < 700) {
-                            document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('irradiationvalue').setAttribute("class", "counter text-primary");
-                            document.getElementById('irradiation').setAttribute("class", "text-primary");
-                        }
-                        else  {
-                            document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('irradiationvalue').setAttribute("class", "counter text-success");
-                            document.getElementById('irradiation').setAttribute("class", "text-success");
-                        }
+                            document.getElementById('irradiationvalue').innerHTML = ((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)).toFixed(0) + " W/m²";
+                            document.getElementById('irradiationwidth').setAttribute("style", "width: " + (((Math.pow((((response.brightness)*1023)/100),2)/10)/(50))/10) + "%; height: 6px;");
+                            if(((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)) < 400) {
+                                document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-danger");
+                                document.getElementById('irradiationvalue').setAttribute("class", "counter text-danger");
+                                document.getElementById('irradiation').setAttribute("class", "text-danger");
+                            }
+                            else if(((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)) < 700) {
+                                document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-primary");
+                                document.getElementById('irradiationvalue').setAttribute("class", "counter text-primary");
+                                document.getElementById('irradiation').setAttribute("class", "text-primary");
+                            }
+                            else  {
+                                document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-success");
+                                document.getElementById('irradiationvalue').setAttribute("class", "counter text-success");
+                                document.getElementById('irradiation').setAttribute("class", "text-success");
+                            }
 
-                        document.getElementById('windspeedvalue').innerHTML = (response.windspeed*1).toFixed(0) + " KM/H";
-                        document.getElementById('windspeedwidth').setAttribute("style", "width: " + response.windspeedwidth + "%; height: 6px;");
-                        if(response.windspeed < 10) {
-                            document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('windspeedvalue').setAttribute("class", "counter text-success");
-                            document.getElementById('windspeed').setAttribute("class", "text-success");
-                        }
-                        else if(response.windspeed < 20) {
-                            document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('windspeedvalue').setAttribute("class", "counter text-primary");
-                            document.getElementById('windspeed').setAttribute("class", "text-primary");
-                        }
-                        else if(response.windspeed >= 20) {
-                            document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('windspeedvalue').setAttribute("class", "counter text-danger");
-                            document.getElementById('windspeed').setAttribute("class", "text-danger");
-                        }
+                            document.getElementById('windspeedvalue').innerHTML = (response.windspeed*1).toFixed(0) + " KM/H";
+                            document.getElementById('windspeedwidth').setAttribute("style", "width: " + response.windspeedwidth + "%; height: 6px;");
+                            if(response.windspeed < 10) {
+                                document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-success");
+                                document.getElementById('windspeedvalue').setAttribute("class", "counter text-success");
+                                document.getElementById('windspeed').setAttribute("class", "text-success");
+                            }
+                            else if(response.windspeed < 20) {
+                                document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-primary");
+                                document.getElementById('windspeedvalue').setAttribute("class", "counter text-primary");
+                                document.getElementById('windspeed').setAttribute("class", "text-primary");
+                            }
+                            else if(response.windspeed >= 20) {
+                                document.getElementById('windspeedwidth').setAttribute("class", "progress-bar bg-danger");
+                                document.getElementById('windspeedvalue').setAttribute("class", "counter text-danger");
+                                document.getElementById('windspeed').setAttribute("class", "text-danger");
+                            }
 
-                        document.getElementById('windspeedinvvalue').innerHTML = (response.windspeedinv*1).toFixed(0) + " KM/H";
-                        document.getElementById('windspeedinvwidth').setAttribute("style", "width: " + response.windspeedinvwidth + "%; height: 6px;");
-                        if(response.windspeedwidth < 10) {
-                            document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-success");
-                            document.getElementById('windspeedinv').setAttribute("class", "text-success");
-                        }
-                        else if(response.windspeedwidth < 20) {
-                            document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-primary");
-                            document.getElementById('windspeedinv').setAttribute("class", "text-primary");
-                        }
-                        else if(response.windspeedwidth >= 20) {
-                            document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-danger");
-                            document.getElementById('windspeedinv').setAttribute("class", "text-danger");
-                        }
+                            document.getElementById('windspeedinvvalue').innerHTML = (response.windspeedinv*1).toFixed(0) + " KM/H";
+                            document.getElementById('windspeedinvwidth').setAttribute("style", "width: " + response.windspeedinvwidth + "%; height: 6px;");
+                            if(response.windspeedwidth < 10) {
+                                document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-success");
+                                document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-success");
+                                document.getElementById('windspeedinv').setAttribute("class", "text-success");
+                            }
+                            else if(response.windspeedwidth < 20) {
+                                document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-primary");
+                                document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-primary");
+                                document.getElementById('windspeedinv').setAttribute("class", "text-primary");
+                            }
+                            else if(response.windspeedwidth >= 20) {
+                                document.getElementById('windspeedinvwidth').setAttribute("class", "progress-bar bg-danger");
+                                document.getElementById('windspeedinvvalue').setAttribute("class", "counter text-danger");
+                                document.getElementById('windspeedinv').setAttribute("class", "text-danger");
+                            }
 
-                        document.getElementById('turbinevalue').innerHTML = (response.turbine*1).toFixed(0) + " TR/MIN";
-                        document.getElementById('turbinewidth').setAttribute("style", "width: " + response.turbinewidth + "%; height: 6px;");
-                        if(response.windspeedwidth < 25) {
-                            document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('turbinevalue').setAttribute("class", "counter text-success");
-                            document.getElementById('turbine').setAttribute("class", "text-success");
+                            document.getElementById('turbinevalue').innerHTML = (response.turbine*1).toFixed(0) + " TR/MIN";
+                            document.getElementById('turbinewidth').setAttribute("style", "width: " + response.turbinewidth + "%; height: 6px;");
+                            if(response.windspeedwidth < 25) {
+                                document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-success");
+                                document.getElementById('turbinevalue').setAttribute("class", "counter text-success");
+                                document.getElementById('turbine').setAttribute("class", "text-success");
+                            }
+                            else if(response.windspeedwidth < 40) {
+                                document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-primary");
+                                document.getElementById('turbinevalue').setAttribute("class", "counter text-primary");
+                                document.getElementById('turbine').setAttribute("class", "text-primary");
+                            }
+                            else if(response.windspeedwidth >= 40) {
+                                document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-danger");
+                                document.getElementById('turbinevalue').setAttribute("class", "counter text-danger");
+                                document.getElementById('turbine').setAttribute("class", "text-danger");
+                            }
+                            
                         }
-                        else if(response.windspeedwidth < 40) {
-                            document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('turbinevalue').setAttribute("class", "counter text-primary");
-                            document.getElementById('turbine').setAttribute("class", "text-primary");
-                        }
-                        else if(response.windspeedwidth >= 40) {
-                            document.getElementById('turbinewidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('turbinevalue').setAttribute("class", "counter text-danger");
-                            document.getElementById('turbine').setAttribute("class", "text-danger");
-                        }
-                        
-                    }
-                });
-            }
-        setInterval(function(){
-            refresh() 
-        }, 400);
+                    });
+                }
+            setInterval(function(){
+                refresh() 
+            }, 400);
         });
         </script>
     </body>

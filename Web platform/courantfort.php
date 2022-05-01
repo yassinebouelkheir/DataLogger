@@ -425,123 +425,124 @@
                     , lineColors: ['#fb9678']
                     , resize: true
                 });
-            Morris.Area({
-                element: 'morris-area-chart7'
-                , data: [{
-                        period: <?php echo "'".SHM($currentacrows[0]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[0]['VALUE']*$voltageacrows[0]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentacrows[1]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[1]['VALUE']*$voltageacrows[1]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentacrows[2]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[2]['VALUE']*$voltageacrows[2]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentacrows[3]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[3]['VALUE']*$voltageacrows[3]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentacrows[4]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[4]['VALUE']*$voltageacrows[4]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentacrows[5]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[5]['VALUE']*$voltageacrows[5]['VALUE']; ?>
-                }
-                    , {
-                        period: <?php echo "'".SHM($currentacrows[6]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[6]['VALUE']*$voltageacrows[6]['VALUE']; ?>
-                }
-                ,{
-                        period: <?php echo "'".SHM($currentacrows[7]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[7]['VALUE']*$voltageacrows[7]['VALUE']; ?>
-                }
-                ,{
-                        period: <?php echo "'".SHM($currentacrows[8]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[8]['VALUE']*$voltageacrows[8]['VALUE']; ?>
-                }
-                ,{
-                        period: <?php echo "'".SHM($currentacrows[9]['UNIXDATE'])."'"; ?>
-                        , puissanceac: <?php echo $currentacrows[9]['VALUE']*$voltageacrows[9]['VALUE']; ?>
-                }]
-                , xkey: 'period'
-                , ykeys: ['puissanceac']
-                , labels: ['PUISSANCE AC']
-                , parseTime: false
-                , pointSize: 3
-                , fillOpacity: 0
-                , pointStrokeColors: ['#0000ff']
-                , behaveLikeLine: true
-                , gridLineColor: '#e0e0e0'
-                , lineWidth: 3
-                , hideHover: 'auto'
-                , lineColors: ['#0000ff']
-                , resize: true
-            });
+                
+                Morris.Area({
+                    element: 'morris-area-chart7'
+                    , data: [{
+                            period: <?php echo "'".SHM($currentacrows[0]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[0]['VALUE']*$voltageacrows[0]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentacrows[1]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[1]['VALUE']*$voltageacrows[1]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentacrows[2]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[2]['VALUE']*$voltageacrows[2]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentacrows[3]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[3]['VALUE']*$voltageacrows[3]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentacrows[4]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[4]['VALUE']*$voltageacrows[4]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentacrows[5]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[5]['VALUE']*$voltageacrows[5]['VALUE']; ?>
+                    }
+                        , {
+                            period: <?php echo "'".SHM($currentacrows[6]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[6]['VALUE']*$voltageacrows[6]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($currentacrows[7]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[7]['VALUE']*$voltageacrows[7]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($currentacrows[8]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[8]['VALUE']*$voltageacrows[8]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($currentacrows[9]['UNIXDATE'])."'"; ?>
+                            , puissanceac: <?php echo $currentacrows[9]['VALUE']*$voltageacrows[9]['VALUE']; ?>
+                    }]
+                    , xkey: 'period'
+                    , ykeys: ['puissanceac']
+                    , labels: ['PUISSANCE AC']
+                    , parseTime: false
+                    , pointSize: 3
+                    , fillOpacity: 0
+                    , pointStrokeColors: ['#0000ff']
+                    , behaveLikeLine: true
+                    , gridLineColor: '#e0e0e0'
+                    , lineWidth: 3
+                    , hideHover: 'auto'
+                    , lineColors: ['#0000ff']
+                    , resize: true
+                });
             
-            function refresh() {
-            $.ajax({
-                url: './updateStaticValues.php',
-                type: 'post',
-                dataType: "json",
-                success: function (response) {
+                function refresh() {
+                $.ajax({
+                    url: './updateStaticValues.php',
+                    type: 'post',
+                    dataType: "json",
+                    success: function (response) {
 
-                    document.getElementById('voltageac').innerHTML = "220 V";
-                    document.getElementById('voltageacwidth').setAttribute("style", "width: 100%; height: 6px;");
-                    /*if(response.voltageac < 14) {
-                        document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-danger");
-                        document.getElementById('voltageac').setAttribute("class", "counter text-danger");
-                        document.getElementById('voltageactitle').setAttribute("class", "text-danger");
-                    }
-                    else if(response.voltageac < 20) {
-                        document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-primary");
-                        document.getElementById('voltageac').setAttribute("class", "counter text-primary");
-                        document.getElementById('voltageactitle').setAttribute("class", "text-primary");
-                    }
-                    else {*/
-                        document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-success");
-                        document.getElementById('voltageac').setAttribute("class", "counter text-success");
-                        document.getElementById('voltageactitle').setAttribute("class", "text-success");
-                    //}
+                        document.getElementById('voltageac').innerHTML = "220 V";
+                        document.getElementById('voltageacwidth').setAttribute("style", "width: 100%; height: 6px;");
+                        /*if(response.voltageac < 14) {
+                            document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('voltageac').setAttribute("class", "counter text-danger");
+                            document.getElementById('voltageactitle').setAttribute("class", "text-danger");
+                        }
+                        else if(response.voltageac < 20) {
+                            document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('voltageac').setAttribute("class", "counter text-primary");
+                            document.getElementById('voltageactitle').setAttribute("class", "text-primary");
+                        }
+                        else {*/
+                            document.getElementById('voltageacwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('voltageac').setAttribute("class", "counter text-success");
+                            document.getElementById('voltageactitle').setAttribute("class", "text-success");
+                        //}
 
-                    document.getElementById('currentac').innerHTML = response.currentac + " A";
-                    document.getElementById('currentacwidth').setAttribute("style", "width: " + response.cacwidth*100/4 + "%; height: 6px;");
-                    if(response.currentac < 1) {
-                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-success");
-                        document.getElementById('currentac').setAttribute("class", "counter text-success");
-                        document.getElementById('currentactitle').setAttribute("class", "text-success");
-                    }
-                    else if(response.currentac < 2.75) {
-                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-primary");
-                        document.getElementById('currentac').setAttribute("class", "counter text-primary");
-                        document.getElementById('currentactitle').setAttribute("class", "text-primary");
-                    }
-                    else {
-                        document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-danger");
-                        document.getElementById('currentac').setAttribute("class", "counter text-danger");
-                        document.getElementById('currentactitle').setAttribute("class", "text-danger");
-                    }
+                        document.getElementById('currentac').innerHTML = response.currentac + " A";
+                        document.getElementById('currentacwidth').setAttribute("style", "width: " + response.cacwidth*100/4 + "%; height: 6px;");
+                        if(response.currentac < 1) {
+                            document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('currentac').setAttribute("class", "counter text-success");
+                            document.getElementById('currentactitle').setAttribute("class", "text-success");
+                        }
+                        else if(response.currentac < 2.75) {
+                            document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('currentac').setAttribute("class", "counter text-primary");
+                            document.getElementById('currentactitle').setAttribute("class", "text-primary");
+                        }
+                        else {
+                            document.getElementById('currentacwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('currentac').setAttribute("class", "counter text-danger");
+                            document.getElementById('currentactitle').setAttribute("class", "text-danger");
+                        }
 
-                    document.getElementById('puissanceac').innerHTML = (220*response.currentac) + " W";
-                    document.getElementById('puissanceacwidth').setAttribute("style", "width: " + ((220*response.currentac)*100)/1000 + "%; height: 6px;");
-                    if((220*response.currentac) > 600) {
-                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-danger");
-                        document.getElementById('puissanceac').setAttribute("class", "counter text-danger");
-                        document.getElementById('puissanceactitle').setAttribute("class", "text-danger");
-                    }
-                    else if((220*response.currentac) < 600 && (220*response.currentac) > 200) {
-                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-primary");
-                        document.getElementById('puissanceac').setAttribute("class", "counter text-primary");
-                        document.getElementById('puissanceactitle').setAttribute("class", "text-primary");
-                    }
-                    else if((220*response.currentac) <= 200) {
-                        document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-success");
-                        document.getElementById('puissanceac').setAttribute("class", "counter text-success");
-                        document.getElementById('puissanceactitle').setAttribute("class", "text-success");
-                    }
-                }});
-            }
-        setInterval(function(){
-            refresh() 
-        }, 400);
+                        document.getElementById('puissanceac').innerHTML = (220*response.currentac) + " W";
+                        document.getElementById('puissanceacwidth').setAttribute("style", "width: " + ((220*response.currentac)*100)/1000 + "%; height: 6px;");
+                        if((220*response.currentac) > 600) {
+                            document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('puissanceac').setAttribute("class", "counter text-danger");
+                            document.getElementById('puissanceactitle').setAttribute("class", "text-danger");
+                        }
+                        else if((220*response.currentac) < 600 && (220*response.currentac) > 200) {
+                            document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('puissanceac').setAttribute("class", "counter text-primary");
+                            document.getElementById('puissanceactitle').setAttribute("class", "text-primary");
+                        }
+                        else if((220*response.currentac) <= 200) {
+                            document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('puissanceac').setAttribute("class", "counter text-success");
+                            document.getElementById('puissanceactitle').setAttribute("class", "text-success");
+                        }
+                    }});
+                }
+            setInterval(function(){
+                refresh() 
+            }, 400);
         });
         </script>
     </body>

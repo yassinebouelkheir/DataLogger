@@ -63,5 +63,4 @@
     $data['evoltagedc'] = number_format($staticrows[12]['VALUE'], 1);
     $data['evoltagedcwidth'] = ((($staticrows[12]['VALUE']-12)*100)/13);
 	echo json_encode($data);
-
 ?>

@@ -31,40 +31,41 @@ const byte address[6] = "14863";
 
 void setup() 
 {
-   radio.begin();                  
-   radio.openWritingPipe(address); 
-   radio.setPALevel(RF24_PA_MAX); 
-   radio.stopListening();
+    radio.begin();                  
+    radio.openWritingPipe(address); 
+    radio.setPALevel(RF24_PA_MAX); 
+    radio.stopListening();
 }
 
 void loop()
 {  
-   char data[24];
-   char str_temp[6];
-  
-   double V1 = getCurrentDC();
-   dtostrf(V1, 1, 2, str_temp);
-   sprintf(data, "setsensor 12 %s", str_temp);
-   radio.write(&data, sizeof(data));             
-   delay(1);
+    char data[24];
+    char str_temp[6];
 
-   double V2 = ((analogRead(A0)*5.0)/1024.0)/(7500.0/(37500.0));
-   dtostrf(V2, 1, 2, str_temp);
-   sprintf(data, "setsensor 13 %s", str_temp);
-   radio.write(&data, sizeof(data));             
-   delay(1);
+    double V1 = getCurrentDC();
+    dtostrf(V1, 1, 2, str_temp);
+    sprintf(data, "setsensor 12 %s", str_temp);
+    radio.write(&data, sizeof(data));             
+    delay(1);
+
+    double V2 = ((analogRead(A0)*5.0)/1024.0)/(7500.0/(37500.0));
+    dtostrf(V2, 1, 2, str_temp);
+    sprintf(data, "setsensor 13 %s", str_temp);
+    radio.write(&data, sizeof(data));             
+    delay(1);
 }
 
 double getCurrentDC()
 {
-   float voltage_raw = 0;
-   for(int i = 0; i < 1000; i++){ 
-      voltage_raw += (5.0 / 1023.0)*analogRead(A1);
-   }
-   voltage_raw /= 1000;
-   float voltage =  voltage_raw - 2.5 + 0.012;
-   float current = voltage / 0.066;
+    float voltage_raw = 0;
+    for(int i = 0; i < 1000; i++)
+    { 
+        voltage_raw += (5.0 / 1023.0)*analogRead(A1);
+    }
+    voltage_raw /= 1000;
+    float voltage =  voltage_raw - 2.5 + 0.012;
+    float current = voltage / 0.066;
 
-   if(abs(current) > 0.05) return abs(current);
-   else return 0.0;
+    if(abs(current) > 0.05) return abs(current);
+    else return 0.0;
 }

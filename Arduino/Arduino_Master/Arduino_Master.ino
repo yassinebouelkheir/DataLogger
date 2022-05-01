@@ -29,15 +29,16 @@
 RF24 radio(9, 10);       
 const byte address[6] = "14863";
 const byte address2[6] = "26957";
+
 void setup() 
 {
     Serial.begin(9600);
     radio.begin();
-    
+
     radio.openWritingPipe(address2);                  
     radio.openReadingPipe(1, address);
     radio.disableAckPayload();
-    
+
     radio.setPALevel(RF24_PA_MAX);
     radio.stopListening(); 
 
@@ -69,22 +70,29 @@ void loop()
     }
     digitalWrite(3, LOW);
 }
-void getChargeCommand() {
+void getChargeCommand() 
+{
     String Buff[10];
     int StringCount = 0;
     String data = Serial.readStringUntil('\n');
+
     if (data.length() > 1) {
         digitalWrite(4, HIGH);
-        while (data.length() > 0) {
+        while (data.length() > 0) 
+        {
             int index = data.indexOf(' ');
-            if (index == -1) {
+            if (index == -1) 
+            {
                 Buff[StringCount++] = data;
                 break;
-            } else {
+            } 
+            else 
+            {
                 Buff[StringCount++] = data.substring(0, index);
                 data = data.substring(index + 1);
             }
         }
+
         char datax[24];
         sprintf(datax, "setcharge %i %i", int(Buff[1].toInt()), bool(Buff[2].toInt()));
         radio.write(&datax, sizeof(datax));

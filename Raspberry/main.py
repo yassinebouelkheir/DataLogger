@@ -33,33 +33,37 @@ db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
 rowcounts = 1
-lastquerytime = [0,0,0,0,0,0,0,0]
+lastquerytime = [0,0,0,0,0,0,0,0,0]
 
 def getquerytime(x, y=0):
 	global lastquerytime
 	if y == 0
-		if x == 1 :
+		if x == 1 : #DC
 			return lastquerytime[0]
 		elif x == 2: # DC
+			return lastquerytime[0]
+		elif x == 3: # AC
 			return lastquerytime[1]
-		elif x == 3: # DC
-			return lastquerytime[2]
 		elif x == 4: # AC
-			return lastquerytime[3]
-		elif x == 5: # AC
-			return lastquerytime[4]
+			return lastquerytime[1]
+		elif x == 5: # Temp
+			return lastquerytime[2]
 		elif x == 6: # Temp
-			return lastquerytime[5]
+			return lastquerytime[2]
 		elif x == 7: # Brightness
-			return lastquerytime[6]
+			return lastquerytime[3]
 		elif x == 8: # Humidity
-			return lastquerytime[7]
+			return lastquerytime[4]
 		elif x == 9: # Wind Speed 1
-			return lastquerytime[8]
+			return lastquerytime[5]
 		elif x == 10: # Wind Speed 2
-			return lastquerytime[8]
+			return lastquerytime[5]
 		elif x == 11: # Turbine
-			return lastquerytime[8]
+			return lastquerytime[5]
+		elif x == 12: # Eo Tension DC
+			return lastquerytime[6]
+		elif x == 13: # Eo Courant DC
+			return lastquerytime[6]
 
 	elif y == 1
 		if x == 1 : # DC
@@ -74,70 +78,84 @@ def getquerytime(x, y=0):
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 1 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[1] = time.time() + row[0]*1000
+				lastquerytime[0] = time.time() + row[0]*1000
 				break;
 		elif x == 3: # AC
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 2 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[2] = time.time() + row[0]*1000
+				lastquerytime[1] = time.time() + row[0]*1000
 				break;
 		elif x == 4: # AC
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 2 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[3] = time.time() + row[0]*1000
+				lastquerytime[1] = time.time() + row[0]*1000
 				break;
 		elif x == 5: # Temp 1 
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 3 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[4] = time.time() + row[0]*1000
+				lastquerytime[2] = time.time() + row[0]*1000
 				break;
 		elif x == 6: # Temp 2
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 3 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[5] = time.time() + row[0]*1000
+				lastquerytime[2] = time.time() + row[0]*1000
 				break;
 		elif x == 7: # Brightness
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 4 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[6] = time.time() + row[0]*1000
+				lastquerytime[3] = time.time() + row[0]*1000
 				break;
 		elif x == 8: # Humidity
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 5 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[7] = time.time() + row[0]*1000
+				lastquerytime[4] = time.time() + row[0]*1000
 				break;
 		elif x == 9: # Wind Speed
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[8] = time.time() + row[0]*1000
+				lastquerytime[5] = time.time() + row[0]*1000
 				break;
 		elif x == 10: # Wind Speed
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[8] = time.time() + row[0]*1000
+				lastquerytime[5] = time.time() + row[0]*1000
 				break;
 		elif x == 11: # Turbine
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[8] = time.time() + row[0]*1000
+				lastquerytime[5] = time.time() + row[0]*1000
+				break;
+		elif x == 12: # EO Tension DC
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 7 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[6] = time.time() + row[0]*1000
+				break;
+		elif x == 13: # EO Courant DC
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 7 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[6] = time.time() + row[0]*1000
 				break;
 
 def receiverHandler():

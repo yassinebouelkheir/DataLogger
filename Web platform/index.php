@@ -450,57 +450,57 @@
                     , lineColors: ['#fb9678']
                     , resize: true
                 });
-            Morris.Area({
-                element: 'morris-area-chart7'
-                , data: [{
-                        period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[0]['VALUE']*$voltagedcrows[0]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[1]['VALUE']*$voltagedcrows[1]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[2]['VALUE']*$voltagedcrows[2]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[3]['VALUE']*$voltagedcrows[3]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[4]['VALUE']*$voltagedcrows[4]['VALUE']; ?>
-                }, {
-                        period: <?php echo "'".SHM($currentdcrows[5]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[5]['VALUE']*$voltagedcrows[5]['VALUE']; ?>
-                }
-                    , {
-                        period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[6]['VALUE']*$voltagedcrows[6]['VALUE']; ?>
-                }
-                ,{
-                        period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[7]['VALUE']*$voltagedcrows[7]['VALUE']; ?>
-                }
-                ,{
-                        period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[8]['VALUE']*$voltagedcrows[8]['VALUE']; ?>
-                }
-                ,{
-                        period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
-                        , puissancedc: <?php echo $currentdcrows[9]['VALUE']*$voltagedcrows[9]['VALUE']; ?>
-                }]
-                , xkey: 'period'
-                , ykeys: ['puissancedc']
-                , labels: ['PUISSANCE DC']
-                , parseTime: false
-                , pointSize: 3
-                , fillOpacity: 0
-                , pointStrokeColors: ['#0000ff']
-                , behaveLikeLine: true
-                , gridLineColor: '#e0e0e0'
-                , lineWidth: 3
-                , hideHover: 'auto'
-                , lineColors: ['#0000ff']
-                , resize: true
-            });
+                Morris.Area({
+                    element: 'morris-area-chart7'
+                    , data: [{
+                            period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[0]['VALUE']*$voltagedcrows[0]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[1]['VALUE']*$voltagedcrows[1]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[2]['VALUE']*$voltagedcrows[2]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[3]['VALUE']*$voltagedcrows[3]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[4]['VALUE']*$voltagedcrows[4]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentdcrows[5]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[5]['VALUE']*$voltagedcrows[5]['VALUE']; ?>
+                    }
+                        , {
+                            period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[6]['VALUE']*$voltagedcrows[6]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[7]['VALUE']*$voltagedcrows[7]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[8]['VALUE']*$voltagedcrows[8]['VALUE']; ?>
+                    }
+                    ,{
+                            period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[9]['VALUE']*$voltagedcrows[9]['VALUE']; ?>
+                    }]
+                    , xkey: 'period'
+                    , ykeys: ['puissancedc']
+                    , labels: ['PUISSANCE DC']
+                    , parseTime: false
+                    , pointSize: 3
+                    , fillOpacity: 0
+                    , pointStrokeColors: ['#0000ff']
+                    , behaveLikeLine: true
+                    , gridLineColor: '#e0e0e0'
+                    , lineWidth: 3
+                    , hideHover: 'auto'
+                    , lineColors: ['#0000ff']
+                    , resize: true
+                });
             
             function refresh() {
             $.ajax({
@@ -581,9 +581,9 @@
                     }
                 }});
             }
-        setInterval(function(){
-            refresh() 
-        }, 400);
+            setInterval(function(){
+                refresh() 
+            }, 400);
         });
         </script>
     </body>
