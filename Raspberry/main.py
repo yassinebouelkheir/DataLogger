@@ -45,9 +45,9 @@ def getquerytime(x, y=0):
 			return lastquerytime[1]
 		elif x == 4: # AC
 			return lastquerytime[1]
-		elif x == 5: # Temp
+		elif x == 5: # Temp 1
 			return lastquerytime[2]
-		elif x == 6: # Temp
+		elif x == 6: # Temp 2
 			return lastquerytime[2]
 		elif x == 7: # Brightness
 			return lastquerytime[3]
@@ -121,14 +121,14 @@ def getquerytime(x, y=0):
 			for row in result:
 				lastquerytime[4] = time.time() + row[0]*1000
 				break;
-		elif x == 9: # Wind Speed
+		elif x == 9: # Wind Speed 1
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
 			result = cursor.fetchall()
 			for row in result:
 				lastquerytime[5] = time.time() + row[0]*1000
 				break;
-		elif x == 10: # Wind Speed
+		elif x == 10: # Wind Speed 2
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 6 LIMIT 1")
 			result = cursor.fetchall()

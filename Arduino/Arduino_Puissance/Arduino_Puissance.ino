@@ -30,6 +30,10 @@ RF24 radio(9, 10);
 const byte address1[6] = "14863";
 const byte address2[6] = "26957";
 
+double VOLTAGEAC_VALUE = 0.0;
+double COURANTAC_VALUE = 0.0;
+double COURANTDC_VALUE = 0.0;
+
 void setup() 
 {
     radio.begin();
@@ -88,7 +92,8 @@ void loop()
     char data[24];
     char str_temp[6];
 
-    double COURANTDC_VALUE = getCurrentDC();
+    getPuissanceValues();
+
     dtostrf(COURANTDC_VALUE, 1, 2, str_temp);
     sprintf(data, "setsensor 1 %s", str_temp);
     radio.write(&data, sizeof(data));             
@@ -98,37 +103,33 @@ void loop()
     sprintf(data, "setsensor 2 %s", str_temp);
     radio.write(&data, sizeof(data));             
 
-    double COURANTAC_VALUE = getCurrentAC();
     dtostrf(COURANTAC_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 3 %s", str_temp);
+    radio.write(&data, sizeof(data));  
+
+    dtostrf(TENSIONAC_VALUE, 4, 2, str_temp);
+    sprintf(data, "setsensor 4 %s", str_temp);
     radio.write(&data, sizeof(data));             
 }
 
-double getCurrentDC()
+double getPuissanceValues()
 {
-    float voltage_raw = 0;
+    float voltage_raw1 = 0;
+    float voltage_raw2 = 0;
     for(int i = 0; i < 1000; i++)
     { 
-        voltage_raw += (5.0 / 1023.0)*analogRead(A0);
+        voltage_raw1 += (5.0 / 1023.0)*analogRead(A0);
+        voltage_raw2 += (5.0 / 1023.0)*analogRead(A2);
     }
-    voltage_raw /= 1000;
-    float voltage =  voltage_raw - 2.5 + 0.012;
-    float current = voltage / 0.066;
+    voltage_raw1 /= 1000;
+    voltage_raw2 /= 1000;
+    TENSIONAC_VALUE = voltage_raw2;
 
-    if(abs(current) > 0.05) return abs(current);
-    else return 0.0;
-}
+    float voltage =  voltage_raw2 - 2.5 + 0.012;
+    COURANTAC_VALUE = voltage / 0.066;
 
-double getCurrentAC()
-{
-    float voltage_raw = 0;
-    for(int i = 0; i < 1000; i++)
-    { 
-        voltage_raw += (5.0 / 1023.0)*analogRead(A2);
-    }
-    voltage_raw /= 1000;
-    float voltage =  voltage_raw - 2.5 + 0.012;
-    float current = voltage / 0.066;
+    voltage =  voltage_raw1 - 2.5 + 0.012;
+    COURANTDC_VALUE = voltage / 0.066;
 
     if(abs(current) > 0.05) return abs(current);
     else return 0.0;
