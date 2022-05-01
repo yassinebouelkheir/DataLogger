@@ -36,7 +36,7 @@ lastquerytime = [0,0,0,0,0,0,0,0,0]
 
 def getquerytime(x, y=0):
 	global lastquerytime
-	if y == 0
+	if y == 0:
 		if x == 1 : #DC
 			return lastquerytime[0]
 		elif x == 2: # DC
@@ -64,7 +64,7 @@ def getquerytime(x, y=0):
 		elif x == 13: # Eo Courant DC
 			return lastquerytime[6]
 
-	elif y == 1
+	elif y == 1:
 		if x == 1 : # DC
 			cursor = db.cursor()
 			cursor.execute("SELECT time FROM `updatetime` WHERE ID = 1 LIMIT 1")
