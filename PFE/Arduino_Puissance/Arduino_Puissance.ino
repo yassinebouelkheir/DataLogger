@@ -17,9 +17,9 @@
    ScriptName    : Arduino_Puissance.ino
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 18/03/2022
+   Created       : 25/04/2022
    License       : GNU General v3.0
-   Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
+   Developers    : BOUELKHEIR Yassine 
 */
 
 #include <SPI.h>

@@ -14,12 +14,12 @@
 -->
 
 <!--
-   ScriptName    : index.php
+   ScriptName    : eolienne.php
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 18/03/2022
+   Created       : 01/05/2022
    License       : GNU General v3.0
-   Developers    : BOUELKHEIR Yassine, CHENAFI Soumia
+   Developers    : BOUELKHEIR Yassine
 -->
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
 
         $mysqli = new mysqli("localhost", "root", "", "PFE");   
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 1 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 12 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
         $currentdcrows = array();
         while($row = $result->fetch_assoc()) {
@@ -43,7 +43,7 @@
         $result->free();
 
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 2 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 13 ORDER BY `UNIXDATE` ASC LIMIT 10';
         $result = $mysqli->query($query);
         $voltagedcrows = array();
         while($row = $result->fetch_assoc()) {
@@ -485,50 +485,50 @@
                 dataType: "json",
                 success: function (response) {
                     
-                    document.getElementById('voltagedc').innerHTML = response.voltagedc + " V";
-                    document.getElementById('tensiondcwidth').setAttribute("style", "width: " + response.voltagedcwidth + "%; height: 6px;");
-                    if(response.voltagedc < 14) {
+                    document.getElementById('voltagedc').innerHTML = response.evoltagedc + " V";
+                    document.getElementById('tensiondcwidth').setAttribute("style", "width: " + response.evoltagedcwidth + "%; height: 6px;");
+                    if(response.evoltagedc < 14) {
                         document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('voltagedc').setAttribute("class", "counter text-danger");
                         document.getElementById('voltagedctitle').setAttribute("class", "text-danger");
                     }
-                    else if(response.voltagedc < 20) {
+                    else if(response.evoltagedc < 20) {
                         document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('voltagedc').setAttribute("class", "counter text-primary");
                         document.getElementById('voltagedctitle').setAttribute("class", "text-primary");
                     }
-                    else if(response.voltagedc >= 20){
+                    else if(response.evoltagedc >= 20){
                         document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('voltagedc').setAttribute("class", "counter text-success");
                         document.getElementById('voltagedctitle').setAttribute("class", "text-success");
                     }
 
-                    document.getElementById('currentdc').innerHTML = response.currentdc + " A";
-                    document.getElementById('currentdcwidth').setAttribute("style", "width: " + response.cdcwidth + "%; height: 6px;");
-                    if(response.currentdc < 15) {
+                    document.getElementById('currentdc').innerHTML = response.ecurrentdc + " A";
+                    document.getElementById('currentdcwidth').setAttribute("style", "width: " + response.ecdcwidth + "%; height: 6px;");
+                    if(response.ecurrentdc < 15) {
                         document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('currentdc').setAttribute("class", "counter text-success");
                         document.getElementById('currentdctitle').setAttribute("class", "text-success");
                     }
-                    else if(response.currentdc < 25) {
+                    else if(response.ecurrentdc < 25) {
                         document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('currentdc').setAttribute("class", "counter text-primary");
                         document.getElementById('currentdctitle').setAttribute("class", "text-primary");
                     }
-                    else if(response.currentdc >= 25) {
+                    else if(response.ecurrentdc >= 25) {
                         document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('currentdc').setAttribute("class", "counter text-danger");
                         document.getElementById('currentdctitle').setAttribute("class", "text-danger");
                     }
 
-                    document.getElementById('puissancedc').innerHTML = (response.voltagedc*response.currentdc) + " W";
-                    document.getElementById('puissancedcwidth').setAttribute("style", "width: " + ((response.voltagedc*response.currentdc)*100)/720 + "%; height: 6px;");
-                    if((response.voltagedc*response.currentdc) > 600) {
+                    document.getElementById('puissancedc').innerHTML = (response.evoltagedc*response.ecurrentdc) + " W";
+                    document.getElementById('puissancedcwidth').setAttribute("style", "width: " + ((response.evoltagedc*response.ecurrentdc)*100)/720 + "%; height: 6px;");
+                    if((response.evoltagedc*response.ecurrentdc) > 600) {
                         document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('puissancedc').setAttribute("class", "counter text-danger");
                         document.getElementById('puissancedctitle').setAttribute("class", "text-danger");
                     }
-                    else if((response.voltagedc*response.currentdc) > 300) {
+                    else if((response.evoltagedc*response.ecurrentdc) > 300) {
                         document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('puissancedc').setAttribute("class", "counter text-primary");
                         document.getElementById('puissancedctitle').setAttribute("class", "text-primary");
