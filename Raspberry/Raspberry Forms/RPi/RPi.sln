@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPi", "RPi.csproj", "{95AD9AB3-EA79-4C1B-8F5F-20EA957ADA7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95AD9AB3-EA79-4C1B-8F5F-20EA957ADA7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95AD9AB3-EA79-4C1B-8F5F-20EA957ADA7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95AD9AB3-EA79-4C1B-8F5F-20EA957ADA7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95AD9AB3-EA79-4C1B-8F5F-20EA957ADA7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B156FBE7-4C9C-4190-BE66-8E5D1A4E454B}
+	EndGlobalSection
+EndGlobal
