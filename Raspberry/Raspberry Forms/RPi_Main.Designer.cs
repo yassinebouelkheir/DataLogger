@@ -1,4 +1,28 @@
-﻿namespace RPi
+﻿/**
+   Copyright (c) 2022 Data Logger
+
+   This program is free software: you can redistribute it and/or modify it under the terms of the
+   GNU General Public License as published by the Free Software Foundation, either version 3 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License along with this program.
+   If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+   ScriptName    : RPi_Main.Designer.cs
+   Author        : BOUELKHEIR Yassine
+   Version       : 2.0
+   Created       : 01/05/2022
+   License       : GNU General v3.0
+   Developers    : BOUELKHEIR Yassine
+*/
+
+namespace RPi
 {
     partial class RPI_Main
     {
@@ -212,9 +236,9 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(3, 2);
+            this.label1.Location = new System.Drawing.Point(35, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(457, 24);
+            this.label1.Size = new System.Drawing.Size(393, 24);
             this.label1.TabIndex = 12;
             this.label1.Text = "ESTS LASTIMI - Data Logger v2.0";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -420,7 +444,7 @@
             this.paramTitle.ForeColor = System.Drawing.Color.Black;
             this.paramTitle.Location = new System.Drawing.Point(3, 0);
             this.paramTitle.Name = "paramTitle";
-            this.paramTitle.Size = new System.Drawing.Size(159, 153);
+            this.paramTitle.Size = new System.Drawing.Size(170, 153);
             this.paramTitle.TabIndex = 13;
             this.paramTitle.Text = "Flux Lumineux :";
             this.paramTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
