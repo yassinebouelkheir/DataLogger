@@ -30,6 +30,8 @@ using MySql.Data.MySqlClient;
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.WinForms;
+using System.Windows.Media;
+using Color = System.Drawing.Color;
 
 namespace RPi
 {
@@ -42,7 +44,7 @@ namespace RPi
         private bool isChargePanelEnabled = false;
         MySql.Data.MySqlClient.MySqlConnection conn;
 
-        #pragma warning disable CS8618
+#pragma warning disable CS8618
         public RPI_Main() => InitializeComponent();
 
         private void RPI_Main_Load(object sender, EventArgs e)
@@ -61,22 +63,49 @@ namespace RPi
                 this.Close();
             }
             conn.Close();
-            panel1.BackColor = Color.FromArgb(150, 255, 255, 255);
+            panel1.BackColor = System.Drawing.Color.FromArgb(180, 255, 255, 255);
+            cartesianChart.Series = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Values = new ChartValues<double> {9999, 9999, 9999, 9999, 9999}
+                }
+            };
+            cartesianChart.AxisX.Add(new Axis
+            {
+                Labels = new[] {"11:10", "11:12", "11:14", "11:16", "11:18"},
+                Separator = new Separator
+                {
+                    Step = 1,
+                }
+            });
+
+            cartesianChart.AxisY.Add(new Axis
+            {
+                LabelFormatter = value => value.ToString()
+            });
             updateSelection();
         }
 
         private void Left_Btn_Click(object sender, EventArgs e)
         {
             browseSelection -= 1;
-            if (browseSelection < 0) browseSelection = MaxSelection;
-            updateSelection();
+            if (isGraphEnabled) if (browseSelection < 1) browseSelection = MaxSelection;
+            else if (browseSelection < 0) browseSelection = MaxSelection;
+            if (isGraphEnabled) updateGraphSelection();
+            else updateSelection();
         }
 
         private void Right_Btn_Click(object sender, EventArgs e)
         {
             browseSelection += 1;
-            if (browseSelection == MaxSelection) browseSelection = 0;
-            updateSelection();
+            if (browseSelection == MaxSelection)
+            {
+                if (isGraphEnabled) browseSelection = 1;
+                else browseSelection = 0;
+            }
+            if (isGraphEnabled) updateGraphSelection();
+            else updateSelection();
         }
 
         private void updateSelection()
@@ -96,6 +125,7 @@ namespace RPi
 
                     paramValue.Text = bat + " %";
                     dr.Close();
+                    Charts.Enabled = false;
                 }
                 else if (browseSelection == 1)
                 {
@@ -106,6 +136,8 @@ namespace RPi
                     paramTitle.Text = "Tension DC :";
                     paramValue.Text = dr.GetFloat(0) + " V";
                     dr.Close();
+                    Charts.Enabled = true;
+
                 }
                 else if (browseSelection == 2)
                 {
@@ -116,6 +148,7 @@ namespace RPi
                     paramTitle.Text = "Courant DC :";
                     paramValue.Text = dr.GetFloat(0) + " A";
                     dr.Close();
+                    Charts.Enabled = true;
                 }
                 else if (browseSelection == 3)
                 {
@@ -128,6 +161,7 @@ namespace RPi
                     paramTitle.Text = "Puissance DC :";
                     paramValue.Text = voltage * dr.GetFloat(0) + " W";
                     dr.Close();
+                    Charts.Enabled = true;
                 }
             }
             else if (menuSelection == 1)
@@ -164,6 +198,7 @@ namespace RPi
                     paramValue.Text = voltage * dr.GetFloat(0) + " W";
                     dr.Close();
                 }
+                Charts.Enabled = true;
             }
             else if (menuSelection == 2)
             {
@@ -199,6 +234,7 @@ namespace RPi
                     paramValue.Text = voltage * dr.GetFloat(0) + " W";
                     dr.Close();
                 }
+                Charts.Enabled = true;
             }
             else if (menuSelection == 3)
             {
@@ -289,12 +325,316 @@ namespace RPi
                     paramValue.Text = dr.GetFloat(0) + " TR/MIN";
                     dr.Close();
                 }
+                Charts.Enabled = true;
             }
             conn.Close();
         }
         private void updateGraphSelection()
         {
-            return;
+            conn.Open();
+            if (menuSelection == 0)
+            {
+                if (browseSelection == 1)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 2 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                if (browseSelection == 2)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 1 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 3)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 1 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+            }
+            else if (menuSelection == 1)
+            {
+                if (browseSelection == 0)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 4 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 1)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 3 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 2)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 3 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                Charts.Enabled = true;
+            }
+            else if (menuSelection == 2)
+            {
+                if (browseSelection == 0)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 1)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 13 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 2)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] }; ;
+                }
+            }
+            else if (menuSelection == 3)
+            {
+                if (browseSelection == 0)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 5 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 1)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 6 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 2)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 7 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 3)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 7 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 4)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 8 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 5)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 9 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 6)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 10 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+                else if (browseSelection == 7)
+                {
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 11 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    var dr = cmd.ExecuteReader();
+
+                    double[] vals = new double[5];
+                    string[] dates = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dr.Read();
+                        vals[i] = dr.GetFloat(0);
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                    }
+                    dr.Close();
+
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                }
+            }
+            conn.Close();
         }
 
         private void updateChargeStatus()
@@ -404,7 +744,9 @@ namespace RPi
         private void Courant_Faible_Click(object sender, EventArgs e)
         {
             menuSelection = 0;
-            browseSelection = 0;
+            if(!isGraphEnabled) browseSelection = 0;
+            else browseSelection = 1;
+
             MaxSelection = 4;
             updateSelection();
 
@@ -585,7 +927,6 @@ namespace RPi
         {
             if (isChargePanelEnabled) updateChargeStatus();
             else if (!isGraphEnabled) updateSelection();
-            else updateGraphSelection();
             return;
         }
 
@@ -597,6 +938,9 @@ namespace RPi
                 Charts.Text = "Passer en mode numérique";
                 paramTitle.Visible = false;
                 paramValue.Visible = false;
+                label2.Text = paramTitle.Text.Replace(":", "");
+                label2.Visible = true;
+                cartesianChart.Visible = true;
                 updateGraphSelection();
             }
             else
@@ -605,6 +949,9 @@ namespace RPi
                 Charts.Text = "Passer en mode graphique";
                 paramTitle.Visible = true;
                 paramValue.Visible = true;
+                label2.Text = "Panneau de contrôle des charges";
+                label2.Visible = false;
+                cartesianChart.Visible = false;
                 updateSelection();
             }
         }
@@ -625,6 +972,7 @@ namespace RPi
                 Meteorologie.BackColor = Color.FromArgb(255, 24, 155, 90);
                 Charges.BackColor = Color.FromArgb(255, 16, 103, 60);
 
+                label2.Text = "Panneau de contrôle des charges";
                 label2.Visible = true;
                 button1.Visible = true;
                 button2.Visible = true;
@@ -702,6 +1050,12 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 8", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+        }
+
+        private void updateCharts_Tick(object sender, EventArgs e)
+        {
+            if(isGraphEnabled) updateGraphSelection();
+            return;
         }
     }
 }

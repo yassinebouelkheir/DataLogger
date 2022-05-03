@@ -41,3 +41,46 @@ C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\RPi\bin\Debug\System.Runtime.C
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\RPi\obj\Debug\RPi.csproj.CopyComplete
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\RPi\obj\Debug\Data Logger v2.0.exe
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\RPi\obj\Debug\Data Logger v2.0.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Data Logger v2.0.exe.config
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Data Logger v2.0.exe
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Data Logger v2.0.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Google.Protobuf.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Compression.LZ4.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Compression.LZ4.Streams.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Hash.xxHash.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.WinForms.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\MySql.Data.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Buffers.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Memory.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Ubiety.Dns.Core.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\ZstdNet.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Google.Protobuf.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Google.Protobuf.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Compression.LZ4.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Compression.LZ4.Streams.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Hash.xxHash.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.WinForms.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.WinForms.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\MySql.Data.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Buffers.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Memory.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\RPi.csproj.AssemblyReference.cache
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\RPi.csproj.SuggestedBindingRedirects.cache
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\RPi.Properties.Resources.resources
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\RPi.RPI_Main.resources
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\RPi.csproj.GenerateResource.cache
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\RPi.csproj.CoreCompileInputs.cache
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\RPi.csproj.CopyComplete
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\Data Logger v2.0.exe
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\Debug\Data Logger v2.0.pdb

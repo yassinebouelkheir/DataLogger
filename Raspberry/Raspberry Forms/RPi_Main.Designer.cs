@@ -28,15 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // RPI_Main
-            // 
-            this.ClientSize = new System.Drawing.Size(464, 281);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "RPI_Main";
-            this.ResumeLayout(false);
-
             this.components = new System.ComponentModel.Container();
             this.Sidebar = new System.Windows.Forms.Panel();
             this.Charts = new System.Windows.Forms.Button();
@@ -49,6 +40,7 @@
             this.Left_Btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cartesianChart = new LiveCharts.WinForms.CartesianChart();
             this.label2 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -61,7 +53,10 @@
             this.paramTitle = new System.Windows.Forms.Label();
             this.paramValue = new System.Windows.Forms.Label();
             this.updateParams = new System.Windows.Forms.Timer(this.components);
-
+            this.updateCharts = new System.Windows.Forms.Timer(this.components);
+            this.Sidebar.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // Sidebar
             // 
@@ -76,14 +71,13 @@
             this.Sidebar.Name = "Sidebar";
             this.Sidebar.Size = new System.Drawing.Size(469, 89);
             this.Sidebar.TabIndex = 0;
-            this.SuspendLayout();
             // 
             // Charts
             // 
             this.Charts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.Charts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Charts.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Charts.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Charts.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Charts.ForeColor = System.Drawing.Color.White;
             this.Charts.Location = new System.Drawing.Point(5, 4);
             this.Charts.Name = "Charts";
@@ -98,7 +92,7 @@
             this.Charges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.Charges.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Charges.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Charges.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Charges.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Charges.ForeColor = System.Drawing.Color.White;
             this.Charges.Image = global::RPi.Properties.Resources.th_solid;
             this.Charges.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -116,7 +110,7 @@
             this.Meteorologie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.Meteorologie.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Meteorologie.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Meteorologie.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Meteorologie.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Meteorologie.ForeColor = System.Drawing.Color.White;
             this.Meteorologie.Image = global::RPi.Properties.Resources.snowflake_solid;
             this.Meteorologie.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -134,7 +128,7 @@
             this.Eolienne.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.Eolienne.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Eolienne.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Eolienne.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Eolienne.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Eolienne.ForeColor = System.Drawing.Color.White;
             this.Eolienne.Image = global::RPi.Properties.Resources.fan_solid;
             this.Eolienne.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -152,7 +146,7 @@
             this.Courant_Fort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.Courant_Fort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Courant_Fort.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Courant_Fort.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Courant_Fort.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Courant_Fort.ForeColor = System.Drawing.Color.White;
             this.Courant_Fort.Image = global::RPi.Properties.Resources.bolt_solid;
             this.Courant_Fort.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -170,7 +164,7 @@
             this.Courant_Faible.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(103)))), ((int)(((byte)(60)))));
             this.Courant_Faible.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.Courant_Faible.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Courant_Faible.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Courant_Faible.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Courant_Faible.ForeColor = System.Drawing.Color.White;
             this.Courant_Faible.Image = global::RPi.Properties.Resources.charging_station_solid;
             this.Courant_Faible.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -188,7 +182,7 @@
             this.Right_Btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.Right_Btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Right_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Right_Btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Right_Btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Right_Btn.ForeColor = System.Drawing.Color.White;
             this.Right_Btn.Image = global::RPi.Properties.Resources.arrow_right_solid;
             this.Right_Btn.Location = new System.Drawing.Point(434, 29);
@@ -203,7 +197,7 @@
             this.Left_Btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.Left_Btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Left_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Left_Btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Left_Btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Left_Btn.ForeColor = System.Drawing.Color.White;
             this.Left_Btn.Image = global::RPi.Properties.Resources.arrow_left_solid;
             this.Left_Btn.Location = new System.Drawing.Point(3, 29);
@@ -216,7 +210,7 @@
             // label1
             // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(3, 2);
             this.label1.Name = "label1";
@@ -228,6 +222,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.cartesianChart);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.button7);
@@ -244,10 +239,19 @@
             this.panel1.Size = new System.Drawing.Size(393, 153);
             this.panel1.TabIndex = 13;
             // 
+            // cartesianChart
+            // 
+            this.cartesianChart.Location = new System.Drawing.Point(4, 24);
+            this.cartesianChart.Name = "cartesianChart";
+            this.cartesianChart.Size = new System.Drawing.Size(385, 126);
+            this.cartesianChart.TabIndex = 24;
+            this.cartesianChart.Text = "cartesianChart";
+            this.cartesianChart.Visible = false;
+            // 
             // label2
             // 
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
@@ -262,7 +266,7 @@
             this.button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button8.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button8.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.button8.ForeColor = System.Drawing.Color.White;
             this.button8.Image = global::RPi.Properties.Resources.lightbulb_regular;
             this.button8.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -281,7 +285,7 @@
             this.button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Image = global::RPi.Properties.Resources.lightbulb_regular;
             this.button7.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -300,7 +304,7 @@
             this.button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.Image = global::RPi.Properties.Resources.lightbulb_regular;
             this.button6.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -319,7 +323,7 @@
             this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.Image = global::RPi.Properties.Resources.lightbulb_regular;
             this.button5.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -338,7 +342,7 @@
             this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = global::RPi.Properties.Resources.lightbulb_regular;
             this.button4.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -357,7 +361,7 @@
             this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Image = global::RPi.Properties.Resources.lightbulb_regular;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -376,7 +380,7 @@
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = global::RPi.Properties.Resources.lightbulb_regular;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -395,7 +399,7 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = global::RPi.Properties.Resources.lightbulb_regular;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -412,7 +416,7 @@
             // paramTitle
             // 
             this.paramTitle.BackColor = System.Drawing.Color.Transparent;
-            this.paramTitle.Font = new System.Drawing.Font("Dubai", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.paramTitle.Font = new System.Drawing.Font("Dubai", 15F, System.Drawing.FontStyle.Bold);
             this.paramTitle.ForeColor = System.Drawing.Color.Black;
             this.paramTitle.Location = new System.Drawing.Point(3, 0);
             this.paramTitle.Name = "paramTitle";
@@ -424,7 +428,7 @@
             // paramValue
             // 
             this.paramValue.BackColor = System.Drawing.Color.Transparent;
-            this.paramValue.Font = new System.Drawing.Font("Dubai", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.paramValue.Font = new System.Drawing.Font("Dubai", 26.25F, System.Drawing.FontStyle.Bold);
             this.paramValue.ForeColor = System.Drawing.Color.Maroon;
             this.paramValue.Location = new System.Drawing.Point(151, 0);
             this.paramValue.Name = "paramValue";
@@ -437,6 +441,12 @@
             // 
             this.updateParams.Enabled = true;
             this.updateParams.Tick += new System.EventHandler(this.updateParams_Tick);
+            // 
+            // updateCharts
+            // 
+            this.updateCharts.Enabled = true;
+            this.updateCharts.Interval = 60000;
+            this.updateCharts.Tick += new System.EventHandler(this.updateCharts_Tick);
             // 
             // RPI_Main
             // 
@@ -461,6 +471,7 @@
             this.Sidebar.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -487,5 +498,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private LiveCharts.WinForms.CartesianChart cartesianChart;
+        private System.Windows.Forms.Timer updateCharts;
     }
 }
