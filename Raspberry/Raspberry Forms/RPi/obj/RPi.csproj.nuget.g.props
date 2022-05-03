@@ -12,4 +12,8 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="C:\Users\Yassine\.nuget\packages\" />
   </ItemGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgLiveCharts_Wpf Condition=" '$(PkgLiveCharts_Wpf)' == '' ">C:\Users\Yassine\.nuget\packages\livecharts.wpf\0.9.7</PkgLiveCharts_Wpf>
+    <PkgLiveCharts_WinForms Condition=" '$(PkgLiveCharts_WinForms)' == '' ">C:\Users\Yassine\.nuget\packages\livecharts.winforms\0.9.7.1</PkgLiveCharts_WinForms>
+  </PropertyGroup>
 </Project>

@@ -25,3 +25,6 @@ C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\RPi\bin\Debug\
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\RPi\bin\Debug\net6.0-windows\Ubiety.Dns.Core.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\RPi\bin\Debug\net6.0-windows\ZstdNet.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\RPi\obj\Debug\net6.0-windows\RPi.csproj.CopyComplete
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\RPi\bin\Debug\net6.0-windows\LiveCharts.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\RPi\bin\Debug\net6.0-windows\LiveCharts.WinForms.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\RPi\bin\Debug\net6.0-windows\LiveCharts.Wpf.dll

@@ -1,7 +1,10 @@
+using MySql.Data.MySqlClient;
+using LiveCharts; 
+using LiveCharts.Wpf; 
+using LiveCharts.WinForms;
+
 namespace RPi
 {
-    using MySql.Data.MySqlClient;
-
     public partial class RPI_Main : Form
     {
         private int menuSelection = 0;
