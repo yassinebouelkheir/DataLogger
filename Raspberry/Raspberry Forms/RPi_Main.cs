@@ -346,6 +346,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 if (browseSelection == 2)
                 {
@@ -364,6 +373,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 3)
                 {
@@ -392,6 +410,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4] * vals1[4]), (vals[3] * vals1[3]), (vals[2] * vals1[2]), (vals[1] * vals1[1]), (vals[0] * vals1[0]) };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
             }
             else if (menuSelection == 1)
@@ -413,6 +440,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 1)
                 {
@@ -431,6 +467,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 2)
                 {
@@ -459,6 +504,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4]*vals1[4]), (vals[3]*vals1[3]), (vals[2]*vals1[2]), (vals[1]*vals1[1]), (vals[0]*vals1[0]) };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 Charts.Enabled = true;
             }
@@ -481,6 +535,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 1)
                 {
@@ -499,6 +562,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 2)
                 {
@@ -527,6 +599,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4] * vals1[4]), (vals[3] * vals1[3]), (vals[2] * vals1[2]), (vals[1] * vals1[1]), (vals[0] * vals1[0]) };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
             }
             else if (menuSelection == 3)
@@ -548,6 +629,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 1)
                 {
@@ -566,6 +656,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 2)
                 {
@@ -585,6 +684,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 3)
                 {
@@ -603,6 +711,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 4)
                 {
@@ -633,6 +750,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { val[4], val[3], val[2], val[1], val[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 5)
                 {
@@ -651,6 +777,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 6)
                 {
@@ -669,6 +804,15 @@ namespace RPi
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
                 else if (browseSelection == 7)
                 {
@@ -682,11 +826,20 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh:mm");
                     }
                     dr.Close();
 
                     cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    cartesianChart.AxisX.Clear();
+                    cartesianChart.AxisX.Add(new Axis
+                    {
+                        Labels = new[] { dates[4], dates[3], dates[2], dates[1], dates[0] },
+                        Separator = new Separator
+                        {
+                            Step = 1,
+                        }
+                    });
                 }
             }
             conn.Close();
