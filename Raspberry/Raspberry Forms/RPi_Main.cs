@@ -108,7 +108,7 @@ namespace RPi
             {
                 if (browseSelection == 0)
                 {
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 1", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 2", conn);
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
@@ -122,19 +122,19 @@ namespace RPi
                 }
                 else if (browseSelection == 1)
                 {
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 1", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 2", conn);
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
                     paramTitle.Text = "Tension DC :";
-                    paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
+                    paramValue.Text = dr.GetFloat(0).ToString("0.0") + " V";
                     dr.Close();
                     Charts.Enabled = true;
 
                 }
                 else if (browseSelection == 2)
                 {
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 2", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 1", conn);
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
@@ -182,11 +182,11 @@ namespace RPi
                 }
                 else if (browseSelection == 2)
                 {
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 3 OR ID = 4", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 3", conn);
                     var dr = cmd.ExecuteReader();
                     dr.Read();
-                    double voltage = dr.GetFloat(0);
-                    dr.Read();
+                    double voltage = 220; /*dr.GetFloat(0);
+                    dr.Read();*/
 
                     paramTitle.Text = "Puissance AC :";
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
@@ -203,7 +203,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Tension DC :";
-                    paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
+                    paramValue.Text = dr.GetFloat(0).ToString("0.0") + " V";
                     dr.Close();
                 }
                 else if (browseSelection == 1)
