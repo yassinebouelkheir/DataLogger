@@ -270,24 +270,17 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Irradiation :";
-                    paramValue.Text = ((Math.Pow((((dr.GetFloat(0)) * 1023) / 100), 2) / 10) / (50)) + " W/m²";
+                    paramValue.Text = ((Math.Pow((1000 - dr.GetFloat(0)), 2) / 10) / (50)) + " W/m²";
                     dr.Close();
                 }
                 else if (browseSelection == 4)
                 {
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `ID`, `VALUE` FROM `SENSORS_STATIC` WHERE ID = 8 OR ID = 5 ORDER BY `ID` DESC", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 8", conn);
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    double val1 = 161.0 * dr.GetFloat(1) / 5.0 - 25.8;
-                    dr.Read();
-
-                    val1 = val1 / (1.0546 - 0.0026 * dr.GetFloat(1));
-                    val1 = Math.Round((val1 / 10.0), 0);
-                    if (val1 < 0) val1 = 0;
-
                     paramTitle.Text = "Humidité :";
-                    paramValue.Text = val1 + " %RH";
+                    paramValue.Text = ((dr.GetFloat(0) * 100) / 1023) + " %RH";
                     dr.Close();
                 }
                 else if (browseSelection == 5)
@@ -705,7 +698,7 @@ namespace RPi
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = ((Math.Pow((((dr.GetFloat(0)) * 1023) / 100), 2) / 10) / (50));
+                        vals[i] = ((Math.Pow((1000 - dr.GetFloat(0)), 2) / 10) / (50));
                         dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
                     }
                     dr.Close();
@@ -732,24 +725,12 @@ namespace RPi
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
+                        vals[i] = (dr.GetFloat(0)*100)/1023;
                         dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
                     }
                     dr.Close();
 
-                    cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 5 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    dr = cmd.ExecuteReader();
-                    double[] val = new double[5];
-
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        val[i] = Math.Round(((((161.0 * val[i])/ 5.0 - 25.8) / (1.0546 - 0.0026 * dr.GetFloat(0))) / 10.0), 0);
-                        if (val[i] < 0) val[i] = 0;
-                    }
-                    dr.Close();
-
-                    cartesianChart.Series[0].Values = new ChartValues<double> { val[4], val[3], val[2], val[1], val[0] };
+                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
