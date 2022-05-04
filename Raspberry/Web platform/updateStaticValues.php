@@ -19,13 +19,13 @@
     $data['battery'] = $batterie;
     $data['batterywidth'] = $batterie;
 
-    $data['currentdc'] = number_format($staticrows[0]['VALUE'], 1);
+    $data['currentdc'] = number_format($staticrows[0]['VALUE'], 2);
     $data['cdcwidth'] = (($staticrows[0]['VALUE']*100)/30);
 
     $data['voltagedc'] = number_format($staticrows[1]['VALUE'], 1);
     $data['voltagedcwidth'] = ((($staticrows[1]['VALUE']-12)*100)/13);
 
-    $data['currentac'] = number_format($staticrows[2]['VALUE'], 1);
+    $data['currentac'] = number_format($staticrows[2]['VALUE'], 2);
     $data['cacwidth'] = $staticrows[2]['VALUE'];
 
     $data['voltageac'] = number_format($staticrows[3]['VALUE'], 1);
@@ -52,10 +52,10 @@
     $data['turbine'] = number_format(round($staticrows[10]['VALUE']), 0);
     $data['turbinewidth'] = round(($staticrows[10]['VALUE']));
 
-    $data['ecurrentdc'] = number_format($staticrows[11]['VALUE'], 1);
+    $data['ecurrentdc'] = number_format($staticrows[11]['VALUE'], 2);
     $data['ecdcwidth'] = $staticrows[11]['VALUE'];
 
     $data['evoltagedc'] = number_format($staticrows[12]['VALUE'], 1);
     $data['evoltagedcwidth'] = ((($staticrows[12]['VALUE']-12)*100)/13);
-    echo json_encode($data);
+	echo json_encode($data);
 ?>

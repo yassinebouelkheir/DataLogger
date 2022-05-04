@@ -562,7 +562,7 @@
                         document.getElementById('currentdctitle').setAttribute("class", "text-danger");
                     }
 
-                    document.getElementById('puissancedc').innerHTML = (response.voltagedc*response.currentdc) + " W";
+                    document.getElementById('puissancedc').innerHTML = (response.voltagedc*response.currentdc).toFixed(1) + " W";
                     document.getElementById('puissancedcwidth').setAttribute("style", "width: " + ((response.voltagedc*response.currentdc)*100)/720 + "%; height: 6px;");
                     if((response.voltagedc*response.currentdc) > 600) {
                         document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-danger");

@@ -521,7 +521,7 @@
                             document.getElementById('currentactitle').setAttribute("class", "text-danger");
                         }
 
-                        document.getElementById('puissanceac').innerHTML = (220*response.currentac) + " W";
+                        document.getElementById('puissanceac').innerHTML = (220*response.currentac).toFixed(1) + " W";
                         document.getElementById('puissanceacwidth').setAttribute("style", "width: " + ((220*response.currentac)*100)/1000 + "%; height: 6px;");
                         if((220*response.currentac) > 600) {
                             document.getElementById('puissanceacwidth').setAttribute("class", "progress-bar bg-danger");

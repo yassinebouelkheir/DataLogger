@@ -522,7 +522,7 @@
                             document.getElementById('currentdctitle').setAttribute("class", "text-danger");
                         }
 
-                        document.getElementById('puissancedc').innerHTML = (response.evoltagedc*response.ecurrentdc) + " W";
+                        document.getElementById('puissancedc').innerHTML = (response.evoltagedc*response.ecurrentdc).toFixed(1) + " W";
                         document.getElementById('puissancedcwidth').setAttribute("style", "width: " + ((response.evoltagedc*response.ecurrentdc)*100)/720 + "%; height: 6px;");
                         if((response.evoltagedc*response.ecurrentdc) > 600) {
                             document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-danger");
