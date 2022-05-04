@@ -1,6 +1,6 @@
 <?php
 
-    $mysqli = new mysqli("localhost", "root", "", "PFE"); 
+    $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE"); 
     $query = 'SELECT * FROM `SENSORS_STATIC` WHERE 1 ORDER BY `ID` ASC';
     $result = $mysqli->query($query);
     $staticrows = array();
@@ -40,13 +40,8 @@
     $data['brightness'] = number_format(round($staticrows[6]['VALUE']), 0);
     $data['brightneswidth'] = 1000-$staticrows[6]['VALUE'];
 
-    if($staticrows[7]['VALUE'] == 0) $data['humidity'] = 0.0;
-    else  {
-        $staticrows[7]['VALUE'] = 161.0 * $staticrows[7]['VALUE'] / 5.0 - 25.8;
-        $staticrows[7]['VALUE'] = $staticrows[7]['VALUE'] / (1.0546 - 0.0026 * $temperature);
-        $data['humidity'] = number_format(round($staticrows[7]['VALUE']/10.0), 0);
-    }
-    $data['humidtywidth'] = $staticrows[7]['VALUE'];
+    $data['humidity'] = number_format(round(($staticrows[7]['VALUE']*100/1023)), 0);
+    $data['humidtywidth'] = number_format(round(($staticrows[7]['VALUE']*100/1023)), 0);
 
     $data['windspeed'] = number_format(round($staticrows[8]['VALUE']), 0);
     $data['windspeedwidth'] = round((($staticrows[8]['VALUE'])*100)/40);
@@ -62,5 +57,5 @@
 
     $data['evoltagedc'] = number_format($staticrows[12]['VALUE'], 1);
     $data['evoltagedcwidth'] = ((($staticrows[12]['VALUE']-12)*100)/13);
-	echo json_encode($data);
+    echo json_encode($data);
 ?>

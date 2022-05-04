@@ -32,9 +32,9 @@
             exit();
         }
 
-        $mysqli = new mysqli("localhost", "root", "", "PFE");   
+        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 5 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 5 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $temprows = array();
         while($row = $result->fetch_assoc()) {
@@ -42,7 +42,7 @@
         }
         $result->free();
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 6 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 6 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $temp1rows = array();
         while($row = $result->fetch_assoc()) {
@@ -50,7 +50,7 @@
         }
         $result->free();
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 7 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 7 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $brightnessrows = array();
         while($row = $result->fetch_assoc()) {
@@ -58,15 +58,16 @@
         }
         $result->free();
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 8 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 8 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $humidityrows = array();
         while($row = $result->fetch_assoc()) {
             $humidityrows[] = $row;
         }
+        for($i = 0; $i < 10; $i++) $humidityrows[$i]['VALUE'] = ($humidityrows[$i]['VALUE']*100)/1023;
         $result->free();
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 9 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 9 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $windspeedrows = array();
         while($row = $result->fetch_assoc()) {
@@ -74,7 +75,7 @@
         }
         $result->free();
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 10 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 10 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $windspeedinvrows = array();
         while($row = $result->fetch_assoc()) {
@@ -82,7 +83,7 @@
         }
         $result->free();
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 11 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 11 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $turbinerows = array();
         while($row = $result->fetch_assoc()) {
@@ -137,7 +138,7 @@
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
         <link href="dist/css/style.min.css" rel="stylesheet">
         <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
-        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout">
         <div class="preloader">
@@ -183,28 +184,28 @@
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
-                                <span class="hide-menu">Courant Faible</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Courant Faible</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
-                                <span class="hide-menu">Courant Fort</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Courant Fort</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
-                                <span class="hide-menu">Éolienne</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Éolienne</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark active" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
-                                <span class="hide-menu">Météorologie</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Météorologie</span></a>
                             </li>
-                            <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> Charges</span></a>
+                            <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
                             <?php 
                                 if($_SESSION["username"] == "admin") {
-                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Paramètres</span></a></li>';
                                 }
                             ?>
-                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> Déconnexion</span></a>
+                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -562,39 +563,39 @@
                 Morris.Area({
                     element: 'morris-area-chart'
                     , data: [{
-                            period: <?php echo "'".SHM($temprows[0]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temprows[9]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temprows[1]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temprows[8]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temprows[2]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temprows[7]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temprows[3]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[3]['VALUE']; ?>
-                    }, {
-                            period: <?php echo "'".SHM($temprows[4]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temprows[6]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($temprows[5]['UNIXDATE'])."'"; ?>
                             , temp: <?php echo $temprows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($temprows[4]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($temprows[6]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temprows[3]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temprows[7]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temprows[2]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temprows[8]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temprows[1]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temprows[9]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temprows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temprows[0]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temprows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['temp']
@@ -613,39 +614,39 @@
                 Morris.Area({
                     element: 'morris-area-chart1'
                     , data: [{
-                            period: <?php echo "'".SHM($temp1rows[0]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[9]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temp1rows[1]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[8]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temp1rows[2]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[7]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($temp1rows[3]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[3]['VALUE']; ?>
-                    }, {
-                            period: <?php echo "'".SHM($temp1rows[4]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[6]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($temp1rows[5]['UNIXDATE'])."'"; ?>
                             , temp: <?php echo $temp1rows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($temp1rows[4]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($temp1rows[6]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[3]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temp1rows[7]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[2]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temp1rows[8]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[1]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($temp1rows[9]['UNIXDATE'])."'"; ?>
-                            , temp: <?php echo $temp1rows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($temp1rows[0]['UNIXDATE'])."'"; ?>
+                            , temp: <?php echo $temp1rows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['temp']
@@ -665,39 +666,39 @@
                 Morris.Area({
                     element: 'morris-area-chart2'
                     , data: [{
-                            period: <?php echo "'".SHM($brightnessrows[0]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($brightnessrows[9]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[9]['VALUE']*0.0048828125)-500)/10); ?>
                     }, {
-                            period: <?php echo "'".SHM($brightnessrows[1]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($brightnessrows[8]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[8]['VALUE']*0.0048828125)-500)/10); ?>
                     }, {
-                            period: <?php echo "'".SHM($brightnessrows[2]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($brightnessrows[7]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[7]['VALUE']*0.0048828125)-500)/10); ?>
                     }, {
-                            period: <?php echo "'".SHM($brightnessrows[3]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[3]['VALUE']; ?>
-                    }, {
-                            period: <?php echo "'".SHM($brightnessrows[4]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($brightnessrows[6]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[6]['VALUE']*0.0048828125)-500)/10); ?>
                     }, {
                             period: <?php echo "'".SHM($brightnessrows[5]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[5]['VALUE']; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[5]['VALUE']*0.0048828125)-500)/10); ?>
+                    }, {
+                            period: <?php echo "'".SHM($brightnessrows[4]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[4]['VALUE']*0.0048828125)-500)/10); ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($brightnessrows[6]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($brightnessrows[3]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[3]['VALUE']*0.0048828125)-500)/10); ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($brightnessrows[7]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($brightnessrows[2]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[2]['VALUE']*0.0048828125)-500)/10); ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($brightnessrows[8]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($brightnessrows[1]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[1]['VALUE']*0.0048828125)-500)/10); ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($brightnessrows[9]['UNIXDATE'])."'"; ?>
-                            , brightness: <?php echo $brightnessrows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($brightnessrows[0]['UNIXDATE'])."'"; ?>
+                            , brightness: <?php echo ((2500/($brightnessrows[0]['VALUE']*0.0048828125)-500)/10); ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['brightness']
@@ -717,39 +718,39 @@
                 Morris.Area({
                     element: 'morris-area-chart3'
                     , data: [{
-                            period: <?php echo "'".SHM($brightnessrows[0]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[0]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($brightnessrows[9]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[9]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }, {
-                            period: <?php echo "'".SHM($brightnessrows[1]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[1]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($brightnessrows[8]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[8]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }, {
-                            period: <?php echo "'".SHM($brightnessrows[2]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[2]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($brightnessrows[7]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[7]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }, {
-                            period: <?php echo "'".SHM($brightnessrows[3]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[3]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
-                    }, {
-                            period: <?php echo "'".SHM($brightnessrows[4]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($brightnessrows[6]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[6]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }, {
                             period: <?php echo "'".SHM($brightnessrows[5]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[5]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[5]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
+                    }, {
+                            period: <?php echo "'".SHM($brightnessrows[4]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[4]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($brightnessrows[6]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[6]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($brightnessrows[3]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[3]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($brightnessrows[7]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[7]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($brightnessrows[2]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[2]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($brightnessrows[8]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[8]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($brightnessrows[1]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[1]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($brightnessrows[9]['UNIXDATE'])."'"; ?>
-                            , Irradiation: <?php echo number_format(((pow((($brightnessrows[9]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($brightnessrows[0]['UNIXDATE'])."'"; ?>
+                            , Irradiation: <?php echo number_format((pow((1000-$brightnessrows[0]['VALUE']),2)/10)/(50), 1, '.', ''); ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['Irradiation']
@@ -769,39 +770,39 @@
                 Morris.Area({
                     element: 'morris-area-chart4'
                     , data: [{
-                            period: <?php echo "'".SHM($humidityrows[0]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($humidityrows[9]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($humidityrows[1]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($humidityrows[8]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($humidityrows[2]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($humidityrows[7]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($humidityrows[3]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[3]['VALUE']; ?>
-                    }, {
-                            period: <?php echo "'".SHM($humidityrows[4]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($humidityrows[6]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($humidityrows[5]['UNIXDATE'])."'"; ?>
                             , humidity: <?php echo $humidityrows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($humidityrows[4]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($humidityrows[6]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($humidityrows[3]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($humidityrows[7]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($humidityrows[2]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($humidityrows[8]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($humidityrows[1]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($humidityrows[9]['UNIXDATE'])."'"; ?>
-                            , humidity: <?php echo $humidityrows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($humidityrows[0]['UNIXDATE'])."'"; ?>
+                            , humidity: <?php echo $humidityrows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['humidity']
@@ -821,39 +822,39 @@
                 Morris.Area({
                     element: 'morris-area-chart5'
                     , data: [{
-                            period: <?php echo "'".SHM($windspeedrows[0]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[0]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[9]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($windspeedrows[1]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[1]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[8]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($windspeedrows[2]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[2]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[7]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($windspeedrows[3]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[3]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
-                    }, {
-                            period: <?php echo "'".SHM($windspeedrows[4]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[6]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($windspeedrows[5]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[5]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            , Vitesse: <?php echo $windspeedrows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($windspeedrows[4]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($windspeedrows[6]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[6]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[3]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($windspeedrows[7]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[7]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[2]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($windspeedrows[8]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[8]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[1]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($windspeedrows[9]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedrows[9]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[0]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedrows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['Vitesse']
@@ -873,39 +874,39 @@
                 Morris.Area({
                     element: 'morris-area-chart6'
                     , data: [{
-                            period: <?php echo "'".SHM($windspeedinvrows[0]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[0]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedinvrows[9]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($windspeedinvrows[1]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[1]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedinvrows[8]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($windspeedinvrows[2]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[2]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedinvrows[7]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($windspeedinvrows[3]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[3]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
-                    }, {
-                            period: <?php echo "'".SHM($windspeedinvrows[4]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[4]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedinvrows[6]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($windspeedinvrows[5]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[5]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            , Vitesse: <?php echo $windspeedinvrows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($windspeedinvrows[4]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($windspeedinvrows[6]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[6]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedinvrows[3]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($windspeedinvrows[7]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[7]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedinvrows[2]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($windspeedinvrows[8]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[8]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedinvrows[1]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($windspeedrows[9]['UNIXDATE'])."'"; ?>
-                            , Vitesse: <?php echo number_format(((pow((($windspeedinvrows[9]['VALUE']*1023)/100),2)/10)/(50)), 1); ?>
+                            period: <?php echo "'".SHM($windspeedrows[0]['UNIXDATE'])."'"; ?>
+                            , Vitesse: <?php echo $windspeedinvrows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['Vitesse']
@@ -926,39 +927,39 @@
                 Morris.Area({
                     element: 'morris-area-chart7'
                     , data: [{
-                            period: <?php echo "'".SHM($turbinerows[0]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($turbinerows[9]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($turbinerows[1]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($turbinerows[8]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($turbinerows[2]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($turbinerows[7]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($turbinerows[3]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[3]['VALUE']; ?>
-                    }, {
-                            period: <?php echo "'".SHM($turbinerows[4]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($turbinerows[6]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($turbinerows[5]['UNIXDATE'])."'"; ?>
                             , vitesseamon: <?php echo $turbinerows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($turbinerows[4]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($turbinerows[6]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($turbinerows[3]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($turbinerows[7]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($turbinerows[2]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($turbinerows[8]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($turbinerows[1]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($turbinerows[9]['UNIXDATE'])."'"; ?>
-                            , vitesseamon: <?php echo $turbinerows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($turbinerows[0]['UNIXDATE'])."'"; ?>
+                            , vitesseamon: <?php echo $turbinerows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['vitesseamon']
@@ -981,8 +982,8 @@
                         type: 'post',
                         dataType: "json",
                         success: function (response) {
-                            document.getElementById('temppanneauvalue').innerHTML = response.temperature + " °C";
-                            document.getElementById('temppanneauwidth').setAttribute("style", "width: " + response.tempwidth + "%; height: 6px;");
+                            document.getElementById('temppanneauvalue').innerHTML = response.temperature1 + " °C";
+                            document.getElementById('temppanneauwidth').setAttribute("style", "width: " + response.temp1width + "%; height: 6px;");
                             if(response.temperature < 25) {
                                 document.getElementById('temppanneauwidth').setAttribute("class", "progress-bar bg-success");
                                 document.getElementById('temppanneauvalue').setAttribute("class", "counter text-success");
@@ -999,8 +1000,8 @@
                                 document.getElementById('temppanneau').setAttribute("class", "text-danger");
                             }
 
-                            document.getElementById('tempambiantvalue').innerHTML = response.temperature1 + " °C";
-                            document.getElementById('tempambiantwidth').setAttribute("style", "width: " + response.temp1width + "%; height: 6px;");
+                            document.getElementById('tempambiantvalue').innerHTML = response.temperature + " °C";
+                            document.getElementById('tempambiantwidth').setAttribute("style", "width: " + response.tempwidth + "%; height: 6px;");
                             if(response.temperature1 < 25) {
                                 document.getElementById('tempambiantwidth').setAttribute("class", "progress-bar bg-success");
                                 document.getElementById('tempambiantvalue').setAttribute("class", "counter text-success");
@@ -1019,17 +1020,17 @@
 
                             document.getElementById('humidityvalue').innerHTML = response.humidity + " %RH";
                             document.getElementById('humiditywidth').setAttribute("style", "width: " + response.humidtywidth + "%; height: 6px;");
-                            if(response.humidity < 25) {
+                            if(response.humidity < 50) {
                                 document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-success");
                                 document.getElementById('humidityvalue').setAttribute("class", "counter text-success");
                                 document.getElementById('humidity').setAttribute("class", "text-success");
                             }
-                            else if(response.humidity < 50) {
+                            else if(response.humidity < 70) {
                                 document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-primary");
                                 document.getElementById('humidityvalue').setAttribute("class", "counter text-primary");
                                 document.getElementById('humidity').setAttribute("class", "text-primary");
                             }
-                            else if(response.humidity >= 50) {
+                            else if(response.humidity >= 70) {
                                 document.getElementById('humiditywidth').setAttribute("class", "progress-bar bg-danger");
                                 document.getElementById('humidityvalue').setAttribute("class", "counter text-danger");
                                 document.getElementById('humidity').setAttribute("class", "text-danger");
@@ -1037,31 +1038,31 @@
 
                             if(response.brightness > 0) document.getElementById('brightnessvalue').innerHTML = ((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)  + " LUX";
                             else document.getElementById('brightnessvalue').innerHTML = "0 LUX";
-                            document.getElementById('brightnesswidth').setAttribute("style", "width: " + (1000-response.brightneswidth) + "%; height: 6px;");
-                            if((1000-response.brightneswidth/10.0) < 25) {
+                            document.getElementById('brightnesswidth').setAttribute("style", "width: " + (((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)) + "%; height: 6px;");
+                            if((((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)) < 25) {
                                 document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-danger");
                                 document.getElementById('brightnessvalue').setAttribute("class", "counter text-danger");
                                 document.getElementById('brightness').setAttribute("class", "text-danger");
                             }
-                            else if((1000-response.brightneswidth/10.0) < 40) {
+                            else if((((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)) < 76) {
                                 document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-primary");
                                 document.getElementById('brightnessvalue').setAttribute("class", "counter text-primary");
                                 document.getElementById('brightness').setAttribute("class", "text-primary");
                             }
-                            else if((1000-response.brightneswidth/10.0) >= 40) {
+                            else {
                                 document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
                                 document.getElementById('brightnessvalue').setAttribute("class", "counter text-success");
                                 document.getElementById('brightness').setAttribute("class", "text-success");
                             }
 
-                            document.getElementById('irradiationvalue').innerHTML = ((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)).toFixed(0) + " W/m²";
-                            document.getElementById('irradiationwidth').setAttribute("style", "width: " + (((Math.pow((((response.brightness)*1023)/100),2)/10)/(50))/10) + "%; height: 6px;");
-                            if(((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)) < 400) {
+                            document.getElementById('irradiationvalue').innerHTML = ((Math.pow((1000-response.brightness),2)/10)/(50)).toFixed(0) + " W/m²";
+                            document.getElementById('irradiationwidth').setAttribute("style", "width: " + (((Math.pow((1000-response.brightness),2)/10)/(50)).toFixed(0)/10) + "%; height: 6px;");
+                            if(((Math.pow((1000-response.brightness),2)/10)/(50)).toFixed(0) < 400) {
                                 document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-danger");
                                 document.getElementById('irradiationvalue').setAttribute("class", "counter text-danger");
                                 document.getElementById('irradiation').setAttribute("class", "text-danger");
                             }
-                            else if(((Math.pow((((response.brightness)*1023)/100),2)/10)/(50)) < 700) {
+                            else if(((Math.pow((1000-response.brightness),2)/10)/(50)).toFixed(0)  < 700) {
                                 document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-primary");
                                 document.getElementById('irradiationvalue').setAttribute("class", "counter text-primary");
                                 document.getElementById('irradiation').setAttribute("class", "text-primary");
@@ -1131,7 +1132,7 @@
                 }
             setInterval(function(){
                 refresh() 
-            }, 400);
+            }, 600);
         });
         </script>
     </body>

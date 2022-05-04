@@ -27,17 +27,17 @@ SET time_zone = "+00:00";
 -- Structure de la table `accounts`
 --
 
-CREATE TABLE `accounts` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+CREATE TABLE `ACCOUNTS` (
+  `ID` int(11) NOT NULL,
+  `USERNAME` varchar(50) NOT NULL,
+  `PASSWORD` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `username`, `password`) VALUES
+INSERT INTO `ACCOUNTS` (`ID`, `USERNAME`, `PASSWORD`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3'),
 (2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee');
 
@@ -47,7 +47,7 @@ INSERT INTO `accounts` (`id`, `username`, `password`) VALUES
 -- Structure de la table `charges`
 --
 
-CREATE TABLE `charges` (
+CREATE TABLE `CHARGES` (
   `ID` int(11) NOT NULL,
   `NAME` varchar(24) NOT NULL,
   `VALUE` int(11) NOT NULL
@@ -57,7 +57,7 @@ CREATE TABLE `charges` (
 -- Déchargement des données de la table `charges`
 --
 
-INSERT INTO `charges` (`ID`, `NAME`, `VALUE`) VALUES
+INSERT INTO `CHARGES` (`ID`, `NAME`, `VALUE`) VALUES
 (1, 'Charge 1', 0),
 (2, 'Charge 2', 0),
 (3, 'Charge 3', 0),
@@ -73,7 +73,7 @@ INSERT INTO `charges` (`ID`, `NAME`, `VALUE`) VALUES
 -- Structure de la table `sensors`
 --
 
-CREATE TABLE `sensors` (
+CREATE TABLE `SENSORS` (
   `ID` int(11) NOT NULL,
   `VALUE` float NOT NULL,
   `UNIXDATE` int(11) NOT NULL
@@ -83,7 +83,7 @@ CREATE TABLE `sensors` (
 -- Déchargement des données de la table `sensors`
 --
 
-INSERT INTO `sensors` (`ID`, `VALUE`, `UNIXDATE`) VALUES
+INSERT INTO `SENSORS` (`ID`, `VALUE`, `UNIXDATE`) VALUES
 (1, 0, 1648582100),
 (1, 0, 1648582220),
 (1, 0, 1648582340),
@@ -221,7 +221,7 @@ INSERT INTO `sensors` (`ID`, `VALUE`, `UNIXDATE`) VALUES
 -- Structure de la table `sensors_static`
 --
 
-CREATE TABLE `sensors_static` (
+CREATE TABLE `SENSORS_STATIC` (
   `ID` int(11) NOT NULL,
   `VALUE` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -230,7 +230,7 @@ CREATE TABLE `sensors_static` (
 -- Déchargement des données de la table `sensors_static`
 --
 
-INSERT INTO `sensors_static` (`ID`, `VALUE`) VALUES
+INSERT INTO `SENSORS_STATIC` (`ID`, `VALUE`) VALUES
 (1, 0),
 (2, 0),
 (3, 0),
@@ -251,7 +251,7 @@ INSERT INTO `sensors_static` (`ID`, `VALUE`) VALUES
 -- Structure de la table `updatetime`
 --
 
-CREATE TABLE `updatetime` (
+CREATE TABLE `UPDATETIME` (
   `ID` int(11) NOT NULL,
   `TIME` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -260,7 +260,7 @@ CREATE TABLE `updatetime` (
 -- Déchargement des données de la table `updatetime`
 --
 
-INSERT INTO `updatetime` (`ID`, `TIME`) VALUES
+INSERT INTO `UPDATETIME` (`ID`, `TIME`) VALUES
 (1, 2),
 (2, 2),
 (3, 2),
@@ -276,8 +276,8 @@ INSERT INTO `updatetime` (`ID`, `TIME`) VALUES
 --
 -- Index pour la table `accounts`
 --
-ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `ACCOUNTS`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -286,8 +286,8 @@ ALTER TABLE `accounts`
 --
 -- AUTO_INCREMENT pour la table `accounts`
 --
-ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `ACCOUNTS`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
