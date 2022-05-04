@@ -30,7 +30,7 @@ RF24 radio(9, 10);
 const byte address1[6] = "14863";
 const byte address2[6] = "26957";
 
-double VOLTAGEAC_VALUE = 0.0;
+double TENSIONAC_VALUE = 0.0;
 double COURANTAC_VALUE = 0.0;
 double COURANTDC_VALUE = 0.0;
 
@@ -131,6 +131,6 @@ double getPuissanceValues()
     voltage =  voltage_raw1 - 2.5 + 0.012;
     COURANTDC_VALUE = voltage / 0.066;
 
-    if(abs(current) > 0.05) return abs(current);
-    else return 0.0;
+    if(abs(COURANTDC_VALUE) > 0.05) COURANTDC_VALUE = abs(COURANTDC_VALUE);
+    else COURANTDC_VALUE = 0.0;
 }
