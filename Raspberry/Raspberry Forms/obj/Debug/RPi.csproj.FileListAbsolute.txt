@@ -49,9 +49,6 @@ C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Goog
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Compression.LZ4.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Compression.LZ4.Streams.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Hash.xxHash.dll
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.dll
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.WinForms.dll
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.Wpf.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\MySql.Data.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Buffers.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Memory.dll
@@ -64,12 +61,6 @@ C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\Goog
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Compression.LZ4.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Compression.LZ4.Streams.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\K4os.Hash.xxHash.xml
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.pdb
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.xml
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.WinForms.pdb
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.WinForms.xml
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.Wpf.pdb
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\MySql.Data.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Buffers.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\Debug\System.Memory.xml

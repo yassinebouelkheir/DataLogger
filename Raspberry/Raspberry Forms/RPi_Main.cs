@@ -42,7 +42,7 @@ namespace RPi
 
         private void RPI_Main_Load(object sender, EventArgs e)
         {
-            string myConnectionString = "server=localhost;uid=adminpi;pwd=adminpi;database=PFE";
+            string myConnectionString = "server=localhost;uid=admnpi;pwd=adminpi;database=PFE";
 
             try
             {
@@ -57,15 +57,6 @@ namespace RPi
             }
             conn.Close();
             panel1.BackColor = System.Drawing.Color.FromArgb(180, 255, 255, 255);
-
-            chart.Series.Clear();
-            chart.Series.Add("Value");
-            chart.Series["Value"].Points.AddXY("11:00", "9999");
-            chart.Series["Value"].Points.AddXY("11:02", "9999");
-            chart.Series["Value"].Points.AddXY("11:04", "9999");
-            chart.Series["Value"].Points.AddXY("11:06", "9999");
-            chart.Series["Value"].Points.AddXY("11:08", "9999");
-
             updateSelection();
         }
 
@@ -322,17 +313,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 if (browseSelection == 2)
                 {
@@ -346,17 +329,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 3)
                 {
@@ -370,7 +345,7 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
 
@@ -383,14 +358,6 @@ namespace RPi
                         vals1[i] = dr.GetFloat(0);
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], (vals[4]*vals1[4]));
-                    chart.Series["Value"].Points.AddXY(dates[3], (vals[3]*vals1[3]));
-                    chart.Series["Value"].Points.AddXY(dates[2], (vals[2]*vals1[2]));
-                    chart.Series["Value"].Points.AddXY(dates[1], (vals[1]*vals1[1]));
-                    chart.Series["Value"].Points.AddXY(dates[0], (vals[0]*vals1[0]));
                 }
             }
             else if (menuSelection == 1)
@@ -407,17 +374,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 1)
                 {
@@ -431,17 +390,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 2)
                 {
@@ -455,7 +406,7 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
 
@@ -468,14 +419,6 @@ namespace RPi
                         vals1[i] = dr.GetFloat(0);
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], (vals[4] * vals1[4]));
-                    chart.Series["Value"].Points.AddXY(dates[3], (vals[3] * vals1[3]));
-                    chart.Series["Value"].Points.AddXY(dates[2], (vals[2] * vals1[2]));
-                    chart.Series["Value"].Points.AddXY(dates[1], (vals[1] * vals1[1]));
-                    chart.Series["Value"].Points.AddXY(dates[0], (vals[0] * vals1[0]));
                 }
                 Charts.Enabled = true;
             }
@@ -493,17 +436,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 1)
                 {
@@ -517,17 +452,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 2)
                 {
@@ -541,7 +468,7 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
 
@@ -554,14 +481,6 @@ namespace RPi
                         vals1[i] = dr.GetFloat(0);
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], (vals[4] * vals1[4]));
-                    chart.Series["Value"].Points.AddXY(dates[3], (vals[3] * vals1[3]));
-                    chart.Series["Value"].Points.AddXY(dates[2], (vals[2] * vals1[2]));
-                    chart.Series["Value"].Points.AddXY(dates[1], (vals[1] * vals1[1]));
-                    chart.Series["Value"].Points.AddXY(dates[0], (vals[0] * vals1[0]));
                 }
             }
             else if (menuSelection == 3)
@@ -578,17 +497,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 1)
                 {
@@ -602,17 +513,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 2)
                 {
@@ -627,17 +530,9 @@ namespace RPi
                         dr.Read();
                         vals[i] = ((2500 / (dr.GetFloat(0) * 0.0048828125) - 500) / 10);
                         if (vals[i] > 9999) vals[i] = 9999;
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 3)
                 {
@@ -651,17 +546,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = ((Math.Pow((1000 - dr.GetFloat(0)), 2) / 10) / (50));
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 4)
                 {
@@ -675,17 +562,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = (dr.GetFloat(0)*100)/1023;
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 5)
                 {
@@ -699,17 +578,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 6)
                 {
@@ -723,17 +594,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm\:fff");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
                 else if (browseSelection == 7)
                 {
@@ -747,17 +610,9 @@ namespace RPi
                     {
                         dr.Read();
                         vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh:mm");
+                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
                     dr.Close();
-
-                    chart.Series.Clear();
-                    chart.Series.Add("Value");
-                    chart.Series["Value"].Points.AddXY(dates[4], vals[4]);
-                    chart.Series["Value"].Points.AddXY(dates[3], vals[3]);
-                    chart.Series["Value"].Points.AddXY(dates[2], vals[2]);
-                    chart.Series["Value"].Points.AddXY(dates[1], vals[1]);
-                    chart.Series["Value"].Points.AddXY(dates[0], vals[0]);
                 }
             }
             conn.Close();
@@ -1070,7 +925,6 @@ namespace RPi
                 paramValue.Visible = false;
                 label2.Text = paramTitle.Text.Replace(":", "");
                 label2.Visible = true;
-                chart.Visible = true;
                 updateGraphSelection();
             }
             else
@@ -1081,7 +935,6 @@ namespace RPi
                 paramValue.Visible = true;
                 label2.Text = "Panneau de contrôle des charges";
                 label2.Visible = false;
-                chart.Visible = false;
                 updateSelection();
             }
         }
@@ -1091,7 +944,7 @@ namespace RPi
             if (!isChargePanelEnabled)
             {
                 Charts.Enabled = false;
-                if (isGraphEnabled) chart.Visible = false;
+                if (isGraphEnabled) ;
                 Charts.Text = "Passer en mode graphique";
                 isGraphEnabled = false;
                 Left_Btn.Enabled = false;
