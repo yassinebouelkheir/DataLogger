@@ -139,7 +139,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Courant DC :";
-                    paramValue.Text = dr.GetFloat(0).ToString("0.0") + " A";
+                    paramValue.Text = dr.GetFloat(0).ToString("0.00") + " A";
                     dr.Close();
                     Charts.Enabled = true;
                 }
@@ -161,13 +161,14 @@ namespace RPi
             {
                 if (browseSelection == 0)
                 {
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 4", conn);
+                    /*MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 4", conn);
                     var dr = cmd.ExecuteReader();
-                    dr.Read();
+                    dr.Read();*/
 
                     paramTitle.Text = "Tension AC :";
-                    paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
-                    dr.Close();
+                    //paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
+                    paramValue.Text = "220 V";
+                    //dr.Close();
                 }
                 else if (browseSelection == 1)
                 {
@@ -176,7 +177,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Courant AC :";
-                    paramValue.Text = dr.GetFloat(0).ToString("0.0") + " A";
+                    paramValue.Text = dr.GetFloat(0).ToString("0.00") + " A";
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -212,7 +213,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Courant DC :";
-                    paramValue.Text = dr.GetFloat(0).ToString("0.0") + " A";
+                    paramValue.Text = dr.GetFloat(0).ToString("0.00") + " A";
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -237,7 +238,7 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Temp. Ambiante :";
+                    paramTitle.Text = "T. Ambiante :";
                     paramValue.Text = dr.GetFloat(0).ToString("0") + " °C";
                     dr.Close();
                 }
@@ -247,7 +248,7 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Temp. Panneau :";
+                    paramTitle.Text = "T. Panneau :";
                     paramValue.Text = dr.GetFloat(0).ToString("0") + " °C";
                     dr.Close();
                 }
@@ -268,7 +269,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Irradiation :";
-                    paramValue.Text = ((Math.Pow((1000 - dr.GetFloat(0)), 2) / 10) / (50)).ToString("0.0") + " W/m²";
+                    paramValue.Text = ((Math.Pow((1000 - dr.GetFloat(0)), 2) / 10) / (50)).ToString("0") + " W/m²";
                     dr.Close();
                 }
                 else if (browseSelection == 4)
