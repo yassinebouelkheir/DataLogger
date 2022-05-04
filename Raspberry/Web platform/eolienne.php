@@ -32,9 +32,9 @@
             exit();
         }
 
-        $mysqli = new mysqli("localhost", "root", "", "PFE");   
+        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 12 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 12 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
         $currentdcrows = array();
         while($row = $result->fetch_assoc()) {
@@ -43,7 +43,7 @@
         $result->free();
 
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 13 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 13 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $voltagedcrows = array();
         while($row = $result->fetch_assoc()) {
@@ -99,7 +99,7 @@
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
         <link href="dist/css/style.min.css" rel="stylesheet">
         <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
-        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout">
         <div class="preloader">
@@ -145,28 +145,28 @@
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
-                                <span class="hide-menu">Courant Faible</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Courant Faible</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
-                                <span class="hide-menu">Courant Fort</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Courant Fort</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark active" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
-                                <span class="hide-menu">Éolienne</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Éolienne</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
-                                <span class="hide-menu">Météorologie</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Météorologie</span></a>
                             </li>
-                            <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> Charges</span></a>
+                            <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
                             <?php 
                                 if($_SESSION["username"] == "admin") {
-                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> Paramètres</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Paramètres</span></a></li>';
                                 }
                             ?>
-                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> Déconnexion</span></a>
+                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -325,39 +325,39 @@
                 Morris.Area({
                     element: 'morris-area-chart'
                     , data: [{
-                            period: <?php echo "'".SHM($voltagedcrows[0]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($voltagedcrows[9]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($voltagedcrows[1]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($voltagedcrows[8]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($voltagedcrows[2]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($voltagedcrows[7]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($voltagedcrows[3]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[3]['VALUE']; ?>
-                    }, {
-                            period: <?php echo "'".SHM($voltagedcrows[4]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($voltagedcrows[6]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($voltagedcrows[5]['UNIXDATE'])."'"; ?>
                             , tensiondc: <?php echo $voltagedcrows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($voltagedcrows[4]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($voltagedcrows[6]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($voltagedcrows[3]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($voltagedcrows[7]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($voltagedcrows[2]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($voltagedcrows[8]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($voltagedcrows[1]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($voltagedcrows[9]['UNIXDATE'])."'"; ?>
-                            , tensiondc: <?php echo $voltagedcrows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($voltagedcrows[0]['UNIXDATE'])."'"; ?>
+                            , tensiondc: <?php echo $voltagedcrows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['tensiondc']
@@ -378,39 +378,39 @@
                 Morris.Area({
                     element: 'morris-area-chart1'
                     , data: [{
-                            period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[3]['VALUE']; ?>
-                    }, {
-                            period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($currentdcrows[5]['UNIXDATE'])."'"; ?>
                             , currentdc: <?php echo $currentdcrows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
-                            , currentdc: <?php echo $currentdcrows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
+                            , currentdc: <?php echo $currentdcrows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['currentdc']
@@ -430,39 +430,39 @@
                 Morris.Area({
                     element: 'morris-area-chart7'
                     , data: [{
-                            period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[0]['VALUE']*$voltagedcrows[0]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[9]['VALUE']*$voltagedcrows[9]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[1]['VALUE']*$voltagedcrows[1]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[8]['VALUE']*$voltagedcrows[8]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[2]['VALUE']*$voltagedcrows[2]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[7]['VALUE']*$voltagedcrows[7]['VALUE']; ?>
                     }, {
-                            period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[3]['VALUE']*$voltagedcrows[3]['VALUE']; ?>
-                    }, {
-                            period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[4]['VALUE']*$voltagedcrows[4]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[6]['VALUE']*$voltagedcrows[6]['VALUE']; ?>
                     }, {
                             period: <?php echo "'".SHM($currentdcrows[5]['UNIXDATE'])."'"; ?>
                             , puissancedc: <?php echo $currentdcrows[5]['VALUE']*$voltagedcrows[5]['VALUE']; ?>
+                    }, {
+                            period: <?php echo "'".SHM($currentdcrows[4]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[4]['VALUE']*$voltagedcrows[4]['VALUE']; ?>
                     }
                         , {
-                            period: <?php echo "'".SHM($currentdcrows[6]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[6]['VALUE']*$voltagedcrows[6]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[3]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[3]['VALUE']*$voltagedcrows[3]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[7]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[7]['VALUE']*$voltagedcrows[7]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[2]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[2]['VALUE']*$voltagedcrows[2]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[8]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[8]['VALUE']*$voltagedcrows[8]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[1]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[1]['VALUE']*$voltagedcrows[1]['VALUE']; ?>
                     }
                     ,{
-                            period: <?php echo "'".SHM($currentdcrows[9]['UNIXDATE'])."'"; ?>
-                            , puissancedc: <?php echo $currentdcrows[9]['VALUE']*$voltagedcrows[9]['VALUE']; ?>
+                            period: <?php echo "'".SHM($currentdcrows[0]['UNIXDATE'])."'"; ?>
+                            , puissancedc: <?php echo $currentdcrows[0]['VALUE']*$voltagedcrows[0]['VALUE']; ?>
                     }]
                     , xkey: 'period'
                     , ykeys: ['puissancedc']
@@ -543,7 +543,7 @@
                 }
             setInterval(function(){
                 refresh() 
-            }, 400);
+            }, 600);
         });
         </script>
     </body>
