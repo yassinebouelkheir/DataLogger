@@ -64,7 +64,6 @@ namespace RPi
             this.Left_Btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.cartesianChart = new LiveCharts.WinForms.CartesianChart();
             this.label2 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -246,7 +245,6 @@ namespace RPi
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.cartesianChart);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.button7);
@@ -264,13 +262,13 @@ namespace RPi
             this.panel1.TabIndex = 13;
             // 
             // cartesianChart
-            // 
+            /* 
             this.cartesianChart.Location = new System.Drawing.Point(4, 24);
             this.cartesianChart.Name = "cartesianChart";
             this.cartesianChart.Size = new System.Drawing.Size(385, 126);
             this.cartesianChart.TabIndex = 24;
             this.cartesianChart.Text = "cartesianChart";
-            this.cartesianChart.Visible = false;
+            this.cartesianChart.Visible = false;*/
             // 
             // label2
             // 
@@ -522,7 +520,6 @@ namespace RPi
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private LiveCharts.WinForms.CartesianChart cartesianChart;
         private System.Windows.Forms.Timer updateCharts;
     }
 }

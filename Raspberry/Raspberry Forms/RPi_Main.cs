@@ -24,8 +24,6 @@
 
 using System;
 using System.Windows.Forms;
-using LiveCharts;
-using LiveCharts.Wpf;
 using Color = System.Drawing.Color;
 
 namespace RPi
@@ -59,7 +57,7 @@ namespace RPi
             }
             conn.Close();
             panel1.BackColor = System.Drawing.Color.FromArgb(180, 255, 255, 255);
-            cartesianChart.Series = new SeriesCollection
+            /*cartesianChart.Series = new SeriesCollection
             {
                 new LineSeries
                 {
@@ -78,7 +76,7 @@ namespace RPi
             cartesianChart.AxisY.Add(new Axis
             {
                 LabelFormatter = value => value.ToString()
-            });
+            });*/
             updateSelection();
         }
 
@@ -118,7 +116,7 @@ namespace RPi
                     double bat = ((dr.GetFloat(0) - 12.0) * 100 / 13.0);
                     if (bat < 0) bat = 0;
 
-                    paramValue.Text = bat + " %";
+                    paramValue.Text = bat.ToString("0") + " %";
                     dr.Close();
                     Charts.Enabled = false;
                 }
@@ -129,7 +127,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Tension DC :";
-                    paramValue.Text = dr.GetFloat(0) + " V";
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
                     dr.Close();
                     Charts.Enabled = true;
 
@@ -141,7 +139,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Courant DC :";
-                    paramValue.Text = dr.GetFloat(0) + " A";
+                    paramValue.Text = dr.GetFloat(0).ToString("0.0") + " A";
                     dr.Close();
                     Charts.Enabled = true;
                 }
@@ -154,7 +152,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Puissance DC :";
-                    paramValue.Text = voltage * dr.GetFloat(0) + " W";
+                    paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                     Charts.Enabled = true;
                 }
@@ -168,7 +166,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Tension AC :";
-                    paramValue.Text = dr.GetFloat(0) + " V";
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -178,7 +176,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Courant AC :";
-                    paramValue.Text = dr.GetFloat(0) + " A";
+                    paramValue.Text = dr.GetFloat(0).ToString("0.0") + " A";
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -190,7 +188,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Puissance AC :";
-                    paramValue.Text = voltage * dr.GetFloat(0) + " W";
+                    paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                 }
                 Charts.Enabled = true;
@@ -204,7 +202,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Tension DC :";
-                    paramValue.Text = dr.GetFloat(0) + " V";
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -214,7 +212,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Courant DC :";
-                    paramValue.Text = dr.GetFloat(0) + " A";
+                    paramValue.Text = dr.GetFloat(0).ToString("0.0") + " A";
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -226,7 +224,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Puissance DC :";
-                    paramValue.Text = voltage * dr.GetFloat(0) + " W";
+                    paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                 }
                 Charts.Enabled = true;
@@ -240,7 +238,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Temp. Ambiante :";
-                    paramValue.Text = dr.GetFloat(0) + " °C";
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " °C";
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -250,7 +248,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Temp. Panneau :";
-                    paramValue.Text = dr.GetFloat(0) + " °C";
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " °C";
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -260,7 +258,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Flux Lumineux :";
-                    paramValue.Text = ((2500 / (dr.GetFloat(0) * 0.0048828125) - 500) / 10) + " LUX";
+                    paramValue.Text = ((2500 / (dr.GetFloat(0) * 0.0048828125) - 500) / 10).ToString("0") + " LUX";
                     dr.Close();
                 }
                 else if (browseSelection == 3)
@@ -270,7 +268,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Irradiation :";
-                    paramValue.Text = ((Math.Pow((1000 - dr.GetFloat(0)), 2) / 10) / (50)) + " W/m²";
+                    paramValue.Text = ((Math.Pow((1000 - dr.GetFloat(0)), 2) / 10) / (50)).ToString("0.0") + " W/m²";
                     dr.Close();
                 }
                 else if (browseSelection == 4)
@@ -280,7 +278,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Humidité :";
-                    paramValue.Text = ((dr.GetFloat(0) * 100) / 1023) + " %RH";
+                    paramValue.Text = ((dr.GetFloat(0) * 100) / 1023).ToString("0") + " %RH";
                     dr.Close();
                 }
                 else if (browseSelection == 5)
@@ -290,7 +288,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "V.Vent (Aval) :";
-                    paramValue.Text = dr.GetFloat(0) + " KM/H";
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " KM/H";
                     dr.Close();
                 }
                 else if (browseSelection == 6)
@@ -300,7 +298,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "V.Vent (Amon) :";
-                    paramValue.Text = dr.GetFloat(0) + " KM/H";
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " KM/H";
                     dr.Close();
                 }
                 else if (browseSelection == 7)
@@ -310,7 +308,7 @@ namespace RPi
                     dr.Read();
 
                     paramTitle.Text = "Turbine :";
-                    paramValue.Text = dr.GetFloat(0) + " TR/MIN";
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " TR/MIN";
                     dr.Close();
                 }
                 Charts.Enabled = true;
@@ -338,7 +336,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -347,7 +345,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 if (browseSelection == 2)
                 {
@@ -365,7 +363,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -374,7 +372,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 3)
                 {
@@ -402,7 +400,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4] * vals1[4]), (vals[3] * vals1[3]), (vals[2] * vals1[2]), (vals[1] * vals1[1]), (vals[0] * vals1[0]) };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4] * vals1[4]), (vals[3] * vals1[3]), (vals[2] * vals1[2]), (vals[1] * vals1[1]), (vals[0] * vals1[0]) };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -411,7 +409,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
             }
             else if (menuSelection == 1)
@@ -432,7 +430,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -441,7 +439,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 1)
                 {
@@ -459,7 +457,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -468,7 +466,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 2)
                 {
@@ -496,7 +494,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4]*vals1[4]), (vals[3]*vals1[3]), (vals[2]*vals1[2]), (vals[1]*vals1[1]), (vals[0]*vals1[0]) };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4]*vals1[4]), (vals[3]*vals1[3]), (vals[2]*vals1[2]), (vals[1]*vals1[1]), (vals[0]*vals1[0]) };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -505,7 +503,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 Charts.Enabled = true;
             }
@@ -527,7 +525,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -536,7 +534,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 1)
                 {
@@ -554,7 +552,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -563,7 +561,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 2)
                 {
@@ -591,7 +589,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4] * vals1[4]), (vals[3] * vals1[3]), (vals[2] * vals1[2]), (vals[1] * vals1[1]), (vals[0] * vals1[0]) };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { (vals[4] * vals1[4]), (vals[3] * vals1[3]), (vals[2] * vals1[2]), (vals[1] * vals1[1]), (vals[0] * vals1[0]) };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -600,7 +598,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
             }
             else if (menuSelection == 3)
@@ -621,7 +619,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -630,7 +628,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 1)
                 {
@@ -648,7 +646,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -657,7 +655,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 2)
                 {
@@ -676,7 +674,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -685,7 +683,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 3)
                 {
@@ -703,7 +701,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -712,7 +710,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 4)
                 {
@@ -730,7 +728,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -739,7 +737,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 5)
                 {
@@ -757,7 +755,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -766,7 +764,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 6)
                 {
@@ -784,7 +782,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -793,7 +791,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
                 else if (browseSelection == 7)
                 {
@@ -811,7 +809,7 @@ namespace RPi
                     }
                     dr.Close();
 
-                    cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
+                    /*cartesianChart.Series[0].Values = new ChartValues<double> { vals[4], vals[3], vals[2], vals[1], vals[0] };
                     cartesianChart.AxisX.Clear();
                     cartesianChart.AxisX.Add(new Axis
                     {
@@ -820,7 +818,7 @@ namespace RPi
                         {
                             Step = 1,
                         }
-                    });
+                    });*/
                 }
             }
             conn.Close();
@@ -1133,7 +1131,7 @@ namespace RPi
                 paramValue.Visible = false;
                 label2.Text = paramTitle.Text.Replace(":", "");
                 label2.Visible = true;
-                cartesianChart.Visible = true;
+                //cartesianChart.Visible = true;
                 updateGraphSelection();
             }
             else
@@ -1144,7 +1142,7 @@ namespace RPi
                 paramValue.Visible = true;
                 label2.Text = "Panneau de contrôle des charges";
                 label2.Visible = false;
-                cartesianChart.Visible = false;
+                //cartesianChart.Visible = false;
                 updateSelection();
             }
         }
@@ -1154,7 +1152,7 @@ namespace RPi
             if (!isChargePanelEnabled)
             {
                 Charts.Enabled = false;
-                if (isGraphEnabled) cartesianChart.Visible = false;
+                //if (isGraphEnabled) cartesianChart.Visible = false;
                 Charts.Text = "Passer en mode graphique";
                 isGraphEnabled = false;
                 Left_Btn.Enabled = false;

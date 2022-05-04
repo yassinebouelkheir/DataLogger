@@ -6,9 +6,6 @@ C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Releas
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\K4os.Compression.LZ4.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\K4os.Compression.LZ4.Streams.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\K4os.Hash.xxHash.dll
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.dll
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.WinForms.dll
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.Wpf.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\MySql.Data.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\System.Buffers.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\System.Memory.dll
@@ -21,12 +18,6 @@ C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Releas
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\K4os.Compression.LZ4.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\K4os.Compression.LZ4.Streams.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\K4os.Hash.xxHash.xml
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.pdb
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.xml
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.WinForms.pdb
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.WinForms.xml
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.Wpf.pdb
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\LiveCharts.Wpf.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\MySql.Data.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\System.Buffers.xml
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\System.Memory.xml
