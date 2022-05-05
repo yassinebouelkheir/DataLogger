@@ -23,6 +23,19 @@
 -->
 
 <?php    
+      session_start();
+      if(!isset($_SESSION["username"]) || !$_SESSION["P1"]) 
+      {
+          header("Location: login.php");
+          exit();
+      }
+      if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+          session_unset();
+          session_destroy();
+      }
+      if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) session_regenerate_id(true);
+      $_SESSION['LAST_ACTIVITY'] = time();
+
     if (isset($_GET['chargeid']) && isset($_GET['value'])) 
     {
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");

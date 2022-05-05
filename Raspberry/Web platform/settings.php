@@ -26,11 +26,17 @@
 <html lang="en">
     <?php
         session_start();
-        if(!isset($_SESSION["username"]) || $_SESSION["username"] != "admin") 
+        if(!isset($_SESSION["username"]) || !$_SESSION["P2"] || !$_SESSION["P3"] || !$_SESSION["P4"]) 
         {
             header("Location: login.php");
             exit();
         }
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+            session_unset();
+            session_destroy();
+        }
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) session_regenerate_id(true);
+        $_SESSION['LAST_ACTIVITY'] = time();
 
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
 
@@ -57,21 +63,30 @@
             {
                 $errormessage4 =  "Le temps d'enregistrement ne peut pas être inférieur à 1 minute."; 
             }
+            else if(!is_numeric($_POST["updatetime1"]) || 
+            !is_numeric($_POST["updatetime2"]) || 
+            !is_numeric($_POST["updatetime3"]) || 
+            !is_numeric($_POST["updatetime4"]) || 
+            !is_numeric($_POST["updatetime5"]) || 
+            !is_numeric($_POST["updatetime6"]))
+            {
+                $errormessage4 =  "Le temps d'enregistrement doit être numérique.";
+            }
             else
             {
-                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime1"].' WHERE ID = 1';
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime1"]).' WHERE ID = 1';
                 $mysqli->query($query) or die($mysqli->error); 
-                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime2"].' WHERE ID = 2';
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime2"]).' WHERE ID = 2';
                 $mysqli->query($query) or die($mysqli->error);
-                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime3"].' WHERE ID = 3';
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime3"]).' WHERE ID = 3';
                 $mysqli->query($query) or die($mysqli->error);
-                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime4"].' WHERE ID = 4';
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime4"]).' WHERE ID = 4';
                 $mysqli->query($query) or die($mysqli->error);
-                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime5"].' WHERE ID = 5';
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime5"]).' WHERE ID = 5';
                 $mysqli->query($query) or die($mysqli->error);
-                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime6"].' WHERE ID = 6';
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime6"]).' WHERE ID = 6';
                 $mysqli->query($query) or die($mysqli->error);
-                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$_POST["updatetime7"].' WHERE ID = 7';
+                $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime7"]).' WHERE ID = 7';
                 $mysqli->query($query) or die($mysqli->error);
             }     
         } 
@@ -85,32 +100,39 @@
             !empty($_POST["chargename7"]) && 
             !empty($_POST["chargename8"]))
         {
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename1"]."' WHERE ID = 1";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename1"])."' WHERE ID = 1";
             $mysqli->query($query) or die($mysqli->error); 
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename2"]."' WHERE ID = 2";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename2"])."' WHERE ID = 2";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename3"]."' WHERE ID = 3";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename3"])."' WHERE ID = 3";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename4"]."' WHERE ID = 4";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename4"])."' WHERE ID = 4";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename5"]."' WHERE ID = 5";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename5"])."' WHERE ID = 5";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename6"]."' WHERE ID = 6";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename6"])."' WHERE ID = 6";
             $mysqli->query($query) or die($mysqli->error);
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename7"]."' WHERE ID = 7";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename7"])."' WHERE ID = 7";
             $mysqli->query($query) or die($mysqli->error);     
-            $query = "UPDATE `CHARGES` SET `NAME` = '".$_POST["chargename8"]."' WHERE ID = 8";
+            $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename8"])."' WHERE ID = 8";
             $mysqli->query($query) or die($mysqli->error);      
         } 
-
+        if(!empty($_POST['UserDelID']))
+        {
+            if($_POST['UserDelID'] != 1)
+            {
+                $query = "DELETE FROM `ACCOUNTS` WHERE `ID` = ".$_POST['UserDelID'];
+                $mysqli->query($query) or die($mysqli->error);
+            }
+        }
         if(!empty($_POST['UserPwdChange']) && !empty($_POST['UserPwd']))
         {
             if(strlen($_POST['UserPwd']) < 4) $errormessage3 = "le mot de passe doit contenir au moins 4 caractères.";
+            else if(strlen($_POST['UserPwd']) > 24) $errormessage3 = "le mot de passe doit contenir au maximum 24 caractères.";
             else if($_POST['UserPwdChange'] > 2 || $_POST['UserPwdChange'] < 1) $errormessage3 = "Une erreur s'est produite lors du traitement de votre demande, veuillez réessayer plus tard.";
             else 
             {
-                if($_POST['UserPwdChange'] == 1) $query = "UPDATE `ACCOUNTS` SET `PASSWORD` = '".md5($_POST['UserPwd'])."' WHERE `USERNAME` = 'admin'";
-                else if($_POST['UserPwdChange'] == 2) $query = "UPDATE `ACCOUNTS` SET `PASSWORD` = '".md5($_POST['UserPwd'])."' WHERE `USERNAME` = 'user'";
+                $query = "UPDATE `ACCOUNTS` SET `PASSWORD` = '".$mysqli->escape_string(md5($_POST['UserPwd']))."' WHERE `ID` = ".$mysqli->escape_string($_POST['UserPwdChange']);
                 $mysqli->query($query) or die($mysqli->error);  
             }
         }
@@ -153,12 +175,45 @@
                 }
             }
         }
+        if(!empty($_POST['NewUserName']) && !empty($_POST['NewUserPwd']))
+        {
+            if(strlen($_POST['NewUserName']) < 5 || strlen($_POST['NewUserName']) > 24) $errormessage2 = "Le nom d'utilisateur est invalide, veuillez réessayer.";
+            else if(strlen($_POST['NewUserPwd']) < 5 || strlen($_POST['NewUserPwd']) > 24) $errormessage2 = "Le mot de passe est invalide, veuillez réessayer.";
+            else
+            {
+                $query = "INSERT INTO `ACCOUNTS`(`USERNAME`, `PASSWORD`, `P1`, `P2`, `P3`, `P4`, `P5`) VALUES ('".$mysqli->escape_string($_POST['NewUserName'])."', '".$mysqli->escape_string(md5($_POST['NewUserPwd']))."',
+                ".(($_POST['customCheck1'] == 'on') ? (1) : (0)).",".(($_POST['customCheck2'] == 'on') ? (1) : (0)).",".(($_POST['customCheck3'] == 'on') ? (1) : (0)).",".(($_POST['customCheck4'] == 'on') ? (1) : (0)).",".(($_POST['customCheck5'] == 'on') ? (1) : (0)).")";
+                $mysqli->query($query) or die($query);     
+            }
+        }
 
         if(!empty($_POST['InputLowLevel']))
         {
             switch($_POST['InputLowLevel'])
             {
                 case 1:
+                {
+                    break;
+                }
+                case 2:
+                {
+                    $query = "DELETE FROM `ACCOUNTS` WHERE `ID` > 1";
+                    $mysqli->query($query) or die($query);
+                    break;
+                }
+                case 3:
+                {
+                    $query = "DELETE FROM `HISTORY` WHERE `TYPE` = 0";
+                    $mysqli->query($query) or die($query);
+                    break;
+                }
+                case 4:
+                {
+                    $query = "DELETE FROM `HISTORY` WHERE `TYPE` = 1";
+                    $mysqli->query($query) or die($query);
+                    break;
+                }
+                case 5:
                 {
                     $query = "UPDATE `CHARGES` SET `NAME` = 'Charge 1' WHERE ID = 1";
                     $mysqli->query($query) or die($mysqli->error); 
@@ -319,7 +374,7 @@
                     $mysqli->query($query) or die($mysqli->error);         
                     break;
                 }
-                case 2:
+                case 6:
                 {
                     exec('sudo /sbin/reboot');                    
                     break;
@@ -342,8 +397,6 @@
             $updatetimerows[] = $row;
         }
         $result->free();
-
-        $mysqli->close();
     ?>
     <head>
         <meta charset="utf-8">
@@ -427,8 +480,13 @@
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
                             <?php 
-                                if($_SESSION["username"] == "admin") {
+                                if($_SESSION["P2"] == 1 || $_SESSION["P3"] == 1 || $_SESSION["P4"] == 1) {
                                     echo'<li><a class="waves-effect waves-dark active" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Paramètres</span></a></li>';
+                                }
+                            ?>
+                            <?php 
+                                if($_SESSION["P5"] == 1) {
+                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;Historique</span></a></li>';
                                 }
                             ?>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
@@ -452,209 +510,306 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Réinitialisation de mot de passe</h4>
-                                    <h5 class="card-subtitle text-danger"> <strong>S'il vous plaît soyez prudent et saisir un mot de passe dont vous souviendrez.</strong> </h5>
-                                    <h5 class="card-subtitle text-danger"> <?php echo $errormessage3; ?> </h5>
-                                    <form action="settings.php" method="post" class="mt-4">
-                                        <div class="form-group">
-                                            <label>Utilisateur</label>
-                                            <select class="custom-select col-12" id="UserPwdChange" name="UserPwdChange">
-                                                <option value="0" selected>Selectioner..</option>
-                                                <option value="1">admin</option>
-                                                <option value="2">user</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="UserPwd">Nouveau mot de passe</label>
-                                            <input type="password" class="form-control" id="UserPwd" name="UserPwd" placeholder="Mot de passe">
-                                        </div>
-                                        <button type="submit" class="btn btn-danger">Mise à jour</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Modifier le temps d'enregistrement</h4>
-                                    <h5 class="card-subtitle"> Veuillez entrer le temps d'enregistrement en minutes. </h5>
-                                    <h5 class="card-subtitle text-danger"> <?php echo $errormessage4; ?> </h5>
-                                    <form action="settings.php" method="post" class="form">
-                                        <div class="form-group mt-5 row">
-                                            <label for="updatetime1" class="col-2 col-form-label">Courant Faible</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[0]['TIME'] ?>" id="updatetime1" name="updatetime1">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="updatetime2" class="col-2 col-form-label">Courant Fort</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[1]['TIME'] ?>" id="updatetime2" name="updatetime2">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="updatetime7" class="col-2 col-form-label">Éolienne</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[6]['TIME'] ?>" id="updatetime6" name="updatetime7">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="updatetime3" class="col-2 col-form-label">Température</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[2]['TIME'] ?>" id="updatetime3" name="updatetime3">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="updatetime4" class="col-2 col-form-label">Énergie lumineuse</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[3]['TIME'] ?>" id="updatetime4" name="updatetime4">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="updatetime5" class="col-2 col-form-label">Humidité</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[4]['TIME'] ?>" id="updatetime5" name="updatetime5">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="updatetime6" class="col-2 col-form-label">Vitesse du vent</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $updatetimerows[5]['TIME'] ?>" id="updatetime6" name="updatetime6">
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-success">Mise à jour</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Modifier les noms des charges</h4>
-                                    <h5 class="card-subtitle"> Veuillez ne pas dépassez 24 lettres. </h5>
-                                    <h5 class="card-subtitle text-danger"> <?php echo $errormessage5; ?> </h5>
-                                    <form action="settings.php" method="post" class="form">
-                                        <div class="form-group mt-5 row">
-                                            <label for="chargename1" class="col-2 col-form-label">Relais PIN: IN1</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $chargesrows[0]['NAME'] ?>" id="chargename1" name="chargename1">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="chargename2" class="col-2 col-form-label">Relais PIN: IN2</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $chargesrows[1]['NAME'] ?>" id="chargename2" name="chargename2">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="chargename3" class="col-2 col-form-label">Relais PIN: IN3</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $chargesrows[2]['NAME'] ?>" id="chargename3" name="chargename3">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="chargename4" class="col-2 col-form-label">Relais PIN: IN4</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $chargesrows[3]['NAME'] ?>" id="chargename4" name="chargename4">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="chargename5" class="col-2 col-form-label">Relais PIN: IN5</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $chargesrows[4]['NAME'] ?>" id="chargename5" name="chargename5">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="chargename6" class="col-2 col-form-label">Relais PIN: IN6</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $chargesrows[5]['NAME'] ?>" id="chargename6" name="chargename6">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="chargename7" class="col-2 col-form-label">Relais PIN: IN7</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $chargesrows[6]['NAME'] ?>" id="chargename7" name="chargename7">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="chargename8" class="col-2 col-form-label">Relais PIN: IN8</label>
-                                            <div class="col-10">
-                                                <input class="form-control" type="search" value="<?php echo $chargesrows[7]['NAME'] ?>" id="chargename8" name="chargename8">
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-success">Mise à jour</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Exportation des données</h4>
-                                    <h5 class="card-subtitle">Ici vous pouvez obtenir un fichier Excel ou PDF de toutes les données de la base de données</h5>
-                                    <h5 class="card-subtitle text-danger"> <?php echo $errormessage6; ?> </h5>
-                                    <form action="settings.php" method="post" class="mt-4">
-                                        <div class="form-group">
-                                            <label>Type des données</label>
-                                            <select class="custom-select col-12" id="ExportationType" name="ExportationType">
-                                                <option value="0" selected>Selectioner..</option>
-                                                <option value="1">Courant Faible</option>
-                                                <option value="2">Courant Fort</option>
-                                                <option value="3">Éolienne</option>
-                                                <option value="4">Météorologie</option>
-                                                <option value="5">Vitesse du vent</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Interval d'enregistrement</label>
-                                            <select class="custom-select col-12" id="ExportationInterval" name="ExportationInterval">
-                                                <option value="0" selected>Selectioner..</option>
-                                                <option value="1">60 minutes</option>
-                                                <option value="2">24 Heures</option>
-                                                <option value="3">7 Jours</option>
-                                                <option value="4">30 Jours</option>
-                                                <option value="5">3 Mois</option>
-                                                <option value="6">12 Mois</option>
-                                                <option value="7">Tout les données</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-info">Exporter</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Paramètres de niveau bas</h4>
-                                    <h5 class="card-subtitle text-danger"> <strong>S'il vous plaît soyez prudent avant d'effectuer une commande ici.</strong> </h5>
-                                    <form action="settings.php" method="post" class="mt-4">
-                                        <div class="form-group">
-                                            <label>Format de fichier</label>
-                                            <select class="custom-select col-12" id="InputLowLevel" name="InputLowLevel">
-                                                <option value="0" selected>Selectioner..</option>
-                                                <option value="1">Vider la base de données</option>
-                                                <option value="2">Redémarrez la plateforme</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-danger">Exécuter</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <?php
+                if ($_SESSION["username"] == "admin")
+                {
+                    echo '<div class="row">';
+                        echo '<div class="col-12">';
+                            echo '<div class="card">';
+                                echo '<div class="card-body">';
+                                    echo '<h4 class="card-title">Ajouter un nouvel utilisateur</h4>';
+                                        echo '<h5 class="card-subtitle text-danger"> <strong>S\'il vous plaît soyez prudent et saisir un mot de passe dont vous souviendrez.</strong> </h5>';
+                                            echo '<h5 class="card-subtitle text-danger"> '.$errormessage2.' </h5>';
+                                                echo '<form action="settings.php" method="post" class="mt-4">';
+                                                    echo '<div class="form-group">';
+                                                        echo '<label for="UserPwd">Nom dutilisateur</label>';
+                                                        echo '<input type="text" class="form-control" id="NewUserName" name="NewUserName" placeholder="Nom dutilisateur">';
+                                                    echo '</div>';
+                                                    echo '<div class="form-group">';
+                                                        echo '<label for="UserPwd">Mot de passe</label>';
+                                                        echo '<input type="password" class="form-control" id="NewUserPwd" name="NewUserPwd" placeholder="Mot de passe">';
+                                                    echo '</div>';
+                                                    echo '<label>Permissions</label>';
+                                                    echo '<div class="form-group row pt-4">';
+                                                        echo '<div class="col-sm-4">';
+                                                            echo '<div class="custom-control custom-checkbox">';
+                                                                echo '<input type="checkbox" class="custom-control-input" id="customCheck1" name="customCheck1">';
+                                                                echo '<label class="custom-control-label" for="customCheck1">Modifier l\'état des charges</label>';
+                                                            echo '</div>';
+                                                            echo '<div class="custom-control custom-checkbox">';
+                                                                echo '<input type="checkbox" class="custom-control-input" id="customCheck2" name="customCheck2">';
+                                                                echo '<label class="custom-control-label" for="customCheck2">Modifier les noms des charges</label>';
+                                                            echo '</div>';
+                                                            echo '<div class="custom-control custom-checkbox">';
+                                                                echo '<input type="checkbox" class="custom-control-input" id="customCheck3" name="customCheck3">';
+                                                                echo '<label class="custom-control-label" for="customCheck3">Modifier l\'intervalle d\'enregistrement</label>';
+                                                            echo '</div>';
+                                                            echo '<div class="custom-control custom-checkbox">';
+                                                                echo '<input type="checkbox" class="custom-control-input" id="customCheck4" name="customCheck4">';
+                                                                echo '<label class="custom-control-label" for="customCheck4">Exporter les données</label>';
+                                                            echo '</div>';
+                                                            echo '<div class="custom-control custom-checkbox">';
+                                                                echo '<input type="checkbox" class="custom-control-input" id="customCheck5" name="customCheck5">';
+                                                                echo '<label class="custom-control-label" for="customCheck5">Voir l\'historique</label>';
+                                                            echo '</div>';
+                                                        echo '</div>';
+                                                    echo '</div>';
+                                                echo '<button type="submit" class="btn btn-success">Ajouter</button>';
+                                            echo '</form>';
+                                        echo '</div>';
+                                    echo '</div>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '<div class="row">';
+                            echo '<div class="col-12">';
+                                echo '<div class="card">';
+                                    echo '<div class="card-body">';
+                                        echo '<h4 class="card-title">Supprimer un utilisateur</h4>';
+                                        echo '<h5 class="card-subtitle text-danger"> <strong>S\'il vous plaît soyez prudent, vous ne pouvez pas annuler les modifications après l\'exécution de la commande.</strong> </h5>';
+                                        echo '<form action="settings.php" method="post" class="mt-4">';
+                                            echo '<div class="form-group">';
+                                                echo '<label>Utilisateur</label>';
+                                                echo '<select class="custom-select col-12" id="UserDelID" name="UserDelID">';
+                                                echo '<option value="0" selected>Selectioner..</option>';
+                                                $query = 'SELECT ID,USERNAME FROM `ACCOUNTS` WHERE ID > 1 ORDER BY `ID` ASC';
+                                                $result = $mysqli->query($query) or die($mysqli->error);
+                                                $rows = array();
+                                                while($row = $result->fetch_assoc()) {
+                                                    echo '<option value="'.$row['ID'].'">'.$row['USERNAME'].'</option>';
+                                                }
+                                                echo '</select>';
+                                            echo '</div>';
+                                            echo '<button type="submit" class="btn btn-danger">Supprimer</button>';
+                                        echo '</form>';
+                                    echo '</div>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    echo '<div class="row">';
+                        echo '<div class="col-12">';
+                            echo '<div class="card">';
+                                echo '<div class="card-body">';
+                                    echo '<h4 class="card-title">Réinitialisation de mot de passe</h4>';
+                                    echo '<h5 class="card-subtitle text-danger"> <strong>S\'il vous plaît soyez prudent et saisir un mot de passe dont vous souviendrez.</strong></h5>';
+                                    echo '<h5 class="card-subtitle text-danger"> '.$errormessage3.' </h5>';
+                                    echo '<form action="settings.php" method="post" class="mt-4">';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Utilisateur</label>';
+                                            echo '<select class="custom-select col-12" id="UserPwdChange" name="UserPwdChange">';
+                                            echo '<option value="0" selected>Selectioner..</option>';
+                                                $query = 'SELECT ID,USERNAME FROM `ACCOUNTS` WHERE 1 ORDER BY `ID` ASC';
+                                                $result = $mysqli->query($query) or die($mysqli->error);
+                                                $rows = array();
+                                                while($row = $result->fetch_assoc()) {
+                                                    echo '<option value="'.$row['ID'].'">'.$row['USERNAME'].'</option>';
+                                                }
+                                            echo '</select>';
+                                        echo '</div>';
+                                        echo '<div class="form-group">';
+                                            echo '<label for="UserPwd">Nouveau mot de passe</label>';
+                                            echo '<input type="password" class="form-control" id="UserPwd" name="UserPwd" placeholder="Mot de passe">';
+                                        echo '</div>';
+                                        echo '<button type="submit" class="btn btn-danger">Réinitialiser</button>';
+                                    echo '</form>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    echo '</div>';
+                }
+                if($_SESSION["P1"] == 1)
+                {
+                    echo '<div class="row">';
+                        echo '<div class="col-12">';
+                            echo '<div class="card">';
+                                echo '<div class="card-body">';
+                                        echo '<h4 class="card-title">Modifier les noms des charges</h4>';
+                                        echo '<h5 class="card-subtitle"> Veuillez ne pas dépassez 24 lettres. </h5>';
+                                        echo '<h5 class="card-subtitle text-danger"> '.$errormessage5.'</h5>';
+                                        echo '<form action="settings.php" method="post" class="form">';
+                                        echo '<div class="form-group mt-5 row">';
+                                            echo '<label for="chargename1" class="col-2 col-form-label">Relais PIN: IN1</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$chargesrows[0]['NAME'].'" id="chargename1" name="chargename1">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="chargename2" class="col-2 col-form-label">Relais PIN: IN2</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$chargesrows[1]['NAME'].'" id="chargename2" name="chargename2">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="chargename3" class="col-2 col-form-label">Relais PIN: IN3</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$chargesrows[2]['NAME'].'" id="chargename3" name="chargename3">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="chargename4" class="col-2 col-form-label">Relais PIN: IN4</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$chargesrows[3]['NAME'].'" id="chargename4" name="chargename4">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="chargename5" class="col-2 col-form-label">Relais PIN: IN5</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$chargesrows[4]['NAME'].'" id="chargename5" name="chargename5">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="chargename6" class="col-2 col-form-label">Relais PIN: IN6</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$chargesrows[5]['NAME'].'" id="chargename6" name="chargename6">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="chargename7" class="col-2 col-form-label">Relais PIN: IN7</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$chargesrows[6]['NAME'].'" id="chargename7" name="chargename7">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="chargename8" class="col-2 col-form-label">Relais PIN: IN8</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$chargesrows[7]['NAME'].'" id="chargename8" name="chargename8">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<button type="submit" class="btn btn-success">Mise à jour</button>';
+                                    echo '</form>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    echo '</div>';
+                }
+                if($_SESSION["P3"] == 3)
+                {
+                    echo '<div class="row">';
+                        echo '<div class="col-12">';
+                            echo '<div class="card">';
+                                echo '<div class="card-body">';
+                                    echo '<h4 class="card-title">Modifier l\'intervalle d\'enregistrement</h4>';
+                                    echo '<h5 class="card-subtitle"> Veuillez entrer l\'intervalle d\'enregistrement en minutes. </h5>';
+                                    echo '<h5 class="card-subtitle text-danger"> '.$errormessage4.'</h5>';
+                                    echo '<form action="settings.php" method="post" class="form">';
+                                        echo '<div class="form-group mt-5 row">';
+                                            echo '<label for="updatetime1" class="col-2 col-form-label">Courant Faible</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[0]['TIME'].'" id="updatetime1" name="updatetime1">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="updatetime2" class="col-2 col-form-label">Courant Fort</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[1]['TIME'].'" id="updatetime2" name="updatetime2">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="updatetime7" class="col-2 col-form-label">Éolienne</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value='.$updatetimerows[6]['TIME'].'>" id="updatetime6" name="updatetime7">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="updatetime3" class="col-2 col-form-label">Température</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[2]['TIME'].'" id="updatetime3" name="updatetime3">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="updatetime4" class="col-2 col-form-label">Énergie lumineuse</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[3]['TIME'].'" id="updatetime4" name="updatetime4">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="updatetime5" class="col-2 col-form-label">Humidité</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[4]['TIME'].'" id="updatetime5" name="updatetime5">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="form-group row">';
+                                            echo '<label for="updatetime6" class="col-2 col-form-label">Vitesse du vent</label>';
+                                            echo '<div class="col-10">';
+                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[5]['TIME'].'" id="updatetime6" name="updatetime6">';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<button type="submit" class="btn btn-success">Mise à jour</button>';
+                                    echo '</form>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    echo '</div>';
+                }
+                if($_SESSION["P4"] == 1)
+                {
+                    echo '<div class="row">';
+                        echo '<div class="col-12">';
+                            echo '<div class="card">';
+                                echo '<div class="card-body">';
+                                    echo '<h4 class="card-title">Exportation des données</h4>';
+                                    echo '<h5 class="card-subtitle">Ici vous pouvez obtenir un fichier Excel ou PDF de toutes les données de la base de données</h5>';
+                                    echo '<h5 class="card-subtitle text-danger"> '.$errormessage6.' </h5>';
+                                    echo '<form action="settings.php" method="post" class="mt-4">';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Type des données</label>';
+                                            echo '<select class="custom-select col-12" id="ExportationType" name="ExportationType">';
+                                                echo '<option value="0" selected>Selectioner..</option>';
+                                                echo '<option value="1">Courant Faible</option>';
+                                                echo '<option value="2">Courant Fort</option>';
+                                                echo '<option value="3">Éolienne</option>';
+                                                echo '<option value="4">Météorologie</option>';
+                                                echo '<option value="5">Vitesse du vent</option>';
+                                            echo '</select>';
+                                        echo '</div>';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Interval d\'enregistrement</label>';
+                                            echo '<select class="custom-select col-12" id="ExportationInterval" name="ExportationInterval">';
+                                                echo '<option value="0" selected>Selectioner..</option>';
+                                                echo '<option value="1">60 minutes</option>';
+                                                echo '<option value="2">24 Heures</option>';
+                                                echo '<option value="3">7 Jours</option>';
+                                                echo '<option value="4">30 Jours</option>';
+                                                echo '<option value="5">3 Mois</option>';
+                                                echo '<option value="6">12 Mois</option>';
+                                                echo '<option value="7">Tout les données</option>';
+                                            echo '</select>';
+                                        echo '</div>';
+                                        echo '<button type="submit" class="btn btn-info">Exporter</button>';
+                                    echo '</form>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    echo '</div>';
+                }
+                if($_SESSION["username"] == "admin")
+                {
+                    echo '<div class="row">';
+                        echo '<div class="col-12">';
+                            echo '<div class="card">';
+                                echo '<div class="card-body">';
+                                    echo '<h4 class="card-title">Paramètres de niveau bas</h4>';
+                                    echo '<h5 class="card-subtitle text-danger"> <strong>S\'il vous plaît soyez prudent avant deffectuer une commande ici.</strong> </h5>';
+                                    echo '<form action="settings.php" method="post" class="mt-4">';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Format de fichier</label>';
+                                            echo '<select class="custom-select col-12" id="InputLowLevel" name="InputLowLevel">';
+                                                echo '<option value="0" selected>Selectioner..</option>';
+                                                echo '<option value="1">Désactiver l\'accès depuis l\'application mobile</option>';
+                                                echo '<option value="2">Supprimer tous les utilisateurs</option>';
+                                                echo '<option value="3">Vider l\'historique de connexion</option>';
+                                                echo '<option value="4">Vider l\'historique de commande</option>';
+                                                echo '<option value="5">Vider la base de données</option>';
+                                                echo '<option value="6">Redémarrez la plateforme</option>';
+                                            echo '</select>';
+                                        echo '</div>';
+                                        echo '<button type="submit" class="btn btn-danger">Exécuter</button>';
+                                    echo '</form>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    echo '</div>';
+                } 
+                ?>
                 </div>
             </div>
             <footer class="footer">

@@ -24,12 +24,18 @@
 
 <?php
     session_start();
-    if(!isset($_SESSION["username"])) 
+    if(!isset($_SESSION["username"]) || !$_SESSION["P4"]) 
     {
         header("Location: login.php");
         exit();
     }
-    
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+        session_unset();
+        session_destroy();
+    }
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) session_regenerate_id(true);
+    $_SESSION['LAST_ACTIVITY'] = time();
+
     require('classes/PHPExcel.php');
     require_once 'classes/PHPExcel/IOFactory.php';
 

@@ -42,20 +42,37 @@
             $password = stripslashes($_REQUEST['password']);
             $password = mysqli_real_escape_string($mysqli, $password);
             
-            $query = "SELECT * FROM `ACCOUNTS` WHERE username='$username' AND password='" . md5($password) . "'";
+            $query = "SELECT * FROM `ACCOUNTS` WHERE username='$username' AND password='" . md5($password) . "' LIMIT 1";
             $result = $mysqli->query($query) or die($mysqli->error);
             $rows = mysqli_num_rows($result);
-    	    $mysqli->close();
             if ($rows != 0) 
             {
+                while($row = $result->fetch_assoc()) {
+                    $_SESSION["P1"] = $row['P1'];
+                    $_SESSION["P2"] = $row['P2'];
+                    $_SESSION["P3"] = $row['P3'];
+                    $_SESSION["P4"] = $row['P4'];
+                    $_SESSION["P5"] = $row['P5'];
+                }
                 $BadInfo = 0;
                 $_SESSION['username'] = $username;
+                $_SESSION['LAST_ACTIVITY'] = time();
+                
+                $LocationArray = json_decode(file_get_contents('http://ip-get-geolocation.com/api/json/'.$_SERVER['REMOTE_ADDR']), true);
+                $result->close();
+
+                if(!empty($LocationArray['isp'])) $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `ISP`, `VALUE`) VALUES ('".$_SESSION['username']."',
+            '".$_SERVER['REMOTE_ADDR']."', 0, '".$LocationArray['isp']."', '".$LocationArray['city'].", ".$LocationArray['country']."')";
+                 else $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `ISP`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 0, 'Local', 'Local')";
+
+                $mysqli->query($query) or die($mysqli->error);
                 header("Location: index.php");
             } 
             else 
             {
                 $BadInfo = 1;
             }
+            $mysqli->close();
         }
     ?>
     <head>
