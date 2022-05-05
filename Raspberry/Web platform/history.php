@@ -232,9 +232,12 @@
         <script src="../assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
         <script>
         $(function () {
-            $('#myTable1').DataTable();
-            $('#myTable2').DataTable();
-        });
+            $('#myTable1').DataTable( {
+        "order": [[ 0, "desc" ]]
+    	});
+            $('#myTable2').DataTable( {
+        "order": [[ 0, "desc" ]]
+    	});
 
     </script>
     </body>

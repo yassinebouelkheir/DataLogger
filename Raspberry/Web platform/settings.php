@@ -88,6 +88,9 @@
                 $mysqli->query($query) or die($mysqli->error);
                 $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime7"]).' WHERE ID = 7';
                 $mysqli->query($query) or die($mysqli->error);
+
+                $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Modification de temps d enregistrement à (".$mysqli->escape_string($_POST["updatetime1"]).", ".$mysqli->escape_string($_POST["updatetime2"]).", ".$mysqli->escape_string($_POST["updatetime3"]).", ".$mysqli->escape_string($_POST["updatetime4"]).", ".$mysqli->escape_string($_POST["updatetime5"]).", ".$mysqli->escape_string($_POST["updatetime6"]).", ".$mysqli->escape_string($_POST["updatetime7"]).")')";
+                 $mysqli->query($query) or die($mysqli->error);
             }     
         } 
 
@@ -115,7 +118,9 @@
             $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename7"])."' WHERE ID = 7";
             $mysqli->query($query) or die($mysqli->error);     
             $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename8"])."' WHERE ID = 8";
-            $mysqli->query($query) or die($mysqli->error);      
+            $mysqli->query($query) or die($mysqli->error); 
+            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Modification du noms des charges')";
+            $mysqli->query($query) or die($mysqli->error);     
         } 
         if(!empty($_POST['UserDelID']))
         {
@@ -174,6 +179,8 @@
                     break;
                 }
             }
+            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Exportation des données de la base de données (type: ".getTypeName($_POST['ExportationType'])." interval: ".getIntervalName($_POST['ExportationType']).")')";
+            $mysqli->query($query) or die($mysqli->error); 
         }
         if(!empty($_POST['NewUserName']) && !empty($_POST['NewUserPwd']))
         {
@@ -397,6 +404,32 @@
             $updatetimerows[] = $row;
         }
         $result->free();
+
+        function getTypeName($type)
+        {
+            switch($type)
+            {
+                case 1: return "Courant Faible";
+                case 2: return "Courant Fort";
+                case 3: return "Éolienne";
+                case 4: return "Météorologie";
+                case 5: return "Vitesse du vent";
+            }
+        }
+
+        function getIntervalName($intrvl)
+        {
+            switch($type)
+            {
+                case 1: return "60 minutes";
+                case 2: return "24 heures";
+                case 3: return "7 jours";
+                case 4: return "30 jours";
+                case 5: return "3 mois";
+                case 6: return "12 mois";
+                case 7: return "Tout";
+            }           
+        }
     ?>
     <head>
         <meta charset="utf-8">
@@ -681,7 +714,7 @@
                         echo '</div>';
                     echo '</div>';
                 }
-                if($_SESSION["P3"] == 3)
+                if($_SESSION["P3"] == 1)
                 {
                     echo '<div class="row">';
                         echo '<div class="col-12">';
@@ -765,7 +798,7 @@
                                             echo '<label>Interval d\'enregistrement</label>';
                                             echo '<select class="custom-select col-12" id="ExportationInterval" name="ExportationInterval">';
                                                 echo '<option value="0" selected>Selectioner..</option>';
-                                                echo '<option value="1">60 minutes</option>';
+                                                echo '<option value="1">60 Minutes</option>';
                                                 echo '<option value="2">24 Heures</option>';
                                                 echo '<option value="3">7 Jours</option>';
                                                 echo '<option value="4">30 Jours</option>';

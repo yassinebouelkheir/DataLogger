@@ -47,6 +47,9 @@
 
         $query = 'UPDATE `CHARGES` SET `VALUE` = '.$chargevalue.' WHERE `ID` = '.$chargeid;
         $mysqli->query($query) or die($mysqli->error);
+
+        $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Mettre à jour de l état de charge IN".$chargeid." à ".$chargevalue."')";
+        $mysqli->query($query) or die($mysqli->error);
         $mysqli->close();
     }
     header("Location: charges.php");
