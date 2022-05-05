@@ -179,7 +179,7 @@
                     break;
                 }
             }
-            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Exportation des données de la base de données (type: ".getTypeName($_POST['ExportationType'])." interval: ".getIntervalName($_POST['ExportationType']).")')";
+            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Exportation des données de la base de données (type: ".getTypeName($_POST['ExportationType'])." interval: ".getIntervalName($_POST['ExportationInterval']).")')";
             $mysqli->query($query) or die($mysqli->error); 
         }
         if(!empty($_POST['NewUserName']) && !empty($_POST['NewUserPwd']))
@@ -419,7 +419,7 @@
 
         function getIntervalName($intrvl)
         {
-            switch($type)
+            switch($intrvl)
             {
                 case 1: return "60 minutes";
                 case 2: return "24 heures";

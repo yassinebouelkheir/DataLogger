@@ -60,8 +60,8 @@
             case 1:
             {
                 $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Courant Faible');
-                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=1 OR ID=2) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
-                else $query = 'SELECT * FROM `SENSORS` WHERE ID=1 OR ID=2 ORDER BY `UNIXDATE` ASC';
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=1 OR ID=2) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID=1 OR ID=2 ORDER BY `UNIXDATE` DESC';
 
                 $result = $mysqli->query($query) or die($mysqli->error);
                 $rows = array();
@@ -110,7 +110,7 @@
                     }
                 }
 
-                for($z = 1; $z < ($i+12); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+                for($z = 1; $z < ($i+13); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
                 
                 $result->free();
                 $mysqli->close();
@@ -119,8 +119,8 @@
             case 2:
             {
                 $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Courant Fort');
-                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=3 OR ID=4) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
-                else $query = 'SELECT * FROM `SENSORS` WHERE ID=3 OR ID=4 ORDER BY `UNIXDATE` ASC';
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=3 OR ID=4) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID=3 OR ID=4 ORDER BY `UNIXDATE` DESC';
 
                 $result = $mysqli->query($query) or die($mysqli->error);
                 $rows = array();
@@ -163,13 +163,13 @@
                     $k += 1;
                     if($k == 2) 
                     { 
-                        $objPHPExcel->getActiveSheet()->setCellValue('H'.(12+$i).'', number_format(($volt*$amper), 1).' W');
+                        $objPHPExcel->getActiveSheet()->setCellValue('H'.(12+$i).'', number_format(($volt*$ampere), 1).' W');
                         $k = 0; 
                         $i += 1; 
                     }
                 }
 
-                for($z = 1; $z < ($i+12); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+                for($z = 1; $z < ($i+13); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
 
                 $result->free();
                 $mysqli->close();
@@ -178,8 +178,8 @@
             case 3:
             {
                 $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Éolienne');
-                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=3 OR ID=4) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
-                else $query = 'SELECT * FROM `SENSORS` WHERE ID=3 OR ID=4 ORDER BY `UNIXDATE` ASC';
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=3 OR ID=4) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID=3 OR ID=4 ORDER BY `UNIXDATE` DESC';
 
                 $result = $mysqli->query($query) or die($mysqli->error);
                 $rows = array();
@@ -228,7 +228,7 @@
                     }
                 }
 
-                for($z = 1; $z < ($i+12); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+                for($z = 1; $z < ($i+13); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
 
                 $result->free();
                 $mysqli->close();
@@ -237,8 +237,8 @@
             case 4:
             {
                 $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Météorologie');
-                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID > 4 AND ID < 9) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
-                else $query = 'SELECT * FROM `SENSORS` WHERE ID > 4 AND ID < 9 ORDER BY `UNIXDATE` ASC';
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID > 4 AND ID < 9) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID > 4 AND ID < 9 ORDER BY `UNIXDATE` DESC';
 
                 $result = $mysqli->query($query) or die($mysqli->error);
                 $rows = array();
@@ -255,8 +255,7 @@
                     if($k == 0) 
                     {
                         $objPHPExcel->getActiveSheet()->setCellValue('A'.(13+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
-                        $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
-                        $tempamb = $row['VALUE'];
+                         $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
                     }
                     else if($k == 1) $objPHPExcel->getActiveSheet()->setCellValue('E'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
                     else if($k == 2) {
@@ -264,15 +263,12 @@
                         if($data < 0) $data = 0;
                         $objPHPExcel->getActiveSheet()->setCellValue('F'.(13+$i).'', $data.' LUX');
 
-                        $data = number_format(((pow((($row['VALUE']*1023)/100),2)/10)/(50)), 1);
+                        $data = number_format(((pow((1000-$row['VALUE']),2)/10)/(50)), 1);
                         if($data < 0) $data = 0;
                         $objPHPExcel->getActiveSheet()->setCellValue('H'.(13+$i).'', $data.' W/m²');
                     }
                     else if($k == 3) {
-                        $row['VALUE'] = 161.0 * $row['VALUE'] / 5.0 - 25.8;
-                        $row['VALUE'] = $row['VALUE'] / (1.0546 - 0.0026 * $tempamb);
-                        $data = number_format(round($row['VALUE']/10.0), 0);
-                        if($data < 0) $data = 0;
+                        $data = number_format(round($row['VALUE']*100/1023.0), 0);
                         $objPHPExcel->getActiveSheet()->setCellValue('C'.(13+$i).'', $data.' %');
                     }
 
@@ -296,7 +292,7 @@
                     }
                 }
 
-                for($z = 1; $z < ($i+13); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+                for($z = 1; $z < ($i+14); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
                 
                 $result->free();
                 $mysqli->close();
@@ -305,8 +301,8 @@
             case 5:
             {
                 $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Vitesse du vent');
-                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID > 8 AND ID < 12) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` ASC';
-                else $query = 'SELECT * FROM `SENSORS` WHERE ID > 8 AND ID < 12 ORDER BY `UNIXDATE` ASC';
+                if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID > 8 AND ID < 12) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC';
+                else $query = 'SELECT * FROM `SENSORS` WHERE ID > 8 AND ID < 12 ORDER BY `UNIXDATE` DESC';
 
                 $result = $mysqli->query($query) or die($mysqli->error);
                 $rows = array();
@@ -348,7 +344,7 @@
                     }
                 }
 
-                for($z = 1; $z < ($i+12); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
+                for($z = 1; $z < ($i+13); $z++) $objPHPExcel->getActiveSheet()->getRowDimension(''.($z).'')->setRowHeight(21);
                 
                 $result->free();
                 $mysqli->close();
