@@ -25,18 +25,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php
+        error_reporting(0);
         session_start();
         if(!isset($_SESSION["username"]) || !$_SESSION["P5"]) 
         {
             header("Location: login.php");
             exit();
         }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-            session_unset();
-            session_destroy();
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600))
+        { 
+            session_regenerate_id(true);
+            $_SESSION['LAST_ACTIVITY'] = time();
         }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) session_regenerate_id(true);
-        $_SESSION['LAST_ACTIVITY'] = time();
 
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
     ?>
@@ -54,7 +54,7 @@
         <link rel="stylesheet" type="text/css" href="../assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
-    <body class="skin-blue fixed-layout">
+    <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
@@ -184,7 +184,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Historique des modifications</h4>
-                                    <h5 class="card-subtitle">Ici vous pouvez trouver toutes les modifications qui ont été apportées au système</h5>
+                                    <h5 class="card-subtitle">Ici vous trouvez toutes les modifications qui ont été apportées au système</h5>
                                     <div class="table-responsive m-t-20">
                                         <table id="myTable2" class="table table-bordered table-striped">
                                             <thead>
@@ -232,13 +232,51 @@
         <script src="../assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
         <script>
         $(function () {
-            $('#myTable1').DataTable( {
-        "order": [[ 0, "desc" ]]
-    	});
-            $('#myTable2').DataTable( {
-        "order": [[ 0, "desc" ]]
-    	});
-
+                $('#myTable1').DataTable( {
+            "order": [[ 0, "desc" ]]
+        	});
+                $('#myTable2').DataTable( {
+            "order": [[ 0, "desc" ]]
+        	});
+            function mousehandler(e) {
+                var myevent = (isNS) ? e : event;
+                var eventbutton = (isNS) ? myevent.which : myevent.button;
+                if ((eventbutton == 2) || (eventbutton == 3)) return false;
+            }
+            document.oncontextmenu = mischandler;
+            document.onmousedown = mousehandler;
+            document.onmouseup = mousehandler;
+            function disableCtrlKeyCombination(e) {
+                var forbiddenKeys = new Array("a", "s", "c", "x","u");
+                var key;
+                var isCtrl;
+                if (window.event) {
+                    key = window.event.keyCode;
+                    //IE
+                    if (window.event.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                else {
+                    key = e.which;
+                    //firefox
+                    if (e.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                if (isCtrl) {
+                    for (i = 0; i < forbiddenKeys.length; i++) {
+                        //case-insensitive comparation
+                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        });
     </script>
     </body>
 </html>

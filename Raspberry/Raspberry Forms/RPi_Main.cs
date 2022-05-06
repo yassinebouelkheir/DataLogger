@@ -35,7 +35,7 @@ namespace RPi
         private int MaxSelection = 4;
         private bool isGraphEnabled = false;
         private bool isChargePanelEnabled = false;
-        MySql.Data.MySqlClient.MySqlConnection conn;
+        private MySql.Data.MySqlClient.MySqlConnection conn;
 
 #pragma warning disable CS8618
         public RPI_Main() => InitializeComponent();
@@ -43,7 +43,6 @@ namespace RPi
         private void RPI_Main_Load(object sender, EventArgs e)
         {
             string myConnectionString = "server=localhost;uid=admnpi;pwd=adminpi;database=PFE";
-
             try
             {
                 conn = new MySql.Data.MySqlClient.MySqlConnection();
@@ -944,7 +943,7 @@ namespace RPi
             if (!isChargePanelEnabled)
             {
                 Charts.Enabled = false;
-                if (isGraphEnabled) ;
+                //if (isGraphEnabled) ;
                 Charts.Text = "Passer en mode graphique";
                 isGraphEnabled = false;
                 Left_Btn.Enabled = false;

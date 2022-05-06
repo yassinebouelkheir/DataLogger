@@ -25,18 +25,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php
+        error_reporting(0);
         session_start();
         if(!isset($_SESSION["username"])) 
         {
             header("Location: login.php");
             exit();
         }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-            session_unset();
-            session_destroy();
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600))
+        { 
+            session_regenerate_id(true);
+            $_SESSION['LAST_ACTIVITY'] = time();
         }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) session_regenerate_id(true);
-        $_SESSION['LAST_ACTIVITY'] = time();
 
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
 
@@ -54,6 +54,10 @@
         {
             if($rows[$i]['VALUE'] == 1) $activecharge++;
         }
+        function htmlxssprotection($string)
+        {
+            return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+        }
     ?>
     <head>
         <meta charset="utf-8">
@@ -69,7 +73,7 @@
         <link href="dist/css/pages/pricing-page.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
-    <body class="skin-blue fixed-layout">
+    <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
@@ -170,7 +174,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN1</h4>
-                                                        <h3 class="text-center"><strong><?php echo  $rows[0]['NAME'] ?></strong></h3>
+                                                        <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[0]['NAME']); ?></strong></h3>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -196,7 +200,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN2</h4>
-                                                        <h3 class="text-center"><strong><?php echo  $rows[1]['NAME'] ?></strong></h2>
+                                                        <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[1]['NAME']); ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -222,7 +226,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN3</h4>
-                                                        <h3 class="text-center"><strong><?php echo  $rows[2]['NAME'] ?></strong></h2>
+                                                        <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[2]['NAME']); ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -250,7 +254,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN4</h4>
-                                                        <h3 class="text-center"><strong><?php echo  $rows[3]['NAME'] ?></strong></h2>
+                                                        <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[3]['NAME']); ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -286,7 +290,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN5</h4>
-                                                        <h3 class="text-center"><strong><?php echo  $rows[4]['NAME'] ?></strong></h2>
+                                                        <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[4]['NAME']); ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -312,7 +316,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN6</h4>
-                                                        <h3 class="text-center"><strong><?php echo  $rows[5]['NAME'] ?></strong></h2>
+                                                        <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[5]['NAME']); ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -338,7 +342,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN7</h4>
-                                                        <h3 class="text-center"><strong><?php echo  $rows[6]['NAME'] ?></strong></h2>
+                                                        <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[6]['NAME']); ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -366,7 +370,7 @@
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN8</h4>
-                                                        <h3 class="text-center"><strong><?php echo  $rows[7]['NAME'] ?></strong></h2>
+                                                        <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[7]['NAME']); ?></strong></h2>
                                                         <p class="uppercase text-success">Disponible</p>
                                                     </div>
                                                     <div class="price-table-content">
@@ -404,5 +408,45 @@
         <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
         <script src="dist/js/sidebarmenu.js"></script>
         <script src="dist/js/custom.min.js"></script>
+        <script type="text/javascript">
+            function mousehandler(e) {
+                var myevent = (isNS) ? e : event;
+                var eventbutton = (isNS) ? myevent.which : myevent.button;
+                if ((eventbutton == 2) || (eventbutton == 3)) return false;
+            }
+            document.oncontextmenu = mischandler;
+            document.onmousedown = mousehandler;
+            document.onmouseup = mousehandler;
+            function disableCtrlKeyCombination(e) {
+                var forbiddenKeys = new Array("a", "s", "c", "x","u");
+                var key;
+                var isCtrl;
+                if (window.event) {
+                    key = window.event.keyCode;
+                    //IE
+                    if (window.event.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                else {
+                    key = e.which;
+                    //firefox
+                    if (e.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                if (isCtrl) {
+                    for (i = 0; i < forbiddenKeys.length; i++) {
+                        //case-insensitive comparation
+                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        </script>
     </body>
 </html>

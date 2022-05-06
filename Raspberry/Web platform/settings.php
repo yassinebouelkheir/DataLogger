@@ -25,18 +25,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php
+        error_reporting(0);
         session_start();
         if(!isset($_SESSION["username"]) || !$_SESSION["P2"] || !$_SESSION["P3"] || !$_SESSION["P4"]) 
         {
             header("Location: login.php");
             exit();
         }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-            session_unset();
-            session_destroy();
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600))
+        { 
+            session_regenerate_id(true);
+            $_SESSION['LAST_ACTIVITY'] = time();
         }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) session_regenerate_id(true);
-        $_SESSION['LAST_ACTIVITY'] = time();
 
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
 
@@ -430,6 +430,11 @@
                 case 7: return "Tout";
             }           
         }
+
+        function htmlxssprotection($string)
+        {
+            return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+        }
     ?>
     <head>
         <meta charset="utf-8">
@@ -452,7 +457,7 @@
         <link href="dist/css/style.min.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
-    <body class="skin-blue fixed-layout">
+    <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
@@ -608,7 +613,7 @@
                                                 $result = $mysqli->query($query) or die($mysqli->error);
                                                 $rows = array();
                                                 while($row = $result->fetch_assoc()) {
-                                                    echo '<option value="'.$row['ID'].'">'.$row['USERNAME'].'</option>';
+                                                    echo '<option value="'.$row['ID'].'">'.htmlxssprotection($row['USERNAME']).'</option>';
                                                 }
                                                 echo '</select>';
                                             echo '</div>';
@@ -634,7 +639,7 @@
                                                 $result = $mysqli->query($query) or die($mysqli->error);
                                                 $rows = array();
                                                 while($row = $result->fetch_assoc()) {
-                                                    echo '<option value="'.$row['ID'].'">'.$row['USERNAME'].'</option>';
+                                                    echo '<option value="'.$row['ID'].'">'.htmlxssprotection($row['USERNAME']).'</option>';
                                                 }
                                             echo '</select>';
                                         echo '</div>';
@@ -662,49 +667,49 @@
                                         echo '<div class="form-group mt-5 row">';
                                             echo '<label for="chargename1" class="col-2 col-form-label">Relais PIN: IN1</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$chargesrows[0]['NAME'].'" id="chargename1" name="chargename1">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($chargesrows[0]['NAME']).'" id="chargename1" name="chargename1">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="chargename2" class="col-2 col-form-label">Relais PIN: IN2</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$chargesrows[1]['NAME'].'" id="chargename2" name="chargename2">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($chargesrows[1]['NAME']).'" id="chargename2" name="chargename2">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="chargename3" class="col-2 col-form-label">Relais PIN: IN3</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$chargesrows[2]['NAME'].'" id="chargename3" name="chargename3">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($chargesrows[2]['NAME']).'" id="chargename3" name="chargename3">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="chargename4" class="col-2 col-form-label">Relais PIN: IN4</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$chargesrows[3]['NAME'].'" id="chargename4" name="chargename4">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($chargesrows[3]['NAME']).'" id="chargename4" name="chargename4">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="chargename5" class="col-2 col-form-label">Relais PIN: IN5</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$chargesrows[4]['NAME'].'" id="chargename5" name="chargename5">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($chargesrows[4]['NAME']).'" id="chargename5" name="chargename5">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="chargename6" class="col-2 col-form-label">Relais PIN: IN6</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$chargesrows[5]['NAME'].'" id="chargename6" name="chargename6">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($chargesrows[5]['NAME']).'" id="chargename6" name="chargename6">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="chargename7" class="col-2 col-form-label">Relais PIN: IN7</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$chargesrows[6]['NAME'].'" id="chargename7" name="chargename7">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($chargesrows[6]['NAME']).'" id="chargename7" name="chargename7">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="chargename8" class="col-2 col-form-label">Relais PIN: IN8</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$chargesrows[7]['NAME'].'" id="chargename8" name="chargename8">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($chargesrows[7]['NAME']).'" id="chargename8" name="chargename8">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<button type="submit" class="btn btn-success">Mise à jour</button>';
@@ -727,43 +732,43 @@
                                         echo '<div class="form-group mt-5 row">';
                                             echo '<label for="updatetime1" class="col-2 col-form-label">Courant Faible</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[0]['TIME'].'" id="updatetime1" name="updatetime1">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($updatetimerows[0]['TIME']).'" id="updatetime1" name="updatetime1">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="updatetime2" class="col-2 col-form-label">Courant Fort</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[1]['TIME'].'" id="updatetime2" name="updatetime2">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($updatetimerows[1]['TIME']).'" id="updatetime2" name="updatetime2">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="updatetime7" class="col-2 col-form-label">Éolienne</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value='.$updatetimerows[6]['TIME'].'>" id="updatetime6" name="updatetime7">';
+                                                echo '<input class="form-control" type="search" value='.htmlxssprotection($updatetimerows[6]['TIME']).'>" id="updatetime6" name="updatetime7">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="updatetime3" class="col-2 col-form-label">Température</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[2]['TIME'].'" id="updatetime3" name="updatetime3">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($updatetimerows[2]['TIME']).'" id="updatetime3" name="updatetime3">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="updatetime4" class="col-2 col-form-label">Énergie lumineuse</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[3]['TIME'].'" id="updatetime4" name="updatetime4">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($updatetimerows[3]['TIME']).'" id="updatetime4" name="updatetime4">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="updatetime5" class="col-2 col-form-label">Humidité</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[4]['TIME'].'" id="updatetime5" name="updatetime5">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($updatetimerows[4]['TIME']).'" id="updatetime5" name="updatetime5">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
                                             echo '<label for="updatetime6" class="col-2 col-form-label">Vitesse du vent</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value="'.$updatetimerows[5]['TIME'].'" id="updatetime6" name="updatetime6">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($updatetimerows[5]['TIME']).'" id="updatetime6" name="updatetime6">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<button type="submit" class="btn btn-success">Mise à jour</button>';
@@ -855,5 +860,45 @@
         <script src="dist/js/sidebarmenu.js"></script>
         <script src="dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/switchery/dist/switchery.min.js"></script>
+        <script type="text/javascript">
+            function mousehandler(e) {
+                var myevent = (isNS) ? e : event;
+                var eventbutton = (isNS) ? myevent.which : myevent.button;
+                if ((eventbutton == 2) || (eventbutton == 3)) return false;
+            }
+            document.oncontextmenu = mischandler;
+            document.onmousedown = mousehandler;
+            document.onmouseup = mousehandler;
+            function disableCtrlKeyCombination(e) {
+                var forbiddenKeys = new Array("a", "s", "c", "x","u");
+                var key;
+                var isCtrl;
+                if (window.event) {
+                    key = window.event.keyCode;
+                    //IE
+                    if (window.event.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                else {
+                    key = e.which;
+                    //firefox
+                    if (e.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                if (isCtrl) {
+                    for (i = 0; i < forbiddenKeys.length; i++) {
+                        //case-insensitive comparation
+                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        </script>
     </body>
 </html>

@@ -90,9 +90,9 @@ namespace RPi
             this.Sidebar.Controls.Add(this.Eolienne);
             this.Sidebar.Controls.Add(this.Courant_Fort);
             this.Sidebar.Controls.Add(this.Courant_Faible);
-            this.Sidebar.Location = new System.Drawing.Point(3, 218);
+            this.Sidebar.Location = new System.Drawing.Point(1, 217);
             this.Sidebar.Name = "Sidebar";
-            this.Sidebar.Size = new System.Drawing.Size(474, 101);
+            this.Sidebar.Size = new System.Drawing.Size(484, 101);
             this.Sidebar.TabIndex = 0;
             // 
             // Charts
@@ -102,9 +102,9 @@ namespace RPi
             this.Charts.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Charts.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Charts.ForeColor = System.Drawing.Color.White;
-            this.Charts.Location = new System.Drawing.Point(0, 9);
+            this.Charts.Location = new System.Drawing.Point(0, 8);
             this.Charts.Name = "Charts";
-            this.Charts.Size = new System.Drawing.Size(474, 25);
+            this.Charts.Size = new System.Drawing.Size(478, 30);
             this.Charts.TabIndex = 9;
             this.Charts.Text = "Passer en mode graphique";
             this.Charts.UseVisualStyleBackColor = false;
@@ -119,9 +119,9 @@ namespace RPi
             this.Charges.ForeColor = System.Drawing.Color.White;
             this.Charges.Image = global::RPi.Properties.Resources.th_solid;
             this.Charges.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Charges.Location = new System.Drawing.Point(384, 38);
+            this.Charges.Location = new System.Drawing.Point(380, 38);
             this.Charges.Name = "Charges";
-            this.Charges.Size = new System.Drawing.Size(90, 60);
+            this.Charges.Size = new System.Drawing.Size(98, 63);
             this.Charges.TabIndex = 8;
             this.Charges.Text = "Charges";
             this.Charges.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -137,9 +137,9 @@ namespace RPi
             this.Meteorologie.ForeColor = System.Drawing.Color.White;
             this.Meteorologie.Image = global::RPi.Properties.Resources.snowflake_solid;
             this.Meteorologie.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Meteorologie.Location = new System.Drawing.Point(288, 38);
+            this.Meteorologie.Location = new System.Drawing.Point(285, 38);
             this.Meteorologie.Name = "Meteorologie";
-            this.Meteorologie.Size = new System.Drawing.Size(90, 60);
+            this.Meteorologie.Size = new System.Drawing.Size(94, 63);
             this.Meteorologie.TabIndex = 8;
             this.Meteorologie.Text = "Météorologie";
             this.Meteorologie.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -155,9 +155,9 @@ namespace RPi
             this.Eolienne.ForeColor = System.Drawing.Color.White;
             this.Eolienne.Image = global::RPi.Properties.Resources.fan_solid;
             this.Eolienne.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Eolienne.Location = new System.Drawing.Point(192, 38);
+            this.Eolienne.Location = new System.Drawing.Point(190, 38);
             this.Eolienne.Name = "Eolienne";
-            this.Eolienne.Size = new System.Drawing.Size(90, 60);
+            this.Eolienne.Size = new System.Drawing.Size(94, 63);
             this.Eolienne.TabIndex = 8;
             this.Eolienne.Text = "Éolienne";
             this.Eolienne.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -173,9 +173,9 @@ namespace RPi
             this.Courant_Fort.ForeColor = System.Drawing.Color.White;
             this.Courant_Fort.Image = global::RPi.Properties.Resources.bolt_solid;
             this.Courant_Fort.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Courant_Fort.Location = new System.Drawing.Point(97, 38);
+            this.Courant_Fort.Location = new System.Drawing.Point(95, 38);
             this.Courant_Fort.Name = "Courant_Fort";
-            this.Courant_Fort.Size = new System.Drawing.Size(90, 60);
+            this.Courant_Fort.Size = new System.Drawing.Size(94, 63);
             this.Courant_Fort.TabIndex = 7;
             this.Courant_Fort.Text = "Courant Fort";
             this.Courant_Fort.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -193,7 +193,7 @@ namespace RPi
             this.Courant_Faible.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Courant_Faible.Location = new System.Drawing.Point(0, 38);
             this.Courant_Faible.Name = "Courant_Faible";
-            this.Courant_Faible.Size = new System.Drawing.Size(91, 60);
+            this.Courant_Faible.Size = new System.Drawing.Size(94, 63);
             this.Courant_Faible.TabIndex = 6;
             this.Courant_Faible.Text = "Courant Faible";
             this.Courant_Faible.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -208,9 +208,9 @@ namespace RPi
             this.Right_Btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Right_Btn.ForeColor = System.Drawing.Color.White;
             this.Right_Btn.Image = global::RPi.Properties.Resources.arrow_right_solid;
-            this.Right_Btn.Location = new System.Drawing.Point(451, 34);
+            this.Right_Btn.Location = new System.Drawing.Point(446, 34);
             this.Right_Btn.Name = "Right_Btn";
-            this.Right_Btn.Size = new System.Drawing.Size(26, 190);
+            this.Right_Btn.Size = new System.Drawing.Size(33, 191);
             this.Right_Btn.TabIndex = 10;
             this.Right_Btn.UseVisualStyleBackColor = false;
             this.Right_Btn.Click += new System.EventHandler(this.Right_Btn_Click);
@@ -223,9 +223,9 @@ namespace RPi
             this.Left_Btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Left_Btn.ForeColor = System.Drawing.Color.White;
             this.Left_Btn.Image = global::RPi.Properties.Resources.arrow_left_solid;
-            this.Left_Btn.Location = new System.Drawing.Point(3, 34);
+            this.Left_Btn.Location = new System.Drawing.Point(1, 34);
             this.Left_Btn.Name = "Left_Btn";
-            this.Left_Btn.Size = new System.Drawing.Size(26, 190);
+            this.Left_Btn.Size = new System.Drawing.Size(33, 191);
             this.Left_Btn.TabIndex = 11;
             this.Left_Btn.UseVisualStyleBackColor = false;
             this.Left_Btn.Click += new System.EventHandler(this.Left_Btn_Click);
@@ -237,7 +237,7 @@ namespace RPi
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(35, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(410, 24);
+            this.label1.Size = new System.Drawing.Size(410, 32);
             this.label1.TabIndex = 12;
             this.label1.Text = "ESTS LASTIMI - Data Logger v2.0";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

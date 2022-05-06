@@ -25,18 +25,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php
+        error_reporting(0);
         session_start();
         if(!isset($_SESSION["username"])) 
         {
             header("Location: login.php");
             exit();
         }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-            session_unset();
-            session_destroy();
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600))
+        { 
+            session_regenerate_id(true);
+            $_SESSION['LAST_ACTIVITY'] = time();
         }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) session_regenerate_id(true);
-        $_SESSION['LAST_ACTIVITY'] = time();
 
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
 
@@ -106,7 +106,7 @@
         <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
-    <body class="skin-blue fixed-layout">
+    <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
@@ -554,6 +554,44 @@
             setInterval(function(){
                 refresh() 
             }, 600);
+            function mousehandler(e) {
+                var myevent = (isNS) ? e : event;
+                var eventbutton = (isNS) ? myevent.which : myevent.button;
+                if ((eventbutton == 2) || (eventbutton == 3)) return false;
+            }
+            document.oncontextmenu = mischandler;
+            document.onmousedown = mousehandler;
+            document.onmouseup = mousehandler;
+            function disableCtrlKeyCombination(e) {
+                var forbiddenKeys = new Array("a", "s", "c", "x","u");
+                var key;
+                var isCtrl;
+                if (window.event) {
+                    key = window.event.keyCode;
+                    //IE
+                    if (window.event.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                else {
+                    key = e.which;
+                    //firefox
+                    if (e.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                if (isCtrl) {
+                    for (i = 0; i < forbiddenKeys.length; i++) {
+                        //case-insensitive comparation
+                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
         });
         </script>
     </body>

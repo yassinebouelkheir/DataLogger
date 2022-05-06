@@ -25,6 +25,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php
+        error_reporting(0);
         session_start();
         if(isset($_SESSION["username"])) 
         {
@@ -86,7 +87,7 @@
         <link href="dist/css/pages/login-register-lock.css" rel="stylesheet">
         <link href="dist/css/style.min.css" rel="stylesheet">
     </head>
-    <body class="skin-default card-no-border">
+    <body class="skin-default card-no-border" oncontextmenu="return false">
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
@@ -140,6 +141,44 @@
                 $("#loginform").slideUp();
                 $("#recoverform").fadeIn();
             });
+            function mousehandler(e) {
+                var myevent = (isNS) ? e : event;
+                var eventbutton = (isNS) ? myevent.which : myevent.button;
+                if ((eventbutton == 2) || (eventbutton == 3)) return false;
+            }
+            document.oncontextmenu = mischandler;
+            document.onmousedown = mousehandler;
+            document.onmouseup = mousehandler;
+            function disableCtrlKeyCombination(e) {
+                var forbiddenKeys = new Array("a", "s", "c", "x","u");
+                var key;
+                var isCtrl;
+                if (window.event) {
+                    key = window.event.keyCode;
+                    //IE
+                    if (window.event.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                else {
+                    key = e.which;
+                    //firefox
+                    if (e.ctrlKey)
+                        isCtrl = true;
+                    else
+                        isCtrl = false;
+                }
+                if (isCtrl) {
+                    for (i = 0; i < forbiddenKeys.length; i++) {
+                        //case-insensitive comparation
+                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
         </script>
     </body>
 </html>

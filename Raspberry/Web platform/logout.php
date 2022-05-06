@@ -23,6 +23,7 @@
 -->
 
 <?php
+    error_reporting(0);
     session_start();
     session_unset();
     if(session_destroy()) 
