@@ -308,16 +308,16 @@
                     (6, 0, 1648582940),
                     (6, 0, 1648583060),
                     (6, 0, 1648583180),
-                    (7, 0, 1648582100),
-                    (7, 0, 1648582220),
-                    (7, 0, 1648582340),
-                    (7, 0, 1648582460),
-                    (7, 0, 1648582580),
-                    (7, 0, 1648582700),
-                    (7, 0, 1648582820),
-                    (7, 0, 1648582940),
-                    (7, 0, 1648583060),
-                    (7, 0, 1648583180),
+                    (7, 1000, 1648582100),
+                    (7, 1000, 1648582220),
+                    (7, 1000, 1648582340),
+                    (7, 1000, 1648582460),
+                    (7, 1000, 1648582580),
+                    (7, 1000, 1648582700),
+                    (7, 1000, 1648582820),
+                    (7, 1000, 1648582940),
+                    (7, 1000, 1648583060),
+                    (7, 1000, 1648583180),
                     (8, 0, 1648582100),
                     (8, 0, 1648582220),
                     (8, 0, 1648582340),
@@ -524,7 +524,7 @@
                             ?>
                             <?php 
                                 if($_SESSION["P5"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;Historique</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
                                 }
                             ?>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
@@ -744,7 +744,7 @@
                                         echo '<div class="form-group row">';
                                             echo '<label for="updatetime7" class="col-2 col-form-label">Éolienne</label>';
                                             echo '<div class="col-10">';
-                                                echo '<input class="form-control" type="search" value='.htmlxssprotection($updatetimerows[6]['TIME']).'>" id="updatetime6" name="updatetime7">';
+                                                echo '<input class="form-control" type="search" value="'.htmlxssprotection($updatetimerows[6]['TIME']).'" id="updatetime6" name="updatetime7">';
                                             echo '</div>';
                                         echo '</div>';
                                         echo '<div class="form-group row">';
@@ -860,45 +860,5 @@
         <script src="dist/js/sidebarmenu.js"></script>
         <script src="dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/switchery/dist/switchery.min.js"></script>
-        <script type="text/javascript">
-            function mousehandler(e) {
-                var myevent = (isNS) ? e : event;
-                var eventbutton = (isNS) ? myevent.which : myevent.button;
-                if ((eventbutton == 2) || (eventbutton == 3)) return false;
-            }
-            document.oncontextmenu = mischandler;
-            document.onmousedown = mousehandler;
-            document.onmouseup = mousehandler;
-            function disableCtrlKeyCombination(e) {
-                var forbiddenKeys = new Array("a", "s", "c", "x","u");
-                var key;
-                var isCtrl;
-                if (window.event) {
-                    key = window.event.keyCode;
-                    //IE
-                    if (window.event.ctrlKey)
-                        isCtrl = true;
-                    else
-                        isCtrl = false;
-                }
-                else {
-                    key = e.which;
-                    //firefox
-                    if (e.ctrlKey)
-                        isCtrl = true;
-                    else
-                        isCtrl = false;
-                }
-                if (isCtrl) {
-                    for (i = 0; i < forbiddenKeys.length; i++) {
-                        //case-insensitive comparation
-                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
-        </script>
     </body>
 </html>

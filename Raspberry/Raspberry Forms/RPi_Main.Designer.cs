@@ -291,7 +291,7 @@ namespace RPi
             this.button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Visible = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.button8.Click += new System.EventHandler(this.Button8_Click);
             // 
             // button7
             // 
@@ -310,7 +310,7 @@ namespace RPi
             this.button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Visible = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button7.Click += new System.EventHandler(this.Button7_Click);
             // 
             // button6
             // 
@@ -329,7 +329,7 @@ namespace RPi
             this.button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button6.UseVisualStyleBackColor = false;
             this.button6.Visible = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button6.Click += new System.EventHandler(this.Button6_Click);
             // 
             // button5
             // 
@@ -348,7 +348,7 @@ namespace RPi
             this.button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Visible = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button5.Click += new System.EventHandler(this.Button5_Click);
             // 
             // button4
             // 
@@ -367,7 +367,7 @@ namespace RPi
             this.button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Visible = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // button3
             // 
@@ -386,7 +386,7 @@ namespace RPi
             this.button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Visible = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // button2
             // 
@@ -405,7 +405,7 @@ namespace RPi
             this.button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Visible = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // button1
             // 
@@ -424,7 +424,7 @@ namespace RPi
             this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // paramTitle
             // 
@@ -453,13 +453,13 @@ namespace RPi
             // updateParams
             // 
             this.updateParams.Enabled = true;
-            this.updateParams.Tick += new System.EventHandler(this.updateParams_Tick);
+            this.updateParams.Tick += new System.EventHandler(this.UpdateParams_Tick);
             // 
             // updateCharts
             // 
             this.updateCharts.Enabled = true;
             this.updateCharts.Interval = 60000;
-            this.updateCharts.Tick += new System.EventHandler(this.updateCharts_Tick);
+            this.updateCharts.Tick += new System.EventHandler(this.UpdateCharts_Tick);
             // 
             // RPI_Main
             // 

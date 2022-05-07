@@ -37,7 +37,6 @@ namespace RPi
         private bool isChargePanelEnabled = false;
         private MySql.Data.MySqlClient.MySqlConnection conn;
 
-#pragma warning disable CS8618
         public RPI_Main() => InitializeComponent();
 
         private void RPI_Main_Load(object sender, EventArgs e)
@@ -45,8 +44,10 @@ namespace RPi
             string myConnectionString = "server=localhost;uid=admnpi;pwd=adminpi;database=PFE";
             try
             {
-                conn = new MySql.Data.MySqlClient.MySqlConnection();
-                conn.ConnectionString = myConnectionString;
+                conn = new MySql.Data.MySqlClient.MySqlConnection
+                {
+                    ConnectionString = myConnectionString
+                };
                 conn.Open();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -56,7 +57,7 @@ namespace RPi
             }
             conn.Close();
             panel1.BackColor = System.Drawing.Color.FromArgb(180, 255, 255, 255);
-            updateSelection();
+            UpdateSelection();
         }
 
         private void Left_Btn_Click(object sender, EventArgs e)
@@ -64,8 +65,8 @@ namespace RPi
             browseSelection -= 1;
             if (isGraphEnabled) if (browseSelection < 1) browseSelection = MaxSelection;
             else if (browseSelection < 0) browseSelection = MaxSelection;
-            if (isGraphEnabled) updateGraphSelection();
-            else updateSelection();
+            if (isGraphEnabled) UpdateGraphSelection();
+            else UpdateSelection();
         }
 
         private void Right_Btn_Click(object sender, EventArgs e)
@@ -76,11 +77,11 @@ namespace RPi
                 if (isGraphEnabled) browseSelection = 1;
                 else browseSelection = 0;
             }
-            if (isGraphEnabled) updateGraphSelection();
-            else updateSelection();
+            if (isGraphEnabled) UpdateGraphSelection();
+            else UpdateSelection();
         }
 
-        private void updateSelection()
+        private void UpdateSelection()
         {
             conn.Open();
             if (menuSelection == 0)
@@ -295,7 +296,7 @@ namespace RPi
             }
             conn.Close();
         }
-        private void updateGraphSelection()
+        private void UpdateGraphSelection()
         {
             conn.Open();
             if (menuSelection == 0)
@@ -617,7 +618,7 @@ namespace RPi
             conn.Close();
         }
 
-        private void updateChargeStatus()
+        private void UpdateChargeStatus()
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `CHARGES` WHERE 1 ORDER BY `ID` ASC", conn);
@@ -728,8 +729,8 @@ namespace RPi
             else browseSelection = 1;
 
             MaxSelection = 4;
-            if (isGraphEnabled) updateGraphSelection();
-            else updateSelection();
+            if (isGraphEnabled) UpdateGraphSelection();
+            else UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 16, 103, 60);
             Courant_Fort.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -746,13 +747,13 @@ namespace RPi
                 {
                     paramTitle.Visible = true;
                     paramValue.Visible = true;
-                    updateSelection();
+                    UpdateSelection();
                 }
                 else
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    updateGraphSelection();
+                    UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -774,8 +775,8 @@ namespace RPi
             menuSelection = 1;
             browseSelection = 0;
             MaxSelection = 3;
-            if (isGraphEnabled) updateGraphSelection();
-            else updateSelection();
+            if (isGraphEnabled) UpdateGraphSelection();
+            else UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
             Courant_Fort.BackColor = Color.FromArgb(255, 16, 103, 60);
@@ -792,13 +793,13 @@ namespace RPi
                 {
                     paramTitle.Visible = true;
                     paramValue.Visible = true;
-                    updateSelection();
+                    UpdateSelection();
                 }
                 else
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    updateGraphSelection();
+                    UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -820,8 +821,8 @@ namespace RPi
             menuSelection = 2;
             browseSelection = 0;
             MaxSelection = 3;
-            if (isGraphEnabled) updateGraphSelection();
-            else updateSelection();
+            if (isGraphEnabled) UpdateGraphSelection();
+            else UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
             Courant_Fort.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -838,13 +839,13 @@ namespace RPi
                 {
                     paramTitle.Visible = true;
                     paramValue.Visible = true;
-                    updateSelection();
+                    UpdateSelection();
                 }
                 else
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    updateGraphSelection();
+                    UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -866,8 +867,8 @@ namespace RPi
             menuSelection = 3;
             browseSelection = 0;
             MaxSelection = 8;
-            if (isGraphEnabled) updateGraphSelection();
-            else updateSelection();
+            if (isGraphEnabled) UpdateGraphSelection();
+            else UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
             Courant_Fort.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -884,13 +885,13 @@ namespace RPi
                 {
                     paramTitle.Visible = true;
                     paramValue.Visible = true;
-                    updateSelection();
+                    UpdateSelection();
                 }
                 else
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    updateGraphSelection();
+                    UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -907,10 +908,10 @@ namespace RPi
             return;
         }
 
-        private void updateParams_Tick(object sender, EventArgs e)
+        private void UpdateParams_Tick(object sender, EventArgs e)
         {
-            if (isChargePanelEnabled) updateChargeStatus();
-            else if (!isGraphEnabled) updateSelection();
+            if (isChargePanelEnabled) UpdateChargeStatus();
+            else if (!isGraphEnabled) UpdateSelection();
             return;
         }
 
@@ -924,7 +925,7 @@ namespace RPi
                 paramValue.Visible = false;
                 label2.Text = paramTitle.Text.Replace(":", "");
                 label2.Visible = true;
-                updateGraphSelection();
+                UpdateGraphSelection();
             }
             else
             {
@@ -934,7 +935,7 @@ namespace RPi
                 paramValue.Visible = true;
                 label2.Text = "Panneau de contrôle des charges";
                 label2.Visible = false;
-                updateSelection();
+                UpdateSelection();
             }
         }
 
@@ -968,12 +969,12 @@ namespace RPi
                 button7.Visible = true;
                 button8.Visible = true;
 
-                updateChargeStatus();
+                UpdateChargeStatus();
                 isChargePanelEnabled = true;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 1", conn);
@@ -981,7 +982,7 @@ namespace RPi
             conn.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 2", conn);
@@ -989,7 +990,7 @@ namespace RPi
             conn.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 3", conn);
@@ -997,7 +998,7 @@ namespace RPi
             conn.Close();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void Button4_Click(object sender, EventArgs e)
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 4", conn);
@@ -1005,7 +1006,7 @@ namespace RPi
             conn.Close();
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void Button5_Click(object sender, EventArgs e)
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 5", conn);
@@ -1013,7 +1014,7 @@ namespace RPi
             conn.Close();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void Button6_Click(object sender, EventArgs e)
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 6", conn);
@@ -1021,7 +1022,7 @@ namespace RPi
             conn.Close();
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void Button7_Click(object sender, EventArgs e)
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 7", conn);
@@ -1029,7 +1030,7 @@ namespace RPi
             conn.Close();
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void Button8_Click(object sender, EventArgs e)
         {
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 8", conn);
@@ -1037,9 +1038,9 @@ namespace RPi
             conn.Close();
         }
 
-        private void updateCharts_Tick(object sender, EventArgs e)
+        private void UpdateCharts_Tick(object sender, EventArgs e)
         {
-            if(isGraphEnabled) updateGraphSelection();
+            if(isGraphEnabled) UpdateGraphSelection();
             return;
         }
     }

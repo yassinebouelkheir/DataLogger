@@ -213,7 +213,7 @@
                             ?>
                             <?php 
                                 if($_SESSION["P5"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;Historique</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
                                 }
                             ?>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
@@ -461,7 +461,7 @@
                                         <h5 class="card-title ">FLUX LUMINEUX</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Flux lumineux moyenne: <?php echo (number_format(getaverage($brightnessrows), 0));?> LUX</li>
+                                                <li><i class="fa fa-circle text-info"></i> Flux lumineux moyenne: <?php echo number_format((((2500/(getaverage($brightnessrows)*0.0048828125)-500)/10)), 0);?> LUX</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -478,7 +478,7 @@
                                         <h5 class="card-title">IRRADIATION</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Irradiation moyenne: <?php echo (number_format(((pow(((getaverage($brightnessrows)*1023)/100),2)/10)/(50)), 0));?> W/m²</li>
+                                                <li><i class="fa fa-circle text-info"></i> Irradiation moyenne: <?php echo number_format(((pow((1000-getaverage($brightnessrows)),2)/10)/(50)), 0);?> W/m²</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -546,7 +546,7 @@
                                         <h5 class="card-title ">VITESSE DU TURBINE</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Vitesse moyenne: <?php echo number_format(getaverage($turbinerows), 0);?> KM/H</li>
+                                                <li><i class="fa fa-circle text-info"></i> Vitesse moyenne: <?php echo number_format(getaverage($turbinerows), 0);?> TR/MIN</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1060,7 +1060,7 @@
                                 document.getElementById('brightnessvalue').setAttribute("class", "counter text-primary");
                                 document.getElementById('brightness').setAttribute("class", "text-primary");
                             }
-                            else {
+                            else if((((2500/(response.brightness*0.0048828125)-500)/10).toFixed(0)) >= 76) {
                                 document.getElementById('brightnesswidth').setAttribute("class", "progress-bar bg-success");
                                 document.getElementById('brightnessvalue').setAttribute("class", "counter text-success");
                                 document.getElementById('brightness').setAttribute("class", "text-success");
@@ -1078,7 +1078,7 @@
                                 document.getElementById('irradiationvalue').setAttribute("class", "counter text-primary");
                                 document.getElementById('irradiation').setAttribute("class", "text-primary");
                             }
-                            else  {
+                            else if(((Math.pow((1000-response.brightness),2)/10)/(50)).toFixed(0)  >= 700) {
                                 document.getElementById('irradiationwidth').setAttribute("class", "progress-bar bg-success");
                                 document.getElementById('irradiationvalue').setAttribute("class", "counter text-success");
                                 document.getElementById('irradiation').setAttribute("class", "text-success");
@@ -1144,45 +1144,6 @@
             setInterval(function(){
                 refresh() 
             }, 600);
-            
-            function mousehandler(e) {
-                var myevent = (isNS) ? e : event;
-                var eventbutton = (isNS) ? myevent.which : myevent.button;
-                if ((eventbutton == 2) || (eventbutton == 3)) return false;
-            }
-            document.oncontextmenu = mischandler;
-            document.onmousedown = mousehandler;
-            document.onmouseup = mousehandler;
-            function disableCtrlKeyCombination(e) {
-                var forbiddenKeys = new Array("a", "s", "c", "x","u");
-                var key;
-                var isCtrl;
-                if (window.event) {
-                    key = window.event.keyCode;
-                    //IE
-                    if (window.event.ctrlKey)
-                        isCtrl = true;
-                    else
-                        isCtrl = false;
-                }
-                else {
-                    key = e.which;
-                    //firefox
-                    if (e.ctrlKey)
-                        isCtrl = true;
-                    else
-                        isCtrl = false;
-                }
-                if (isCtrl) {
-                    for (i = 0; i < forbiddenKeys.length; i++) {
-                        //case-insensitive comparation
-                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
         });
         </script>
     </body>

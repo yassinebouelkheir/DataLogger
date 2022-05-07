@@ -173,7 +173,7 @@
                             ?>
                             <?php 
                                 if($_SESSION["P5"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;Historique</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
                                 }
                             ?>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
@@ -554,44 +554,6 @@
             setInterval(function(){
                 refresh() 
             }, 600);
-            function mousehandler(e) {
-                var myevent = (isNS) ? e : event;
-                var eventbutton = (isNS) ? myevent.which : myevent.button;
-                if ((eventbutton == 2) || (eventbutton == 3)) return false;
-            }
-            document.oncontextmenu = mischandler;
-            document.onmousedown = mousehandler;
-            document.onmouseup = mousehandler;
-            function disableCtrlKeyCombination(e) {
-                var forbiddenKeys = new Array("a", "s", "c", "x","u");
-                var key;
-                var isCtrl;
-                if (window.event) {
-                    key = window.event.keyCode;
-                    //IE
-                    if (window.event.ctrlKey)
-                        isCtrl = true;
-                    else
-                        isCtrl = false;
-                }
-                else {
-                    key = e.which;
-                    //firefox
-                    if (e.ctrlKey)
-                        isCtrl = true;
-                    else
-                        isCtrl = false;
-                }
-                if (isCtrl) {
-                    for (i = 0; i < forbiddenKeys.length; i++) {
-                        //case-insensitive comparation
-                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
         });
         </script>
     </body>

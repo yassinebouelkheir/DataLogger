@@ -65,13 +65,13 @@
             <header class="topbar">
                 <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="charges.php">
+                        <a class="navbar-brand" href="history.php">
                             <span>  
                     </div>
                     <div class="navbar-collapse">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="charges.php"><i class="ti-reload"></i></a> </li>
-                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="charges.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="history.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="history.php"><i class="ti-reload"></i></a> </li>
                         </ul>
 
                         <ul class="navbar-nav my-lg-0">
@@ -121,7 +121,7 @@
                             ?>
                             <?php 
                                 if($_SESSION["P5"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark active" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;Historique</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark active" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
                                 }
                             ?>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
@@ -140,7 +140,7 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Charges</li>
+                                    <li class="breadcrumb-item active">Historique</li>
                                 </ol>
                             </div>
                         </div>
@@ -238,44 +238,6 @@
                 $('#myTable2').DataTable( {
             "order": [[ 0, "desc" ]]
         	});
-            function mousehandler(e) {
-                var myevent = (isNS) ? e : event;
-                var eventbutton = (isNS) ? myevent.which : myevent.button;
-                if ((eventbutton == 2) || (eventbutton == 3)) return false;
-            }
-            document.oncontextmenu = mischandler;
-            document.onmousedown = mousehandler;
-            document.onmouseup = mousehandler;
-            function disableCtrlKeyCombination(e) {
-                var forbiddenKeys = new Array("a", "s", "c", "x","u");
-                var key;
-                var isCtrl;
-                if (window.event) {
-                    key = window.event.keyCode;
-                    //IE
-                    if (window.event.ctrlKey)
-                        isCtrl = true;
-                    else
-                        isCtrl = false;
-                }
-                else {
-                    key = e.which;
-                    //firefox
-                    if (e.ctrlKey)
-                        isCtrl = true;
-                    else
-                        isCtrl = false;
-                }
-                if (isCtrl) {
-                    for (i = 0; i < forbiddenKeys.length; i++) {
-                        //case-insensitive comparation
-                        if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) {
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
         });
     </script>
     </body>
