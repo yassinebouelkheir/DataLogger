@@ -161,31 +161,17 @@
     <None Include="Resources\arrow-right-solid.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bolt-solid.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\charging-station-solid.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fan-solid.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lightbulb-regular.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lightbulb-solid.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\login.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\snowflake-solid.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\th-solid.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="logo.ico" />
+    <None Include="Resources\charging-station-solid.png" />
+    <None Include="Resources\fan-solid.png" />
+    <None Include="Resources\th-solid.png" />
+    <None Include="Resources\snowflake-solid.png" />
+    <None Include="Resources\bolt-solid.png" />
+    <None Include="Resources\lightbulb-regular.png" />
+    <None Include="Resources\lightbulb-solid.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

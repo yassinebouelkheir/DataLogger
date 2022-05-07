@@ -41,7 +41,7 @@ namespace RPi
 
         private void RPI_Main_Load(object sender, EventArgs e)
         {
-            string myConnectionString = "server=localhost;uid=admnpi;pwd=adminpi;database=PFE";
+            string myConnectionString = "server=localhost;uid=adminpi;pwd=adminpi;database=PFE";
             try
             {
                 conn = new MySql.Data.MySqlClient.MySqlConnection
