@@ -239,11 +239,11 @@ namespace RPi
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(1, 2);
+            this.label1.Location = new System.Drawing.Point(35, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(302, 32);
+            this.label1.Size = new System.Drawing.Size(214, 32);
             this.label1.TabIndex = 12;
-            this.label1.Text = "ESTS LASTIMI - Data Logger v2.0";
+            this.label1.Text = "ESTS - Data Logger v2.0";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1

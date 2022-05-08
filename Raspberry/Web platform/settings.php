@@ -591,7 +591,7 @@
                                                             echo '</div>';
                                                             echo '<div class="custom-control custom-checkbox">';
                                                                 echo '<input type="checkbox" class="custom-control-input" id="customCheck6" name="customCheck6">';
-                                                                echo '<label class="custom-control-label" for="customCheck6">Gérer les fonctions</label>';
+                                                                echo '<label class="custom-control-label" for="customCheck6">Gérer les fonctions automatisées</label>';
                                                             echo '</div>';
                                                         echo '</div>';
                                                     echo '</div>';
