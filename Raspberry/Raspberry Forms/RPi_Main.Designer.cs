@@ -239,7 +239,7 @@ namespace RPi
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(35, 2);
+            this.label1.Location = new System.Drawing.Point(23, 2);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(214, 32);
             this.label1.TabIndex = 12;
@@ -270,7 +270,7 @@ namespace RPi
             this.wifilabel.BackColor = System.Drawing.Color.Transparent;
             this.wifilabel.BackgroundImage = global::RPi.Properties.Resources.wifi_solid;
             this.wifilabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.wifilabel.Location = new System.Drawing.Point(299, 0);
+            this.wifilabel.Location = new System.Drawing.Point(263, 0);
             this.wifilabel.Name = "wifilabel";
             this.wifilabel.Size = new System.Drawing.Size(38, 34);
             this.wifilabel.TabIndex = 15;
@@ -482,7 +482,7 @@ namespace RPi
             this.timelabel.BackColor = System.Drawing.Color.Transparent;
             this.timelabel.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
             this.timelabel.ForeColor = System.Drawing.Color.Black;
-            this.timelabel.Location = new System.Drawing.Point(334, 2);
+            this.timelabel.Location = new System.Drawing.Point(298, 2);
             this.timelabel.Name = "timelabel";
             this.timelabel.Size = new System.Drawing.Size(145, 32);
             this.timelabel.TabIndex = 14;

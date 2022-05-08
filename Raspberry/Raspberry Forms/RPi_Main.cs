@@ -916,7 +916,7 @@ namespace RPi
 
         private void UpdateParams_Tick(object sender, EventArgs e)
         {
-            string date = DateTime.UtcNow.ToString("dd/MM/yyyy hh:mm");
+            string date = DateTime.Now.ToString("dd/MM/yyyy hh:mm");
             timelabel.Text = date;
 
             if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())

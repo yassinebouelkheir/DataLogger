@@ -1,6 +1,3 @@
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\Data Logger v2.0.exe.config
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\Data Logger v2.0.exe
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\Data Logger v2.0.pdb
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\BouncyCastle.Crypto.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\Google.Protobuf.dll
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\K4os.Compression.LZ4.dll
@@ -30,5 +27,8 @@ C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\x86\Releas
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\x86\Release\RPi.csproj.GenerateResource.cache
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\x86\Release\RPi.csproj.CoreCompileInputs.cache
 C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\x86\Release\RPi.csproj.CopyComplete
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\x86\Release\Data Logger v2.0.exe
-C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\x86\Release\Data Logger v2.0.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\DataLogger.exe.config
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\DataLogger.exe
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\DataLogger.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\x86\Release\DataLogger.exe
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\obj\x86\Release\DataLogger.pdb
