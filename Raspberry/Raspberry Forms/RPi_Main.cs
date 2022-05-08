@@ -995,6 +995,7 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 1", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+            LogChargeChanges(1);
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -1003,6 +1004,7 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 2", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+            LogChargeChanges(2);
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -1011,6 +1013,7 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 3", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+            LogChargeChanges(3);
         }
 
         private void Button4_Click(object sender, EventArgs e)
@@ -1019,6 +1022,7 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 4", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+            LogChargeChanges(4);
         }
 
         private void Button5_Click(object sender, EventArgs e)
@@ -1027,6 +1031,7 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 5", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+            LogChargeChanges(5);
         }
 
         private void Button6_Click(object sender, EventArgs e)
@@ -1035,6 +1040,7 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 6", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+            LogChargeChanges(6);
         }
 
         private void Button7_Click(object sender, EventArgs e)
@@ -1043,6 +1049,7 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 7", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+            LogChargeChanges(7);
         }
 
         private void Button8_Click(object sender, EventArgs e)
@@ -1051,11 +1058,26 @@ namespace RPi
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = !`VALUE` WHERE `ID` = 8", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
+            LogChargeChanges(8);
         }
 
         private void UpdateCharts_Tick(object sender, EventArgs e)
         {
             if(isGraphEnabled) UpdateGraphSelection();
+            return;
+        }
+        private void LogChargeChanges(int id)
+        {
+            conn.Open();
+            MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `CHARGES` WHERE ID = "+id+" LIMIT 1", conn);
+            var dr = cmd.ExecuteReader();
+            dr.Read();
+            int newstate = dr.GetInt32(0);
+            dr.Close();
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand("INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('RaspberryPi', '127.0.0.1', 1, 'Mettre à jour de l état de charge IN"+id+" à "+newstate+"')", conn);
+            cmd.ExecuteNonQuery();
+            conn.Close();
             return;
         }
     }

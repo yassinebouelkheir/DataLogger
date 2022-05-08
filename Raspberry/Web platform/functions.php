@@ -40,6 +40,73 @@
 
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
         $errormessage = "";
+        
+        if(!empty($_POST["InputParams"]) && 
+            !empty($_POST["InputCondition"]) && 
+            !empty($_POST["InputAction"]) && 
+            !empty($_POST["InputValue"]) && 
+            !empty($_POST["InputRelay"]))
+        {
+            $query = "INSERT INTO `FUNCTIONS` (`USERNAME`, `PARAM`, `CONDITIONS`, `VALUE`, `RELAY`, `FNCT`) VALUES ('".$_SESSION['username']."', ".$_POST["InputParams"].", ".$_POST["InputCondition"].", ".$mysqli->escape_string($_POST["InputValue"]).", ".$_POST["InputRelay"].", ".$_POST["InputAction"].")";
+            $mysqli->query($query) or die($mysqli->error);
+
+            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'création de la nouvelle fonction automatisée (ID : ".$mysqli->insert_id.") qui affecte le status de charge (ID: ".empty($_POST["InputRelay"]).")')";
+            $mysqli->query($query) or die($mysqli->error); 
+        }
+        if(!empty($_POST["RemvFncID"]))
+        {
+            $query = "SELECT `ID` FROM FUNCTIONS WHERE `ID` = ".$mysqli->escape_string($_POST["RemvFncID"]);
+            $result = $mysqli->query($query) or die($mysqli->error);
+            if($result->num_rows != 0)
+            {
+                $query = "DELETE FROM FUNCTIONS WHERE `ID` = ".$mysqli->escape_string($_POST["RemvFncID"]);
+                $mysqli->query($query) or die($mysqli->error);
+
+                $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Suppréssion de la fonction automatisée (ID : ".$_POST["RemvFncID"].")')";
+                $mysqli->query($query) or die($mysqli->error);
+            }
+            else $errormessage = "Identifiant de fonction non valide, veuillez réessayer";
+            $result->free();
+        }
+        function htmlxssprotection($string)
+        {
+            return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+        }
+        function getParam($param)
+        {
+            switch($param)
+            {
+                case 1: return 'C.Faible: Courant DC';
+                case 2: return 'C.Faible: Courant DC';
+                case 3: return 'C.Fort: Courant AC';
+                case 4: return 'C.Fort: Tension AC';
+                case 5: return 'Température Ambiante';
+                case 6: return 'Température du Panneau';
+                case 7: return 'Flux Lumineux';
+                case 8: return 'Humidité Relative';
+                case 9: return 'Vitesse du vent (Aval)';
+                case 10: return 'Vitesse du vent (Amon)';
+                case 11: return 'Turbine';
+                case 12: return 'Éolienne: Courant DC';
+                case 13: return 'Éolienne: Tension DC';
+                case 14: return 'C.Faible: Batterie';
+                case 15: return 'C.Faible: Puissance DC';
+                case 16: return 'C.Fort: Puissance AC';
+                case 17: return 'Irradiation';          
+            }
+        }
+        function getCondition($cond)
+        {
+            switch($cond)
+            {
+                case 1: return '>';
+                case 2: return '<';
+                case 3: return '>=';
+                case 4: return '<=';
+                case 5: return '=';
+                case 6: return '!';
+            }
+        }
     ?>
     <head>
         <meta charset="utf-8">
@@ -175,10 +242,11 @@
                                                     echo '<td>'.$row['ID'].'</td>';
                                                     echo '<td>'.$row['UNIXDATE'].'</td>';
                                                     echo '<td>'.$row['USERNAME'].'</td>';
-                                                    echo '<td>'.$row['PARAM'].'</td>';
-                                                    echo '<td>'.$row['CONDITIONS'].'</td>';
-                                                    echo '<td>'.$row['VALUE'].'</td>';
-                                                    echo '<td>'.$row['FNCT'].'</td>';
+                                                    echo '<td>'.getParam($row['PARAM']).'</td>';
+                                                    echo '<td>'.getCondition($row['CONDITIONS']).'</td>';
+                                                    echo '<td>'.htmlxssprotection($row['VALUE']).'</td>';
+                                                    echo '<td>'.$row['RELAY'].'</td>';
+                                                    echo '<td>'.(($row['FNCT']) ? ("ON") : ("OFF")).'</td>';
                                                     echo '<td>'.$row['EXEC'].' Fois</td>';
                                                     echo '</tr>';
                                                 }
@@ -194,87 +262,75 @@
                 if($_SESSION["P6"] == 1)
                 {
                     echo '<div class="row">';
-                        echo '<div class="col-md-12">';
+                        echo '<div class="col-12">';
                             echo '<div class="card">';
                                 echo '<div class="card-body">';
                                     echo '<h4 class="card-title">Ajouter une nouvelle fonction automatisées</h4>';
-                                    echo '<div id="education_fields"></div>';
-                                    echo '<div class="row">';
-                                        echo '<div class="col-sm-4 nopadding">';
-                                            echo '<div class="form-group">';
-                                                echo '<div class="input-group">';
-                                                    echo '<select class="form-control" id="InputParams" name="InputParams">';
-                                                        echo '<option value="">Paramètres</option>';
-                                                        echo '<option value="14">C.Faible: Batterie</option>';
-                                                        echo '<option value="2">C.Faible: Tension DC</option>';
-                                                        echo '<option value="1">C.Faible: Courant DC</option>';
-                                                        echo '<option value="15">C.Faible: Puissance DC</option>';
-                                                        echo '<option value="4">C.Fort: Tension AC</option>';
-                                                        echo '<option value="3">C.Fort: Courant AC</option>';
-                                                        echo '<option value="16">C.Fort: Puissance AC</option>';
-                                                        echo '<option value="13">Éolienne: Tension DC</option>';
-                                                        echo '<option value="12">Éolienne: Courant DC</option>';
-                                                        echo '<option value="5">Température Ambiante</option>';
-                                                        echo '<option value="6">Température du Panneau</option>';
-                                                        echo '<option value="7">Flux Lumineux</option>';
-                                                        echo '<option value="17">Irradiation</option>';
-                                                        echo '<option value="8">Humidité Relative</option>';
-                                                        echo '<option value="9">Vitesse du vent (Aval)</option>';
-                                                        echo '<option value="10">Vitesse du vent (Amon)</option>';
-                                                        echo '<option value="11">Turbine</option>';
-                                                    echo '</select>';
-                                                echo '</div>';
-                                            echo '</div>';
+                                    echo '<h5 class="card-subtitle text-danger"> <strong>S\'il vous plaît soyez prudent avant deffectuer une commande ici.</strong> </h5>';
+                                    echo '<form action="functions.php" method="POST" class="mt-4">';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Fonction paramètre</label>';
+                                            echo '<select class="custom-select col-12" id="InputParams" name="InputParams">';
+                                                echo '<option value="">Paramètres</option>';
+                                                echo '<option value="14">C.Faible: Batterie</option>';
+                                                echo '<option value="2">C.Faible: Tension DC</option>';
+                                                echo '<option value="1">C.Faible: Courant DC</option>';
+                                                echo '<option value="15">C.Faible: Puissance DC</option>';
+                                                echo '<option value="4">C.Fort: Tension AC</option>';
+                                                echo '<option value="3">C.Fort: Courant AC</option>';
+                                                echo '<option value="16">C.Fort: Puissance AC</option>';
+                                                echo '<option value="13">Éolienne: Tension DC</option>';
+                                                echo '<option value="12">Éolienne: Courant DC</option>';
+                                                echo '<option value="5">Température Ambiante</option>';
+                                                echo '<option value="6">Température du Panneau</option>';
+                                                echo '<option value="7">Flux Lumineux</option>';
+                                                echo '<option value="17">Irradiation</option>';
+                                                echo '<option value="8">Humidité Relative</option>';
+                                                echo '<option value="9">Vitesse du vent (Aval)</option>';
+                                                echo '<option value="10">Vitesse du vent (Amon)</option>';
+                                                echo '<option value="11">Turbine</option>';
+                                            echo '</select>';
                                         echo '</div>';
-                                        echo '<div class="col-sm-2 nopadding">';
-                                            echo '<div class="form-group">';
-                                                echo '<div class="input-group">';
-                                                    echo '<select class="form-control" id="InputCondition" name="InputCondition">';
-                                                        echo '<option value="">Condition</option>';
-                                                        echo '<option value="1">></option>';
-                                                        echo '<option value="2"><</option>';
-                                                        echo '<option value="3">>=</option>';
-                                                        echo '<option value="4"><=</option>';
-                                                        echo '<option value="5">=</option>';
-                                                        echo '<option value="6">!=</option>';
-                                                    echo '</select>';
-                                                echo '</div>';
-                                            echo '</div>';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Condition opérateur</label>';
+                                            echo '<select class="custom-select col-12" id="InputCondition" name="InputCondition">';
+                                                echo '<option value="">Condition</option>';
+                                                echo '<option value="1">></option>';
+                                                echo '<option value="2"><</option>';
+                                                echo '<option value="3">>=</option>';
+                                                echo '<option value="4"><=</option>';
+                                                echo '<option value="5">=</option>';
+                                                echo '<option value="6">!=</option>';
+                                            echo '</select>';
                                         echo '</div>';
-                                        echo '<div class="col-sm-2 nopadding">';
-                                            echo '<div class="form-group">';
-                                                echo '<input type="number" class="form-control" id="InputValue" name="InputValue" value="" placeholder="Valeur">';
-                                            echo '</div>';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Valeur à comparer</label>';
+                                            echo '<input type="number" class="form-control" id="InputValue" name="InputValue" value="" placeholder="Valeur">';
                                         echo '</div>';
-                                        echo '<div class="col-sm-2 nopadding">';
-                                            echo '<div class="form-group">';
-                                                echo '<div class="input-group">';
-                                                    echo '<select class="form-control" id="InputRelay" name="InputRelay">';
-                                                        echo '<option value="">Relais PIN</option>';
-                                                        echo '<option value="1">1</option>';
-                                                        echo '<option value="2">2</option>';
-                                                        echo '<option value="3">3</option>';
-                                                        echo '<option value="4">4</option>';
-                                                        echo '<option value="5">5</option>';
-                                                        echo '<option value="6">6</option>';
-                                                        echo '<option value="6">7</option>';
-                                                        echo '<option value="6">8</option>';
-                                                    echo '</select>';
-                                                echo '</div>';
-                                            echo '</div>';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Relais</label>';
+                                            echo '<select class="form-control" id="InputRelay" name="InputRelay">';
+                                                echo '<option value="">Relais PIN</option>';
+                                                echo '<option value="1">1</option>';
+                                                echo '<option value="2">2</option>';
+                                                echo '<option value="3">3</option>';
+                                                echo '<option value="4">4</option>';
+                                                echo '<option value="5">5</option>';
+                                                echo '<option value="6">6</option>';
+                                                echo '<option value="6">7</option>';
+                                                echo '<option value="6">8</option>';
+                                            echo '</select>';
                                         echo '</div>';
-                                        echo '<div class="col-sm-2 nopadding">';
-                                            echo '<div class="form-group">';
-                                                echo '<div class="input-group">';
-                                                    echo '<select class="form-control" id="InputAction" name="InputAction">';
-                                                        echo '<option value="">Action</option>';
-                                                        echo '<option value="1">ON</option>';
-                                                        echo '<option value="0">OFF</option>';
-                                                    echo '</select>';
-                                                echo '</div>';
-                                            echo '</div>';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Action à effectuer</label>';
+                                            echo '<select class="custom-select col-12" id="InputAction" name="InputAction">';
+                                                echo '<option value="">Action</option>';
+                                                echo '<option value="1">ON</option>';
+                                                echo '<option value="0">OFF</option>';
+                                            echo '</select>';
                                         echo '</div>';
-                                    echo '</div>';
+                                        echo '<button type="submit" class="btn btn-success">Ajouter</button>';
+                                    echo '</form>';
                                 echo '</div>';
                             echo '</div>';
                         echo '</div>';
@@ -286,12 +342,12 @@
                                     echo '<h4 class="card-title">Supprimer une fonction automatisée</h4>';
                                     echo '<h5 class="card-subtitle text-danger"> <strong>S\'il vous plaît soyez prudent avant deffectuer une commande ici.</strong> </h5>';
                                     echo '<h6 class="card-subtitle text-danger"> '.$errormessage.' </h6>';
-                                    echo '<form action="settings.php" method="post" class="mt-4">';
+                                    echo '<form action="functions.php" method="POST" class="mt-4">';
                                         echo '<div class="form-group">';
                                             echo '<label for="RemvFncID">Fonction ID</label>';
                                             echo '<input type="number" class="form-control" id="RemvFncID" name="RemvFncID" placeholder="Fonction ID">';
                                         echo '</div>';
-                                        echo '<button type="submit" class="btn btn-danger">Exécuter</button>';
+                                        echo '<button type="submit" class="btn btn-danger">Supprimer</button>';
                                     echo '</form>';
                                 echo '</div>';
                             echo '</div>';
@@ -306,7 +362,6 @@
             </footer>
         </div>
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
-        <script src="../assets/node_modules/popper/popper.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
         <script src="dist/js/sidebarmenu.js"></script>

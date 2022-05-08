@@ -162,7 +162,7 @@ def getquerytime(x, y=0):
 def receiverHandler():
 	global lastquerytime
 	global rowcounts
-	print('Running. Press CTRL-C to exit.')
+	print('recieverHandler Running. Press CTRL-C to exit.')
 	time.sleep(0.1) 
 	if arduino.isOpen():
 		print("{} connected!".format(arduino.port))
@@ -208,14 +208,24 @@ def receiverHandler():
 			print("KeyboardInterrupt has been caught.")
 			
 
+def automateHandler():
+	print('automateHandler Running. Press CTRL-C to exit.')
+
 if __name__ == "__main__":
 	
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setwarnings(False)
 	GPIO.setup(21, GPIO.OUT)
 	GPIO.output(21, GPIO.LOW)
+
 	reciever = threading.Thread(target=receiverHandler)
 	reciever.start()
+
+	automate = threading.Thread(target=automateHandler)
+	automate.start()
+
 	print("Data Logger v2.0 python script - PFE 2021/2022");
 	GPIO.output(21, GPIO.HIGH)
+
+	reciever.join()
 	reciever.join()
