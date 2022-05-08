@@ -23,9 +23,12 @@
 */
 
 #include <SPI.h>
+#include <DHT.h>
+#include <DHT_U.h>
 #include <nRF24L01.h>
+#include <printf.h>
 #include <RF24.h>
-#include "DHT.h"
+#include <RF24_config.h>
 
 #define DHTPIN 2 
 #define DHTTYPE DHT11

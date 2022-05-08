@@ -24,7 +24,9 @@
 
 #include <SPI.h>
 #include <nRF24L01.h>
+#include <printf.h>
 #include <RF24.h>
+#include <RF24_config.h>
 
 RF24 radio(9, 10);       
 const byte address[6] = "14863";
