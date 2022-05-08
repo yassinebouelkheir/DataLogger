@@ -65,7 +65,6 @@ namespace RPi
             this.Left_Btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.wifilabel = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -77,6 +76,7 @@ namespace RPi
             this.button1 = new System.Windows.Forms.Button();
             this.paramTitle = new System.Windows.Forms.Label();
             this.paramValue = new System.Windows.Forms.Label();
+            this.wifilabel = new System.Windows.Forms.PictureBox();
             this.updateParams = new System.Windows.Forms.Timer(this.components);
             this.updateCharts = new System.Windows.Forms.Timer(this.components);
             this.timelabel = new System.Windows.Forms.Label();
@@ -264,18 +264,6 @@ namespace RPi
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(410, 190);
             this.panel1.TabIndex = 13;
-            // 
-            // wifilabel
-            // 
-            this.wifilabel.BackColor = System.Drawing.Color.Transparent;
-            this.wifilabel.BackgroundImage = global::RPi.Properties.Resources.wifi_solid;
-            this.wifilabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.wifilabel.Location = new System.Drawing.Point(263, 0);
-            this.wifilabel.Name = "wifilabel";
-            this.wifilabel.Size = new System.Drawing.Size(38, 34);
-            this.wifilabel.TabIndex = 15;
-            this.wifilabel.TabStop = false;
-            this.wifilabel.Visible = false;
             // 
             // label2
             // 
@@ -466,6 +454,18 @@ namespace RPi
             this.paramValue.Text = "9999.9 KM/H";
             this.paramValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // wifilabel
+            // 
+            this.wifilabel.BackColor = System.Drawing.Color.Transparent;
+            this.wifilabel.BackgroundImage = global::RPi.Properties.Resources.wifi_solid;
+            this.wifilabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.wifilabel.Location = new System.Drawing.Point(265, 0);
+            this.wifilabel.Name = "wifilabel";
+            this.wifilabel.Size = new System.Drawing.Size(38, 34);
+            this.wifilabel.TabIndex = 15;
+            this.wifilabel.TabStop = false;
+            this.wifilabel.Visible = false;
+            // 
             // updateParams
             // 
             this.updateParams.Enabled = true;
@@ -482,7 +482,7 @@ namespace RPi
             this.timelabel.BackColor = System.Drawing.Color.Transparent;
             this.timelabel.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
             this.timelabel.ForeColor = System.Drawing.Color.Black;
-            this.timelabel.Location = new System.Drawing.Point(298, 2);
+            this.timelabel.Location = new System.Drawing.Point(300, 2);
             this.timelabel.Name = "timelabel";
             this.timelabel.Size = new System.Drawing.Size(145, 32);
             this.timelabel.TabIndex = 14;
