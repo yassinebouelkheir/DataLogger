@@ -54,6 +54,7 @@
                     $_SESSION["P3"] = $row['P3'];
                     $_SESSION["P4"] = $row['P4'];
                     $_SESSION["P5"] = $row['P5'];
+                    $_SESSION["P6"] = $row['P6'];
                 }
                 $BadInfo = 0;
                 $_SESSION['username'] = $username;

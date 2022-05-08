@@ -188,8 +188,8 @@
             else if(strlen($_POST['NewUserPwd']) < 5 || strlen($_POST['NewUserPwd']) > 24) $errormessage2 = "Le mot de passe est invalide, veuillez réessayer.";
             else
             {
-                $query = "INSERT INTO `ACCOUNTS`(`USERNAME`, `PASSWORD`, `P1`, `P2`, `P3`, `P4`, `P5`) VALUES ('".$mysqli->escape_string($_POST['NewUserName'])."', '".$mysqli->escape_string(md5($_POST['NewUserPwd']))."',
-                ".(($_POST['customCheck1'] == 'on') ? (1) : (0)).",".(($_POST['customCheck2'] == 'on') ? (1) : (0)).",".(($_POST['customCheck3'] == 'on') ? (1) : (0)).",".(($_POST['customCheck4'] == 'on') ? (1) : (0)).",".(($_POST['customCheck5'] == 'on') ? (1) : (0)).")";
+                $query = "INSERT INTO `ACCOUNTS`(`USERNAME`, `PASSWORD`, `P1`, `P2`, `P3`, `P4`, `P5`, `P6`) VALUES ('".$mysqli->escape_string($_POST['NewUserName'])."', '".$mysqli->escape_string(md5($_POST['NewUserPwd']))."',
+                ".(($_POST['customCheck1'] == 'on') ? (1) : (0)).",".(($_POST['customCheck2'] == 'on') ? (1) : (0)).",".(($_POST['customCheck3'] == 'on') ? (1) : (0)).",".(($_POST['customCheck4'] == 'on') ? (1) : (0)).",".(($_POST['customCheck5'] == 'on') ? (1) : (0)).",".(($_POST['customCheck6'] == 'on') ? (1) : (0)).")";
                 $mysqli->query($query) or die($query);     
             }
         }
@@ -517,12 +517,11 @@
                             </li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
+                            <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Fonctions</span></a></li>
                             <?php 
                                 if($_SESSION["P2"] == 1 || $_SESSION["P3"] == 1 || $_SESSION["P4"] == 1) {
                                     echo'<li><a class="waves-effect waves-dark active" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Paramètres</span></a></li>';
-                                }
-                            ?>
-                            <?php 
+                                } 
                                 if($_SESSION["P5"] == 1) {
                                     echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
                                 }
@@ -589,6 +588,10 @@
                                                             echo '<div class="custom-control custom-checkbox">';
                                                                 echo '<input type="checkbox" class="custom-control-input" id="customCheck5" name="customCheck5">';
                                                                 echo '<label class="custom-control-label" for="customCheck5">Voir l\'historique</label>';
+                                                            echo '</div>';
+                                                            echo '<div class="custom-control custom-checkbox">';
+                                                                echo '<input type="checkbox" class="custom-control-input" id="customCheck6" name="customCheck6">';
+                                                                echo '<label class="custom-control-label" for="customCheck6">Gérer les fonctions</label>';
                                                             echo '</div>';
                                                         echo '</div>';
                                                     echo '</div>';

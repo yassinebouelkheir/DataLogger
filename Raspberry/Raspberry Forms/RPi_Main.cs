@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Net;
 using System.Windows.Forms;
 using Color = System.Drawing.Color;
 
@@ -50,12 +51,17 @@ namespace RPi
                 };
                 conn.Open();
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySql.Data.MySqlClient.MySqlException)
             {
-                MessageBox.Show(ex.Message, "ERROR: CONNECTION NOT POSSIBLE", MessageBoxButtons.OK);
-                this.Close();
+                System.Windows.Forms.Application.Exit();
             }
             conn.Close();
+
+            if(System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                wifilabel.Visible = true;
+            }
+            else wifilabel.Visible = false;
             panel1.BackColor = System.Drawing.Color.FromArgb(180, 255, 255, 255);
             UpdateSelection();
         }
@@ -427,7 +433,7 @@ namespace RPi
                 if (browseSelection == 0)
                 {
                     label2.Text = "Tension DC";
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 13 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
                     double[] vals = new double[5];
@@ -443,7 +449,7 @@ namespace RPi
                 else if (browseSelection == 1)
                 {
                     label2.Text = "Courant DC";
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 13 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
                     double[] vals = new double[5];
@@ -910,6 +916,15 @@ namespace RPi
 
         private void UpdateParams_Tick(object sender, EventArgs e)
         {
+            string date = DateTime.UtcNow.ToString("dd/MM/yyyy hh:mm");
+            timelabel.Text = date;
+
+            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                wifilabel.Visible = true;
+            }
+            else wifilabel.Visible = false;
+
             if (isChargePanelEnabled) UpdateChargeStatus();
             else if (!isGraphEnabled) UpdateSelection();
             return;

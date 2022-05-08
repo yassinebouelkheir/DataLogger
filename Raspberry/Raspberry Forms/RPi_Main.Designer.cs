@@ -53,6 +53,7 @@ namespace RPi
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RPI_Main));
             this.Sidebar = new System.Windows.Forms.Panel();
             this.Charts = new System.Windows.Forms.Button();
             this.Charges = new System.Windows.Forms.Button();
@@ -64,6 +65,7 @@ namespace RPi
             this.Left_Btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.wifilabel = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -77,8 +79,10 @@ namespace RPi
             this.paramValue = new System.Windows.Forms.Label();
             this.updateParams = new System.Windows.Forms.Timer(this.components);
             this.updateCharts = new System.Windows.Forms.Timer(this.components);
+            this.timelabel = new System.Windows.Forms.Label();
             this.Sidebar.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wifilabel)).BeginInit();
             this.SuspendLayout();
             // 
             // Sidebar
@@ -117,7 +121,7 @@ namespace RPi
             this.Charges.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Charges.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Charges.ForeColor = System.Drawing.Color.White;
-            this.Charges.Image = global::RPi.Properties.Resources.th_solid;
+            this.Charges.Image = ((System.Drawing.Image)(resources.GetObject("Charges.Image")));
             this.Charges.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Charges.Location = new System.Drawing.Point(380, 38);
             this.Charges.Name = "Charges";
@@ -135,7 +139,7 @@ namespace RPi
             this.Meteorologie.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Meteorologie.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Meteorologie.ForeColor = System.Drawing.Color.White;
-            this.Meteorologie.Image = global::RPi.Properties.Resources.snowflake_solid;
+            this.Meteorologie.Image = ((System.Drawing.Image)(resources.GetObject("Meteorologie.Image")));
             this.Meteorologie.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Meteorologie.Location = new System.Drawing.Point(285, 38);
             this.Meteorologie.Name = "Meteorologie";
@@ -153,7 +157,7 @@ namespace RPi
             this.Eolienne.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Eolienne.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Eolienne.ForeColor = System.Drawing.Color.White;
-            this.Eolienne.Image = global::RPi.Properties.Resources.fan_solid;
+            this.Eolienne.Image = ((System.Drawing.Image)(resources.GetObject("Eolienne.Image")));
             this.Eolienne.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Eolienne.Location = new System.Drawing.Point(190, 38);
             this.Eolienne.Name = "Eolienne";
@@ -171,7 +175,7 @@ namespace RPi
             this.Courant_Fort.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Courant_Fort.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Courant_Fort.ForeColor = System.Drawing.Color.White;
-            this.Courant_Fort.Image = global::RPi.Properties.Resources.bolt_solid;
+            this.Courant_Fort.Image = ((System.Drawing.Image)(resources.GetObject("Courant_Fort.Image")));
             this.Courant_Fort.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Courant_Fort.Location = new System.Drawing.Point(95, 38);
             this.Courant_Fort.Name = "Courant_Fort";
@@ -189,7 +193,7 @@ namespace RPi
             this.Courant_Faible.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Courant_Faible.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.Courant_Faible.ForeColor = System.Drawing.Color.White;
-            this.Courant_Faible.Image = global::RPi.Properties.Resources.charging_station_solid;
+            this.Courant_Faible.Image = ((System.Drawing.Image)(resources.GetObject("Courant_Faible.Image")));
             this.Courant_Faible.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Courant_Faible.Location = new System.Drawing.Point(0, 38);
             this.Courant_Faible.Name = "Courant_Faible";
@@ -235,9 +239,9 @@ namespace RPi
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(35, 2);
+            this.label1.Location = new System.Drawing.Point(1, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(410, 32);
+            this.label1.Size = new System.Drawing.Size(302, 32);
             this.label1.TabIndex = 12;
             this.label1.Text = "ESTS LASTIMI - Data Logger v2.0";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -260,6 +264,18 @@ namespace RPi
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(410, 190);
             this.panel1.TabIndex = 13;
+            // 
+            // wifilabel
+            // 
+            this.wifilabel.BackColor = System.Drawing.Color.Transparent;
+            this.wifilabel.BackgroundImage = global::RPi.Properties.Resources.wifi_solid;
+            this.wifilabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.wifilabel.Location = new System.Drawing.Point(299, 0);
+            this.wifilabel.Name = "wifilabel";
+            this.wifilabel.Size = new System.Drawing.Size(38, 34);
+            this.wifilabel.TabIndex = 15;
+            this.wifilabel.TabStop = false;
+            this.wifilabel.Visible = false;
             // 
             // label2
             // 
@@ -461,6 +477,18 @@ namespace RPi
             this.updateCharts.Interval = 60000;
             this.updateCharts.Tick += new System.EventHandler(this.UpdateCharts_Tick);
             // 
+            // timelabel
+            // 
+            this.timelabel.BackColor = System.Drawing.Color.Transparent;
+            this.timelabel.Font = new System.Drawing.Font("Dubai", 12F, System.Drawing.FontStyle.Bold);
+            this.timelabel.ForeColor = System.Drawing.Color.Black;
+            this.timelabel.Location = new System.Drawing.Point(334, 2);
+            this.timelabel.Name = "timelabel";
+            this.timelabel.Size = new System.Drawing.Size(145, 32);
+            this.timelabel.TabIndex = 14;
+            this.timelabel.Text = "05/05/2002 23:29";
+            this.timelabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // RPI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -470,6 +498,8 @@ namespace RPi
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(480, 320);
             this.ControlBox = false;
+            this.Controls.Add(this.wifilabel);
+            this.Controls.Add(this.timelabel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Left_Btn);
@@ -483,6 +513,7 @@ namespace RPi
             this.Load += new System.EventHandler(this.RPI_Main_Load);
             this.Sidebar.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.wifilabel)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -512,5 +543,7 @@ namespace RPi
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer updateCharts;
+        private System.Windows.Forms.Label timelabel;
+        private System.Windows.Forms.PictureBox wifilabel;
     }
 }

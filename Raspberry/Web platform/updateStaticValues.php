@@ -52,10 +52,10 @@
     $data['turbine'] = number_format(round($staticrows[10]['VALUE']), 0);
     $data['turbinewidth'] = round(($staticrows[10]['VALUE']));
 
-    $data['ecurrentdc'] = number_format($staticrows[11]['VALUE'], 2);
-    $data['ecdcwidth'] = $staticrows[11]['VALUE'];
+    $data['ecurrentdc'] = number_format($staticrows[12]['VALUE'], 2);
+    $data['ecdcwidth'] = $staticrows[12]['VALUE'];
 
-    $data['evoltagedc'] = number_format($staticrows[12]['VALUE'], 1);
-    $data['evoltagedcwidth'] = ((($staticrows[12]['VALUE']-12)*100)/13);
+    $data['evoltagedc'] = number_format($staticrows[13]['VALUE'], 1);
+    $data['evoltagedcwidth'] = ((($staticrows[13]['VALUE']-12)*100)/13);
 	echo json_encode($data);
 ?>

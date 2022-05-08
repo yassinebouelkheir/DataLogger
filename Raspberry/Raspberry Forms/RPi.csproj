@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <None Include="Resources\wifi-solid.png" />
     <None Include="Resources\charging-station-solid.png" />
     <None Include="Resources\fan-solid.png" />
     <None Include="Resources\th-solid.png" />
