@@ -102,10 +102,10 @@
             {
                 case 1: return '>';
                 case 2: return '<';
-                case 3: return '>=';
-                case 4: return '<=';
+                case 3: return '≥';
+                case 4: return '≤';
                 case 5: return '=';
-                case 6: return '!=';
+                case 6: return '≠';
             }
         }
     ?>
@@ -299,10 +299,10 @@
                                                 echo '<option value="">Condition</option>';
                                                 echo '<option value="1">></option>';
                                                 echo '<option value="2"><</option>';
-                                                echo '<option value="3">>=</option>';
-                                                echo '<option value="4"><=</option>';
+                                                echo '<option value="3">≥</option>';
+                                                echo '<option value="4">≤</option>';
                                                 echo '<option value="5">=</option>';
-                                                echo '<option value="6">!=</option>';
+                                                echo '<option value="6">≠</option>';
                                             echo '</select>';
                                         echo '</div>';
                                         echo '<div class="form-group">';

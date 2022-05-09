@@ -26,6 +26,7 @@ using System;
 using System.Net;
 using System.Windows.Forms;
 using Color = System.Drawing.Color;
+using ZedGraph;
 
 namespace RPi
 {
@@ -64,8 +65,29 @@ namespace RPi
             else wifilabel.Visible = false;
             panel1.BackColor = System.Drawing.Color.FromArgb(180, 255, 255, 255);
             UpdateSelection();
+            CreateGraph(zedGraphControl1);
         }
 
+        private void CreateGraph(ZedGraphControl zgc)
+        {
+            GraphPane myPane = zgc.GraphPane;
+            myPane.XAxis.Title.Text = "Période";
+            myPane.YAxis.Title.Text = "Valeur";
+
+            double x, y;
+            PointPairList list1 = new PointPairList();
+            for (int i = 0; i < 36; i++)
+            {
+                x = (double)i + 5;
+                y = 1.5 + Math.Sin((double)i * 0.2);
+                list1.Add(x, y);
+            }
+
+            LineItem myCurve = myPane.AddCurve("Paramètre",
+                  list1, Color.Red, SymbolType.Diamond);
+
+            zgc.AxisChange();
+        }
         private void FunctionsUpdate()
         {
             conn.Open();
@@ -1099,6 +1121,7 @@ namespace RPi
             if (!isGraphEnabled)
             {
                 isGraphEnabled = true;
+                zedGraphControl1.Visible = true;
                 Charts.Text = "Passer en mode numérique";
                 paramTitle.Visible = false;
                 paramValue.Visible = false;
@@ -1109,6 +1132,7 @@ namespace RPi
             else
             {
                 isGraphEnabled = false;
+                zedGraphControl1.Visible = false;
                 Charts.Text = "Passer en mode graphique";
                 paramTitle.Visible = true;
                 paramValue.Visible = true;
@@ -1123,7 +1147,7 @@ namespace RPi
             if (!isChargePanelEnabled)
             {
                 Charts.Enabled = false;
-                //if (isGraphEnabled) ;
+                if (isGraphEnabled) zedGraphControl1.Visible = false;
                 Charts.Text = "Passer en mode graphique";
                 isGraphEnabled = false;
                 Left_Btn.Enabled = false;

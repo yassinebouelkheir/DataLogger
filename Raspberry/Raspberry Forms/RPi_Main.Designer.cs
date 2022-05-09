@@ -80,6 +80,7 @@ namespace RPi
             this.updateParams = new System.Windows.Forms.Timer(this.components);
             this.updateCharts = new System.Windows.Forms.Timer(this.components);
             this.timelabel = new System.Windows.Forms.Label();
+            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.Sidebar.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wifilabel)).BeginInit();
@@ -249,6 +250,7 @@ namespace RPi
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.zedGraphControl1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.button7);
@@ -489,6 +491,22 @@ namespace RPi
             this.timelabel.Text = "05/05/2002 23:29";
             this.timelabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // zedGraphControl1
+            // 
+            this.zedGraphControl1.Location = new System.Drawing.Point(1, 28);
+            this.zedGraphControl1.Name = "zedGraphControl1";
+            this.zedGraphControl1.ScrollGrace = 0D;
+            this.zedGraphControl1.ScrollMaxX = 0D;
+            this.zedGraphControl1.ScrollMaxY = 0D;
+            this.zedGraphControl1.ScrollMaxY2 = 0D;
+            this.zedGraphControl1.ScrollMinX = 0D;
+            this.zedGraphControl1.ScrollMinY = 0D;
+            this.zedGraphControl1.ScrollMinY2 = 0D;
+            this.zedGraphControl1.Size = new System.Drawing.Size(408, 161);
+            this.zedGraphControl1.TabIndex = 24;
+            this.zedGraphControl1.UseExtendedPrintDialog = true;
+            this.zedGraphControl1.Visible = false;
+            // 
             // RPI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -545,5 +563,6 @@ namespace RPi
         private System.Windows.Forms.Timer updateCharts;
         private System.Windows.Forms.Label timelabel;
         private System.Windows.Forms.PictureBox wifilabel;
+        private ZedGraph.ZedGraphControl zedGraphControl1;
     }
 }
