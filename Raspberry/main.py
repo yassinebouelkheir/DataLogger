@@ -206,10 +206,6 @@ def receiverHandler():
 							time.sleep(0.01)						
 		except KeyboardInterrupt:
 			print("KeyboardInterrupt has been caught.")
-			
-
-def automateHandler():
-	print('automateHandler Running. Press CTRL-C to exit.')
 
 if __name__ == "__main__":
 	
@@ -221,11 +217,7 @@ if __name__ == "__main__":
 	reciever = threading.Thread(target=receiverHandler)
 	reciever.start()
 
-	automate = threading.Thread(target=automateHandler)
-	automate.start()
-
 	print("Data Logger v2.0 python script - PFE 2021/2022");
 	GPIO.output(21, GPIO.HIGH)
 
-	reciever.join()
 	reciever.join()
