@@ -92,7 +92,8 @@
                 case 14: return 'C.Faible: Batterie';
                 case 15: return 'C.Faible: Puissance DC';
                 case 16: return 'C.Fort: Puissance AC';
-                case 17: return 'Irradiation';          
+                case 17: return 'Éolienne: Puissance DC';
+                case 18: return 'Irradiation';          
             }
         }
         function getCondition($cond)
@@ -104,7 +105,7 @@
                 case 3: return '>=';
                 case 4: return '<=';
                 case 5: return '=';
-                case 6: return '!';
+                case 6: return '!=';
             }
         }
     ?>
@@ -281,10 +282,11 @@
                                                 echo '<option value="16">C.Fort: Puissance AC</option>';
                                                 echo '<option value="13">Éolienne: Tension DC</option>';
                                                 echo '<option value="12">Éolienne: Courant DC</option>';
+                                                echo '<option value="17">Éolienne: Puissance DC</option>';
                                                 echo '<option value="5">Température Ambiante</option>';
                                                 echo '<option value="6">Température du Panneau</option>';
                                                 echo '<option value="7">Flux Lumineux</option>';
-                                                echo '<option value="17">Irradiation</option>';
+                                                echo '<option value="18">Irradiation</option>';
                                                 echo '<option value="8">Humidité Relative</option>';
                                                 echo '<option value="9">Vitesse du vent (Aval)</option>';
                                                 echo '<option value="10">Vitesse du vent (Amon)</option>';
