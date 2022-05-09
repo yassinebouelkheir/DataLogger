@@ -27,6 +27,7 @@ using System.Net;
 using System.Windows.Forms;
 using Color = System.Drawing.Color;
 using ZedGraph;
+using System.Drawing;
 
 namespace RPi
 {
@@ -70,6 +71,8 @@ namespace RPi
 
         private void CreateGraph(ZedGraphControl zgc)
         {
+            zgc.Location = new Point(1, 28);
+            zgc.Size = new Size(408, 161);
             GraphPane myPane = zgc.GraphPane;
             myPane.XAxis.Title.Text = "Période";
             myPane.YAxis.Title.Text = "Valeur";
