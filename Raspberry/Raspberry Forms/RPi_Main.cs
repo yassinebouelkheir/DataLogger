@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using Color = System.Drawing.Color;
 using ZedGraph;
 using System.Drawing;
+using System.Collections;
 
 namespace RPi
 {
@@ -71,24 +72,21 @@ namespace RPi
 
         private void CreateGraph(ZedGraphControl zgc)
         {
-            zgc.Location = new Point(1, 28);
-            zgc.Size = new Size(408, 161);
             GraphPane myPane = zgc.GraphPane;
+            myPane.Title.Text = "My Test Graph";
             myPane.XAxis.Title.Text = "Période";
             myPane.YAxis.Title.Text = "Valeur";
 
             double x, y;
             PointPairList list1 = new PointPairList();
-            for (int i = 0; i < 36; i++)
+            for (int i = 0; i < 6; i++)
             {
                 x = (double)i + 5;
                 y = 1.5 + Math.Sin((double)i * 0.2);
                 list1.Add(x, y);
             }
 
-            LineItem myCurve = myPane.AddCurve("Paramètre",
-                  list1, Color.Red, SymbolType.Diamond);
-
+            LineItem myCurve = myPane.AddCurve("Paramètre", list1, Color.Red, SymbolType.Diamond);
             zgc.AxisChange();
         }
         private void FunctionsUpdate()
