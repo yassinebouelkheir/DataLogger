@@ -88,9 +88,9 @@
                 $mysqli->query($query) or die($mysqli->error);
                 $query = 'UPDATE `UPDATETIME` SET `TIME` = '.$mysqli->escape_string($_POST["updatetime7"]).' WHERE ID = 7';
                 $mysqli->query($query) or die($mysqli->error);
-
-                $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Modification de temps d enregistrement à (".$mysqli->escape_string($_POST["updatetime1"]).", ".$mysqli->escape_string($_POST["updatetime2"]).", ".$mysqli->escape_string($_POST["updatetime3"]).", ".$mysqli->escape_string($_POST["updatetime4"]).", ".$mysqli->escape_string($_POST["updatetime5"]).", ".$mysqli->escape_string($_POST["updatetime6"]).", ".$mysqli->escape_string($_POST["updatetime7"]).")')";
-                 $mysqli->query($query) or die($mysqli->error);
+                
+                $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'User has changed the logging interval to (".$mysqli->escape_string($_POST["updatetime1"]).", ".$mysqli->escape_string($_POST["updatetime2"]).", ".$mysqli->escape_string($_POST["updatetime3"]).", ".$mysqli->escape_string($_POST["updatetime4"]).", ".$mysqli->escape_string($_POST["updatetime5"]).", ".$mysqli->escape_string($_POST["updatetime6"]).", ".$mysqli->escape_string($_POST["updatetime7"]).")')";
+                $mysqli->query($query) or die($mysqli->error);
             }     
         } 
 
@@ -119,8 +119,8 @@
             $mysqli->query($query) or die($mysqli->error);     
             $query = "UPDATE `CHARGES` SET `NAME` = '".$mysqli->escape_string($_POST["chargename8"])."' WHERE ID = 8";
             $mysqli->query($query) or die($mysqli->error); 
-            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Modification du noms des charges')";
-            $mysqli->query($query) or die($mysqli->error);     
+            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'User has changed the relay nicknames')";
+            $mysqli->query($query) or die($mysqli->error);    
         } 
         if(!empty($_POST['UserDelID']))
         {
@@ -179,7 +179,7 @@
                     break;
                 }
             }
-            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Exportation des données de la base de données (type: ".getTypeName($_POST['ExportationType'])." interval: ".getIntervalName($_POST['ExportationInterval']).")')";
+            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'User has exported statistics data from the database (type: ".getTypeName($_POST['ExportationType'])." interval: ".getIntervalName($_POST['ExportationInterval']).")')";
             $mysqli->query($query) or die($mysqli->error); 
         }
         if(!empty($_POST['NewUserName']) && !empty($_POST['NewUserPwd']))
@@ -409,11 +409,11 @@
         {
             switch($type)
             {
-                case 1: return "Courant Faible";
-                case 2: return "Courant Fort";
-                case 3: return "Éolienne";
-                case 4: return "Météorologie";
-                case 5: return "Vitesse du vent";
+                case 1: return "L.Current";
+                case 2: return "H.Current";
+                case 3: return "Wind Turbine";
+                case 4: return "Meteorology";
+                case 5: return "Speed of wind";
             }
         }
 
@@ -422,12 +422,12 @@
             switch($intrvl)
             {
                 case 1: return "60 minutes";
-                case 2: return "24 heures";
-                case 3: return "7 jours";
-                case 4: return "30 jours";
-                case 5: return "3 mois";
-                case 6: return "12 mois";
-                case 7: return "Tout";
+                case 2: return "24 hours";
+                case 3: return "7 days";
+                case 4: return "30 days";
+                case 5: return "3 months";
+                case 6: return "12 months";
+                case 7: return "All time";
             }           
         }
 

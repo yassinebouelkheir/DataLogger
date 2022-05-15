@@ -50,7 +50,7 @@
             $query = "INSERT INTO `FUNCTIONS` (`USERNAME`, `PARAM`, `CONDITIONS`, `VALUE`, `RELAY`, `FNCT`) VALUES ('".$_SESSION['username']."', ".$_POST["InputParams"].", ".$_POST["InputCondition"].", ".$mysqli->escape_string($_POST["InputValue"]).", ".$_POST["InputRelay"].", ".$_POST["InputAction"].")";
             $mysqli->query($query) or die($mysqli->error);
 
-            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'création de la nouvelle fonction automatisée (ID : ".$mysqli->insert_id.") qui affecte le status de charge (ID: ".empty($_POST["InputRelay"]).")')";
+            $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'User has created a new automated function (ID : ".$mysqli->insert_id.") which affects the status of relay (ID: ".empty($_POST["InputRelay"]).")')";
             $mysqli->query($query) or die($mysqli->error); 
         }
         if(!empty($_POST["RemvFncID"]))
@@ -61,8 +61,8 @@
             {
                 $query = "DELETE FROM FUNCTIONS WHERE `ID` = ".$mysqli->escape_string($_POST["RemvFncID"]);
                 $mysqli->query($query) or die($mysqli->error);
-
-                $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'Suppréssion de la fonction automatisée (ID : ".$_POST["RemvFncID"].")')";
+                
+                $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'User has removed the automated function (ID : ".$_POST["RemvFncID"].")')";
                 $mysqli->query($query) or die($mysqli->error);
             }
             else $errormessage = "Identifiant de fonction non valide, veuillez réessayer";

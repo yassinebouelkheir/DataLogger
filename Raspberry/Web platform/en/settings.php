@@ -90,7 +90,7 @@
                 $mysqli->query($query) or die($mysqli->error);
 
                 $query = "INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('".$_SESSION['username']."', '".$_SERVER['REMOTE_ADDR']."', 1, 'User has changed the logging interval to (".$mysqli->escape_string($_POST["updatetime1"]).", ".$mysqli->escape_string($_POST["updatetime2"]).", ".$mysqli->escape_string($_POST["updatetime3"]).", ".$mysqli->escape_string($_POST["updatetime4"]).", ".$mysqli->escape_string($_POST["updatetime5"]).", ".$mysqli->escape_string($_POST["updatetime6"]).", ".$mysqli->escape_string($_POST["updatetime7"]).")')";
-                 $mysqli->query($query) or die($mysqli->error);
+                $mysqli->query($query) or die($mysqli->error);
             }     
         } 
 

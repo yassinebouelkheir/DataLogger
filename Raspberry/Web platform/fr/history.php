@@ -39,6 +39,13 @@
         }
 
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
+        include('http://www.phpclasses.org/browse/download/1/file/28706/name/api_googletranslate.class.php');
+
+
+        function translate($str)
+        {
+            return $str
+        }
     ?>
     <head>
         <meta charset="utf-8">
@@ -204,7 +211,7 @@
                                                     echo '<td>'.$row['UNIXDATE'].'</td>';
                                                     echo '<td>'.$row['USERNAME'].'</td>';
                                                     echo '<td>'.$row['IP'].'</td>';
-                                                    echo '<td>'.$row['VALUE'].'</td>';
+                                                    echo '<td>'.translate($row['VALUE']).'</td>';
                                                     echo '</tr>';
                                                 }
                                             ?>
