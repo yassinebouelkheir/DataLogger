@@ -49,8 +49,8 @@
         <meta name="author" content="BOUELKHEIR Yassine">
         <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-        <title>Data logger - Historique</title>
-        <link href="dist/css/style.min.css" rel="stylesheet">
+        <title>Data logger - History</title>
+        <link href="../dist/css/style.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="../assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
@@ -58,7 +58,7 @@
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">Data logger v2.0 - Historique</p>
+                <p class="loader__label">Data logger v2.0 - History</p>
             </div>
         </div>
         <div id="main-wrapper">
@@ -78,7 +78,7 @@
                             <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down"><?php echo $_SESSION["username"]; ?> &nbsp;<i class="fa fa-angle-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Déconnexion</a>
+                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
                                 </div>
                             </li>
                         </ul>
@@ -95,35 +95,36 @@
                             <li class="user-pro text-center">
                                 <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="120" width="140" style="margin-right: 13px;">
                             </li>
-                            <li class="nav-small-cap">--- Menu Principal</li>
+                            <li class="nav-small-cap">--- Dashboard</li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Courant Faible</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Low current</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Courant Fort</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;High current</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Éolienne</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Wind Turbine</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Météorologie</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Meteorology</span></a>
                             </li>
+                            <li class="nav-small-cap">--- Main settings</li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
-                            <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Fonctions</span></a></li>
+                            <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Functions</span></a></li>
                             <?php 
                                 if($_SESSION["P2"] == 1 || $_SESSION["P3"] == 1 || $_SESSION["P4"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Paramètres</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Settings</span></a></li>';
                                 }
                                 if($_SESSION["P5"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark active" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark active" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;History</span></a></li>';
                                 }
                             ?>
-                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
+                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Logout</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -139,7 +140,7 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Historique</li>
+                                    <li class="breadcrumb-item active">History</li>
                                 </ol>
                             </div>
                         </div>
@@ -148,14 +149,15 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Historique de connexion</h4>
+                                    <h4 class="card-title">Connections history</h4>
+                                    <h5 class="card-subtitle">Here you see the history of user connections to the platform</h5>
                                     <div class="table-responsive m-t-20">
                                         <table id="myTable1" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Date</th>
-                                                    <th>Nom d'utilisateur</th>
-                                                    <th>Adresse IP</th>
+                                                    <th>Username</th>
+                                                    <th>IP Address</th>
                                                     <th>Location</th>
                                                     <th>ISP</th>
                                                 </tr>
@@ -182,16 +184,16 @@
                             </div>
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Historique des modifications</h4>
-                                    <h5 class="card-subtitle">Ici vous trouvez toutes les modifications qui ont été apportées au système</h5>
+                                    <h4 class="card-title">Changes history</h4>
+                                    <h5 class="card-subtitle">Here you find all the changes that have been made to the system</h5>
                                     <div class="table-responsive m-t-20">
                                         <table id="myTable2" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Date</th>
-                                                    <th>Nom d'utilisateur</th>
-                                                    <th>Adresse IP</th>
-                                                    <th>Modification</th>
+                                                    <th>Username</th>
+                                                    <th>IP Address</th>
+                                                    <th>Changes</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -224,9 +226,9 @@
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
         <script src="../assets/node_modules/popper/popper.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="dist/js/sidebarmenu.js"></script>
-        <script src="dist/js/custom.min.js"></script>
+        <script src="../dist/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../dist/js/sidebarmenu.js"></script>
+        <script src="../dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="../assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
         <script>

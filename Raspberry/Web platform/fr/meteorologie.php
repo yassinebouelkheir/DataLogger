@@ -142,8 +142,8 @@
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - Météorologie</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
-        <link href="dist/css/style.min.css" rel="stylesheet">
-        <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
+        <link href="../dist/css/style.min.css" rel="stylesheet">
+        <link href="../dist/css/pages/dashboard1.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
@@ -562,9 +562,9 @@
         </div>
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="dist/js/sidebarmenu.js"></script>
-        <script src="dist/js/custom.min.js"></script>
+        <script src="../dist/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../dist/js/sidebarmenu.js"></script>
+        <script src="../dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/raphael/raphael-min.js"></script>
         <script src="../assets/node_modules/morrisjs/morris.min.js"></script>
         <script type="text/javascript">

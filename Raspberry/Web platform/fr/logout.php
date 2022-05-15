@@ -25,22 +25,9 @@
 <?php
     error_reporting(0);
     session_start();
-    if(!isset($_SESSION["username"])) 
+    session_unset();
+    if(session_destroy()) 
     {
-        header("Location: /en/login.php");
-        exit();
-    }
-    else
-    {
-        if($_SESSION["language"])
-        {
-            header("Location: /en/login.php");
-            exit();            
-        }
-        else
-        {
-            header("Location: /fr/login.php");
-            exit();
-        }
+        header("Location: login.php");
     }
 ?>

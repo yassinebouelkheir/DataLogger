@@ -100,17 +100,17 @@
         <meta name="author" content="BOUELKHEIR Yassine">
         <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-        <title>Data logger - Courant Fort</title>
+        <title>Data logger - High current</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
-        <link href="dist/css/style.min.css" rel="stylesheet">
-        <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
+        <link href="../dist/css/style.min.css" rel="stylesheet">
+        <link href="../dist/css/pages/dashboard1.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">Data logger v2.0 - Courant Fort</p>
+                <p class="loader__label">Data logger v2.0 - High current</p>
             </div>
         </div>
         <div id="main-wrapper">
@@ -130,7 +130,7 @@
                             <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down"><?php echo $_SESSION["username"]; ?> &nbsp;<i class="fa fa-angle-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Déconnexion</a>
+                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
                                 </div>
                             </li>
                         </ul>
@@ -147,35 +147,36 @@
                             <li class="user-pro text-center">
                                 <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="120" width="140" style="margin-right: 13px;">
                             </li>
-                            <li class="nav-small-cap">--- Menu Principal</li>
+                            <li class="nav-small-cap">--- Dashboard</li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Courant Faible</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Low current</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark active" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Courant Fort</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;High current</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Éolienne</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Wind Turbine</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Météorologie</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Meteorology</span></a>
                             </li>
+                            <li class="nav-small-cap">--- Main settings</li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
-                            <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Fonctions</span></a></li>
+                            <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Functions</span></a></li>
                             <?php 
                                 if($_SESSION["P2"] == 1 || $_SESSION["P3"] == 1 || $_SESSION["P4"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Paramètres</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Settings</span></a></li>';
                                 }
                                 if($_SESSION["P5"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;History</span></a></li>';
                                 }
                             ?>
-                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
+                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Logout</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -191,7 +192,7 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Courant Fort</li>
+                                    <li class="breadcrumb-item active">High current</li>
                                 </ol>
                             </div>
                         </div>
@@ -204,7 +205,7 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-bolt"></i></h3>
-                                                <p class="text-danger" id="voltageactitle">TENSION AC</p>
+                                                <p class="text-danger" id="voltageactitle">AC VOLTAGE</p>
                                             </div>
                                             <div class="ml-auto">
                                                 <h2 class="counter text-danger" id="voltageac">0.0 V</h2>
@@ -226,7 +227,7 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-exchange-alt"></i></h3>
-                                                <p class="text-danger" id="currentactitle">COURANT AC</p>
+                                                <p class="text-danger" id="currentactitle">AC CURRENT</p>
                                             </div>
                                             <div class="ml-auto">
                                                 <h2 class="counter text-danger" id="currentac">0.0 A</h2>
@@ -248,7 +249,7 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-fire"></i></h3>
-                                                    <p class="text-danger" id="puissanceactitle">PUISSANCE AC</p>
+                                                    <p class="text-danger" id="puissanceactitle">AC POWER</p>
                                             </div>
                                             <div class="ml-auto">
                                                 <h2 class="counter text-danger" id="puissanceac">0.0 W</h2>
@@ -269,10 +270,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">TENSION AC</h5>
+                                        <h5 class="card-title ">AC VOLTAGE</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-purple"></i> Tension moyenne: <?php echo getaverage($voltageacrows); ?> V</li>
+                                                <li><i class="fa fa-circle text-purple"></i> Average Voltage: <?php echo getaverage($voltageacrows); ?> V</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -286,10 +287,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">COURANT AC</h5>
+                                        <h5 class="card-title ">AC CURRENT</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-primary"></i> COURANT AC moyenne: <?php echo getaverage($currentacrows); ?> A</li>
+                                                <li><i class="fa fa-circle text-primary"></i> Average Current: <?php echo getaverage($currentacrows); ?> A</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -303,10 +304,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex m-b-40 align-items-center no-block">
-                                        <h5 class="card-title ">PUISSANCE AC</h5>
+                                        <h5 class="card-title ">AC POWER</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Puissance AC moyenne: <?php echo (getaverage($currentacrows)*getaverage($voltageacrows));?> W</li>
+                                                <li><i class="fa fa-circle text-info"></i> Average Power: <?php echo (getaverage($currentacrows)*getaverage($voltageacrows));?> W</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -323,9 +324,9 @@
         </div>
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="dist/js/sidebarmenu.js"></script>
-        <script src="dist/js/custom.min.js"></script>
+        <script src="../dist/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../dist/js/sidebarmenu.js"></script>
+        <script src="../dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/raphael/raphael-min.js"></script>
         <script src="../assets/node_modules/morrisjs/morris.min.js"></script>
         <script type="text/javascript">
@@ -370,7 +371,7 @@
                     }]
                     , xkey: 'period'
                     , ykeys: ['voltageac']
-                    , labels: ['Tension AC']
+                    , labels: ['AC Voltage']
                     , parseTime: false
                     , ymax: 440
                     , pointSize: 3
@@ -423,7 +424,7 @@
                     }]
                     , xkey: 'period'
                     , ykeys: ['currentac']
-                    , labels: ['Courant AC']
+                    , labels: ['AC Current']
                     , parseTime: false
                     , pointSize: 3
                     , fillOpacity: 0
@@ -475,7 +476,7 @@
                     }]
                     , xkey: 'period'
                     , ykeys: ['puissanceac']
-                    , labels: ['PUISSANCE AC']
+                    , labels: ['AC Power']
                     , parseTime: false
                     , pointSize: 3
                     , fillOpacity: 0

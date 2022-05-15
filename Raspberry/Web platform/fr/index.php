@@ -14,12 +14,12 @@
 -->
 
 <!--
-   ScriptName    : eolienne.php
+   ScriptName    : index.php
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 01/05/2022
+   Created       : 18/03/2022
    License       : GNU General v3.0
-   Developers    : BOUELKHEIR Yassine
+   Developers    : BOUELKHEIR Yassine 
 -->
 
 <!DOCTYPE html>
@@ -40,7 +40,7 @@
 
         $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");   
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 12 ORDER BY `UNIXDATE` DESC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 1 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query) or die($mysqli->error);
         $currentdcrows = array();
         while($row = $result->fetch_assoc()) {
@@ -49,7 +49,7 @@
         $result->free();
 
 
-        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 13 ORDER BY `UNIXDATE` DESC LIMIT 10';
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 2 ORDER BY `UNIXDATE` DESC LIMIT 10';
         $result = $mysqli->query($query);
         $voltagedcrows = array();
         while($row = $result->fetch_assoc()) {
@@ -101,30 +101,30 @@
         <meta name="author" content="BOUELKHEIR Yassine">
         <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-        <title>Data logger - Éolienne</title>
+        <title>Data logger - Courant Faible</title>
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
-        <link href="dist/css/style.min.css" rel="stylesheet">
-        <link href="dist/css/pages/dashboard1.css" rel="stylesheet">
+        <link href="../dist/css/style.min.css" rel="stylesheet">
+        <link href="../dist/css/pages/dashboard1.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">Data logger v2.0 - Éolienne</p>
+                <p class="loader__label">Data logger v2.0 - Courant Faible</p>
             </div>
         </div>
         <div id="main-wrapper">
             <header class="topbar">
                 <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="eolienne.php">
+                        <a class="navbar-brand" href="index.php">
                             <span>  
                     </div>
                     <div class="navbar-collapse">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="eolienne.php"><i class="ti-reload"></i></a> </li>
-                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="eolienne.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="index.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="index.php"><i class="ti-reload"></i></a> </li>
                         </ul>
 
                         <ul class="navbar-nav my-lg-0">
@@ -150,7 +150,7 @@
                             </li>
                             <li class="nav-small-cap">--- Menu Principal</li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
+                                <a class="waves-effect waves-dark active" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
                                 <span class="hide-menu">&nbsp;&nbsp;Courant Faible</span></a>
                             </li>
                             <li> 
@@ -158,7 +158,7 @@
                                 <span class="hide-menu">&nbsp;&nbsp;&nbsp;Courant Fort</span></a>
                             </li>
                             <li> 
-                                <a class="waves-effect waves-dark active" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
+                                <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
                                 <span class="hide-menu">&nbsp;&nbsp;Éolienne</span></a>
                             </li>
                             <li> 
@@ -166,7 +166,7 @@
                                 <span class="hide-menu">&nbsp;&nbsp;Météorologie</span></a>
                             </li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
-                            </li>
+                            </li>                            
                             <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Fonctions</span></a></li>
                             <?php 
                                 if($_SESSION["P2"] == 1 || $_SESSION["P3"] == 1 || $_SESSION["P4"] == 1) {
@@ -192,8 +192,32 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Éolienne</li>
+                                    <li class="breadcrumb-item active">Courant Faible</li>
                                 </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div>
+                                                <h3><i class="fas fa-battery-three-quarters"></i></h3>
+                                                <p class="text-danger" id="batterietitle">BATTERIE</p>
+                                            </div>
+                                            <div class="ml-auto">
+                                                <h2 class="counter text-danger" id="batterie">0%</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" role="progressbar" id="batteriewidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -324,9 +348,9 @@
         </div>
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="dist/js/sidebarmenu.js"></script>
-        <script src="dist/js/custom.min.js"></script>
+        <script src="../dist/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../dist/js/sidebarmenu.js"></script>
+        <script src="../dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/raphael/raphael-min.js"></script>
         <script src="../assets/node_modules/morrisjs/morris.min.js"></script>
         <script type="text/javascript">
@@ -436,7 +460,6 @@
                     , lineColors: ['#fb9678']
                     , resize: true
                 });
-                
                 Morris.Area({
                     element: 'morris-area-chart7'
                     , data: [{
@@ -489,71 +512,88 @@
                     , resize: true
                 });
             
-                function refresh() {
-                $.ajax({
-                    url: './updateStaticValues.php',
-                    type: 'post',
-                    dataType: "json",
-                    success: function (response) {
-                        
-                        document.getElementById('voltagedc').innerHTML = response.evoltagedc + " V";
-                        document.getElementById('tensiondcwidth').setAttribute("style", "width: " + response.evoltagedcwidth + "%; height: 6px;");
-                        if(response.evoltagedc < 14) {
-                            document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('voltagedc').setAttribute("class", "counter text-danger");
-                            document.getElementById('voltagedctitle').setAttribute("class", "text-danger");
-                        }
-                        else if(response.evoltagedc < 20) {
-                            document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('voltagedc').setAttribute("class", "counter text-primary");
-                            document.getElementById('voltagedctitle').setAttribute("class", "text-primary");
-                        }
-                        else if(response.evoltagedc >= 20){
-                            document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('voltagedc').setAttribute("class", "counter text-success");
-                            document.getElementById('voltagedctitle').setAttribute("class", "text-success");
-                        }
+            function refresh() {
+            $.ajax({
+                url: './updateStaticValues.php',
+                type: 'post',
+                dataType: "json",
+                success: function (response) {
+                    document.getElementById('batterie').innerHTML = response.battery + " %";
+                    document.getElementById('batteriewidth').setAttribute("style", "width: " + response.batterywidth + "%; height: 6px;");
+                    if(response.batterie <= 20) {
+                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('batterie').setAttribute("class", "counter text-danger");
+                        document.getElementById('batterietitle').setAttribute("class", "text-danger");
+                    }
+                    else if(response.batterie <= 50) {
+                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('batterie').setAttribute("class", "counter text-primary");
+                        document.getElementById('batterietitle').setAttribute("class", "text-primary");
+                    }
+                    else if(response.batterie > 50){
+                        document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('batterie').setAttribute("class", "counter text-success");
+                        document.getElementById('batterietitle').setAttribute("class", "text-success");
+                    }
 
-                        document.getElementById('currentdc').innerHTML = response.ecurrentdc + " A";
-                        document.getElementById('currentdcwidth').setAttribute("style", "width: " + response.ecdcwidth + "%; height: 6px;");
-                        if(response.ecurrentdc < 15) {
-                            document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('currentdc').setAttribute("class", "counter text-success");
-                            document.getElementById('currentdctitle').setAttribute("class", "text-success");
-                        }
-                        else if(response.ecurrentdc < 25) {
-                            document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('currentdc').setAttribute("class", "counter text-primary");
-                            document.getElementById('currentdctitle').setAttribute("class", "text-primary");
-                        }
-                        else if(response.ecurrentdc >= 25) {
-                            document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('currentdc').setAttribute("class", "counter text-danger");
-                            document.getElementById('currentdctitle').setAttribute("class", "text-danger");
-                        }
+                    document.getElementById('voltagedc').innerHTML = response.voltagedc + " V";
+                    document.getElementById('tensiondcwidth').setAttribute("style", "width: " + response.voltagedcwidth + "%; height: 6px;");
+                    if(response.voltagedc < 14) {
+                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('voltagedc').setAttribute("class", "counter text-danger");
+                        document.getElementById('voltagedctitle').setAttribute("class", "text-danger");
+                    }
+                    else if(response.voltagedc < 20) {
+                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('voltagedc').setAttribute("class", "counter text-primary");
+                        document.getElementById('voltagedctitle').setAttribute("class", "text-primary");
+                    }
+                    else if(response.voltagedc >= 20){
+                        document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('voltagedc').setAttribute("class", "counter text-success");
+                        document.getElementById('voltagedctitle').setAttribute("class", "text-success");
+                    }
 
-                        document.getElementById('puissancedc').innerHTML = (response.evoltagedc*response.ecurrentdc).toFixed(1) + " W";
-                        document.getElementById('puissancedcwidth').setAttribute("style", "width: " + ((response.evoltagedc*response.ecurrentdc)*100)/720 + "%; height: 6px;");
-                        if((response.evoltagedc*response.ecurrentdc) > 600) {
-                            document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('puissancedc').setAttribute("class", "counter text-danger");
-                            document.getElementById('puissancedctitle').setAttribute("class", "text-danger");
-                        }
-                        else if((response.evoltagedc*response.ecurrentdc) > 300) {
-                            document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('puissancedc').setAttribute("class", "counter text-primary");
-                            document.getElementById('puissancedctitle').setAttribute("class", "text-primary");
-                        }
-                        else {
-                            document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('puissancedc').setAttribute("class", "counter text-success");
-                            document.getElementById('puissancedctitle').setAttribute("class", "text-success");
-                        }
-                    }});
-                }
+                    document.getElementById('currentdc').innerHTML = response.currentdc + " A";
+                    document.getElementById('currentdcwidth').setAttribute("style", "width: " + response.cdcwidth + "%; height: 6px;");
+                    if(response.currentdc < 15) {
+                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('currentdc').setAttribute("class", "counter text-success");
+                        document.getElementById('currentdctitle').setAttribute("class", "text-success");
+                    }
+                    else if(response.currentdc < 25) {
+                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('currentdc').setAttribute("class", "counter text-primary");
+                        document.getElementById('currentdctitle').setAttribute("class", "text-primary");
+                    }
+                    else if(response.currentdc >= 25) {
+                        document.getElementById('currentdcwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('currentdc').setAttribute("class", "counter text-danger");
+                        document.getElementById('currentdctitle').setAttribute("class", "text-danger");
+                    }
+
+                    document.getElementById('puissancedc').innerHTML = (response.voltagedc*response.currentdc).toFixed(1) + " W";
+                    document.getElementById('puissancedcwidth').setAttribute("style", "width: " + ((response.voltagedc*response.currentdc)*100)/720 + "%; height: 6px;");
+                    if((response.voltagedc*response.currentdc) > 600) {
+                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-danger");
+                        document.getElementById('puissancedc').setAttribute("class", "counter text-danger");
+                        document.getElementById('puissancedctitle').setAttribute("class", "text-danger");
+                    }
+                    else if((response.voltagedc*response.currentdc) > 300) {
+                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-primary");
+                        document.getElementById('puissancedc').setAttribute("class", "counter text-primary");
+                        document.getElementById('puissancedctitle').setAttribute("class", "text-primary");
+                    }
+                    else {
+                        document.getElementById('puissancedcwidth').setAttribute("class", "progress-bar bg-success");
+                        document.getElementById('puissancedc').setAttribute("class", "counter text-success");
+                        document.getElementById('puissancedctitle').setAttribute("class", "text-success");
+                    }
+                }});
+            }
             setInterval(function(){
                 refresh() 
-            }, 600);
+            }, 400);
         });
         </script>
     </body>

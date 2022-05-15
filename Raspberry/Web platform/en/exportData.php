@@ -36,8 +36,8 @@
         $_SESSION['LAST_ACTIVITY'] = time();
     }
 
-    require('classes/PHPExcel.php');
-    require_once 'classes/PHPExcel/IOFactory.php';
+    require('../classes/PHPExcel.php');
+    require_once '../classes/PHPExcel/IOFactory.php';
 
     if (isset($_GET['interval'])) 
     {
@@ -48,10 +48,43 @@
 
         $type = stripslashes($_GET['type']);
 
-        if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple_'.$type.'.xlsx');
-        else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple_1.xlsx');
-        else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('assets/exemple_'.($type-1).'.xlsx');
-
+        switch($_GET['lang'])
+        {
+            case 1: 
+            {
+                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/en/assets/exemple_'.$type.'.xlsx');
+                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/en/exemple_1.xlsx');
+                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/en/exemple_'.($type-1).'.xlsx');
+                break;
+            }
+            case 2:
+            {
+                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/fr/assets/exemple_'.$type.'.xlsx');
+                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/fr/exemple_1.xlsx');
+                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/fr/exemple_'.($type-1).'.xlsx');
+                break;
+            }
+            case 3: 
+            {
+                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/es/assets/exemple_'.$type.'.xlsx');
+                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/es/exemple_1.xlsx');
+                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/es/exemple_'.($type-1).'.xlsx');
+                break;
+            }
+            case 4: 
+            {
+                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/de/assets/exemple_'.$type.'.xlsx');
+                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/de/exemple_1.xlsx');
+                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/de/exemple_'.($type-1).'.xlsx');
+                break;
+            }
+            default: 
+            {
+                header("Location: login.php");
+                exit();
+                break;
+            }
+        }
         $objPHPExcel->setActiveSheetIndex(0);
         $objPHPExcel->getActiveSheet()->setCellValue('B9', strftime('%d/%m/%Y').' '.strftime('%H:%M'));
 

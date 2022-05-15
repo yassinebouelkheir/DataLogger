@@ -59,6 +59,7 @@
                 $BadInfo = 0;
                 $_SESSION['username'] = $username;
                 $_SESSION['LAST_ACTIVITY'] = time();
+                $_SESSION["language"] = 1;
                 
                 $LocationArray = json_decode(file_get_contents('http://ip-get-geolocation.com/api/json/'.$_SERVER['REMOTE_ADDR']), true);
                 $result->close();
@@ -85,8 +86,8 @@
         <meta name="author" content="">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - Login</title>
-        <link href="dist/css/pages/login-register-lock.css" rel="stylesheet">
-        <link href="dist/css/style.min.css" rel="stylesheet">
+        <link href="../dist/css/pages/login-register-lock.css" rel="stylesheet">
+        <link href="../dist/css/style.min.css" rel="stylesheet">
     </head>
     <body class="skin-default card-no-border" oncontextmenu="return false">
         <div class="preloader">
@@ -103,24 +104,24 @@
                     <div class="card-body">
                         <form class="form-horizontal form-material" id="loginform" method="post">
                             <br>
-                            <h3 class="text-center m-b-20">Connectez-vous</h3>
+                            <h3 class="text-center m-b-20">Login</h3>
                             <br>
                             <div class="form-group ">
                                 <div class="col-xs-12">
-                                    <input class="form-control" type="text" required="" id="username" name="username" placeholder=" Nom d'utilisateur"> </div>
+                                    <input class="form-control" type="text" required="" id="username" name="username" placeholder=" Username"> </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <input class="form-control" type="password" required="" id="password" name="password" placeholder=" Mot de passe"> </div>
+                                    <input class="form-control" type="password" required="" id="password" name="password" placeholder=" Password"> </div>
                             </div>
                             <br>
                             <?php 
-                                if($BadInfo == 1) echo '<h6 class="text-center m-b-20 text-danger">Votre informations de connexion sont incorrect.</h6>';
+                                if($BadInfo == 1) echo '<h6 class="text-center m-b-20 text-danger">Your username or password is incorrect.</h6>';
                             ?>
                             <br>
                             <div class="form-group text-center">
                                 <div class="col-xs-12 p-b-20">
-                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Connexion</button>
+                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Sign in</button>
                                 </div>
                             </div>
                         </form>

@@ -69,8 +69,8 @@
         <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - Charges</title>
-        <link href="dist/css/style.min.css" rel="stylesheet">
-        <link href="dist/css/pages/pricing-page.css" rel="stylesheet">
+        <link href="../dist/css/style.min.css" rel="stylesheet">
+        <link href="../dist/css/pages/pricing-page.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
@@ -97,7 +97,7 @@
                             <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down"><?php echo $_SESSION["username"]; ?> &nbsp;<i class="fa fa-angle-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Déconnexion</a>
+                                    <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
                                 </div>
                             </li>
                         </ul>
@@ -114,35 +114,36 @@
                             <li class="user-pro text-center">
                                 <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="120" width="140" style="margin-right: 13px;">
                             </li>
-                            <li class="nav-small-cap">--- Menu Principal</li>
+                            <li class="nav-small-cap">--- Dashboard</li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Courant Faible</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Low current</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="courantfort.php" aria-expanded="false"><i class="fas fa-bolt"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Courant Fort</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;High current</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="eolienne.php" aria-expanded="false"><i class="fas fa-fan"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Éolienne</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Wind Turbine</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Météorologie</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Meteorology</span></a>
                             </li>
+                            <li class="nav-small-cap">--- Main settings</li>
                             <li> <a class="waves-effect waves-dark active" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
-                            <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Fonctions</span></a></li>
+                            <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Functions</span></a></li>
                             <?php 
                                 if($_SESSION["P2"] == 1 || $_SESSION["P3"] == 1 || $_SESSION["P4"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Paramètres</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Settings</span></a></li>';
                                 }
                                 if($_SESSION["P5"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;History</span></a></li>';
                                 }
                             ?>
-                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
+                            <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Logout</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -172,21 +173,21 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN1</h4>
+                                                        <h4 class="text-center">Relay PIN: IN1</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[0]['NAME']); ?></strong></h3>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-success">Available</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[0]['VALUE'] == 0)
                                                             {
-                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=1&value=1'\">Allumer</button>");
+                                                                echo '<div class="price-row">Status: OFF<i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=1&value=1'\">Switch ON</button>");
                                                             }
                                                             else
                                                             {
-                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=1&value=0'\">Éteindre</button>");                                                               
+                                                                echo '<div class="price-row">Status: ON<i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=1&value=0'\">Switch OFF</button>");                                                               
                                                             }
                                                         ?>
                                                         </div>
@@ -198,21 +199,21 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN2</h4>
+                                                        <h4 class="text-center">Relay PIN: IN2</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[1]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-success">Available</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[1]['VALUE'] == 0)
                                                             {
-                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=2&value=1'\">Allumer</button>");
+                                                                echo '<div class="price-row">Status: OFF<i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=2&value=1'\">Switch ON</button>");
                                                             }
                                                             else
                                                             {
-                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=2&value=0'\">Éteindre</button>");                                                            
+                                                                echo '<div class="price-row">Status: ON<i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=2&value=0'\">Switch OFF</button>");                                                            
                                                             }
                                                         ?>
                                                         </div>
@@ -224,23 +225,23 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN3</h4>
+                                                        <h4 class="text-center">Relay PIN: IN3</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[2]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-success">Available</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[2]['VALUE'] == 0)
                                                             {
-                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                echo '<div class="price-row">Status: OFF<i class="fas fa-minus-circle"></i></div><div class="price-row">';
 
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=3&value=1'\">Allumer</button>");
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=3&value=1'\">Switch ON</button>");
                                                             }
                                                             else
                                                             {
-                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                echo '<div class="price-row">Status: ON<i class="fas fa-check-circle"></i></div><div class="price-row">';
 
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=3&value=0'\">Éteindre</button>");                                                           
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=3&value=0'\">Switch OFF</button>");                                                           
                                                             }
                                                         ?>
                                                         </div>
@@ -252,21 +253,21 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN4</h4>
+                                                        <h4 class="text-center">Relay PIN: IN4</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[3]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-success">Available</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[3]['VALUE'] == 0)
                                                             {
-                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=4&value=1'\">Allumer</button>");
+                                                                echo '<div class="price-row">Status: OFF<i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=4&value=1'\">Switch ON</button>");
                                                             }
                                                             else
                                                             {
-                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=4&value=0'\">Éteindre</button>");                                              
+                                                                echo '<div class="price-row">Status: ON<i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=4&value=0'\">Switch OFF</button>");                                              
                                                             }
                                                         ?>
                                                         </div>
@@ -288,21 +289,21 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN5</h4>
+                                                        <h4 class="text-center">Relay PIN: IN5</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[4]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-danger">Unavailable</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[4]['VALUE'] == 0)
                                                             {
-                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=5&value=1'\">Allumer</button>");
+                                                                echo '<div class="price-row">Status: OFF<i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20 disabled\" onclick= \"location.href='updateCharge.php?chargeid=5&value=1'\">Switch ON</button>");
                                                             }
                                                             else
                                                             {
-                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=5&value=0'\">Éteindre</button>");                                                               
+                                                                echo '<div class="price-row">Status: ON<i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20 disabled\" onclick= \"location.href='updateCharge.php?chargeid=5&value=0'\">Switch OFF</button>");                                                               
                                                             }
                                                         ?>
                                                         </div>
@@ -314,21 +315,21 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN6</h4>
+                                                        <h4 class="text-center">Relay PIN: IN6</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[5]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-danger">Unavailable</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[5]['VALUE'] == 0)
                                                             {
-                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=6&value=1'\">Allumer</button>");
+                                                                echo '<div class="price-row">Status: OFF<i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20 disabled\" onclick= \"location.href='updateCharge.php?chargeid=6&value=1'\">Switch ON</button>");
                                                             }
                                                             else
                                                             {
-                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=6&value=0'\">Éteindre</button>");                                                            
+                                                                echo '<div class="price-row">Status: ON<i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20 disabled\" onclick= \"location.href='updateCharge.php?chargeid=6&value=0'\">Switch OFF</button>");                                                            
                                                             }
                                                         ?>
                                                         </div>
@@ -340,23 +341,23 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN7</h4>
+                                                        <h4 class="text-center">Relay PIN: IN7</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[6]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-danger">Unavailable</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[6]['VALUE'] == 0)
                                                             {
-                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                echo '<div class="price-row">Status: OFF<i class="fas fa-minus-circle"></i></div><div class="price-row">';
 
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=7&value=1'\">Allumer</button>");
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20 disabled\" onclick= \"location.href='updateCharge.php?chargeid=7&value=1'\">Switch ON</button>");
                                                             }
                                                             else
                                                             {
-                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                echo '<div class="price-row">Status: ON<i class="fas fa-check-circle"></i></div><div class="price-row">';
 
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=7&value=0'\">Éteindre</button>");                                                           
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20 disabled\" onclick= \"location.href='updateCharge.php?chargeid=7&value=0'\">Switch OFF</button>");                                                           
                                                             }
                                                         ?>
                                                         </div>
@@ -368,21 +369,21 @@
                                             <div class="pricing-box">
                                                 <div class="pricing-body">
                                                     <div class="pricing-header">
-                                                        <h4 class="text-center">Relais PIN: IN8</h4>
+                                                        <h4 class="text-center">Relay PIN: IN8</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[7]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-danger">Unavailable</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[7]['VALUE'] == 0)
                                                             {
-                                                                echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=8&value=1'\">Allumer</button>");
+                                                                echo '<div class="price-row">Status: OFF<i class="fas fa-minus-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20 disabled\" onclick= \"location.href='updateCharge.php?chargeid=8&value=1'\">Switch ON</button>");
                                                             }
                                                             else
                                                             {
-                                                                echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=8&value=0'\">Éteindre</button>");                                              
+                                                                echo '<div class="price-row">Status: ON<i class="fas fa-check-circle"></i></div><div class="price-row">';
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20 disabled\" onclick= \"location.href='updateCharge.php?chargeid=8&value=0'\">Switch OFF</button>");                                              
                                                             }
                                                         ?>
                                                         </div>
@@ -404,8 +405,8 @@
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
         <script src="../assets/node_modules/popper/popper.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="dist/js/sidebarmenu.js"></script>
-        <script src="dist/js/custom.min.js"></script>
+        <script src="../dist/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../dist/js/sidebarmenu.js"></script>
+        <script src="../dist/js/custom.min.js"></script>
     </body>
 </html>

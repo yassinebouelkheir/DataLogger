@@ -142,36 +142,36 @@
             }
         }
 
-        if(!empty($_POST['ExportationInterval']) && !empty($_POST['ExportationType']))
+       if(!empty($_POST['ExportationInterval']) && !empty($_POST['ExportationType']) && !empty($_POST['ExportationLang']))
         {
             switch($_POST['ExportationInterval'])
             {
                 case 1: {
-                    header("Location: exportData.php?interval=3600&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=3600&type=".$mysqli->escape_string($_POST['ExportationType'])."&lang=".$mysqli->escape_string($_POST['ExportationLang']));
                     break;
                 }
                 case 2: {
-                    header("Location: exportData.php?interval=86400&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=86400&type=".$mysqli->escape_string($_POST['ExportationType'])."&lang=".$mysqli->escape_string($_POST['ExportationLang']));
                     break;
                 }
                 case 3: {
-                    header("Location: exportData.php?interval=604800&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=604800&type=".$mysqli->escape_string($_POST['ExportationType'])."&lang=".$mysqli->escape_string($_POST['ExportationLang']));
                     break;
                 }
                 case 4: {
-                    header("Location: exportData.php?interval=2419200&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=2419200&type=".$mysqli->escape_string($_POST['ExportationType'])."&lang=".$mysqli->escape_string($_POST['ExportationLang']));
                     break;
                 }
                 case 5: {
-                    header("Location: exportData.php?interval=7257600&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=7257600&type=".$mysqli->escape_string($_POST['ExportationType'])."&lang=".$mysqli->escape_string($_POST['ExportationLang']));
                     break;
                 }
                 case 6: {
-                    header("Location: exportData.php?interval=29030400&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=29030400&type=".$mysqli->escape_string($_POST['ExportationType'])."&lang=".$mysqli->escape_string($_POST['ExportationLang']));
                     break;
                 }
                 case 7: {
-                    header("Location: exportData.php?interval=0&type=".$_POST['ExportationType']);
+                    header("Location: exportData.php?interval=0&type=".$mysqli->escape_string($_POST['ExportationType'])."&lang=".$mysqli->escape_string($_POST['ExportationLang']));
                     break;
                 }
                 default: {
@@ -454,7 +454,7 @@
         <link href="../assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
         <link href="../assets/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
         <link href="../assets/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
-        <link href="dist/css/style.min.css" rel="stylesheet">
+        <link href="../dist/css/style.min.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
@@ -815,6 +815,16 @@
                                                 echo '<option value="7">Tout les données</option>';
                                             echo '</select>';
                                         echo '</div>';
+                                        echo '<div class="form-group">';
+                                            echo '<label>Langue</label>';
+                                            echo '<select class="custom-select col-12" id="ExportationLang" name="ExportationLang">';
+                                                echo '<option value="0" selected>Selectioner..</option>';
+                                                echo '<option value="1">Anglais</option>';
+                                                echo '<option value="2">Français</option>';
+                                                echo '<option value="3">Espagnol</option>';
+                                                echo '<option value="4">Allemand</option>';
+                                            echo '</select>';
+                                        echo '</div>';
                                         echo '<button type="submit" class="btn btn-info">Exporter</button>';
                                     echo '</form>';
                                 echo '</div>';
@@ -859,9 +869,9 @@
         </div>
         <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
         <script src="../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="dist/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="dist/js/sidebarmenu.js"></script>
-        <script src="dist/js/custom.min.js"></script>
+        <script src="../dist/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../dist/js/sidebarmenu.js"></script>
+        <script src="../dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/switchery/dist/switchery.min.js"></script>
     </body>
 </html>
