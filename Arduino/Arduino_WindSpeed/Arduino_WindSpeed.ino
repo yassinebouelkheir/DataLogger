@@ -59,13 +59,13 @@ void loop()
     double value = analogRead(A0);
     double vOUT = (value*5.0)/1024.0;
     double vIN = vOUT/(R2/(R1+R2));
-    double V1 = 4.6+(0.2480485*vIN)+(0*pow(vIN,2))+(0*pow(vIN,3));
+    double V1 = 4.6+(0.2480485*vIN);
     if(V1 < 4.7) V1 = 0;
 
     value = analogRead(A1);
     vOUT = (value*5.0)/1024.0;
     vIN = vOUT/(R2/(R1+R2));
-    double V2 = -4.876997*pow(10,-2)+(0.5189756*vIN)+(0*pow(vIN,2))+(0*pow(vIN,3));
+    double V2 = -4.876997*pow(10,-2)+(0.5189756*vIN);
     if(V2 < 0) V2 = 0;
 
     int sensorValue = analogRead(A2); 
@@ -77,17 +77,14 @@ void loop()
     dtostrf(V1, 1, 2, str_temp);
     sprintf(data, "setsensor 9 %s", str_temp);
     radio.write(&data, sizeof(data));             
-    delay(1);
 
     dtostrf(V2, 1, 2, str_temp);
     sprintf(data, "setsensor 10 %s", str_temp);
     radio.write(&data, sizeof(data));             
-    delay(1);
 
     dtostrf(velocity, 1, 2, str_temp);
     sprintf(data, "setsensor 11 %s", str_temp);
     radio.write(&data, sizeof(data));             
-    delay(1);
 }
 
 void readEncoder()
@@ -97,6 +94,6 @@ void readEncoder()
 
     velocity = 1/deltaT;
     velocity = velocity*60;
-
+    Serial.println(velocity);
     prevT=currT;
 }
