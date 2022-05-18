@@ -1257,7 +1257,7 @@ namespace RPi
             if(langSelected)
             {
                 if (isGraphEnabled) ;
-                else; 
+                else ; 
                 if (isChargePanelEnabled)
                 {
 
