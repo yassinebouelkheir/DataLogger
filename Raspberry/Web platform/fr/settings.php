@@ -822,7 +822,6 @@
                                                 echo '<option value="1">Anglais</option>';
                                                 echo '<option value="2">Français</option>';
                                                 echo '<option value="3">Espagnol</option>';
-                                                echo '<option value="4">Allemand</option>';
                                             echo '</select>';
                                         echo '</div>';
                                         echo '<button type="submit" class="btn btn-info">Exporter</button>';

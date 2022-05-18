@@ -71,13 +71,6 @@
                 else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/es/exemple_'.($type-1).'.xlsx');
                 break;
             }
-            case 4: 
-            {
-                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/de/assets/exemple_'.$type.'.xlsx');
-                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/de/exemple_1.xlsx');
-                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/de/exemple_'.($type-1).'.xlsx');
-                break;
-            }
             default: 
             {
                 header("Location: login.php");
@@ -92,7 +85,25 @@
         {
             case 1:
             {
-                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Courant Faible');
+            	switch($_GET['lang'])
+		        {
+		            case 1: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Low Current');
+		                break;
+		            }
+		            case 2:
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Courant Faible');
+		                break;
+		            }
+		            case 3: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Corriente baja');
+		                break;
+		            }
+		        }
+                
                 if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=1 OR ID=2) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC, `ID` ASC';
                 else $query = 'SELECT * FROM `SENSORS` WHERE ID=1 OR ID=2 ORDER BY `UNIXDATE` DESC, `ID` ASC';
 
@@ -151,7 +162,24 @@
             }
             case 2:
             {
-                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Courant Fort');
+                switch($_GET['lang'])
+		        {
+		            case 1: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'High Current');
+		                break;
+		            }
+		            case 2:
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Courant Fort');
+		                break;
+		            }
+		            case 3: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Alta corriente');
+		                break;
+		            }
+		        }
                 if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=3 OR ID=4) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC, `ID` ASC';
                 else $query = 'SELECT * FROM `SENSORS` WHERE ID=3 OR ID=4 ORDER BY `UNIXDATE` DESC, `ID` ASC';
 
@@ -210,7 +238,24 @@
             }
             case 3:
             {
-                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Éolienne');
+                switch($_GET['lang'])
+		        {
+		            case 1: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Wind Turbine');
+		                break;
+		            }
+		            case 2:
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Éolienne');
+		                break;
+		            }
+		            case 3: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Turbina Eólica');
+		                break;
+		            }
+		        }
                 if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID=3 OR ID=4) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC, `ID` ASC';
                 else $query = 'SELECT * FROM `SENSORS` WHERE ID=3 OR ID=4 ORDER BY `UNIXDATE` DESC, `ID` ASC';
 
@@ -269,7 +314,24 @@
             }
             case 4:
             {
-                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Météorologie');
+                switch($_GET['lang'])
+		        {
+		            case 1: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Meteorology');
+		                break;
+		            }
+		            case 2:
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Météorologie');
+		                break;
+		            }
+		            case 3: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Meteorología');
+		                break;
+		            }
+		        }
                 if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID > 4 AND ID < 9) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC, `ID` ASC';
                 else $query = 'SELECT * FROM `SENSORS` WHERE ID > 4 AND ID < 9 ORDER BY `UNIXDATE` DESC, `ID` ASC';
 
@@ -333,7 +395,24 @@
             }
             case 5:
             {
-                $objPHPExcel->getActiveSheet()->setCellValue('F9', 'Vitesse du vent');
+                switch($_GET['lang'])
+		        {
+		            case 1: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Wind speed');
+		                break;
+		            }
+		            case 2:
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Vitesse du vent');
+		                break;
+		            }
+		            case 3: 
+		            {
+		            	$objPHPExcel->getActiveSheet()->setCellValue('F9', 'Velocidad del viento');
+		                break;
+		            }
+		        }
                 if($interval != 0) $query = 'SELECT * FROM `SENSORS` WHERE (ID > 8 AND ID < 12) AND UNIXDATE > '.(time()-$interval).' ORDER BY `UNIXDATE` DESC, `ID` ASC';
                 else $query = 'SELECT * FROM `SENSORS` WHERE ID > 8 AND ID < 12 ORDER BY `UNIXDATE` DESC, `ID` ASC';
 
