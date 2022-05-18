@@ -118,29 +118,35 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="login" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\login.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="th_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\th-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="bolt_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bolt-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="lightbulb_regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\lightbulb-regular.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="arrow_left_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arrow-left-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lightbulb_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lightbulb-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="th_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\th-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrow_left_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrow-left-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lightbulb_regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lightbulb-regular.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wifi-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wifi-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="arrow_right_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-right-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="globe-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\globe-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="charging_station_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\charging-station-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="login" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\login.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="fan_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fan-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,7 +154,7 @@
   <data name="snowflake_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\snowflake-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wifi-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wifi-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="chart-area-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chart-area-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

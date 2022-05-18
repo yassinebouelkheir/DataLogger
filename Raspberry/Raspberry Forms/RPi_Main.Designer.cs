@@ -55,6 +55,7 @@ namespace RPi
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RPI_Main));
             this.Sidebar = new System.Windows.Forms.Panel();
+            this.Langswitch = new System.Windows.Forms.Button();
             this.Charts = new System.Windows.Forms.Button();
             this.Charges = new System.Windows.Forms.Button();
             this.Meteorologie = new System.Windows.Forms.Button();
@@ -80,7 +81,6 @@ namespace RPi
             this.updateParams = new System.Windows.Forms.Timer(this.components);
             this.updateCharts = new System.Windows.Forms.Timer(this.components);
             this.timelabel = new System.Windows.Forms.Label();
-            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.Sidebar.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wifilabel)).BeginInit();
@@ -89,6 +89,7 @@ namespace RPi
             // Sidebar
             // 
             this.Sidebar.BackColor = System.Drawing.Color.Transparent;
+            this.Sidebar.Controls.Add(this.Langswitch);
             this.Sidebar.Controls.Add(this.Charts);
             this.Sidebar.Controls.Add(this.Charges);
             this.Sidebar.Controls.Add(this.Meteorologie);
@@ -100,6 +101,23 @@ namespace RPi
             this.Sidebar.Size = new System.Drawing.Size(484, 101);
             this.Sidebar.TabIndex = 0;
             // 
+            // Langswitch
+            // 
+            this.Langswitch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
+            this.Langswitch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Langswitch.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Langswitch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.Langswitch.ForeColor = System.Drawing.Color.White;
+            this.Langswitch.Image = global::RPi.Properties.Resources.globe_solid;
+            this.Langswitch.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Langswitch.Location = new System.Drawing.Point(239, 8);
+            this.Langswitch.Name = "Langswitch";
+            this.Langswitch.Size = new System.Drawing.Size(239, 30);
+            this.Langswitch.TabIndex = 10;
+            this.Langswitch.Text = "Passer au français";
+            this.Langswitch.UseVisualStyleBackColor = false;
+            this.Langswitch.Click += new System.EventHandler(this.Langswitch_Click);
+            // 
             // Charts
             // 
             this.Charts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
@@ -107,9 +125,11 @@ namespace RPi
             this.Charts.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Charts.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Charts.ForeColor = System.Drawing.Color.White;
+            this.Charts.Image = global::RPi.Properties.Resources.chart_area_solid;
+            this.Charts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Charts.Location = new System.Drawing.Point(0, 8);
             this.Charts.Name = "Charts";
-            this.Charts.Size = new System.Drawing.Size(478, 30);
+            this.Charts.Size = new System.Drawing.Size(239, 30);
             this.Charts.TabIndex = 9;
             this.Charts.Text = "Passer en mode graphique";
             this.Charts.UseVisualStyleBackColor = false;
@@ -250,7 +270,6 @@ namespace RPi
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.zedGraphControl1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.button7);
@@ -284,6 +303,7 @@ namespace RPi
             // 
             this.button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.button8.Enabled = false;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button8.ForeColor = System.Drawing.Color.White;
@@ -303,6 +323,7 @@ namespace RPi
             // 
             this.button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.button7.Enabled = false;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button7.ForeColor = System.Drawing.Color.White;
@@ -322,6 +343,7 @@ namespace RPi
             // 
             this.button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.button6.Enabled = false;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button6.ForeColor = System.Drawing.Color.White;
@@ -341,6 +363,7 @@ namespace RPi
             // 
             this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
             this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.button5.Enabled = false;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.ForeColor = System.Drawing.Color.White;
@@ -491,22 +514,6 @@ namespace RPi
             this.timelabel.Text = "05/05/2002 23:29";
             this.timelabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // zedGraphControl1
-            // 
-            this.zedGraphControl1.Location = new System.Drawing.Point(1, 28);
-            this.zedGraphControl1.Name = "zedGraphControl1";
-            this.zedGraphControl1.ScrollGrace = 0D;
-            this.zedGraphControl1.ScrollMaxX = 0D;
-            this.zedGraphControl1.ScrollMaxY = 0D;
-            this.zedGraphControl1.ScrollMaxY2 = 0D;
-            this.zedGraphControl1.ScrollMinX = 0D;
-            this.zedGraphControl1.ScrollMinY = 0D;
-            this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(408, 161);
-            this.zedGraphControl1.TabIndex = 24;
-            this.zedGraphControl1.UseExtendedPrintDialog = true;
-            this.zedGraphControl1.Visible = false;
-            // 
             // RPI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -563,6 +570,6 @@ namespace RPi
         private System.Windows.Forms.Timer updateCharts;
         private System.Windows.Forms.Label timelabel;
         private System.Windows.Forms.PictureBox wifilabel;
-        private ZedGraph.ZedGraphControl zedGraphControl1;
+        private System.Windows.Forms.Button Langswitch;
     }
 }

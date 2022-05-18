@@ -39,6 +39,7 @@ namespace RPi
         private int MaxSelection = 4;
         private bool isGraphEnabled = false;
         private bool isChargePanelEnabled = false;
+        private bool langSelected = false;
         private MySql.Data.MySqlClient.MySqlConnection conn;
 
         public RPI_Main() => InitializeComponent();
@@ -67,28 +68,9 @@ namespace RPi
             else wifilabel.Visible = false;
             panel1.BackColor = System.Drawing.Color.FromArgb(180, 255, 255, 255);
             UpdateSelection();
-            CreateGraph(zedGraphControl1);
         }
 
-        private void CreateGraph(ZedGraphControl zgc)
-        {
-            GraphPane myPane = zgc.GraphPane;
-            myPane.Title.Text = "My Test Graph";
-            myPane.XAxis.Title.Text = "Période";
-            myPane.YAxis.Title.Text = "Valeur";
 
-            double x, y;
-            PointPairList list1 = new PointPairList();
-            for (int i = 0; i < 6; i++)
-            {
-                x = (double)i + 5;
-                y = 1.5 + Math.Sin((double)i * 0.2);
-                list1.Add(x, y);
-            }
-
-            LineItem myCurve = myPane.AddCurve("Paramètre", list1, Color.Red, SymbolType.Diamond);
-            zgc.AxisChange();
-        }
         private void FunctionsUpdate()
         {
             conn.Open();
@@ -1122,7 +1104,7 @@ namespace RPi
             if (!isGraphEnabled)
             {
                 isGraphEnabled = true;
-                zedGraphControl1.Visible = true;
+                //zedGraphControl1.Visible = true;
                 Charts.Text = "Passer en mode numérique";
                 paramTitle.Visible = false;
                 paramValue.Visible = false;
@@ -1133,7 +1115,7 @@ namespace RPi
             else
             {
                 isGraphEnabled = false;
-                zedGraphControl1.Visible = false;
+               // zedGraphControl1.Visible = false;
                 Charts.Text = "Passer en mode graphique";
                 paramTitle.Visible = true;
                 paramValue.Visible = true;
@@ -1148,7 +1130,7 @@ namespace RPi
             if (!isChargePanelEnabled)
             {
                 Charts.Enabled = false;
-                if (isGraphEnabled) zedGraphControl1.Visible = false;
+                //if (isGraphEnabled) zedGraphControl1.Visible = false;
                 Charts.Text = "Passer en mode graphique";
                 isGraphEnabled = false;
                 Left_Btn.Enabled = false;
@@ -1268,6 +1250,28 @@ namespace RPi
             cmd.ExecuteNonQuery();
             conn.Close();
             return;
+        }
+
+        private void Langswitch_Click(object sender, EventArgs e)
+        {
+            if(langSelected)
+            {
+                if (isGraphEnabled) ;
+                else; 
+                if (isChargePanelEnabled)
+                {
+
+                }
+            }
+            else
+            {
+                if (isGraphEnabled) ;
+                else ;
+                if (isChargePanelEnabled)
+                {
+
+                }
+            }
         }
     }
 }

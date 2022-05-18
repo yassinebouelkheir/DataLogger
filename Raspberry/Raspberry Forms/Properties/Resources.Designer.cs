@@ -103,9 +103,29 @@ namespace RPi.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap chart_area_solid {
+            get {
+                object obj = ResourceManager.GetObject("chart-area-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fan_solid {
             get {
                 object obj = ResourceManager.GetObject("fan_solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap globe_solid {
+            get {
+                object obj = ResourceManager.GetObject("globe-solid", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
