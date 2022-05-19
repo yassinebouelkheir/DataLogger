@@ -267,7 +267,8 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Batterie :";
+                    if (langSelected) paramTitle.Text = "Battery ";
+                    else paramTitle.Text = "Batterie :";
                     double bat = ((dr.GetFloat(0) - 12.0) * 100 / 13.0);
                     if (bat < 0) bat = 0;
 
@@ -281,7 +282,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Tension DC :";
+                    if(langSelected) paramTitle.Text = "DC Voltage :";
+                    else paramTitle.Text = "Tension DC :";
+
                     paramValue.Text = dr.GetFloat(0).ToString("0.0") + " V";
                     dr.Close();
                     Charts.Enabled = true;
@@ -293,7 +296,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Courant DC :";
+                    if(langSelected) paramTitle.Text = "DC Current :";
+                    else paramTitle.Text = "Courant DC :";
+
                     paramValue.Text = dr.GetFloat(0).ToString("0.00") + " A";
                     dr.Close();
                     Charts.Enabled = true;
@@ -306,7 +311,8 @@ namespace RPi
                     double voltage = dr.GetFloat(0);
                     dr.Read();
 
-                    paramTitle.Text = "Puissance DC :";
+                    if(langSelected) paramTitle.Text = "DC Power:";
+                    else paramTitle.Text = "Puissance DC :";
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                     Charts.Enabled = true;
@@ -320,7 +326,8 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();*/
 
-                    paramTitle.Text = "Tension AC :";
+                    if (langSelected) paramTitle.Text = "AC Voltage :";
+                    else paramTitle.Text = "Tension AC :";
                     //paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
                     paramValue.Text = "220 V";
                     //dr.Close();
@@ -331,7 +338,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Courant AC :";
+                    if (langSelected) paramTitle.Text = "AC Current :";
+                    else paramTitle.Text = "Courant AC :";
+
                     paramValue.Text = dr.GetFloat(0).ToString("0.00") + " A";
                     dr.Close();
                 }
@@ -343,7 +352,9 @@ namespace RPi
                     double voltage = 220; /*dr.GetFloat(0);
                     dr.Read();*/
 
-                    paramTitle.Text = "Puissance AC :";
+                    if (langSelected) paramTitle.Text = "AC Power :";
+                    else paramTitle.Text = "Puissance AC :";
+
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                 }
@@ -357,7 +368,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Tension DC :";
+                    if(langSelected) paramTitle.Text = "DC Voltage :";
+                    else paramTitle.Text = "Tension DC :";
+
                     paramValue.Text = dr.GetFloat(0).ToString("0.0") + " V";
                     dr.Close();
                 }
@@ -367,7 +380,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Courant DC :";
+                    if(langSelected) paramTitle.Text = "DC Current :";
+                    else paramTitle.Text = "Courant DC :";
+                    
                     paramValue.Text = dr.GetFloat(0).ToString("0.00") + " A";
                     dr.Close();
                 }
@@ -379,7 +394,9 @@ namespace RPi
                     double voltage = dr.GetFloat(0);
                     dr.Read();
 
-                    paramTitle.Text = "Puissance DC :";
+                    if (langSelected) paramTitle.Text = "DC Power :";
+                    else paramTitle.Text = "Puissance DC :";
+                    
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                 }
@@ -393,7 +410,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "T. Ambiante :";
+                    if (langSelected) paramTitle.Text = "T. Ambient";
+                    else paramTitle.Text = "T. Ambiante :";
+                    
                     paramValue.Text = dr.GetFloat(0).ToString("0") + " °C";
                     dr.Close();
                 }
@@ -403,7 +422,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "T. Panneau :";
+                    if (langSelected) paramTitle.Text = "T. Panel";
+                    else paramTitle.Text = "T. Panneau :";
+
                     paramValue.Text = dr.GetFloat(0).ToString("0") + " °C";
                     dr.Close();
                 }
@@ -413,7 +434,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Flux Lumineux :";
+                    if (langSelected) paramTitle.Text = "Luminous flow :";
+                    else paramTitle.Text = "Flux Lumineux :";
+                    
                     paramValue.Text = ((2500 / (dr.GetFloat(0) * 0.0048828125) - 500) / 10).ToString("0") + " LUX";
                     dr.Close();
                 }
@@ -433,7 +456,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "Humidité :";
+                    if (langSelected) paramTitle.Text = "Humidity";
+                    else paramTitle.Text = "Humidité :";
+
                     paramValue.Text = ((dr.GetFloat(0) * 100) / 1023).ToString("0") + " %RH";
                     dr.Close();
                 }
@@ -443,7 +468,9 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "V.Vent (Aval) :";
+                    if (langSelected) paramTitle.Text = "S. Wind (D):";
+                    else paramTitle.Text = "V.Vent (Aval) :";
+
                     paramValue.Text = dr.GetFloat(0).ToString("0") + " KM/H";
                     dr.Close();
                 }
@@ -453,7 +480,8 @@ namespace RPi
                     var dr = cmd.ExecuteReader();
                     dr.Read();
 
-                    paramTitle.Text = "V.Vent (Amon) :";
+                    if (langSelected) paramTitle.Text = "S. Wind (U):";
+                    else paramTitle.Text = "V.Vent (Amon) :";
                     paramValue.Text = dr.GetFloat(0).ToString("0") + " KM/H";
                     dr.Close();
                 }
@@ -478,7 +506,8 @@ namespace RPi
             {
                 if (browseSelection == 1)
                 {
-                    label2.Text = "Tension DC";
+                    if (langSelected) label2.Text = "DC Voltage";
+                    else label2.Text = "Tension DC";
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 2 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -494,7 +523,8 @@ namespace RPi
                 }
                 if (browseSelection == 2)
                 {
-                    label2.Text = "Courant DC";
+                    if (langSelected) label2.Text = "DC Current";
+                    else label2.Text = "Courant DC";
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 1 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -510,7 +540,8 @@ namespace RPi
                 }
                 else if (browseSelection == 3)
                 {
-                    label2.Text = "Puissance DC";
+                    if (langSelected) label2.Text = "DC Power";
+                    else label2.Text = "Puissance DC";
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 1 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -539,7 +570,9 @@ namespace RPi
             {
                 if (browseSelection == 0)
                 {
-                    label2.Text = "Tension AC";
+                    if (langSelected) label2.Text = "AC Voltage";
+                    else label2.Text = "Tension AC";
+                    
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 4 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -555,7 +588,9 @@ namespace RPi
                 }
                 else if (browseSelection == 1)
                 {
-                    label2.Text = "Courant AC";
+                    if (langSelected) label2.Text = "AC Current";
+                    else label2.Text = "Courant AC";
+
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 3 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -571,7 +606,9 @@ namespace RPi
                 }
                 else if (browseSelection == 2)
                 {
-                    label2.Text = "Puissance AC";
+                    if (langSelected) label2.Text = "AC Power";
+                    else label2.Text = "Puissance AC";
+                    
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 4 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -601,7 +638,9 @@ namespace RPi
             {
                 if (browseSelection == 0)
                 {
-                    label2.Text = "Tension DC";
+                    if (langSelected) label2.Text = "DC Voltage";
+                    else label2.Text = "Tension DC";
+                    
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 13 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -617,7 +656,9 @@ namespace RPi
                 }
                 else if (browseSelection == 1)
                 {
-                    label2.Text = "Courant DC";
+                    if (langSelected) label2.Text = "DC Current";
+                    else label2.Text = "Courant DC";
+
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -633,7 +674,9 @@ namespace RPi
                 }
                 else if (browseSelection == 2)
                 {
-                    label2.Text = "Puissance DC";
+                    if (langSelected) label2.Text = "DC Power";
+                    else label2.Text = "Puissance DC";
+                    
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -660,7 +703,9 @@ namespace RPi
             }
             else if (menuSelection == 3)
             {
-                label2.Text = "Température Ambiante";
+                if (langSelected) label2.Text = "Ambient Temperature";
+                else label2.Text = "Température Ambiante";
+
                 if (browseSelection == 0)
                 {
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 5 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
@@ -678,7 +723,9 @@ namespace RPi
                 }
                 else if (browseSelection == 1)
                 {
-                    label2.Text = "Température du Panneau";
+                    if (langSelected) label2.Text = "Panel Temperature";
+                    else label2.Text = "Température Panneau";
+
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 6 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -694,7 +741,9 @@ namespace RPi
                 }
                 else if (browseSelection == 2)
                 {
-                    label2.Text = "Flux Lumineux";
+                    if (langSelected) label2.Text = "Luminous Flow";
+                    else label2.Text = "Flux Lumineux";
+                    
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 7 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -727,7 +776,9 @@ namespace RPi
                 }
                 else if (browseSelection == 4)
                 {
-                    label2.Text = "Humidité Relative";
+                    if (langSelected) label2.Text = "Relative Humidity";
+                    else label2.Text = "Humidité Relative";
+
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 8 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -743,7 +794,9 @@ namespace RPi
                 }
                 else if (browseSelection == 5)
                 {
-                    label2.Text = "Vitesse du vent (Aval)";
+                    if (langSelected) label2.Text = "Speed of wind (Down)";
+                    else label2.Text = "Vitesse du vent (Aval)";
+
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 9 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -759,7 +812,9 @@ namespace RPi
                 }
                 else if (browseSelection == 6)
                 {
-                    label2.Text = "Vitesse du vent (Amon)";
+                    if (langSelected) label2.Text = "Speed of wind (Up)";
+                    else label2.Text = "Vitesse du vent (Amon)";
+                    
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 10 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
@@ -1105,7 +1160,8 @@ namespace RPi
             {
                 isGraphEnabled = true;
                 //zedGraphControl1.Visible = true;
-                Charts.Text = "Passer en mode numérique";
+                if (langSelected) Charts.Text = "Switch to numeric mode";
+                else Charts.Text = "Passer en mode numérique";
                 paramTitle.Visible = false;
                 paramValue.Visible = false;
                 label2.Text = paramTitle.Text.Replace(":", "");
@@ -1115,11 +1171,13 @@ namespace RPi
             else
             {
                 isGraphEnabled = false;
-               // zedGraphControl1.Visible = false;
-                Charts.Text = "Passer en mode graphique";
+                // zedGraphControl1.Visible = false;
+                if (langSelected) Charts.Text = "Switch to chart mode";
+                else Charts.Text = "Passer en mode graphique";
                 paramTitle.Visible = true;
                 paramValue.Visible = true;
-                label2.Text = "Panneau de contrôle des charges";
+                if (langSelected) label2.Text = "Relay control panel";
+                else label2.Text = "Panneau de contrôle des charges";
                 label2.Visible = false;
                 UpdateSelection();
             }
@@ -1131,7 +1189,9 @@ namespace RPi
             {
                 Charts.Enabled = false;
                 //if (isGraphEnabled) zedGraphControl1.Visible = false;
-                Charts.Text = "Passer en mode graphique";
+                if(langSelected) Charts.Text = "Switch to chart mode";
+                else Charts.Text = "Passer en mode graphique";
+
                 isGraphEnabled = false;
                 Left_Btn.Enabled = false;
                 Right_Btn.Enabled = false;
@@ -1144,7 +1204,9 @@ namespace RPi
                 Meteorologie.BackColor = Color.FromArgb(255, 24, 155, 90);
                 Charges.BackColor = Color.FromArgb(255, 16, 103, 60);
 
-                label2.Text = "Panneau de contrôle des charges";
+                if (langSelected) label2.Text = "Relay control panel";
+                else label2.Text = "Panneau de contrôle des charges";
+
                 label2.Visible = true;
                 button1.Visible = true;
                 button2.Visible = true;
@@ -1245,8 +1307,11 @@ namespace RPi
             dr.Read();
             int newstate = dr.GetInt32(0);
             dr.Close();
+            string statestring;
+            if(newstate == 1) statestring = "ON";
+            else statestring = "OFF";
 
-            cmd = new MySql.Data.MySqlClient.MySqlCommand("INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('RaspberryPi', '127.0.0.1', 1, 'Mettre à jour de l état de charge IN"+id+" à "+newstate+"')", conn);
+            cmd = new MySql.Data.MySqlClient.MySqlCommand("INSERT INTO `HISTORY` (`USERNAME`, `IP`, `TYPE`, `VALUE`) VALUES ('RaspberryPi', '127.0.0.1', 1, 'Update charging status of relay ID " + id+" to "+statestring+"')", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
             return;
@@ -1256,21 +1321,25 @@ namespace RPi
         {
             if(langSelected)
             {
-                if (isGraphEnabled) ;
-                else ; 
+                if (isGraphEnabled) Charts.Text = "Passer en mode numérique";
+                else Charts.Text = "Passer en mode graphique";
                 if (isChargePanelEnabled)
                 {
-
+                    label2.Text = "Panneau de contrôle des charges";
                 }
+                Langswitch.Text = "Passer au anglais";
+                langSelected = false;
             }
             else
             {
-                if (isGraphEnabled) ;
-                else ;
+                if (isGraphEnabled) Charts.Text = "Switch to numeric mode";
+                else Charts.Text = "Switch to chart mode";
                 if (isChargePanelEnabled)
                 {
-
+                    label2.Text = "Relay control panel";
                 }
+                Langswitch.Text = "Switch to french";
+                langSelected = true;
             }
         }
     }
