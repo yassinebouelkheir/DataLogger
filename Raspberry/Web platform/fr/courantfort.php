@@ -128,8 +128,18 @@
 
                         <ul class="navbar-nav my-lg-0">
                             <li class="nav-item dropdown u-pro">
+                                <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/world.png" alt="user" class=""></img></a>
+                                <div class="dropdown-menu dropdown-menu-right animated bounceIn">
+                                    <?php  
+                                        $curPageName = str_replace(".php", "", substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1));
+                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=0" class="dropdown-item"><i class="flag-icon flag-icon-fr"></i> Français</a>';
+                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=1" class="dropdown-item"><i class="flag-icon flag-icon-us"></i> Anglais</a>';
+                                    ?>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down"><?php echo $_SESSION["username"]; ?> &nbsp;<i class="fa fa-angle-down"></i></span> </a>
-                                <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                <div class="dropdown-menu dropdown-menu-right animated bounceIn">
                                     <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Déconnexion</a>
                                 </div>
                             </li>
@@ -147,7 +157,7 @@
                             <li class="user-pro text-center">
                                 <img src="../assets/images/Lastimi_Logo.png" alt="user-img" height="120" width="140" style="margin-right: 13px;">
                             </li>
-                            <li class="nav-small-cap">--- Menu Principal</li>
+                            <li class="nav-small-cap">--- Statistiques</li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="fas fa-charging-station"></i>
                                 <span class="hide-menu">&nbsp;&nbsp;Courant Faible</span></a>
@@ -164,6 +174,14 @@
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
                                 <span class="hide-menu">&nbsp;&nbsp;Météorologie</span></a>
                             </li>
+                            <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-home"></i><span class="hide-menu">&nbsp;&nbsp;&nbsp;Maison intelligente</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="Smarthouse/index.php">Espace principal</a></li>
+                                    <li><a href="Smarthouse/aircon.php">Climatiseur</a></li>
+                                    <li><a href="Smarthouse/bathroom.php">Salle de bain</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-small-cap">--- Paramètres générales</li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
                             <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Fonctions</span></a></li>

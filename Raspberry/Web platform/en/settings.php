@@ -479,8 +479,18 @@
 
                         <ul class="navbar-nav my-lg-0">
                             <li class="nav-item dropdown u-pro">
+                                <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/world.png" alt="user" class=""></img></a>
+                                <div class="dropdown-menu dropdown-menu-right animated bounceIn">
+                                    <?php  
+                                        $curPageName = str_replace(".php", "", substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1));
+                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=0" class="dropdown-item"><i class="flag-icon flag-icon-fr"></i> French</a>';
+                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=1" class="dropdown-item"><i class="flag-icon flag-icon-us"></i> English</a>';
+                                    ?>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down"><?php echo $_SESSION["username"]; ?> &nbsp;<i class="fa fa-angle-down"></i></span> </a>
-                                <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                <div class="dropdown-menu dropdown-menu-right animated bounceIn">
                                     <a href="logout.php" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
                                 </div>
                             </li>
@@ -513,7 +523,14 @@
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Meteorology</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Meteorology</span></a>
+                            </li>
+                            <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-home"></i><span class="hide-menu">&nbsp;&nbsp;&nbsp;Smart House</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="index.php">Main space</a></li>
+                                    <li><a href="aircon.php">Air conditioner</a></li>
+                                    <li><a href="bathroom.php">Bathroom</a></li>
+                                </ul>
                             </li>
                             <li class="nav-small-cap">--- Main settings</li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
