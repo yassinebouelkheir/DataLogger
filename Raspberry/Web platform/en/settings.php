@@ -454,7 +454,7 @@
         <link href="../assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
         <link href="../assets/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
         <link href="../assets/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
-        <link href=".../dist/css/style.min.css" rel="stylesheet">
+        <link href="../dist/css/style.min.css" rel="stylesheet" type="text/css" />
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
