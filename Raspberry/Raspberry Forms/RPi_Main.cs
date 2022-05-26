@@ -26,9 +26,6 @@ using System;
 using System.Net;
 using System.Windows.Forms;
 using Color = System.Drawing.Color;
-using ZedGraph;
-using System.Drawing;
-using System.Collections;
 
 namespace RPi
 {
@@ -1143,7 +1140,7 @@ namespace RPi
             string date = DateTime.Now.ToString("dd/MM/yyyy hh:mm");
             timelabel.Text = date;
 
-            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            if (CheckForInternetConnection())
             {
                 if (isChargePanelEnabled) UpdateChargeStatus();
                 else if (!isGraphEnabled) UpdateSelection();
@@ -1154,6 +1151,19 @@ namespace RPi
             return;
         }
 
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://google.com/generate_204"))
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         private void Charts_Click(object sender, EventArgs e)
         {
             if (!isGraphEnabled)
@@ -1328,6 +1338,13 @@ namespace RPi
                     label2.Text = "Panneau de contrôle des charges";
                 }
                 Langswitch.Text = "Passer au anglais";
+
+                Courant_Faible.Text = "Courant Faible";
+                Courant_Fort.Text = "Courant Fort";
+                Eolienne.Text = "Éolienne";
+                Meteorologie.Text = "Météorologie";
+                Charges.Text = "Charges";
+
                 langSelected = false;
             }
             else
@@ -1339,6 +1356,13 @@ namespace RPi
                     label2.Text = "Relay control panel";
                 }
                 Langswitch.Text = "Switch to french";
+
+                Courant_Faible.Text = "Low Current";
+                Courant_Fort.Text = "High Current";
+                Eolienne.Text = "Wind turbine";
+                Meteorologie.Text = "Meteorologie";
+                Charges.Text = "Charges";
+
                 langSelected = true;
             }
         }
