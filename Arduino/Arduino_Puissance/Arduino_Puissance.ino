@@ -19,7 +19,7 @@
    Version       : 2.0
    Created       : 25/04/2022
    License       : GNU General v3.0
-   Developers    : BOUELKHEIR Yassine 
+   Developer    : BOUELKHEIR Yassine 
 */
 
 #include <SPI.h>
@@ -27,10 +27,16 @@
 #include <printf.h>
 #include <RF24.h>
 #include <RF24_config.h>
+#include "ZMPT101B.h"
+#include "ACS712.h"
 
 RF24 radio(9, 10);       
 const byte address1[6] = "14863";
 const byte address2[6] = "26957";
+
+ZMPT101B voltageSensor(A3);
+ACS712 currentSensor1(ACS712_30A, A0);
+ACS712 currentSensor2(ACS712_30A, A2);
 
 double TENSIONAC_VALUE = 0.0;
 double COURANTAC_VALUE = 0.0;
@@ -52,6 +58,9 @@ void setup()
         pinMode(i, OUTPUT);
         digitalWrite(i, LOW);
     }
+    voltageSensor.calibrate();
+    currentSensor1.calibrate();
+    currentSensor2.calibrate();
 }
 
 void loop() 
@@ -94,9 +103,7 @@ void loop()
     char data[24];
     char str_temp[6];
 
-    getPuissanceValues();
-
-    dtostrf(COURANTDC_VALUE, 1, 2, str_temp);
+    dtostrf(currentSensor1.getCurrentDC(), 1, 2, str_temp);
     sprintf(data, "setsensor 1 %s", str_temp);
     radio.write(&data, sizeof(data));             
 
@@ -105,34 +112,11 @@ void loop()
     sprintf(data, "setsensor 2 %s", str_temp);
     radio.write(&data, sizeof(data));             
 
-    dtostrf(COURANTAC_VALUE, 4, 2, str_temp);
+    dtostrf(currentSensor2.getCurrentAC(), 4, 2, str_temp);
     sprintf(data, "setsensor 3 %s", str_temp);
     radio.write(&data, sizeof(data));  
 
-    dtostrf(TENSIONAC_VALUE, 4, 2, str_temp);
+    dtostrf(voltageSensor.getVoltageAC(50), 4, 2, str_temp);
     sprintf(data, "setsensor 4 %s", str_temp);
     radio.write(&data, sizeof(data));             
-}
-
-double getPuissanceValues()
-{
-    float voltage_raw1 = 0;
-    float voltage_raw2 = 0;
-    for(int i = 0; i < 1000; i++)
-    { 
-        voltage_raw1 += (5.0 / 1023.0)*analogRead(A0);
-        voltage_raw2 += (5.0 / 1023.0)*analogRead(A2);
-    }
-    voltage_raw1 /= 1000;
-    voltage_raw2 /= 1000;
-    TENSIONAC_VALUE = voltage_raw2;
-
-    float voltage =  voltage_raw2 - 2.5 + 0.012;
-    COURANTAC_VALUE = voltage / 0.066;
-
-    voltage =  voltage_raw1 - 2.5 + 0.012;
-    COURANTDC_VALUE = voltage / 0.066;
-
-    if(abs(COURANTDC_VALUE) > 0.05) COURANTDC_VALUE = abs(COURANTDC_VALUE);
-    else COURANTDC_VALUE = 0.0;
 }
