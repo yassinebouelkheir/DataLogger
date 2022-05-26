@@ -34,11 +34,13 @@
     {
         if($_SESSION["language"])
         {
+            $_SESSION["language"] = 1;
             header("Location: /en/index.php");
             exit();            
         }
         else
         {
+            $_SESSION["language"] = 0;
             header("Location: /fr/index.php");
             exit();
         }
