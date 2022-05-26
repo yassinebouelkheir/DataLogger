@@ -23,7 +23,6 @@
 */
 
 using System;
-using System.Net;
 using System.Windows.Forms;
 using Color = System.Drawing.Color;
 
@@ -1140,7 +1139,7 @@ namespace RPi
             string date = DateTime.Now.ToString("dd/MM/yyyy hh:mm");
             timelabel.Text = date;
 
-            if (CheckForInternetConnection())
+            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
                 if (isChargePanelEnabled) UpdateChargeStatus();
                 else if (!isGraphEnabled) UpdateSelection();
@@ -1149,20 +1148,6 @@ namespace RPi
             }
             else wifilabel.Visible = false;
             return;
-        }
-
-        public static bool CheckForInternetConnection()
-        {
-            try
-            {
-                using (var client = new WebClient())
-                using (client.OpenRead("http://google.com/generate_204"))
-                    return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
         private void Charts_Click(object sender, EventArgs e)
         {
@@ -1360,7 +1345,7 @@ namespace RPi
                 Courant_Faible.Text = "Low Current";
                 Courant_Fort.Text = "High Current";
                 Eolienne.Text = "Wind turbine";
-                Meteorologie.Text = "Meteorologie";
+                Meteorologie.Text = "Meteorology";
                 Charges.Text = "Charges";
 
                 langSelected = true;
