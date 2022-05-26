@@ -308,19 +308,19 @@
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN5</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[4]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-danger">Indisponible</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[4]['VALUE'] == 0)
                                                             {
                                                                 echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=5&value=1'\">Allumer</button>");
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=5&value=1'\" disabled>Allumer</button>");
                                                             }
                                                             else
                                                             {
                                                                 echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=5&value=0'\">Éteindre</button>");                                                               
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=5&value=0'\" disabled>Éteindre</button>");                                                               
                                                             }
                                                         ?>
                                                         </div>
@@ -334,19 +334,19 @@
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN6</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[5]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-danger">Indisponible</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[5]['VALUE'] == 0)
                                                             {
                                                                 echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=6&value=1'\">Allumer</button>");
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=6&value=1'\" disabled>Allumer</button>");
                                                             }
                                                             else
                                                             {
                                                                 echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=6&value=0'\">Éteindre</button>");                                                            
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=6&value=0'\" disabled>Éteindre</button>");                                                            
                                                             }
                                                         ?>
                                                         </div>
@@ -360,7 +360,7 @@
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN7</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[6]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-danger">Indisponible</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
@@ -368,13 +368,13 @@
                                                             {
                                                                 echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
 
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=7&value=1'\">Allumer</button>");
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=7&value=1'\" disabled>Allumer</button>");
                                                             }
                                                             else
                                                             {
                                                                 echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
 
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=7&value=0'\">Éteindre</button>");                                                           
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=7&value=0'\" disabled>Éteindre</button>");                                                           
                                                             }
                                                         ?>
                                                         </div>
@@ -388,19 +388,19 @@
                                                     <div class="pricing-header">
                                                         <h4 class="text-center">Relais PIN: IN8</h4>
                                                         <h3 class="text-center"><strong><?php echo  htmlxssprotection($rows[7]['NAME']); ?></strong></h2>
-                                                        <p class="uppercase text-success">Disponible</p>
+                                                        <p class="uppercase text-danger">Indisponible</p>
                                                     </div>
                                                     <div class="price-table-content">
                                                         <?php 
                                                             if($rows[7]['VALUE'] == 0)
                                                             {
                                                                 echo '<div class="price-row">État: Éteint <i class="fas fa-minus-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=8&value=1'\">Allumer</button>");
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-success waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=8&value=1'\" disabled>Allumer</button>");
                                                             }
                                                             else
                                                             {
                                                                 echo '<div class="price-row">État: Allumé <i class="fas fa-check-circle"></i></div><div class="price-row">';
-                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=8&value=0'\">Éteindre</button>");                                              
+                                                                if($_SESSION["P1"] == 1) echo( "<button class=\"btn btn-danger waves-effect waves-light m-t-20\" onclick= \"location.href='updateCharge.php?chargeid=8&value=0'\" disabled>Éteindre</button>");                                              
                                                             }
                                                         ?>
                                                         </div>
