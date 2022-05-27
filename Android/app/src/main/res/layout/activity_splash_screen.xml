@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".splashScreen">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginBottom="20.0dp"
+        android:layout_height="match_parent"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"
+            android:contentDescription="Ecole Supérieure de Technologie de Salé"
+            android:layout_marginTop="140dp"
+            tools:ignore="HardcodedText" />
+
+
+        <TextView
+            android:id="@+id/txtAppVersion"
+            android:text="© 2022 Data Logger v2.0 by BOUELKHEIR Yassine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginTop="190dp"
+            android:layout_gravity="center"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/txtAppSponsor"
+            android:text="Sponsored by LASTIMI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
