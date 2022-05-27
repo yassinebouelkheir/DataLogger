@@ -817,7 +817,6 @@
                                                 echo '<option value="3">Wind Turbine</option>';
                                                 echo '<option value="4">Meteorology</option>';
                                                 echo '<option value="5">Speed of Wind</option>';
-                                                echo '<option value="6">Everything</option>';
                                             echo '</select>';
                                         echo '</div>';
                                         echo '<div class="form-group">';
