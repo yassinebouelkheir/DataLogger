@@ -290,7 +290,7 @@
                                         <h5 class="card-title ">AC VOLTAGE</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-purple"></i> Average Voltage: <?php echo getaverage($voltageacrows); ?> V</li>
+                                                <li><i class="fa fa-circle text-purple"></i> Average Voltage: <?php echo number_format(getaverage($voltageacrows), 2); ?> V</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -307,7 +307,7 @@
                                         <h5 class="card-title ">AC CURRENT</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-primary"></i> Average Current: <?php echo getaverage($currentacrows); ?> A</li>
+                                                <li><i class="fa fa-circle text-primary"></i> Average Current: <?php echo number_format(getaverage($currentacrows), 2); ?> A</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -324,7 +324,7 @@
                                         <h5 class="card-title ">AC POWER</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Average Power: <?php echo (getaverage($currentacrows)*getaverage($voltageacrows));?> W</li>
+                                                <li><i class="fa fa-circle text-info"></i> Average Power: <?php echo number_format(getaverage($currentacrows)*getaverage($voltageacrows), 2);?> W</li>
                                             </ul>
                                         </div>
                                     </div>

@@ -290,7 +290,7 @@
                                         <h5 class="card-title ">TENSION AC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-purple"></i> Tension moyenne: <?php echo getaverage($voltageacrows); ?> V</li>
+                                                <li><i class="fa fa-circle text-purple"></i> Tension moyenne: <?php echo number_format(getaverage($voltageacrows), 2); ?> V</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -307,7 +307,7 @@
                                         <h5 class="card-title ">COURANT AC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-primary"></i> COURANT AC moyenne: <?php echo getaverage($currentacrows); ?> A</li>
+                                                <li><i class="fa fa-circle text-primary"></i> Courant moyenne: <?php echo number_format(getaverage($currentacrows), 2); ?> A</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -324,7 +324,7 @@
                                         <h5 class="card-title ">PUISSANCE AC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Puissance AC moyenne: <?php echo (getaverage($currentacrows)*getaverage($voltageacrows));?> W</li>
+                                                <li><i class="fa fa-circle text-info"></i> Puissance moyenne: <?php echo number_format(getaverage($currentacrows)*getaverage($voltageacrows), 2);?> W</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -493,7 +493,7 @@
                     }]
                     , xkey: 'period'
                     , ykeys: ['puissanceac']
-                    , labels: ['PUISSANCE AC']
+                    , labels: ['Puissance AC']
                     , parseTime: false
                     , pointSize: 3
                     , fillOpacity: 0

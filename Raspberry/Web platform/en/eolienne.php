@@ -291,7 +291,7 @@
                                         <h5 class="card-title ">DC VOLTAGE</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-purple"></i> Average Voltage: <?php echo getaverage($voltagedcrows); ?> V</li>
+                                                <li><i class="fa fa-circle text-purple"></i> Average Voltage: <?php echo number_format(getaverage($voltagedcrows), 2); ?> V</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -308,7 +308,7 @@
                                         <h5 class="card-title ">DC CURRENT</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-primary"></i> Average Current: <?php echo getaverage($currentdcrows); ?> A</li>
+                                                <li><i class="fa fa-circle text-primary"></i> Average Current: <?php echo number_format(getaverage($currentdcrows), 2); ?> A</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -325,7 +325,7 @@
                                         <h5 class="card-title ">DC POWER</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Average Power: <?php echo (getaverage($currentdcrows)*getaverage($voltagedcrows));?> W</li>
+                                                <li><i class="fa fa-circle text-info"></i> Average Power: <?php echo number_format(getaverage($currentdcrows)*getaverage($voltagedcrows), 2);?> W</li>
                                             </ul>
                                         </div>
                                     </div>

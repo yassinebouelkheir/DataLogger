@@ -291,7 +291,7 @@
                                         <h5 class="card-title ">TENSION DC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-purple"></i> Tension moyenne: <?php echo getaverage($voltagedcrows); ?> V</li>
+                                                <li><i class="fa fa-circle text-purple"></i> Tension moyenne: <?php echo number_format(getaverage($voltagedcrows), 2); ?> V</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -308,7 +308,7 @@
                                         <h5 class="card-title ">COURANT DC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-primary"></i> Courant DC moyenne: <?php echo getaverage($currentdcrows); ?> A</li>
+                                                <li><i class="fa fa-circle text-primary"></i> Courant moyenne: <?php echo number_format(getaverage($currentdcrows), 2); ?> A</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -325,7 +325,7 @@
                                         <h5 class="card-title ">PUISSANCE DC</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Puissance DC moyenne: <?php echo (getaverage($currentdcrows)*getaverage($voltagedcrows));?> W</li>
+                                                <li><i class="fa fa-circle text-info"></i> Puissance moyenne: <?php echo number_format(getaverage($currentdcrows)*getaverage($voltagedcrows), 2);?> W</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -494,7 +494,7 @@
                     }]
                     , xkey: 'period'
                     , ykeys: ['puissancedc']
-                    , labels: ['PUISSANCE DC']
+                    , labels: ['Puissance DC']
                     , parseTime: false
                     , pointSize: 3
                     , fillOpacity: 0
