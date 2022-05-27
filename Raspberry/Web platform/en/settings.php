@@ -812,7 +812,7 @@
                                             echo '<label>Type of data</label>';
                                             echo '<select class="custom-select col-12" id="ExportationType" name="ExportationType">';
                                                 echo '<option value="0" selected>Select..</option>';
-                                                echo '<option value="1"Low Current</option>';
+                                                echo '<option value="1">Low Current</option>';
                                                 echo '<option value="2">High Current</option>';
                                                 echo '<option value="3">Wind Turbine</option>';
                                                 echo '<option value="4">Meteorology</option>';

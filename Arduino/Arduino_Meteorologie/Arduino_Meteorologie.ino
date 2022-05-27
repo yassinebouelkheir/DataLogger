@@ -29,6 +29,12 @@
 #include <printf.h>
 #include <RF24.h>
 #include <RF24_config.h>
+#include "max6675.h"
+
+int soPin = 4;
+int csPin = 5;
+int sckPin = 6;
+MAX6675 Module(sckPin, csPin, soPin);
 
 #define DHTPIN 2 
 #define DHTTYPE DHT11
@@ -59,7 +65,7 @@ void loop()
     radio.write(&data, sizeof(data));             
     delay(1);
 
-    double TEMP2_VALUE = 0.00;
+    double TEMP2_VALUE = Module.readCelsius();
     dtostrf(TEMP2_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 6 %s", str_temp);
     radio.write(&data, sizeof(data));             
