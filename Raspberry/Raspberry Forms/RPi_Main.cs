@@ -25,6 +25,9 @@
 using System;
 using System.Windows.Forms;
 using Color = System.Drawing.Color;
+using ImageChartsLib;
+using System.Drawing;
+using System.IO;
 
 namespace RPi
 {
@@ -507,14 +510,25 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 2 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162") 
+                            .chxl("0:" + dates + "| 1:" + vals) 
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+
                     dr.Close();
                 }
                 if (browseSelection == 2)
@@ -524,14 +538,24 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 1 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+                    
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 3)
@@ -572,14 +596,25 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 4 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -590,14 +625,25 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 3 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -640,14 +686,25 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 13 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -658,14 +715,26 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -707,14 +776,26 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 5 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -725,14 +806,26 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 6 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -796,14 +889,25 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 9 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 6)
@@ -814,14 +918,25 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 10 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
                 else if (browseSelection == 7)
@@ -830,14 +945,25 @@ namespace RPi
                     MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 11 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
                     var dr = cmd.ExecuteReader();
 
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
+                    string vals = "";
+                    string dates = "";
                     for (int i = 0; i < 5; i++)
                     {
                         dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
+                        vals = vals + "|" + dr.GetFloat(0);
+                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
                     }
+
+                    string chartPath = "tmp/chart.png";
+                    new ImageCharts()
+                            .cht("ls")
+                            .chxt("x,y")
+                            .chd("t:10,40,25")
+                            .chs("412x162")
+                            .chxl("0:" + dates + "| 1:" + vals)
+                            .toFile(chartPath);
+
+                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
                     dr.Close();
                 }
             }

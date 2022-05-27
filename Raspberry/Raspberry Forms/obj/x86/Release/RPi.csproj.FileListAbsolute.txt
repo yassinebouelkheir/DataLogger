@@ -84,3 +84,5 @@ C:\Users\Yassine\Desktop\DataLogger\Raspberry\Raspberry Forms\obj\x86\Release\RP
 C:\Users\Yassine\Desktop\DataLogger\Raspberry\Raspberry Forms\obj\x86\Release\RPi.csproj.CopyComplete
 C:\Users\Yassine\Desktop\DataLogger\Raspberry\Raspberry Forms\obj\x86\Release\DataLogger.exe
 C:\Users\Yassine\Desktop\DataLogger\Raspberry\Raspberry Forms\obj\x86\Release\DataLogger.pdb
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\ImageCharts.dll
+C:\Users\Yassine\Desktop\PFE_Repository\Raspberry\Raspberry Forms\bin\x86\Release\System.Drawing.Common.dll
