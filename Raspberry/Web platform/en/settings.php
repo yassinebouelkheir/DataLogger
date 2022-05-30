@@ -498,7 +498,7 @@
                     </div>
                 </nav>
             </header>
-            <aside class="left-sidebar">
+                        <aside class="left-sidebar">
                 <div class="scroll-sidebar">
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
@@ -525,12 +525,13 @@
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
                                 <span class="hide-menu">&nbsp;&nbsp;&nbsp;Meteorology</span></a>
                             </li>
-                            <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-home"></i><span class="hide-menu">&nbsp;&nbsp;&nbsp;Smart House</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="index.php">Main space</a></li>
-                                    <li><a href="aircon.php">Air conditioner</a></li>
-                                    <li><a href="bathroom.php">Bathroom</a></li>
-                                </ul>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="smarthouse.php" aria-expanded="false"><i class="fas fa-home"></i>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Smart House</span></a>
+                            </li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="livestream.php" aria-expanded="false"><i class="fas fa-camera"></i>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Live Stream</span></a>
                             </li>
                             <li class="nav-small-cap">--- Main settings</li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>

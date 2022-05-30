@@ -52,10 +52,37 @@
     $data['turbine'] = number_format(round($staticrows[10]['VALUE']), 0);
     $data['turbinewidth'] = round(($staticrows[10]['VALUE']));
 
-    $data['ecurrentdc'] = number_format($staticrows[12]['VALUE'], 2);
-    $data['ecdcwidth'] = $staticrows[12]['VALUE'];
+    $data['ecurrentdc'] = number_format($staticrows[11]['VALUE'], 2);
+    $data['ecdcwidth'] = $staticrows[11]['VALUE'];
 
-    $data['evoltagedc'] = number_format($staticrows[13]['VALUE'], 1);
-    $data['evoltagedcwidth'] = ((($staticrows[13]['VALUE']-12)*100)/13);
+    $data['evoltagedc'] = number_format($staticrows[12]['VALUE'], 1);
+    $data['evoltagedcwidth'] = ((($staticrows[12]['VALUE']-12)*100)/13);
+
+    $data['tempext'] = number_format($staticrows[13]['VALUE'], 0);
+    $data['tempextwidth'] = (($staticrows[13]['VALUE']*100)/60);
+
+    $data['tempint'] = number_format($staticrows[14]['VALUE'], 0);
+    $data['tempintwidth'] = (($staticrows[14]['VALUE']*100)/60);
+
+    $data['humidityint'] = number_format($staticrows[15]['VALUE'], 0);
+    $data['humidityintwidth'] = $staticrows[15]['VALUE'];
+
+    $data['co2level'] = number_format($staticrows[16]['VALUE'], 0);
+    $data['co2levelwidth'] = $staticrows[16]['VALUE'];
+
+    $data['gauzeslevel'] = number_format($staticrows[17]['VALUE'], 0);
+    $data['gauzeslevelwidth'] = $staticrows[17]['VALUE'];
+
+    $data['luminousflow'] = number_format(round($staticrows[18]['VALUE']), 0);
+    $data['luminousflowwidth'] = 1000-$staticrows[18]['VALUE'];
+
+    $data['lights'] = number_format(round($staticrows[19]['VALUE']), 0);
+    $data['exteriorDoor'] = number_format(round($staticrows[20]['VALUE']), 0);
+    $data['interiorWindow'] = number_format(round($staticrows[21]['VALUE']), 0);
+    $data['ac'] = number_format(round($staticrows[22]['VALUE']), 0);
+    $data['acfan'] = number_format(round($staticrows[23]['VALUE']), 0);
+    $data['extractor'] = number_format(round($staticrows[24]['VALUE']), 0);
+    $data['movement'] = number_format(round($staticrows[25]['VALUE']), 0);
+
 	echo json_encode($data);
 ?>
