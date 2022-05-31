@@ -185,7 +185,7 @@ def receiverHandler():
 					arduino.write(str.encode("setcharge " + str(rowcounts) + " " +  str(row[0]) + "\n"))
 					print("R: setcharge " + str(rowcounts) + " " +  str(row[0]))
 				rowcounts += 1
-				if rowcounts == 9: 
+				if rowcounts == 5: 
 					rowcounts = 1
 
 				while arduino.inWaiting()==0: pass
