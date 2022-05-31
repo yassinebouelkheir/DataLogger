@@ -56,7 +56,6 @@ namespace RPi
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RPI_Main));
             this.Sidebar = new System.Windows.Forms.Panel();
             this.Langswitch = new System.Windows.Forms.Button();
-            this.Charts = new System.Windows.Forms.Button();
             this.Charges = new System.Windows.Forms.Button();
             this.Meteorologie = new System.Windows.Forms.Button();
             this.Eolienne = new System.Windows.Forms.Button();
@@ -66,8 +65,6 @@ namespace RPi
             this.Left_Btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -81,12 +78,9 @@ namespace RPi
             this.paramValue = new System.Windows.Forms.Label();
             this.wifilabel = new System.Windows.Forms.PictureBox();
             this.updateParams = new System.Windows.Forms.Timer(this.components);
-            this.updateCharts = new System.Windows.Forms.Timer(this.components);
             this.timelabel = new System.Windows.Forms.Label();
             this.Sidebar.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wifilabel)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,7 +88,6 @@ namespace RPi
             // 
             this.Sidebar.BackColor = System.Drawing.Color.Transparent;
             this.Sidebar.Controls.Add(this.Langswitch);
-            this.Sidebar.Controls.Add(this.Charts);
             this.Sidebar.Controls.Add(this.Charges);
             this.Sidebar.Controls.Add(this.Meteorologie);
             this.Sidebar.Controls.Add(this.Eolienne);
@@ -113,31 +106,14 @@ namespace RPi
             this.Langswitch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Langswitch.ForeColor = System.Drawing.Color.White;
             this.Langswitch.Image = global::RPi.Properties.Resources.globe_solid;
-            this.Langswitch.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Langswitch.Location = new System.Drawing.Point(239, 8);
+            this.Langswitch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Langswitch.Location = new System.Drawing.Point(0, 8);
             this.Langswitch.Name = "Langswitch";
-            this.Langswitch.Size = new System.Drawing.Size(239, 30);
+            this.Langswitch.Size = new System.Drawing.Size(478, 30);
             this.Langswitch.TabIndex = 10;
-            this.Langswitch.Text = "Passer au français";
+            this.Langswitch.Text = "Passer au anglais";
             this.Langswitch.UseVisualStyleBackColor = false;
             this.Langswitch.Click += new System.EventHandler(this.Langswitch_Click);
-            // 
-            // Charts
-            // 
-            this.Charts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(155)))), ((int)(((byte)(90)))));
-            this.Charts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Charts.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Charts.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.Charts.ForeColor = System.Drawing.Color.White;
-            this.Charts.Image = global::RPi.Properties.Resources.chart_area_solid;
-            this.Charts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Charts.Location = new System.Drawing.Point(0, 8);
-            this.Charts.Name = "Charts";
-            this.Charts.Size = new System.Drawing.Size(239, 30);
-            this.Charts.TabIndex = 9;
-            this.Charts.Text = "Passer en mode graphique";
-            this.Charts.UseVisualStyleBackColor = false;
-            this.Charts.Click += new System.EventHandler(this.Charts_Click);
             // 
             // Charges
             // 
@@ -274,8 +250,6 @@ namespace RPi
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.pictureBox2);
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.button7);
@@ -291,23 +265,6 @@ namespace RPi
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(410, 190);
             this.panel1.TabIndex = 13;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Location = new System.Drawing.Point(-1, 28);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(412, 162);
-            this.pictureBox2.TabIndex = 25;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(334, 73);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 24;
-            this.pictureBox1.TabStop = false;
             // 
             // label2
             // 
@@ -519,12 +476,6 @@ namespace RPi
             this.updateParams.Enabled = true;
             this.updateParams.Tick += new System.EventHandler(this.UpdateParams_Tick);
             // 
-            // updateCharts
-            // 
-            this.updateCharts.Enabled = true;
-            this.updateCharts.Interval = 60000;
-            this.updateCharts.Tick += new System.EventHandler(this.UpdateCharts_Tick);
-            // 
             // timelabel
             // 
             this.timelabel.BackColor = System.Drawing.Color.Transparent;
@@ -561,8 +512,6 @@ namespace RPi
             this.Load += new System.EventHandler(this.RPI_Main_Load);
             this.Sidebar.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wifilabel)).EndInit();
             this.ResumeLayout(false);
 
@@ -570,7 +519,6 @@ namespace RPi
 
         #endregion
         private System.Windows.Forms.Panel Sidebar;
-        private System.Windows.Forms.Button Charts;
         private System.Windows.Forms.Button Charges;
         private System.Windows.Forms.Button Meteorologie;
         private System.Windows.Forms.Button Eolienne;
@@ -592,11 +540,8 @@ namespace RPi
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Timer updateCharts;
         private System.Windows.Forms.Label timelabel;
         private System.Windows.Forms.PictureBox wifilabel;
         private System.Windows.Forms.Button Langswitch;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

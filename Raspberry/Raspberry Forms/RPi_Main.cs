@@ -239,8 +239,9 @@ namespace RPi
             browseSelection -= 1;
             if (isGraphEnabled) if (browseSelection < 1) browseSelection = MaxSelection;
             else if (browseSelection < 0) browseSelection = MaxSelection;
-            if (isGraphEnabled) UpdateGraphSelection();
-            else UpdateSelection();
+            //if (isGraphEnabled) UpdateGraphSelection();
+            //else
+            UpdateSelection();
         }
 
         private void Right_Btn_Click(object sender, EventArgs e)
@@ -251,8 +252,9 @@ namespace RPi
                 if (isGraphEnabled) browseSelection = 1;
                 else browseSelection = 0;
             }
-            if (isGraphEnabled) UpdateGraphSelection();
-            else UpdateSelection();
+            //if (isGraphEnabled) UpdateGraphSelection();
+            //else 
+            UpdateSelection();
         }
 
         private void UpdateSelection()
@@ -273,7 +275,7 @@ namespace RPi
 
                     paramValue.Text = bat.ToString("0") + " %";
                     dr.Close();
-                    Charts.Enabled = false;
+                    //Charts.Enabled = false;
                 }
                 else if (browseSelection == 1)
                 {
@@ -286,7 +288,7 @@ namespace RPi
 
                     paramValue.Text = dr.GetFloat(0).ToString("0.0") + " V";
                     dr.Close();
-                    Charts.Enabled = true;
+                    //Charts.Enabled = true;
 
                 }
                 else if (browseSelection == 2)
@@ -300,7 +302,7 @@ namespace RPi
 
                     paramValue.Text = dr.GetFloat(0).ToString("0.00") + " A";
                     dr.Close();
-                    Charts.Enabled = true;
+                    //Charts.Enabled = true;
                 }
                 else if (browseSelection == 3)
                 {
@@ -314,7 +316,7 @@ namespace RPi
                     else paramTitle.Text = "Puissance DC :";
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
-                    Charts.Enabled = true;
+                    //Charts.Enabled = true;
                 }
             }
             else if (menuSelection == 1)
@@ -356,7 +358,7 @@ namespace RPi
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                 }
-                Charts.Enabled = true;
+                //Charts.Enabled = true;
             }
             else if (menuSelection == 2)
             {
@@ -398,7 +400,7 @@ namespace RPi
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                 }
-                Charts.Enabled = true;
+                //Charts.Enabled = true;
             }
             else if (menuSelection == 3)
             {
@@ -493,11 +495,11 @@ namespace RPi
                     paramValue.Text = dr.GetFloat(0).ToString("0") + " TR/MIN";
                     dr.Close();
                 }
-                Charts.Enabled = true;
+                //Charts.Enabled = true;
             }
             conn.Close();
         }
-        private void UpdateGraphSelection()
+        /*private void UpdateGraphSelection()
         {
             conn.Open();
             if (menuSelection == 0)
@@ -522,13 +524,12 @@ namespace RPi
                             .cht("ls")
                             .chxt("x,y")
                             .chd("t:10,40,25")
-                            .chs("415x165") 
+                            .chs("500x200") 
                             .chxl("0:" + dates + "| 1:" + vals) 
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
                     dr.Close();
                 }
                 if (browseSelection == 2)
@@ -551,13 +552,12 @@ namespace RPi
                             .cht("ls")
                             .chxt("x,y")
                             .chd("t:10,40,25")
-                            .chs("412x162")
+                            .chs("500x200")
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
                     dr.Close();
                 }
                 else if (browseSelection == 3)
@@ -616,9 +616,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -647,9 +647,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -710,9 +710,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -742,9 +742,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -805,9 +805,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -837,9 +837,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -921,9 +921,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
                 else if (browseSelection == 6)
@@ -952,9 +952,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
                 else if (browseSelection == 7)
@@ -981,14 +981,14 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
-                    pictureBox2.Visible = false;
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.Visible = true;
+                    Image image1 = Image.FromFile("tmp/chart.png");
+                    pictureBox2.BackgroundImage = image1;
+                    image1.Dispose();
                     dr.Close();
                 }
             }
             conn.Close();
-        }
+        }*/
 
         private void UpdateChargeStatus()
         {
@@ -1101,8 +1101,9 @@ namespace RPi
             else browseSelection = 1;
 
             MaxSelection = 4;
-            if (isGraphEnabled) UpdateGraphSelection();
-            else UpdateSelection();
+            //if (isGraphEnabled) UpdateGraphSelection();
+            //else 
+            UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 16, 103, 60);
             Courant_Fort.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -1112,7 +1113,7 @@ namespace RPi
 
             if (isChargePanelEnabled)
             {
-                Charts.Enabled = true;
+                //Charts.Enabled = true;
                 Left_Btn.Enabled = true;
                 Right_Btn.Enabled = true;
                 if (!isGraphEnabled)
@@ -1125,7 +1126,7 @@ namespace RPi
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    UpdateGraphSelection();
+                    //UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -1147,8 +1148,9 @@ namespace RPi
             menuSelection = 1;
             browseSelection = 0;
             MaxSelection = 3;
-            if (isGraphEnabled) UpdateGraphSelection();
-            else UpdateSelection();
+            //if (isGraphEnabled) UpdateGraphSelection();
+            //else 
+            UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
             Courant_Fort.BackColor = Color.FromArgb(255, 16, 103, 60);
@@ -1158,7 +1160,7 @@ namespace RPi
 
             if (isChargePanelEnabled)
             {
-                Charts.Enabled = true;
+                //Charts.Enabled = true;
                 Left_Btn.Enabled = true;
                 Right_Btn.Enabled = true;
                 if (!isGraphEnabled)
@@ -1171,7 +1173,7 @@ namespace RPi
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    UpdateGraphSelection();
+                    //UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -1193,8 +1195,9 @@ namespace RPi
             menuSelection = 2;
             browseSelection = 0;
             MaxSelection = 3;
-            if (isGraphEnabled) UpdateGraphSelection();
-            else UpdateSelection();
+            //if (isGraphEnabled) UpdateGraphSelection();
+            //else 
+            UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
             Courant_Fort.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -1204,7 +1207,7 @@ namespace RPi
 
             if (isChargePanelEnabled)
             {
-                Charts.Enabled = true;
+                //Charts.Enabled = true;
                 Left_Btn.Enabled = true;
                 Right_Btn.Enabled = true;
                 if (!isGraphEnabled)
@@ -1217,7 +1220,7 @@ namespace RPi
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    UpdateGraphSelection();
+                    //UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -1239,8 +1242,9 @@ namespace RPi
             menuSelection = 3;
             browseSelection = 0;
             MaxSelection = 8;
-            if (isGraphEnabled) UpdateGraphSelection();
-            else UpdateSelection();
+            //if (isGraphEnabled) UpdateGraphSelection();
+            //else 
+            UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
             Courant_Fort.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -1250,7 +1254,7 @@ namespace RPi
 
             if (isChargePanelEnabled)
             {
-                Charts.Enabled = true;
+                //Charts.Enabled = true;
                 Left_Btn.Enabled = true;
                 Right_Btn.Enabled = true;
                 if (!isGraphEnabled)
@@ -1263,7 +1267,7 @@ namespace RPi
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    UpdateGraphSelection();
+                    //UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -1299,22 +1303,22 @@ namespace RPi
         {
             if (!isGraphEnabled)
             {
-                isGraphEnabled = true;
+                /*isGraphEnabled = true;
                 pictureBox2.Visible = true;
                 if (langSelected) Charts.Text = "Switch to numeric mode";
-                else Charts.Text = "Passer en mode numérique";
+                else Charts.Text = "Passer en mode numérique";*/
                 paramTitle.Visible = false;
                 paramValue.Visible = false;
                 label2.Text = paramTitle.Text.Replace(":", "");
                 label2.Visible = true;
-                UpdateGraphSelection();
+                //UpdateGraphSelection();
             }
             else
             {
-                isGraphEnabled = false;
+                /*isGraphEnabled = false;
                 pictureBox2.Visible = false;
                 if (langSelected) Charts.Text = "Switch to chart mode";
-                else Charts.Text = "Passer en mode graphique";
+                else Charts.Text = "Passer en mode graphique";*/
                 paramTitle.Visible = true;
                 paramValue.Visible = true;
                 if (langSelected) label2.Text = "Relay control panel";
@@ -1328,10 +1332,10 @@ namespace RPi
         {
             if (!isChargePanelEnabled)
             {
-                Charts.Enabled = false;
+                /*Charts.Enabled = false;
                 if (isGraphEnabled) pictureBox2.Visible = false;
                 if (langSelected) Charts.Text = "Switch to chart mode";
-                else Charts.Text = "Passer en mode graphique";
+                else Charts.Text = "Passer en mode graphique";*/
 
                 isGraphEnabled = false;
                 Left_Btn.Enabled = false;
@@ -1435,11 +1439,6 @@ namespace RPi
             LogChargeChanges(8);
         }
 
-        private void UpdateCharts_Tick(object sender, EventArgs e)
-        {
-            if(isGraphEnabled) UpdateGraphSelection();
-            return;
-        }
         private void LogChargeChanges(int id)
         {
             conn.Open();
@@ -1462,8 +1461,8 @@ namespace RPi
         {
             if(langSelected)
             {
-                if (isGraphEnabled) Charts.Text = "Passer en mode numérique";
-                else Charts.Text = "Passer en mode graphique";
+                /*if (isGraphEnabled) Charts.Text = "Passer en mode numérique";
+                else Charts.Text = "Passer en mode graphique";*/
                 if (isChargePanelEnabled)
                 {
                     label2.Text = "Panneau de contrôle des charges";
@@ -1480,8 +1479,8 @@ namespace RPi
             }
             else
             {
-                if (isGraphEnabled) Charts.Text = "Switch to numeric mode";
-                else Charts.Text = "Switch to chart mode";
+                /*if (isGraphEnabled) Charts.Text = "Switch to numeric mode";
+                else Charts.Text = "Switch to chart mode";*/
                 if (isChargePanelEnabled)
                 {
                     label2.Text = "Relay control panel";
