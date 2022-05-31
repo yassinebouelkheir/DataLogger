@@ -44,7 +44,6 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="author" content="BOUELKHEIR Yassine">
-        <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - Live Stream</title>
         <link href="../dist/css/style.min.css" rel="stylesheet">

@@ -321,15 +321,14 @@ namespace RPi
             {
                 if (browseSelection == 0)
                 {
-                    /*MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 4", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 4", conn);
                     var dr = cmd.ExecuteReader();
-                    dr.Read();*/
+                    dr.Read();
 
                     if (langSelected) paramTitle.Text = "AC Voltage :";
                     else paramTitle.Text = "Tension AC :";
-                    //paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
-                    paramValue.Text = "220 V";
-                    //dr.Close();
+                    paramValue.Text = dr.GetFloat(0).ToString("0") + " V";
+                    dr.Close();
                 }
                 else if (browseSelection == 1)
                 {
@@ -345,11 +344,11 @@ namespace RPi
                 }
                 else if (browseSelection == 2)
                 {
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE ID = 3", conn);
+                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE (ID = 4 OR ID = 3)", conn);
                     var dr = cmd.ExecuteReader();
                     dr.Read();
-                    double voltage = 220; /*dr.GetFloat(0);
-                    dr.Read();*/
+                    double voltage = dr.GetFloat(0);
+                    dr.Read();
 
                     if (langSelected) paramTitle.Text = "AC Power :";
                     else paramTitle.Text = "Puissance AC :";
@@ -523,12 +522,13 @@ namespace RPi
                             .cht("ls")
                             .chxt("x,y")
                             .chd("t:10,40,25")
-                            .chs("412x162") 
+                            .chs("415x165") 
                             .chxl("0:" + dates + "| 1:" + vals) 
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 if (browseSelection == 2)
@@ -554,8 +554,10 @@ namespace RPi
                             .chs("412x162")
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
-                    
+
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 3)
@@ -614,7 +616,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -643,7 +647,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -704,7 +710,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -734,7 +742,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -795,7 +805,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 1)
@@ -825,7 +837,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 2)
@@ -907,7 +921,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 6)
@@ -936,7 +952,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
                 else if (browseSelection == 7)
@@ -963,7 +981,9 @@ namespace RPi
                             .chxl("0:" + dates + "| 1:" + vals)
                             .toFile(chartPath);
 
+                    pictureBox2.Visible = false;
                     pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
+                    pictureBox2.Visible = true;
                     dr.Close();
                 }
             }
@@ -1280,7 +1300,7 @@ namespace RPi
             if (!isGraphEnabled)
             {
                 isGraphEnabled = true;
-                //zedGraphControl1.Visible = true;
+                pictureBox2.Visible = true;
                 if (langSelected) Charts.Text = "Switch to numeric mode";
                 else Charts.Text = "Passer en mode numérique";
                 paramTitle.Visible = false;
@@ -1292,7 +1312,7 @@ namespace RPi
             else
             {
                 isGraphEnabled = false;
-                // zedGraphControl1.Visible = false;
+                pictureBox2.Visible = false;
                 if (langSelected) Charts.Text = "Switch to chart mode";
                 else Charts.Text = "Passer en mode graphique";
                 paramTitle.Visible = true;
@@ -1309,8 +1329,8 @@ namespace RPi
             if (!isChargePanelEnabled)
             {
                 Charts.Enabled = false;
-                //if (isGraphEnabled) zedGraphControl1.Visible = false;
-                if(langSelected) Charts.Text = "Switch to chart mode";
+                if (isGraphEnabled) pictureBox2.Visible = false;
+                if (langSelected) Charts.Text = "Switch to chart mode";
                 else Charts.Text = "Passer en mode graphique";
 
                 isGraphEnabled = false;

@@ -445,7 +445,6 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="author" content="BOUELKHEIR Yassine">
-        <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
         <title>Data logger - Settings</title>
         <link href="../assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
