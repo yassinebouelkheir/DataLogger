@@ -48,12 +48,11 @@
         }
         $result->free();
 
-
-        /*$query = 'SELECT * FROM `SENSORS` WHERE `ID` = 56 ORDER BY `UNIXDATE` ASC LIMIT 10';
-        $result = $mysqli->query($query);*/
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 4 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $result = $mysqli->query($query);
         $voltageacrows = array();
-        for($i = 0; $i < 10; $i++) {
-            $voltageacrows[$i]['VALUE'] = 220;
+        while($row = $result->fetch_assoc()) {
+            $voltageacrows[] = $row;
         }
         $mysqli->close();
 
@@ -172,16 +171,17 @@
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="meteorologie.php" aria-expanded="false"><i class="fas fa-snowflake"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;Météorologie</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Météorologie</span></a>
                             </li>
-                            <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-home"></i><span class="hide-menu">&nbsp;&nbsp;&nbsp;Maison intelligente</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="Smarthouse/index.php">Espace principal</a></li>
-                                    <li><a href="Smarthouse/aircon.php">Climatiseur</a></li>
-                                    <li><a href="Smarthouse/bathroom.php">Salle de bain</a></li>
-                                </ul>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="smarthouse.php" aria-expanded="false"><i class="fas fa-home"></i>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Maison intelligente</span></a>
                             </li>
-                            <li class="nav-small-cap">--- Paramètres générales</li>
+                            <li> 
+                                <a class="waves-effect waves-dark" href="livestream.php" aria-expanded="false"><i class="fas fa-camera"></i>
+                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Diffusion en direct</span></a>
+                            </li>
+                            <li class="nav-small-cap">--- Main settings</li>
                             <li> <a class="waves-effect waves-dark" href="charges.php" aria-expanded="false"><i class="fas fa-th"></i><span class="hide-menu"> &nbsp;&nbsp;Charges</span></a>
                             </li>
                             <li><a class="waves-effect waves-dark" href="functions.php" aria-expanded="false"><i class="fas fa-subscript"></i><span class="hide-menu"> &nbsp;&nbsp;Fonctions</span></a></li>

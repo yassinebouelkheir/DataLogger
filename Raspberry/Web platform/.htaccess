@@ -3,3 +3,5 @@
     Header set Access-Control-Allow-Origin "*"
   </FilesMatch>
 </IfModule>
+
+Options -Indexes

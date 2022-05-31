@@ -14,32 +14,29 @@
 -->
 
 <!--
-   ScriptName    : history.php
+   ScriptName    : charges.php
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 05/05/2022
+   Created       : 18/03/2022
    License       : GNU General v3.0
    Developers    : BOUELKHEIR Yassine 
 -->
-
+<?php
+    error_reporting(0);
+    session_start();
+    if(!isset($_SESSION["username"])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600))
+    { 
+        session_regenerate_id(true);
+        $_SESSION['LAST_ACTIVITY'] = time();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
-    <?php
-        error_reporting(0);
-        session_start();
-        if(!isset($_SESSION["username"]) || !$_SESSION["P5"]) 
-        {
-            header("Location: login.php");
-            exit();
-        }
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600))
-        { 
-            session_regenerate_id(true);
-            $_SESSION['LAST_ACTIVITY'] = time();
-        }
-
-        $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE");
-    ?>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,29 +46,29 @@
         <meta name="author" content="BOUELKHEIR Yassine">
         <meta http-equiv="refresh" content="120">
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-        <title>Data logger - Historique</title>
+        <title>Data logger - Diffusion en direct</title>
         <link href="../dist/css/style.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
+        <link href="../dist/css/pages/pricing-page.css" rel="stylesheet">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">Data logger v2.0 - Historique</p>
+                <p class="loader__label">Data logger v2.0 - Diffusion en direct</p>
             </div>
         </div>
         <div id="main-wrapper">
             <header class="topbar">
                 <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="history.php">
+                        <a class="navbar-brand" href="livestream.php">
                             <span>  
                     </div>
                     <div class="navbar-collapse">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="history.php"><i class="ti-reload"></i></a> </li>
-                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="history.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-block d-md-none waves-effect waves-dark" href="livestream.php"><i class="ti-reload"></i></a> </li>
+                            <li class="nav-item"> <a class="nav-link d-none d-lg-block d-md-block waves-effect waves-dark" href="livestream.php"><i class="ti-reload"></i></a> </li>
                         </ul>
 
                         <ul class="navbar-nav my-lg-0">
@@ -80,8 +77,8 @@
                                 <div class="dropdown-menu dropdown-menu-right animated bounceIn">
                                     <?php  
                                         $curPageName = str_replace(".php", "", substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1));
-                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=0" class="dropdown-item"><i class="flag-icon flag-icon-fr"></i> Français</a>';
-                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=1" class="dropdown-item"><i class="flag-icon flag-icon-us"></i> Anglais</a>';
+                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=0" class="dropdown-item"><i class="flag-icon flag-icon-fr"></i> French</a>';
+                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=1" class="dropdown-item"><i class="flag-icon flag-icon-us"></i> English</a>';
                                     ?>
                                 </div>
                             </li>
@@ -127,7 +124,7 @@
                                 <span class="hide-menu">&nbsp;&nbsp;&nbsp;Maison intelligente</span></a>
                             </li>
                             <li> 
-                                <a class="waves-effect waves-dark" href="livestream.php" aria-expanded="false"><i class="fas fa-camera"></i>
+                                <a class="waves-effect waves-dark active" href="livestream.php" aria-expanded="false"><i class="fas fa-camera"></i>
                                 <span class="hide-menu">&nbsp;&nbsp;&nbsp;Diffusion en direct</span></a>
                             </li>
                             <li class="nav-small-cap">--- Main settings</li>
@@ -139,7 +136,7 @@
                                     echo'<li><a class="waves-effect waves-dark" href="settings.php" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu"> &nbsp;Paramètres</span></a></li>';
                                 }
                                 if($_SESSION["P5"] == 1) {
-                                    echo'<li><a class="waves-effect waves-dark active" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
+                                    echo'<li><a class="waves-effect waves-dark" href="history.php" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu"> &nbsp;&nbsp;Historique</span></a></li>';
                                 }
                             ?>
                             <li><a class="waves-effect waves-dark" href="logout.php" aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu"> &nbsp;&nbsp;Déconnexion</span></a>
@@ -158,80 +155,13 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active">Historique</li>
+                                    <li class="breadcrumb-item active">Diffusion en direct</li>
                                 </ol>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Historique de connexion</h4>
-                                    <div class="table-responsive m-t-20">
-                                        <table id="myTable1" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date</th>
-                                                    <th>Nom d'utilisateur</th>
-                                                    <th>Adresse IP</th>
-                                                    <th>Location</th>
-                                                    <th>ISP</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                                $query = 'SELECT * FROM `HISTORY` WHERE `TYPE` = 0 ORDER BY `UNIXDATE` DESC';
-                                                $result = $mysqli->query($query) or die($mysqli->error);
-                                                $rows = array();
-                                                while($row = $result->fetch_assoc()) {
-                                                    echo '<tr>';
-                                                    echo '<td>'.$row['UNIXDATE'].'</td>';
-                                                    echo '<td>'.$row['USERNAME'].'</td>';
-                                                    echo '<td>'.$row['IP'].'</td>';
-                                                    echo '<td>'.$row['VALUE'].'</td>';
-                                                    echo '<td>'.$row['ISP'].'</td>';
-                                                    echo '</tr>';
-                                                }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Historique des modifications</h4>
-                                    <h5 class="card-subtitle">Ici vous trouvez toutes les modifications qui ont été apportées au système</h5>
-                                    <div class="table-responsive m-t-20">
-                                        <table id="myTable2" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date</th>
-                                                    <th>Nom d'utilisateur</th>
-                                                    <th>Adresse IP</th>
-                                                    <th>Modification</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                                $query = 'SELECT * FROM `HISTORY` WHERE `TYPE` = 1 ORDER BY `UNIXDATE` DESC';
-                                                $result = $mysqli->query($query) or die($mysqli->error);
-                                                $rows = array();
-                                                while($row = $result->fetch_assoc()) {
-                                                    echo '<tr>';
-                                                    echo '<td>'.$row['UNIXDATE'].'</td>';
-                                                    echo '<td>'.$row['USERNAME'].'</td>';
-                                                    echo '<td>'.$row['IP'].'</td>';
-                                                    echo '<td>'.$row['VALUE'].'</td>';
-                                                    echo '</tr>';
-                                                }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -246,17 +176,5 @@
         <script src="../dist/js/perfect-scrollbar.jquery.min.js"></script>
         <script src="../dist/js/sidebarmenu.js"></script>
         <script src="../dist/js/custom.min.js"></script>
-        <script src="../assets/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="../assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
-        <script>
-        $(function () {
-                $('#myTable1').DataTable( {
-            "order": [[ 0, "desc" ]]
-        	});
-                $('#myTable2').DataTable( {
-            "order": [[ 0, "desc" ]]
-        	});
-        });
-    </script>
     </body>
 </html>

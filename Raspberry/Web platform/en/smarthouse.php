@@ -208,7 +208,7 @@
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark active" href="smarthouse.php" aria-expanded="false"><i class="fas fa-home"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Smart House</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Smart House</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="livestream.php" aria-expanded="false"><i class="fas fa-camera"></i>
@@ -369,16 +369,16 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-cloud"></i></h3>
-                                                    <p class="text-danger" id="actitle">RESTROOM<br> GAUZES LEVEL</p>
+                                                    <p class="text-danger" id="gauzesleveltitle">RESTROOM<br> GAUZES LEVEL</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h2 class="counter text-danger" id="ac">0.0 PPM</h2>
+                                                <h2 class="counter text-danger" id="gauzeslevel">0.0 PPM</h2>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="acwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" id="gauzeslevelwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -392,10 +392,10 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-wind"></i></h3>
-                                                <p class="text-danger" id="doortitle">RESTROOM<br> EXTRACTOR</p>
+                                                <p class="text-danger" id="extractortitle">RESTROOM<br> EXTRACTOR</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h3 class="counter text-danger" id="door">OFF</h3>
+                                                <h3 class="counter text-danger" id="extractor">OFF</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -410,10 +410,10 @@
                                         <div class="d-flex no-block align-items-center">
                                             <div>
                                                 <h3><i class="fas fa-male"></i></h3>
-                                                    <p class="text-danger" id="windowtitle">RESTROOM<br> MOVEMENT</p>
+                                                    <p class="text-danger" id="movetitle">RESTROOM<br> MOVEMENT</p>
                                             </div>
                                             <div class="ml-auto">
-                                                <h3 class="counter text-danger" id="window">NO</h3>
+                                                <h3 class="counter text-danger" id="movement">NO</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -438,7 +438,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="acwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" id="tempextwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -460,7 +460,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="acwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" id="tempintwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -482,7 +482,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="acwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" id="inthumiditywidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -504,7 +504,7 @@
                                     </div>                                    
                                     <div class="col-12">
                                         <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" id="acwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" id="co2levelwidth" style="width: 0%; height: 6px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -828,35 +828,216 @@
                     , resize: true
                 });
 
-                /*function refresh() {
+                function refresh() {
                 $.ajax({
                     url: './updateStaticValues.php',
                     type: 'post',
                     dataType: "json",
                     success: function (response) {
                         
-                        document.getElementById('voltagedc').innerHTML = response.evoltagedc + " V";
-                        document.getElementById('tensiondcwidth').setAttribute("style", "width: " + response.evoltagedcwidth + "%; height: 6px;");
-                        if(response.evoltagedc < 14) {
-                            document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-danger");
-                            document.getElementById('voltagedc').setAttribute("class", "counter text-danger");
-                            document.getElementById('voltagedctitle').setAttribute("class", "text-danger");
+                        if(response.lights == 1) {
+                            document.getElementById('lightsheader').setAttribute("class", "card-header bg-success");
+                            document.getElementById('light').setAttribute("class", "counter text-success");
+                            document.getElementById('lighttitle').setAttribute("class", "text-success");
+                            document.getElementById('light').innerHTML = "ON";
                         }
-                        else if(response.evoltagedc < 20) {
-                            document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-primary");
-                            document.getElementById('voltagedc').setAttribute("class", "counter text-primary");
-                            document.getElementById('voltagedctitle').setAttribute("class", "text-primary");
+                        else {
+                            document.getElementById('lightsheader').setAttribute("class", "card-header bg-danger");
+                            document.getElementById('light').setAttribute("class", "counter text-danger");
+                            document.getElementById('lighttitle').setAttribute("class", "text-danger");
+                            document.getElementById('light').innerHTML = "OFF";
                         }
-                        else if(response.evoltagedc >= 20){
-                            document.getElementById('tensiondcwidth').setAttribute("class", "progress-bar bg-success");
-                            document.getElementById('voltagedc').setAttribute("class", "counter text-success");
-                            document.getElementById('voltagedctitle').setAttribute("class", "text-success");
+
+                        if(response.exteriorDoor == 1) {
+                            document.getElementById('doorheader').setAttribute("class", "card-header bg-success");
+                            document.getElementById('door').setAttribute("class", "counter text-success");
+                            document.getElementById('doortitle').setAttribute("class", "text-success");
+                            document.getElementById('door').innerHTML = "OPENED";
+                        }
+                        else {
+                            document.getElementById('doorheader').setAttribute("class", "card-header bg-danger");
+                            document.getElementById('door').setAttribute("class", "counter text-danger");
+                            document.getElementById('doortitle').setAttribute("class", "text-danger");
+                            document.getElementById('door').innerHTML = "CLOSED";
+                        }
+
+                        if(response.interiorWindow == 1) {
+                            document.getElementById('windowheader').setAttribute("class", "card-header bg-success");
+                            document.getElementById('window').setAttribute("class", "counter text-success");
+                            document.getElementById('windowtitle').setAttribute("class", "text-success");
+                            document.getElementById('window').innerHTML = "OPENED";
+                        }
+                        else {
+                            document.getElementById('windowheader').setAttribute("class", "card-header bg-danger");
+                            document.getElementById('window').setAttribute("class", "counter text-danger");
+                            document.getElementById('windowtitle').setAttribute("class", "text-danger");
+                            document.getElementById('window').innerHTML = "CLOSED";
+                        }
+
+                        if(response.ac == 1) {
+                            document.getElementById('acheader').setAttribute("class", "card-header bg-success");
+                            document.getElementById('ac').setAttribute("class", "counter text-success");
+                            document.getElementById('actitle').setAttribute("class", "text-success");
+                            document.getElementById('ac').innerHTML = "ON";
+                        }
+                        else {
+                            document.getElementById('acheader').setAttribute("class", "card-header bg-danger");
+                            document.getElementById('ac').setAttribute("class", "counter text-danger");
+                            document.getElementById('actitle').setAttribute("class", "text-danger");
+                            document.getElementById('ac').innerHTML = "OFF";
+                        }
+
+                        if(response.acfan == 1) {
+                            document.getElementById('acfanheader').setAttribute("class", "card-header bg-success");
+                            document.getElementById('acfan').setAttribute("class", "counter text-success");
+                            document.getElementById('acfantitle').setAttribute("class", "text-success");
+                            document.getElementById('acfan').innerHTML = "ON";
+                        }
+                        else {
+                            document.getElementById('acfanheader').setAttribute("class", "card-header bg-danger");
+                            document.getElementById('acfan').setAttribute("class", "counter text-danger");
+                            document.getElementById('acfantitle').setAttribute("class", "text-danger");
+                            document.getElementById('acfan').innerHTML = "OFF";
+                        }
+
+                        if(response.extractor == 1) {
+                            document.getElementById('extractorheader').setAttribute("class", "card-header bg-success");
+                            document.getElementById('extractor').setAttribute("class", "counter text-success");
+                            document.getElementById('extractortitle').setAttribute("class", "text-success");
+                            document.getElementById('extractor').innerHTML = "ON";
+                        }
+                        else {
+                            document.getElementById('extractorheader').setAttribute("class", "card-header bg-danger");
+                            document.getElementById('extractor').setAttribute("class", "counter text-danger");
+                            document.getElementById('extractortitle').setAttribute("class", "text-danger");
+                            document.getElementById('extractor').innerHTML = "OFF";
+                        }
+
+                        if(response.movement == 1) {
+                            document.getElementById('moveheader').setAttribute("class", "card-header bg-success");
+                            document.getElementById('movement').setAttribute("class", "counter text-success");
+                            document.getElementById('movetitle').setAttribute("class", "text-success");
+                            document.getElementById('movement').innerHTML = "YES";
+                        }
+                        else {
+                            document.getElementById('moveheader').setAttribute("class", "card-header bg-danger");
+                            document.getElementById('movement').setAttribute("class", "counter text-danger");
+                            document.getElementById('movetitle').setAttribute("class", "text-danger");
+                            document.getElementById('movement').innerHTML = "NO";
+                        }
+
+                        document.getElementById('tempext').innerHTML = response.tempint + " °C";
+                        document.getElementById('tempextwidth').setAttribute("style", "width: " + response.tempintwidth + "%; height: 6px;");
+                        if(response.tempext < 25) {
+                            document.getElementById('tempextwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('tempext').setAttribute("class", "counter text-success");
+                            document.getElementById('tempexttitle').setAttribute("class", "text-success");
+                        }
+                        else if(response.tempext < 37) {
+                            document.getElementById('tempextwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('tempext').setAttribute("class", "counter text-primary");
+                            document.getElementById('tempexttitle').setAttribute("class", "text-primary");
+                        }
+                        else if(response.tempext >= 37) {
+                            document.getElementById('tempextwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('tempext').setAttribute("class", "counter text-danger");
+                            document.getElementById('tempexttitle').setAttribute("class", "text-danger");
+                        }
+
+                        document.getElementById('tempint').innerHTML = response.tempext + " °C";
+                        document.getElementById('tempintwidth').setAttribute("style", "width: " + response.tempextwidth + "%; height: 6px;");
+                        if(response.tempint < 25) {
+                            document.getElementById('tempintwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('tempint').setAttribute("class", "counter text-success");
+                            document.getElementById('tempinttitle').setAttribute("class", "text-success");
+                        }
+                        else if(response.tempint < 37) {
+                            document.getElementById('tempintwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('tempint').setAttribute("class", "counter text-primary");
+                            document.getElementById('tempinttitle').setAttribute("class", "text-primary");
+                        }
+                        else if(response.tempint >= 37) {
+                            document.getElementById('tempintwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('tempint').setAttribute("class", "counter text-danger");
+                            document.getElementById('tempinttitle').setAttribute("class", "text-danger");
+                        }
+
+                        document.getElementById('inthumidity').innerHTML = response.humidityint + " %RH";
+                        document.getElementById('inthumiditywidth').setAttribute("style", "width: " + response.humidityintwidth + "%; height: 6px;");
+                        if(response.humidityint > 60) {
+                            document.getElementById('inthumiditywidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('inthumidity').setAttribute("class", "counter text-success");
+                            document.getElementById('inthumiditytitle').setAttribute("class", "text-success");
+                        }
+                        else if(response.humidityint >= 40) {
+                            document.getElementById('inthumiditywidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('inthumidity').setAttribute("class", "counter text-primary");
+                            document.getElementById('inthumiditytitle').setAttribute("class", "text-primary");
+                        }
+                        else if(response.humidityint < 40) {
+                            document.getElementById('inthumiditywidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('inthumidity').setAttribute("class", "counter text-danger");
+                            document.getElementById('inthumiditytitle').setAttribute("class", "text-danger");
+                        }
+
+                        document.getElementById('co2level').innerHTML = response.co2level + " PPM";
+                        document.getElementById('co2levelwidth').setAttribute("style", "width: " + response.co2levelwidth + "%; height: 6px;");
+                        if(response.co2level < 400) {
+                            document.getElementById('co2levelwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('co2level').setAttribute("class", "counter text-success");
+                            document.getElementById('co2leveltitle').setAttribute("class", "text-success");
+                        }
+                        else if(response.co2level < 700) {
+                            document.getElementById('co2levelwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('co2level').setAttribute("class", "counter text-primary");
+                            document.getElementById('co2leveltitle').setAttribute("class", "text-primary");
+                        }
+                        else if(response.co2level >= 700) {
+                            document.getElementById('co2levelwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('co2level').setAttribute("class", "counter text-danger");
+                            document.getElementById('co2leveltitle').setAttribute("class", "text-danger");
+                        }
+
+                        document.getElementById('gauzeslevel').innerHTML = response.gauzeslevel + " PPM";
+                        document.getElementById('gauzeslevelwidth').setAttribute("style", "width: " + response.gauzeslevelwidth + "%; height: 6px;");
+                        if(response.gauzeslevel < 400) {
+                            document.getElementById('gauzeslevelwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('gauzeslevel').setAttribute("class", "counter text-success");
+                            document.getElementById('gauzesleveltitle').setAttribute("class", "text-success");
+                        }
+                        else if(response.gauzeslevel < 700) {
+                            document.getElementById('gauzeslevelwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('gauzeslevel').setAttribute("class", "counter text-primary");
+                            document.getElementById('gauzesleveltitle').setAttribute("class", "text-primary");
+                        }
+                        else if(response.gauzeslevel >= 700) {
+                            document.getElementById('gauzeslevelwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('gauzeslevel').setAttribute("class", "counter text-danger");
+                            document.getElementById('gauzesleveltitle').setAttribute("class", "text-danger");
+                        }
+
+                        document.getElementById('ldrflux').innerHTML = response.luminousflow + " LUX";
+                        document.getElementById('ldrfluxwidth').setAttribute("style", "width: " + response.luminousflowwidth + "%; height: 6px;");
+                        if(response.luminousflowwidth > 60) {
+                            document.getElementById('ldrfluxwidth').setAttribute("class", "progress-bar bg-success");
+                            document.getElementById('ldrflux').setAttribute("class", "counter text-success");
+                            document.getElementById('ldrfluxtitle').setAttribute("class", "text-success");
+                        }
+                        else if(response.luminousflowwidth >= 40) {
+                            document.getElementById('ldrfluxwidth').setAttribute("class", "progress-bar bg-primary");
+                            document.getElementById('ldrflux').setAttribute("class", "counter text-primary");
+                            document.getElementById('ldrfluxtitle').setAttribute("class", "text-primary");
+                        }
+                        else if(response.luminousflowwidth < 40) {
+                            document.getElementById('ldrfluxwidth').setAttribute("class", "progress-bar bg-danger");
+                            document.getElementById('ldrflux').setAttribute("class", "counter text-danger");
+                            document.getElementById('ldrfluxtitle').setAttribute("class", "text-danger");
                         }
                     }});
                 }
             setInterval(function(){
                 refresh() 
-            }, 600);*/
+            }, 600);
         });
         </script>
     </body>

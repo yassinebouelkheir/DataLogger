@@ -32,7 +32,7 @@ import os
 db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi", database='PFE') 
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
-lastquerytime = [1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+lastquerytime = [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
 rowcounts = 1
 
 def getquerytime(x, y=0):
@@ -64,6 +64,8 @@ def getquerytime(x, y=0):
 			return lastquerytime[6]
 		elif x == '13': # Eo Courant DC
 			return lastquerytime[6]
+		elif int(x) > 13: # Smart House
+			return lastquerytime[7]
 
 	else:
 		if x == '1' : # DC
@@ -156,6 +158,13 @@ def getquerytime(x, y=0):
 			result = cursor.fetchall()
 			for row in result:
 				lastquerytime[6] = time.time() + row[0]*1000
+				break;
+		elif int(x) > 13: # Smart House
+			cursor = db.cursor()
+			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 8 LIMIT 1")
+			result = cursor.fetchall()
+			for row in result:
+				lastquerytime[7] = time.time() + row[0]*1000
 				break;
 		return 1;
 

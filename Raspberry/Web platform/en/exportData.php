@@ -52,23 +52,23 @@
         {
             case 1: 
             {
-                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/en/assets/exemple_'.$type.'.xlsx');
-                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/en/exemple_1.xlsx');
-                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/en/exemple_'.($type-1).'.xlsx');
+                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/en/exemple_'.$type.'.xlsx');
+                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/en/exemple_1.xlsx');
+                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/en/exemple_'.($type-1).'.xlsx');
                 break;
             }
             case 2:
             {
-                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/fr/assets/exemple_'.$type.'.xlsx');
-                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/fr/exemple_1.xlsx');
-                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/fr/exemple_'.($type-1).'.xlsx');
+                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/fr/exemple_'.$type.'.xlsx');
+                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/fr/exemple_1.xlsx');
+                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/fr/exemple_'.($type-1).'.xlsx');
                 break;
             }
             case 3: 
             {
-                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/es/assets/exemple_'.$type.'.xlsx');
-                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/es/exemple_1.xlsx');
-                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../exportation/es/exemple_'.($type-1).'.xlsx');
+                if($type < 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/es/exemple_'.$type.'.xlsx');
+                else if($type == 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/es/exemple_1.xlsx');
+                else if($type > 3) $objPHPExcel = PHPExcel_IOFactory::load('../assets/exportation/es/exemple_'.($type-1).'.xlsx');
                 break;
             }
             default: 

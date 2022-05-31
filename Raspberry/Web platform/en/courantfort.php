@@ -48,12 +48,11 @@
         }
         $result->free();
 
-
-        /*$query = 'SELECT * FROM `SENSORS` WHERE `ID` = 56 ORDER BY `UNIXDATE` ASC LIMIT 10';
-        $result = $mysqli->query($query);*/
+        $query = 'SELECT * FROM `SENSORS` WHERE `ID` = 4 ORDER BY `UNIXDATE` ASC LIMIT 10';
+        $result = $mysqli->query($query);
         $voltageacrows = array();
-        for($i = 0; $i < 10; $i++) {
-            $voltageacrows[$i]['VALUE'] = 220;
+        while($row = $result->fetch_assoc()) {
+            $voltageacrows[] = $row;
         }
         $mysqli->close();
 
@@ -176,7 +175,7 @@
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="smarthouse.php" aria-expanded="false"><i class="fas fa-home"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Smart House</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Smart House</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="livestream.php" aria-expanded="false"><i class="fas fa-camera"></i>

@@ -216,7 +216,7 @@
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="smarthouse.php" aria-expanded="false"><i class="fas fa-home"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Smart House</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Smart House</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="livestream.php" aria-expanded="false"><i class="fas fa-camera"></i>
@@ -479,7 +479,7 @@
                                         <h5 class="card-title ">LUMINOUS FLOW</h5>
                                         <div class="ml-auto">
                                             <ul class="list-inline font-12">
-                                                <li><i class="fa fa-circle text-info"></i> Average Luminous flow: <?php echo number_format((((2500/(getaverage($brightnessrows)*0.0048828125)-500)/10)), 0);?> LUX</li>
+                                                <li><i class="fa fa-circle text-warning"></i> Average Luminous flow: <?php echo number_format((((2500/(getaverage($brightnessrows)*0.0048828125)-500)/10)), 0);?> LUX</li>
                                             </ul>
                                         </div>
                                     </div>

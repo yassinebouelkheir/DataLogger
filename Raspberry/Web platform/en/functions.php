@@ -193,7 +193,7 @@
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="smarthouse.php" aria-expanded="false"><i class="fas fa-home"></i>
-                                <span class="hide-menu">&nbsp;&nbsp;&nbsp;Smart House</span></a>
+                                <span class="hide-menu">&nbsp;&nbsp;Smart House</span></a>
                             </li>
                             <li> 
                                 <a class="waves-effect waves-dark" href="livestream.php" aria-expanded="false"><i class="fas fa-camera"></i>

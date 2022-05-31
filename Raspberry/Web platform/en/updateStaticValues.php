@@ -73,7 +73,7 @@
     $data['gauzeslevel'] = number_format($staticrows[17]['VALUE'], 0);
     $data['gauzeslevelwidth'] = $staticrows[17]['VALUE'];
 
-    $data['luminousflow'] = number_format(round($staticrows[18]['VALUE']), 0);
+    $data['luminousflow'] = number_format(round(((2500/($staticrows[18]['VALUE']*0.0048828125)-500)/10)), 0);
     $data['luminousflowwidth'] = 1000-$staticrows[18]['VALUE'];
 
     $data['lights'] = number_format(round($staticrows[19]['VALUE']), 0);
