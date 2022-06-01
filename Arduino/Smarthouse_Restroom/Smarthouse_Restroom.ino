@@ -14,10 +14,10 @@
 */
 
 /*
-   ScriptName    : Arduino_Eolienne.ino
+   ScriptName    : Smarthouse_Restroom.ino
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 25/04/2022
+   Created       : 01/06/2022
    License       : GNU General v3.0
    Developers    : BOUELKHEIR Yassine
 */
@@ -27,12 +27,12 @@
 #include <printf.h>
 #include <RF24.h>
 #include <RF24_config.h>
-#include "ACS712.h"
 
 RF24 radio(9, 10);       
 const byte address[6] = "14863";
 
-ACS712 currentSensor1(ACS712_30A, A0);
+unsigned uint timeEplased1;
+unsigned uint timeEplased2;
 
 void setup() 
 {
@@ -40,22 +40,39 @@ void setup()
     radio.openWritingPipe(address); 
     radio.setPALevel(RF24_PA_MAX); 
     radio.stopListening();
+
+    pinMode(8, OUTPUT);
+    pinMode(9, OUTPUT);
 }
 
 void loop()
 {  
     char data[24];
-    char str_temp[6];
+    int extractor = 0, movement = 0;
 
-    double V1 = getCurrentDC();
-    dtostrf(V1, 1, 2, str_temp);
-    sprintf(data, "setsensor 12 %s", currentSensor1.getCurrentDC());
-    radio.write(&data, sizeof(data));             
-    delay(1);
+    if(((millis() + 5000) < timeEplased1))
+    {
+        if(extractor == 1)
+        {
+            digitalWrite(8, HIGH);
+            timeEplased1 = millis();
+        }
+        else digitalWrite(8, LOW);
+    }
 
-    double V2 = ((analogRead(A0)*5.0)/1024.0)/(7500.0/(37500.0));
-    dtostrf(V2, 1, 2, str_temp);
-    sprintf(data, "setsensor 13 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    if(((millis() + 5000) < timeEplased2))
+    {    
+        if(movement == 1)
+        {
+            digitalWrite(9, HIGH);
+            timeEplased2 = millis();
+        }
+        else digitalWrite(9, LOW);
+    }
+
+    sprintf(data, "setsensor 23 %d", extractor);
+    radio.write(&data, sizeof(data));     
+
+    sprintf(data, "setsensor 24 %d", movement);
+    radio.write(&data, sizeof(data));          
     delay(1);
-}

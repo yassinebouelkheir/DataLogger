@@ -14,10 +14,10 @@
 */
 
 /*
-   ScriptName    : Arduino_Eolienne.ino
+   ScriptName    : Smarthouse_AC.ino
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 25/04/2022
+   Created       : 01/06/2022
    License       : GNU General v3.0
    Developers    : BOUELKHEIR Yassine
 */
@@ -27,35 +27,28 @@
 #include <printf.h>
 #include <RF24.h>
 #include <RF24_config.h>
-#include "ACS712.h"
 
 RF24 radio(9, 10);       
-const byte address[6] = "14863";
-
-ACS712 currentSensor1(ACS712_30A, A0);
+const byte address[6] = "63257";
 
 void setup() 
 {
-    radio.begin();                  
-    radio.openWritingPipe(address); 
-    radio.setPALevel(RF24_PA_MAX); 
-    radio.stopListening();
+    Serial.begin(9600);
+    radio.begin();
+              
+    radio.openReadingPipe(1, address);
+    radio.disableAckPayload();
+
+    radio.setPALevel(RF24_PA_MAX);
+    radio.startListening();
 }
-
 void loop()
-{  
-    char data[24];
-    char str_temp[6];
-
-    double V1 = getCurrentDC();
-    dtostrf(V1, 1, 2, str_temp);
-    sprintf(data, "setsensor 12 %s", currentSensor1.getCurrentDC());
-    radio.write(&data, sizeof(data));             
-    delay(1);
-
-    double V2 = ((analogRead(A0)*5.0)/1024.0)/(7500.0/(37500.0));
-    dtostrf(V2, 1, 2, str_temp);
-    sprintf(data, "setsensor 13 %s", str_temp);
-    radio.write(&data, sizeof(data));             
-    delay(1);
+{   
+    delay(10);
+    if (radio.available()) 
+    {
+        char text[24];
+        radio.read(&text, sizeof(text));
+        Serial.println(text);
+    }
 }
