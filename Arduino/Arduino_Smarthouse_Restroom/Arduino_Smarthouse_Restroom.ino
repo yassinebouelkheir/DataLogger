@@ -29,10 +29,10 @@
 #include <RF24_config.h>
 
 RF24 radio(9, 10);       
-const byte address[6] = "14863";
+const byte address[6] = "57369";
 
-unsigned uint timeEplased1;
-unsigned uint timeEplased2;
+unsigned long timeEplased;
+unsigned long timeEplased1;
 
 void setup() 
 {
@@ -41,38 +41,53 @@ void setup()
     radio.setPALevel(RF24_PA_MAX); 
     radio.stopListening();
 
+    pinMode(5, INPUT);
+    pinMode(6, INPUT);
+
+    pinMode(7, OUTPUT);
     pinMode(8, OUTPUT);
-    pinMode(9, OUTPUT);
+    timeEplased = millis()-3000;
+    timeEplased1 = millis()-500;
 }
 
 void loop()
 {  
     char data[24];
-    int extractor = 0, movement = 0;
+    bool extractor = false, movement = false;
+    double GazesValue;
 
-    if(((millis() + 5000) < timeEplased1))
+    if(GazesValue > 600) extractor = true;
+    else extractor = false;
+
+    if(((millis() + 3000) < timeEplased))
     {
         if(extractor == 1)
         {
-            digitalWrite(8, HIGH);
+            digitalWrite(7, HIGH);
             timeEplased1 = millis();
         }
-        else digitalWrite(8, LOW);
+        else digitalWrite(7, LOW);
     }
 
-    if(((millis() + 5000) < timeEplased2))
-    {    
-        if(movement == 1)
-        {
-            digitalWrite(9, HIGH);
-            timeEplased2 = millis();
-        }
-        else digitalWrite(9, LOW);
+    movement = digitalRead(6);
+    if(movement == 1)
+    {
+        digitalWrite(8, HIGH);
     }
+    else digitalWrite(8, LOW);
 
-    sprintf(data, "setsensor 23 %d", extractor);
-    radio.write(&data, sizeof(data));     
+    if(((millis() + 500) < timeEplased1))
+    {
+        sprintf(data, "setsensor 16 %d", GazesValue);
+        radio.write(&data, sizeof(data));
 
-    sprintf(data, "setsensor 24 %d", movement);
-    radio.write(&data, sizeof(data));          
-    delay(1);
+        sprintf(data, "setsensor 23 %d", extractor);
+        radio.write(&data, sizeof(data));   
+
+        sprintf(data, "setsensor 24 %d", movement);
+        radio.write(&data, sizeof(data));      
+        timeEplased1 = millis();    
+    }
+}
+
+

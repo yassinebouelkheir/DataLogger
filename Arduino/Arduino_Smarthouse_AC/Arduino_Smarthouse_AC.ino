@@ -50,5 +50,27 @@ void loop()
         char text[24];
         radio.read(&text, sizeof(text));
         Serial.println(text);
+        int output = text - '0';
+
+        if(output == 10) // AC
+        {
+            digitalWrite(2, HIGH);
+            digitalWrite(3, LOW);  
+        }
+        else if(output == 01) // FAN
+        {
+            digitalWrite(2, LOW);
+            digitalWrite(3, HIGH);
+        }
+        else if(output == 11) // BOTH
+        {
+            digitalWrite(2, HIGH);
+            digitalWrite(3, HIGH);
+        }
+        else // NOTHING
+        {
+            digitalWrite(2, LOW);
+            digitalWrite(3, LOW);
+        }
     }
 }

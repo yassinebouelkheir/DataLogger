@@ -14,10 +14,10 @@
 ##
 
 ## 
-#    ScriptName    : main.py
+#    ScriptName    : Reciever.py
 #    Author        : BOUELKHEIR Yassine
 #    Version       : 2.0
-#    Created       : 18/03/2022
+#    Created       : 03/06/2022
 #    License       : GNU General v3.0
 #    Developers    : BOUELKHEIR Yassine 
 ##
@@ -33,7 +33,6 @@ db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
 lastquerytime = [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
-rowcounts = 1
 
 def getquerytime(x, y=0):
 	global lastquerytime
@@ -170,7 +169,6 @@ def getquerytime(x, y=0):
 
 def receiverHandler():
 	global lastquerytime
-	global rowcounts
 	print('recieverHandler Running. Press CTRL-C to exit.')
 	time.sleep(0.1) 
 	if arduino.isOpen():
@@ -178,16 +176,7 @@ def receiverHandler():
 		time.sleep(5)
 		try:
 			while True:
-				cursor = db.cursor(buffered=True)
-				cursor.execute("SELECT VALUE FROM `CHARGES` WHERE `ID` =" + str(rowcounts))
-				result = cursor.fetchall()
-				for row in result:
-					arduino.write(str.encode("setcharge " + str(rowcounts) + " " +  str(row[0]) + "\n"))
-					print("R: setcharge " + str(rowcounts) + " " +  str(row[0]))
-				rowcounts += 1
-				if rowcounts == 5: 
-					rowcounts = 1
-
+				arduino.write(str.encode(" "))
 				while arduino.inWaiting()==0: pass
 				if  arduino.inWaiting()>0: 
 					answer=arduino.readline()
@@ -203,7 +192,6 @@ def receiverHandler():
 							db.commit()
 
 						else:
-							print("called")
 							cursor = db.cursor(buffered=True)
 							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
 							db.commit()

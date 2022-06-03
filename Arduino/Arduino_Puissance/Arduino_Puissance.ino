@@ -98,7 +98,6 @@ void loop()
     }
 
     radio.stopListening();
-    delay(10);
 
     char data[24];
     char str_temp[6];
