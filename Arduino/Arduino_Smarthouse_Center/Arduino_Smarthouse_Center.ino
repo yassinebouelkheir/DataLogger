@@ -40,6 +40,7 @@ DHT dhtext(2, DHTTYPE);
 DHT dhtint(3, DHTTYPE);
 
 bool cO2LevelHigh = false;
+bool cO2WindowClosed = true;
 
 void setup() 
 {
@@ -72,8 +73,11 @@ void loop()
    data = "00";
 
    float tempext = dhtext.readTemperature();
+   Serial.println("setsensor 14 " + String(cO2Level));
    float tempint = dhtint.readTemperature();
+   Serial.println("setsensor 15 " + String(cO2Level));
    float humidityint = dhtint.readhumidity();
+   Serial.println("setsensor 16 " + String(cO2Level));
 
    if(tempint > 24)
    {
@@ -81,17 +85,17 @@ void loop()
       {
          if(humidityint < 60) // FAN
          {
-            Serial.println("setsensor 20 1");
-            Serial.println("setsensor 21 0");
             Serial.println("setsensor 22 1");
+            Serial.println("setsensor 23 0");
+            Serial.println("setsensor 24 1");
             data = "01";
             // OPEN WINDOW
          }
          else 
          {
-            Serial.println("setsensor 20 1");
-            Serial.println("setsensor 21 0");
-            Serial.println("setsensor 22 0");
+            Serial.println("setsensor 22 1");
+            Serial.println("setsensor 23 0");
+            Serial.println("setsensor 24 0");
             data = "00"; 
             // OPEN WINDOW
          }
@@ -100,17 +104,17 @@ void loop()
       {
          if(humidityint < 60) 
          {
-            Serial.println("setsensor 20 0");
-            Serial.println("setsensor 21 1");
-            Serial.println("setsensor 22 1");
+            Serial.println("setsensor 22 0");
+            Serial.println("setsensor 23 1");
+            Serial.println("setsensor 24 1");
             data = "11"; // FAN & AC 
             if(!cO2LevelHigh) // CLOSE WINDOW
          }
          else 
          {
-            Serial.println("setsensor 20 0");
-            Serial.println("setsensor 21 1");
             Serial.println("setsensor 22 0");
+            Serial.println("setsensor 23 1");
+            Serial.println("setsensor 24 0");
             data = "10"; // AC
             if(!cO2LevelHigh) // CLOSE WINDOW   
          }    
@@ -120,31 +124,53 @@ void loop()
    {
       if(humidityint < 60) 
       {
-         Serial.println("setsensor 20 0");
-         Serial.println("setsensor 21 0");
-         Serial.println("setsensor 22 1");
+         Serial.println("setsensor 22 0");
+         Serial.println("setsensor 23 0");
+         Serial.println("setsensor 24 1");
          data = "01"; // FAN
          if(!cO2LevelHigh) // CLOSE WINDOW
       }
       else 
       {
-         Serial.println("setsensor 20 0");
-         Serial.println("setsensor 21 0");
          Serial.println("setsensor 22 0");
+         Serial.println("setsensor 23 0");
+         Serial.println("setsensor 24 0");
          data = "00"; // NOTHING
           if(!cO2LevelHigh) // CLOSE WINDOW
       }
    }
    if(data.toInt() != 00) radio.write(&data, sizeof(data));   
 
-   if((1023 - analogRead(A0)) < 500)
+   float brightness = analogRead(A0);
+   Serial.println("setsensor 19 " + String(brightness));
+   if((1023 - brightness) < 500)
    {
       digitalWrite(2, HIGH);
-      Serial.println("setsensor 18 1");
+      Serial.println("setsensor 20 1");
    }
    else 
    {
       digitalWrite(2, LOW);   
-      Serial.println("setsensor 18 0"); 
-   }              
+      Serial.println("setsensor 20 0"); 
+   }    
+
+   float cO2Level = getSensorValue();
+   
+   Serial.println("setsensor 17 " + String(cO2Level));
+   if(cO2Level > 500) 
+   {
+      Serial.println("setsensor 22 1");
+      cO2LevelHigh = true;
+      cO2WindowClosed = false;
+      // OPEN WINDOW
+   }         
+   else
+   {
+      Serial.println("setsensor 22 0");
+      cO2LevelHigh = false;
+      if(cO2WindowClosed == false) {
+         // CLOSE WINDOW
+         cO2WindowClosed = true;
+      }
+   }
 }

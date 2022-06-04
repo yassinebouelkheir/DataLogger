@@ -78,13 +78,13 @@ void loop()
 
     if(((millis() + 500) < timeEplased1))
     {
-        sprintf(data, "setsensor 16 %d", GazesValue);
+        sprintf(data, "setsensor 18 %d", GazesValue);
         radio.write(&data, sizeof(data));
 
-        sprintf(data, "setsensor 23 %d", extractor);
+        sprintf(data, "setsensor 25 %d", extractor);
         radio.write(&data, sizeof(data));   
 
-        sprintf(data, "setsensor 24 %d", movement);
+        sprintf(data, "setsensor 26 %d", movement);
         radio.write(&data, sizeof(data));      
         timeEplased1 = millis();    
     }
