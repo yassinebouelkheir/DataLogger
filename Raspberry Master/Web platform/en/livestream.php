@@ -14,10 +14,10 @@
 -->
 
 <!--
-   ScriptName    : charges.php
+   ScriptName    : livestream.php
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 18/03/2022
+   Created       : 03/06/2022
    License       : GNU General v3.0
    Developers    : BOUELKHEIR Yassine 
 -->
@@ -161,6 +161,14 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
+                            <div class="card">
+                              <div class="card-header">
+                                Live stream from inside the smart house
+                              </div>
+                              <div class="card-body"> 
+                                <p align="center"><iframe style="border:none;" src="http://192.168.1.14:5000/" title="livestream" height="500" width="660"></iframe></p>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>

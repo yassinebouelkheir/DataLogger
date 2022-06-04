@@ -14,7 +14,7 @@
 */
 
 /*
-   ScriptName    : Smarthouse_Restroom.ino
+   ScriptName    : Arduino_Smarthouse_Restroom.ino
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
    Created       : 01/06/2022

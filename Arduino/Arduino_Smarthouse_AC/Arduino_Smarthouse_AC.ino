@@ -14,7 +14,7 @@
 */
 
 /*
-   ScriptName    : Smarthouse_AC.ino
+   ScriptName    : Arduino_Smarthouse_AC.ino
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
    Created       : 01/06/2022

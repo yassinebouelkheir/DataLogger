@@ -14,10 +14,10 @@
 -->
 
 <!--
-   ScriptName    : charges.php
+   ScriptName    : livestream.php
    Author        : BOUELKHEIR Yassine
    Version       : 2.0
-   Created       : 18/03/2022
+   Created       : 03/06/2022
    License       : GNU General v3.0
    Developers    : BOUELKHEIR Yassine 
 -->
@@ -76,8 +76,8 @@
                                 <div class="dropdown-menu dropdown-menu-right animated bounceIn">
                                     <?php  
                                         $curPageName = str_replace(".php", "", substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1));
-                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=0" class="dropdown-item"><i class="flag-icon flag-icon-fr"></i> French</a>';
-                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=1" class="dropdown-item"><i class="flag-icon flag-icon-us"></i> English</a>';
+                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=0" class="dropdown-item"><i class="flag-icon flag-icon-fr"></i> Français</a>';
+                                        echo '<a href="../switchlang.php?page='.$curPageName.'&lang=1" class="dropdown-item"><i class="flag-icon flag-icon-us"></i> Anglais</a>';
                                     ?>
                                 </div>
                             </li>
@@ -161,6 +161,14 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
+                            <div class="card">
+                              <div class="card-header">
+                                Diffusion en direct depuis l'intérieur de la maison intelligente
+                              </div>
+                              <div class="card-body"> 
+                                <p align="center"><iframe style="border:none;" src="http://192.168.1.14:5000/" title="livestream" height="500" width="660"></iframe></p>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
