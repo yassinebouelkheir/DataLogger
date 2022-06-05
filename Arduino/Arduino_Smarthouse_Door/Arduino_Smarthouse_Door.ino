@@ -45,7 +45,7 @@ char keys[ROW_NUM][COLUMN_NUM] = {
 };
 byte pin_rows[ROW_NUM] = {9, 8, 7, 6}; 
 byte pin_column[COLUMN_NUM] = {5, 4, 3, 2}; 
-Keypad keypad = Keypad( makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_NUM );
+Keypad keypad = Keypad(makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_NUM);
 
 int numKeysPressed = 0;
 String numEntered = "";
