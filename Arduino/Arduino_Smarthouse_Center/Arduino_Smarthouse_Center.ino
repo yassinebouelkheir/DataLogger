@@ -157,7 +157,7 @@ void loop()
    float cO2Level = getSensorValue();
    
    Serial.println("setsensor 17 " + String(cO2Level));
-   if(cO2Level > 500) 
+   if(cO2Level > 600) 
    {
       Serial.println("setsensor 22 1");
       cO2LevelHigh = true;
