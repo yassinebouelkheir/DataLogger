@@ -1293,7 +1293,6 @@ namespace RPi
             {
                 if (isChargePanelEnabled) UpdateChargeStatus();
                 else if (!isGraphEnabled) UpdateSelection();
-                FunctionsUpdate();
                 wifilabel.Visible = true;
             }
             else wifilabel.Visible = false;
@@ -1495,6 +1494,11 @@ namespace RPi
 
                 langSelected = true;
             }
+        }
+
+        private void updateFunctions_Tick(object sender, EventArgs e)
+        {
+            FunctionsUpdate();
         }
     }
 }

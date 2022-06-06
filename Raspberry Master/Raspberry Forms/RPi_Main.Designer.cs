@@ -79,6 +79,7 @@ namespace RPi
             this.wifilabel = new System.Windows.Forms.PictureBox();
             this.updateParams = new System.Windows.Forms.Timer(this.components);
             this.timelabel = new System.Windows.Forms.Label();
+            this.updateFunctions = new System.Windows.Forms.Timer(this.components);
             this.Sidebar.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wifilabel)).BeginInit();
@@ -488,6 +489,12 @@ namespace RPi
             this.timelabel.Text = "05/05/2002 23:29";
             this.timelabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // updateFunctions
+            // 
+            this.updateFunctions.Enabled = true;
+            this.updateFunctions.Interval = 500;
+            this.updateFunctions.Tick += new System.EventHandler(this.updateFunctions_Tick);
+            // 
             // RPI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -543,5 +550,6 @@ namespace RPi
         private System.Windows.Forms.Label timelabel;
         private System.Windows.Forms.PictureBox wifilabel;
         private System.Windows.Forms.Button Langswitch;
+        private System.Windows.Forms.Timer updateFunctions;
     }
 }
