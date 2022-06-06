@@ -32,7 +32,6 @@
 
 RF24 radio(9, 10);       
 const byte address1[6] = "14863";
-const byte address2[6] = "26957";
 
 ZMPT101B voltageSensor(A3);
 ACS712 currentSensor1(ACS712_30A, A0);
@@ -47,7 +46,6 @@ void setup()
     radio.begin();
 
     radio.openWritingPipe(address1);
-    radio.openReadingPipe(1, address2);
     radio.disableAckPayload();
 
     radio.setPALevel(RF24_PA_MAX); 
@@ -65,40 +63,6 @@ void setup()
 
 void loop() 
 {
-    radio.startListening();
-    delay(15);
-
-    if(radio.available())
-    {
-        char text[32];
-        radio.read(&text, sizeof(text));
-
-        String Buff[10];
-        int StringCount = 0;
-        String data = String(text); 
-        if (data.length() > 1) 
-        {
-            int id, value;
-            while (data.length() > 0) 
-            {
-                int index = data.indexOf(' ');
-                if (index == -1) 
-                {
-                    Buff[StringCount++] = data;
-                    break;
-                } 
-                else 
-                {
-                    Buff[StringCount++] = data.substring(0, index);
-                    data = data.substring(index + 1);
-                }
-            }
-            digitalWrite(Buff[1].toInt(), bool(!Buff[2].toInt()));
-        }
-    }
-
-    radio.stopListening();
-
     char data[24];
     char str_temp[6];
 
