@@ -44,6 +44,7 @@ def receiverHandler():
 		time.sleep(5)
 		try:
 			while True:
+				arduino.write(str.encode("R: OK"))
 				while arduino.inWaiting()==0: pass
 				if  arduino.inWaiting()>0: 
 					answer=arduino.readline()

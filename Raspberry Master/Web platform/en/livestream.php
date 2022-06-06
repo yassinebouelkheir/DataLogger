@@ -166,7 +166,7 @@
                                 Live stream from inside the smart house
                               </div>
                               <div class="card-body"> 
-                                <p align="center"><iframe style="border:none;" src="http://192.168.1.14:5000/" title="livestream" height="500" width="660"></iframe></p>
+                                <p align="center"><iframe style="border:none;" src="http://192.168.0.200:5000/" title="livestream" height="500" width="660"></iframe></p>
                               </div>
                             </div>
                         </div>

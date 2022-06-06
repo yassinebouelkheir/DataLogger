@@ -35,7 +35,6 @@ arduino = serial.Serial("/dev/ttyACM1", 9600, timeout=1)
 rowcounts = 1
 
 def transmitterHandler():
-	global lastquerytime
 	global rowcounts
 	print('transmitterHandler Running. Press CTRL-C to exit.')
 	time.sleep(0.1) 
@@ -59,15 +58,11 @@ def transmitterHandler():
 
 if __name__ == "__main__":
 	
-	GPIO.setmode(GPIO.BCM)
 	GPIO.setwarnings(False)
-	GPIO.setup(20, GPIO.OUT)
-	GPIO.output(20, GPIO.LOW)
 
 	reciever = threading.Thread(target=transmitterHandler)
 	reciever.start()
 
 	print("Data Logger v2.0 python script - PFE 2021/2022");
-	GPIO.output(20, GPIO.HIGH)
 
 	reciever.join()
