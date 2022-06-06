@@ -41,6 +41,9 @@ void setup()
 
     radio.setPALevel(RF24_PA_MAX);
     radio.startListening();
+
+    pinMode(2, OUTPUT);
+    pinMode(3, OUTPUT);
 }
 void loop()
 {   

@@ -41,11 +41,9 @@ void setup()
     radio.setPALevel(RF24_PA_MAX); 
     radio.stopListening();
 
-    pinMode(5, INPUT);
-    pinMode(6, INPUT);
-
-    pinMode(7, OUTPUT);
-    pinMode(8, OUTPUT);
+    pinMode(2, INPUT);
+    pinMode(3, OUTPUT);
+    pinMode(4, OUTPUT);
     timeEplased = millis()-3000;
     timeEplased1 = millis()-500;
 }
@@ -63,18 +61,18 @@ void loop()
     {
         if(extractor == 1)
         {
-            digitalWrite(7, HIGH);
+            digitalWrite(4, HIGH);
             timeEplased1 = millis();
         }
-        else digitalWrite(7, LOW);
+        else digitalWrite(4, LOW);
     }
 
-    movement = digitalRead(6);
+    movement = digitalRead(2);
     if(movement == 1)
     {
-        digitalWrite(8, HIGH);
+        digitalWrite(3, HIGH);
     }
-    else digitalWrite(8, LOW);
+    else digitalWrite(3, LOW);
 
     if(((millis() + 500) < timeEplased1))
     {
