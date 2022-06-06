@@ -52,7 +52,7 @@
         <title>Data logger - Historique</title>
         <link href="../dist/css/style.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="../assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
+        <script src='../dist/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">

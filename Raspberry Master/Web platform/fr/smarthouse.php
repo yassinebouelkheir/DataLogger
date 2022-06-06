@@ -136,7 +136,7 @@
         <link href="../assets/node_modules/morrisjs/morris.css" rel="stylesheet">
         <link href="../dist/css/style.min.css" rel="stylesheet">
         <link href="../dist/css/pages/dashboard1.css" rel="stylesheet">
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.js' crossorigin='anonymous'></script>
+        <script src='../dist/js/all.js' crossorigin='anonymous'></script>
     </head>
     <body class="skin-blue fixed-layout" oncontextmenu="return false">
         <div class="preloader">
