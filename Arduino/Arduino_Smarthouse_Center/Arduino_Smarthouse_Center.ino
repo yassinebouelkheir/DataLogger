@@ -136,7 +136,7 @@ void loop()
          Serial.println("setsensor 23 0");
          Serial.println("setsensor 24 0");
          data = "00"; // NOTHING
-          if(!cO2LevelHigh) // CLOSE WINDOW
+         if(!cO2LevelHigh) // CLOSE WINDOW
       }
    }
    if(data.toInt() != 00) radio.write(&data, sizeof(data));   
