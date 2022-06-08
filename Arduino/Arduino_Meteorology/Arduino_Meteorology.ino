@@ -62,24 +62,28 @@ void loop()
     char str_temp[6];
     dtostrf(TEMP1_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 5 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data)); 
+    Serial.println(data);            
     delay(1);
 
     double TEMP2_VALUE = Module.readCelsius();
     dtostrf(TEMP2_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 6 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));   
+    Serial.println(data);          
     delay(1);
 
-    double BRIGHTNESS_VALUE = analogRead(A0);
+    double BRIGHTNESS_VALUE = analogRead(A2);
     dtostrf(BRIGHTNESS_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 7 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));  
+    Serial.println(data);           
     delay(1);
 
-    double HUMIDITY_VALUE = analogRead(A1);
+    double HUMIDITY_VALUE = analogRead(A3);
     dtostrf(HUMIDITY_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 8 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data)); 
+    Serial.println(data);            
     delay(1);
 }

@@ -40,6 +40,17 @@ void setup()
 
     radio.setPALevel(RF24_PA_MAX); 
     radio.startListening(); 
+
+    Serial.begin(9600);
+    pinMode(2, OUTPUT);
+    pinMode(3, OUTPUT);
+    pinMode(4, OUTPUT);
+    pinMode(5, OUTPUT);
+
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
 }
 
 void loop() 
@@ -69,7 +80,7 @@ void loop()
                     data = data.substring(index + 1);
                 }
             }
-            digitalWrite(Buff[1].toInt(), bool(!Buff[2].toInt()));
+            digitalWrite(Buff[1].toInt()+1, bool(!Buff[2].toInt()));
         }
     }
 }

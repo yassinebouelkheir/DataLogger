@@ -22,18 +22,18 @@
    Developer    : BOUELKHEIR Yassine 
 */
 
+//#include <Filters.h> 
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <printf.h>
 #include <RF24.h>
 #include <RF24_config.h>
-#include "ZMPT101B.h"
 #include "ACS712.h"
 
 RF24 radio(9, 10);       
 const byte address1[6] = "14863";
 
-ZMPT101B voltageSensor(A3);
+//ZMPT101B voltageSensor(A3);
 ACS712 currentSensor1(ACS712_30A, A0);
 ACS712 currentSensor2(ACS712_30A, A2);
 
@@ -56,9 +56,10 @@ void setup()
         pinMode(i, OUTPUT);
         digitalWrite(i, LOW);
     }
-    voltageSensor.calibrate();
+
     currentSensor1.calibrate();
     currentSensor2.calibrate();
+    Serial.begin(9600);
 }
 
 void loop() 
@@ -68,18 +69,22 @@ void loop()
 
     dtostrf(currentSensor1.getCurrentDC(), 1, 2, str_temp);
     sprintf(data, "setsensor 1 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));    
+    Serial.println(data);                
 
     double TENSIONDC_VALUE = ((analogRead(A1)*5.0)/1024.0)/(7500.0/(37500.0));
     dtostrf(TENSIONDC_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 2 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));     
+    Serial.println(data);               
 
     dtostrf(currentSensor2.getCurrentAC(), 4, 2, str_temp);
     sprintf(data, "setsensor 3 %s", str_temp);
     radio.write(&data, sizeof(data));  
-
-    dtostrf(voltageSensor.getVoltageAC(50), 4, 2, str_temp);
+    Serial.println(data);       
+      
+    dtostrf(analogRead(A4), 4, 2, str_temp);
     sprintf(data, "setsensor 4 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));    
+    Serial.println(data);         
 }
