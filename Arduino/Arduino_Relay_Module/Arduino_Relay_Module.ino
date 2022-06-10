@@ -36,7 +36,6 @@ void setup()
     radio.begin();
 
     radio.openReadingPipe(1, address1);
-    radio.disableAckPayload();
 
     radio.setPALevel(RF24_PA_MAX); 
     radio.startListening(); 
@@ -59,7 +58,7 @@ void loop()
     {
         char text[32];
         radio.read(&text, sizeof(text));
-
+        Serial.println(text);
         String Buff[10];
         int StringCount = 0;
         String data = String(text); 

@@ -37,7 +37,7 @@ void setup()
     radio.begin();
 
     radio.openWritingPipe(address);                  
-    radio.disableAckPayload();
+//    radio.disableAckPayload();
 
     radio.setPALevel(RF24_PA_MAX);
     radio.stopListening(); 
@@ -52,7 +52,9 @@ void loop()
     String Buff[10];
     int StringCount = 0;
     String data = Serial.readStringUntil('\n');
-
+    
+    char datax[24];
+        
     if (data.length() > 1) {
         digitalWrite(3, HIGH);
         while (data.length() > 0) 
@@ -71,7 +73,7 @@ void loop()
         }
 
         char datax[24];
-        sprintf(datax, "setcharge %i %i", int(Buff[1].toInt()), bool(Buff[2].toInt()));
+        sprintf(datax, "setcharge %d %d", int(Buff[1].toInt()), int(Buff[2].toInt()));
         radio.write(&datax, sizeof(datax));
         digitalWrite(3, LOW);
         Serial.println("OK");

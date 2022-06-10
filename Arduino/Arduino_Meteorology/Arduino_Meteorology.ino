@@ -36,7 +36,7 @@ int csPin = 5;
 int sckPin = 6;
 MAX6675 Module(sckPin, csPin, soPin);
 
-#define DHTPIN 2 
+#define DHTPIN 3 
 #define DHTTYPE DHT11
 
 RF24 radio(9, 10);       
@@ -52,7 +52,8 @@ void setup()
     radio.begin();                  
     radio.openWritingPipe(address); 
     radio.setPALevel(RF24_PA_MAX); 
-    radio.stopListening();          
+    radio.stopListening();         
+    delay(1000); 
 }
 
 void loop()
@@ -73,17 +74,17 @@ void loop()
     Serial.println(data);          
     delay(1);
 
-    double BRIGHTNESS_VALUE = analogRead(A2);
+    double BRIGHTNESS_VALUE = analogRead(A4);
     dtostrf(BRIGHTNESS_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 7 %s", str_temp);
     radio.write(&data, sizeof(data));  
     Serial.println(data);           
     delay(1);
 
-    double HUMIDITY_VALUE = analogRead(A3);
+    double HUMIDITY_VALUE = analogRead(A5);
     dtostrf(HUMIDITY_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 8 %s", str_temp);
     radio.write(&data, sizeof(data)); 
     Serial.println(data);            
-    delay(1);
+    delay(300);
 }

@@ -37,13 +37,15 @@ void setup()
     radio.begin();
               
     radio.openReadingPipe(1, address);
-    radio.disableAckPayload();
+    //radio.disableAckPayload();
 
     radio.setPALevel(RF24_PA_MAX);
     radio.startListening();
 
     pinMode(2, OUTPUT);
     pinMode(3, OUTPUT);
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
 }
 void loop()
 {   
@@ -53,27 +55,27 @@ void loop()
         char text[24];
         radio.read(&text, sizeof(text));
         Serial.println(text);
-        int output = text - '0';
-
-        if(output == 10) // AC
-        {
-            digitalWrite(2, HIGH);
-            digitalWrite(3, LOW);  
-        }
-        else if(output == 01) // FAN
+        String textouts = String(text);
+        int textout = textouts.toInt();
+        if(textout == 10) // AC
         {
             digitalWrite(2, LOW);
-            digitalWrite(3, HIGH);
+            digitalWrite(3, HIGH);  
         }
-        else if(output == 11) // BOTH
+        else if(textout == 01) // FAN
         {
             digitalWrite(2, HIGH);
-            digitalWrite(3, HIGH);
+            digitalWrite(3, LOW);
         }
-        else // NOTHING
+        else if(textout == 11) // BOTH
         {
             digitalWrite(2, LOW);
             digitalWrite(3, LOW);
+        }
+        else // NOTHING
+        {
+            digitalWrite(2, HIGH);
+            digitalWrite(3, HIGH);
         }
     }
 }
