@@ -37,7 +37,6 @@ void setup()
     radio.begin();
              
     radio.openReadingPipe(1, address);
-    radio.disableAckPayload();
 
     radio.setPALevel(RF24_PA_MAX);
     radio.startListening(); 

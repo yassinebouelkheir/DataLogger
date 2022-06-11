@@ -27,12 +27,15 @@
 #include <printf.h>
 #include <RF24.h>
 #include <RF24_config.h>
+#include "MQ135.h"
 
 RF24 radio(9, 10);       
 const byte address[6] = "57369";
 
-unsigned long timeEplased;
-unsigned long timeEplased1;
+unsigned long timeEplased = 0;
+unsigned long timeEplased1 = 0;
+
+MQ135 gasSensor = MQ135(A0);
 
 void setup() 
 {
@@ -44,37 +47,37 @@ void setup()
     pinMode(2, INPUT);
     pinMode(3, OUTPUT);
     pinMode(4, OUTPUT);
-    timeEplased = millis()-3000;
-    timeEplased1 = millis()-500;
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
 }
 
 void loop()
 {  
     char data[24];
     bool extractor = false, movement = false;
-    double GazesValue;
+    double GazesValue = gasSensor.getPPM();
 
-    if(GazesValue > 600) extractor = true;
+    if(GazesValue > 1000) extractor = true;
     else extractor = false;
 
-    if(((millis() + 3000) < timeEplased))
+    if(timeEplased < millis())
     {
         if(extractor == 1)
         {
-            digitalWrite(4, HIGH);
-            timeEplased1 = millis();
+            digitalWrite(4, LOW);
+            timeEplased = millis() + 10000;
         }
-        else digitalWrite(4, LOW);
+        else digitalWrite(4, HIGH);
     }
 
     movement = digitalRead(2);
     if(movement == 1)
     {
-        digitalWrite(3, HIGH);
+        digitalWrite(3, LOW);
     }
-    else digitalWrite(3, LOW);
+    else digitalWrite(3, HIGH);
 
-    if(((millis() + 500) < timeEplased1))
+    if(timeEplased1 < millis())
     {
         sprintf(data, "setsensor 18 %d", GazesValue);
         radio.write(&data, sizeof(data));
@@ -84,8 +87,6 @@ void loop()
 
         sprintf(data, "setsensor 26 %d", movement);
         radio.write(&data, sizeof(data));      
-        timeEplased1 = millis();    
+        timeEplased1 = millis()+ 500;    
     }
 }
-
-

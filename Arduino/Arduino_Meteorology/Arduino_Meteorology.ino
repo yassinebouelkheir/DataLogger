@@ -36,7 +36,7 @@ int csPin = 5;
 int sckPin = 6;
 MAX6675 Module(sckPin, csPin, soPin);
 
-#define DHTPIN 2 
+#define DHTPIN 3 
 #define DHTTYPE DHT11
 
 RF24 radio(9, 10);       
@@ -52,7 +52,8 @@ void setup()
     radio.begin();                  
     radio.openWritingPipe(address); 
     radio.setPALevel(RF24_PA_MAX); 
-    radio.stopListening();          
+    radio.stopListening();         
+    delay(1000); 
 }
 
 void loop()
@@ -62,24 +63,28 @@ void loop()
     char str_temp[6];
     dtostrf(TEMP1_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 5 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data)); 
+    Serial.println(data);            
     delay(1);
 
     double TEMP2_VALUE = Module.readCelsius();
     dtostrf(TEMP2_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 6 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));   
+    Serial.println(data);          
     delay(1);
 
-    double BRIGHTNESS_VALUE = analogRead(A0);
+    double BRIGHTNESS_VALUE = analogRead(A4);
     dtostrf(BRIGHTNESS_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 7 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));  
+    Serial.println(data);           
     delay(1);
 
-    double HUMIDITY_VALUE = analogRead(A1);
+    double HUMIDITY_VALUE = analogRead(A5);
     dtostrf(HUMIDITY_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 8 %s", str_temp);
-    radio.write(&data, sizeof(data));             
-    delay(1);
+    radio.write(&data, sizeof(data)); 
+    Serial.println(data);            
+    delay(300);
 }

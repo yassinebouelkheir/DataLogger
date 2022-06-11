@@ -22,31 +22,26 @@
    Developer    : BOUELKHEIR Yassine 
 */
 
+//#include <Filters.h> 
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <printf.h>
 #include <RF24.h>
 #include <RF24_config.h>
-#include "ZMPT101B.h"
 #include "ACS712.h"
 
 RF24 radio(9, 10);       
 const byte address1[6] = "14863";
 
-ZMPT101B voltageSensor(A3);
-ACS712 currentSensor1(ACS712_30A, A0);
-ACS712 currentSensor2(ACS712_30A, A2);
-
-double TENSIONAC_VALUE = 0.0;
-double COURANTAC_VALUE = 0.0;
-double COURANTDC_VALUE = 0.0;
+ACS712 ACS1(A0, 5.0, 1023, 66);
+ACS712 ACS2(A2, 5.0, 1023, 66);
 
 void setup() 
 {
     radio.begin();
 
     radio.openWritingPipe(address1);
-    radio.disableAckPayload();
+//    radio.disableAckPayload();
 
     radio.setPALevel(RF24_PA_MAX); 
     radio.stopListening(); 
@@ -56,9 +51,10 @@ void setup()
         pinMode(i, OUTPUT);
         digitalWrite(i, LOW);
     }
-    voltageSensor.calibrate();
-    currentSensor1.calibrate();
-    currentSensor2.calibrate();
+
+    ACS1.autoMidPoint();
+    ACS2.autoMidPoint();
+    Serial.begin(9600);
 }
 
 void loop() 
@@ -66,20 +62,23 @@ void loop()
     char data[24];
     char str_temp[6];
 
-    dtostrf(currentSensor1.getCurrentDC(), 1, 2, str_temp);
+    dtostrf((ACS1.mA_DC()/1000.0), 1, 2, str_temp);
     sprintf(data, "setsensor 1 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));    
+    Serial.println(data);                
 
     double TENSIONDC_VALUE = ((analogRead(A1)*5.0)/1024.0)/(7500.0/(37500.0));
     dtostrf(TENSIONDC_VALUE, 4, 2, str_temp);
     sprintf(data, "setsensor 2 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    radio.write(&data, sizeof(data));     
+    Serial.println(data);               
 
-    dtostrf(currentSensor2.getCurrentAC(), 4, 2, str_temp);
+    dtostrf((ACS2.mA_AC()/1000.0), 4, 2, str_temp);
     sprintf(data, "setsensor 3 %s", str_temp);
     radio.write(&data, sizeof(data));  
-
-    dtostrf(voltageSensor.getVoltageAC(50), 4, 2, str_temp);
-    sprintf(data, "setsensor 4 %s", str_temp);
-    radio.write(&data, sizeof(data));             
+    Serial.println(data);       
+      
+    sprintf(data, "setsensor 4 220", str_temp);
+    radio.write(&data, sizeof(data));    
+    Serial.println(data);         
 }
