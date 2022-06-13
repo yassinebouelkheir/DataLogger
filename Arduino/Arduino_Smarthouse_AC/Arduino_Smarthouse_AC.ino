@@ -44,8 +44,19 @@ void setup()
 
     pinMode(2, OUTPUT);
     pinMode(3, OUTPUT);
-    digitalWrite(2, HIGH);
-    digitalWrite(3, HIGH);
+    pinMode(4, OUTPUT);
+    pinMode(5, OUTPUT);
+    
+    pinMode(6, OUTPUT);
+    pinMode(7, OUTPUT);
+
+    digitalWrite(2, LOW);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    
+    digitalWrite(7, HIGH);
+    analogWrite(6, 127);
 }
 void loop()
 {   
@@ -59,23 +70,23 @@ void loop()
         int textout = textouts.toInt();
         if(textout == 10) // AC
         {
-            digitalWrite(2, LOW);
-            digitalWrite(3, HIGH);  
+            digitalWrite(3, HIGH);
+            digitalWrite(5, LOW); 
         }
         else if(textout == 01) // FAN
         {
-            digitalWrite(2, HIGH);
             digitalWrite(3, LOW);
+            digitalWrite(5, HIGH); 
         }
         else if(textout == 11) // BOTH
         {
-            digitalWrite(2, LOW);
-            digitalWrite(3, LOW);
+            digitalWrite(3, HIGH);
+            digitalWrite(5, HIGH); 
         }
         else // NOTHING
         {
-            digitalWrite(2, HIGH);
-            digitalWrite(3, HIGH);
+            digitalWrite(3, LOW);
+            digitalWrite(5, LOW);
         }
     }
 }
