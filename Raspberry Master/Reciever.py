@@ -214,16 +214,25 @@ def receiverHandler():
 						if (type(datasplitted[1]) == int or float) and (type(datasplitted[2]) == int or float):
 							if time.time() < getquerytime(datasplitted[1]):
 								cursor = db.cursor(buffered=True)
-								cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+								try: 
+									cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+								except:
+									pass
 								db.commit()
 
 							else:
 								cursor = db.cursor(buffered=True)
-								cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+								try: 
+									cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+								except:
+									pass
 								db.commit()
 								time.sleep(0.01)		
 								cursor = db.cursor(buffered=True)
-								cursor.execute("INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")")
+								try:
+									cursor.execute("INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")")
+								except:
+									pass
 								db.commit()
 								getquerytime(datasplitted[1], 1)
 								time.sleep(0.01)						
