@@ -44,7 +44,8 @@ def transmitterHandler():
 		try:
 			while True:
 				cursor = db.cursor(buffered=True)
-				cursor.execute("SELECT VALUE FROM `CHARGES` WHERE `ID` =" + str(rowcounts))
+				cursor.execute("SELECT VALUE FROM `CHARGES` WHERE `ID` =" + str(rowcounts) + " LIMIT 1")
+				db.commit()
 				result = cursor.fetchall()
 				for row in result:
 					arduino.write(str.encode("setcharge " + str(rowcounts) + " " +  str(row[0]) + "\n"))
@@ -52,6 +53,7 @@ def transmitterHandler():
 				rowcounts += 1
 				if rowcounts == 5: 
 					rowcounts = 1
+					time.sleep(0.3)
 
 		except KeyboardInterrupt:
 			print("KeyboardInterrupt has been caught.")

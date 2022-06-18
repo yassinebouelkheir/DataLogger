@@ -33,9 +33,11 @@ db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
 lastquerytime = [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+tempCount = 0
 
 def getquerytime(x, y=0):
 	global lastquerytime
+	global tempCount
 	if y == 0:
 		if x == '1' : #DC
 			return lastquerytime[0]
@@ -68,102 +70,125 @@ def getquerytime(x, y=0):
 
 	else:
 		if x == '1' : # DC
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 1 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[0] = time.time() + row[0]*1000
+				lastquerytime[0] = time.time() + row[0]*60
 				break;
 		elif x == '2': # DC
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 1 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[0] = time.time() + row[0]*1000
+				lastquerytime[0] = time.time() + row[0]*60
 				break;
 		elif x == '3': # AC
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 2 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[1] = time.time() + row[0]*1000
+				lastquerytime[1] = time.time() + row[0]*60
 				break;
 		elif x == '4': # AC
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 2 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[1] = time.time() + row[0]*1000
+				lastquerytime[1] = time.time() + row[0]*60
 				break;
-		elif x == '5': # Temp 1 
-			cursor = db.cursor()
+		elif x == '5': # Temp 1
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 3 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[2] = time.time() + row[0]*1000
-				break;
+				if tempCount == 2:
+					lastquerytime[2] = time.time() + row[0]*60
+					tempCount = 0
+					break;
+				elif tempCount < 2:
+					tempCount += 1
+					
 		elif x == '6': # Temp 2
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 3 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[2] = time.time() + row[0]*1000
-				break;
+				if tempCount == 2:
+					lastquerytime[2] = time.time() + row[0]*60
+					tempCount = 0
+					break;
+				elif tempCount < 2:
+					tempCount += 1
 		elif x == '7': # Brightness
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 4 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[3] = time.time() + row[0]*1000
+				lastquerytime[3] = time.time() + row[0]*60
 				break;
 		elif x == '8': # Humidity
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 5 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[4] = time.time() + row[0]*1000
+				lastquerytime[4] = time.time() + row[0]*60
 				break;
 		elif x == '9': # Wind Speed 1
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 6 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[5] = time.time() + row[0]*1000
+				lastquerytime[5] = time.time() + row[0]*60
 				break;
 		elif x == '10': # Wind Speed 2
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 6 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[5] = time.time() + row[0]*1000
+				lastquerytime[5] = time.time() + row[0]*60
 				break;
 		elif x == '11': # Turbine
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 6 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[5] = time.time() + row[0]*1000
+				lastquerytime[5] = time.time() + row[0]*60
 				break;
 		elif x == '12': # EO Tension DC
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 7 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[6] = time.time() + row[0]*1000
+				lastquerytime[6] = time.time() + row[0]*60
 				break;
 		elif x == '13': # EO Courant DC
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 7 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[6] = time.time() + row[0]*1000
+				lastquerytime[6] = time.time() + row[0]*60
 				break;
 		elif int(x) > 13: # Smart House
-			cursor = db.cursor()
+			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 8 LIMIT 1")
+			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[7] = time.time() + row[0]*1000
+				lastquerytime[7] = time.time() + row[0]*60
 				break;
 		return 1;
 
@@ -176,7 +201,7 @@ def receiverHandler():
 		time.sleep(5)
 		try:
 			while True:
-				arduino.write(str.encode("R: OK"))
+				#arduino.write(str.encode("OK"))
 				while arduino.inWaiting()==0: pass
 				if  arduino.inWaiting()>0: 
 					answer=arduino.readline()
@@ -186,21 +211,22 @@ def receiverHandler():
 					datasplitted = decodedanswer.split(' ')
 					
 					if datasplitted[0] == 'setsensor':
-						if time.time() < getquerytime(datasplitted[1]):
-							cursor = db.cursor(buffered=True)
-							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
-							db.commit()
+						if (type(datasplitted[1]) == int or float) and (type(datasplitted[2]) == int or float):
+							if time.time() < getquerytime(datasplitted[1]):
+								cursor = db.cursor(buffered=True)
+								cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+								db.commit()
 
-						else:
-							cursor = db.cursor(buffered=True)
-							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
-							db.commit()
-							time.sleep(0.01)		
-							cursor = db.cursor(buffered=True)
-							cursor.execute("INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")")
-							db.commit()
-							getquerytime(datasplitted[1], 1)
-							time.sleep(0.01)						
+							else:
+								cursor = db.cursor(buffered=True)
+								cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+								db.commit()
+								time.sleep(0.01)		
+								cursor = db.cursor(buffered=True)
+								cursor.execute("INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")")
+								db.commit()
+								getquerytime(datasplitted[1], 1)
+								time.sleep(0.01)						
 		except KeyboardInterrupt:
 			print("KeyboardInterrupt has been caught.")
 

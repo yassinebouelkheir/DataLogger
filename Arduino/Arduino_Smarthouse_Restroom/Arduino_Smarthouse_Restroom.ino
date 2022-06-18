@@ -34,6 +34,7 @@ RF24 radio(9, 10);
 const byte address[6] = "14863";
 
 unsigned long timeEplased = 0;
+unsigned long timeEplasedData = 0;
 MQ135 gasSensor = MQ135(A0);
 
 void setup() 
@@ -56,8 +57,8 @@ void loop()
     bool extractor = false, movement = false;
     double GazesValue = gasSensor.getPPM();
 
-    if(GazesValue > 1000) { extractor = true; sprintf(data, "setsensor 18 %d", random(1000,1200)); radio.write(&data, sizeof(data)); sprintf(data, "setsensor 25 1", extractor); radio.write(&data, sizeof(data)); }
-    else { extractor = false; sprintf(data, "setsensor 18 %d", random(600,700)); radio.write(&data, sizeof(data)); }
+    if(GazesValue > 1000) { extractor = true; sprintf(data, "setsensor 18 %d", random(1000,1200)); if(timeEplasedData < millis()) radio.write(&data, sizeof(data)); sprintf(data, "setsensor 25 1", extractor); if(timeEplasedData < millis()) radio.write(&data, sizeof(data)); }
+    else { extractor = false; sprintf(data, "setsensor 18 %d", random(600,700)); if(timeEplasedData < millis()) radio.write(&data, sizeof(data)); }
 
     if(timeEplased < millis())
     {
@@ -69,7 +70,7 @@ void loop()
         else {
           digitalWrite(4, HIGH);
           sprintf(data, "setsensor 25 0", extractor); 
-          radio.write(&data, sizeof(data));
+          if(timeEplasedData < millis()) radio.write(&data, sizeof(data));
         }
     }
 
@@ -79,7 +80,11 @@ void loop()
         digitalWrite(3, LOW);
     }
     else digitalWrite(3, HIGH); 
-  
-    sprintf(data, "setsensor 26 %d", movement);
-    radio.write(&data, sizeof(data));          
+
+    if(timeEplasedData < millis())
+    {
+        sprintf(data, "setsensor 26 %d", movement);
+        radio.write(&data, sizeof(data));     
+        timeEplasedData = millis() + 250;     
+    }
 }
