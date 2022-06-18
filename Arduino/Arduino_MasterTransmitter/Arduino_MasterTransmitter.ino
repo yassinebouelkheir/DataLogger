@@ -76,6 +76,6 @@ void loop()
         sprintf(datax, "setcharge %d %d", int(Buff[1].toInt()), int(Buff[2].toInt()));
         radio.write(&datax, sizeof(datax));
         digitalWrite(3, LOW);
-        Serial.println("OK");
+        //Serial.println("OK");
     }
 }
