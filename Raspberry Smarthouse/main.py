@@ -29,14 +29,13 @@ import time
 import threading
 import os
 
-db = mysql.connector.connect(host="192.168.0.100", user="adminpi", password="adminpi", database='PFE') 
+db = mysql.connector.connect(host="192.168.1.100", user="adminpi", password="adminpi", database='PFE') 
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
 lastquerytime = 1.0
-
+queryCount = 0
 def receiverHandler():
 	global lastquerytime
-	fixedRate = 1.0
 	print('recieverHandler Running. Press CTRL-C to exit.')
 	time.sleep(0.1) 
 	if arduino.isOpen():
@@ -44,7 +43,7 @@ def receiverHandler():
 		time.sleep(5)
 		try:
 			while True:
-				arduino.write(str.encode("R: OK"))
+				#arduino.write(str.encode("OK"))
 				while arduino.inWaiting()==0: pass
 				if  arduino.inWaiting()>0: 
 					answer=arduino.readline()
@@ -54,21 +53,41 @@ def receiverHandler():
 					datasplitted = decodedanswer.split(' ')
 					
 					if datasplitted[0] == 'setsensor':
-						if time.time() < lastquerytime:
-							cursor = db.cursor(buffered=True)
-							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
-							db.commit()
+						if (type(datasplitted[1]) == int or float) and (type(datasplitted[2]) == int or float):
+							if time.time() < lastquerytime:
+								cursor = db.cursor(buffered=True)
+								try: 
+									cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+								except:
+									pass
+								db.commit()
 
-						else:
-							cursor = db.cursor(buffered=True)
-							cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
-							db.commit()
-							time.sleep(0.01)		
-							cursor = db.cursor(buffered=True)
-							cursor.execute("INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")")
-							db.commit()
-							lastquerytime = time.time() + (fixedRate*60)
-							time.sleep(0.01)						
+							else:
+								cursor = db.cursor(buffered=True)
+								try: 
+									cursor.execute("UPDATE `SENSORS_STATIC` SET VALUE = "+ str(datasplitted[2]) +" WHERE ID = " + str(datasplitted[1]))
+								except:
+									pass
+								db.commit()
+								time.sleep(0.01)		
+								cursor = db.cursor(buffered=True)
+								try:
+									cursor.execute("INSERT INTO `SENSORS` (ID, VALUE, UNIXDATE) VALUES ("+ str(datasplitted[1]) +", " + str(datasplitted[2]) +", " + str(time.time()) + ")")
+								except:
+									pass
+								db.commit()
+								cursor = db.cursor(buffered=True)
+								cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 8 LIMIT 1")
+								db.commit()
+								result = cursor.fetchall()
+								for row in result:
+									if queryCount == 5:
+										lastquerytime = time.time() + row[0]*60
+										queryCount = 0
+										break;
+									elif queryCount < 5:
+										queryCount += 1
+								time.sleep(0.01)						
 		except KeyboardInterrupt:
 			print("KeyboardInterrupt has been caught.")
 

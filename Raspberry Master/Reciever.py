@@ -33,7 +33,11 @@ db = mysql.connector.connect(host="localhost", user="adminpi", password="adminpi
 arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
 
 lastquerytime = [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+dcCount = 0
+acCount = 0
 tempCount = 0
+windSpeedCount = 0
+eoCount = 0
 
 def getquerytime(x, y=0):
 	global lastquerytime
@@ -75,43 +79,59 @@ def getquerytime(x, y=0):
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[0] = time.time() + row[0]*60
-				break;
+				if dcCount == 1:
+					lastquerytime[0] = time.time() + row[0]*60
+					dcCount = 0
+					break;
+				elif dcCount < 1:
+					dcCount += 1
 		elif x == '2': # DC
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 1 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[0] = time.time() + row[0]*60
-				break;
+				if dcCount == 1:
+					lastquerytime[0] = time.time() + row[0]*60
+					dcCount = 0
+					break;
+				elif dcCount < 1:
+					dcCount += 1
 		elif x == '3': # AC
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 2 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[1] = time.time() + row[0]*60
-				break;
+				if acCount == 1:
+					lastquerytime[1] = time.time() + row[0]*60
+					acCount = 0
+					break;
+				elif acCount < 1:
+					acCount += 1
 		elif x == '4': # AC
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 2 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[1] = time.time() + row[0]*60
-				break;
+				if acCount == 1:
+					lastquerytime[1] = time.time() + row[0]*60
+					acCount = 0
+					break;
+				elif acCount < 1:
+					acCount += 1
 		elif x == '5': # Temp 1
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 3 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				if tempCount == 2:
+				if tempCount == 1:
 					lastquerytime[2] = time.time() + row[0]*60
 					tempCount = 0
 					break;
-				elif tempCount < 2:
+				elif tempCount < 1:
 					tempCount += 1
 					
 		elif x == '6': # Temp 2
@@ -120,11 +140,11 @@ def getquerytime(x, y=0):
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				if tempCount == 2:
+				if tempCount == 1:
 					lastquerytime[2] = time.time() + row[0]*60
 					tempCount = 0
 					break;
-				elif tempCount < 2:
+				elif tempCount < 1:
 					tempCount += 1
 		elif x == '7': # Brightness
 			cursor = db.cursor(buffered=True)
@@ -148,48 +168,67 @@ def getquerytime(x, y=0):
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[5] = time.time() + row[0]*60
-				break;
+				if windSpeedCount == 2:
+					lastquerytime[5] = time.time() + row[0]*60
+					windSpeedCount = 0
+					break;
+				elif windSpeedCount < 2:
+					windSpeedCount += 1
 		elif x == '10': # Wind Speed 2
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 6 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[5] = time.time() + row[0]*60
-				break;
+				if windSpeedCount == 2:
+					lastquerytime[5] = time.time() + row[0]*60
+					windSpeedCount = 0
+					break;
+				elif windSpeedCount < 2:
+					windSpeedCount += 1
 		elif x == '11': # Turbine
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 6 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[5] = time.time() + row[0]*60
-				break;
+				if windSpeedCount == 2:
+					lastquerytime[5] = time.time() + row[0]*60
+					windSpeedCount = 0
+					break;
+				elif windSpeedCount < 2:
+					windSpeedCount += 1
 		elif x == '12': # EO Tension DC
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 7 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[6] = time.time() + row[0]*60
-				break;
+				if eoCount == 1:
+					lastquerytime[6] = time.time() + row[0]*60
+					eoCount = 0
+					break;
+				elif eoCount < 1:
+					eoCount += 1
 		elif x == '13': # EO Courant DC
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 7 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
-				lastquerytime[6] = time.time() + row[0]*60
-				break;
-		elif int(x) > 13: # Smart House
+				if eoCount == 1:
+					lastquerytime[6] = time.time() + row[0]*60
+					eoCount = 0
+					break;
+				elif eoCount < 1:
+					eoCount += 1
+		elif x == '18': # Restroom gauzes level
 			cursor = db.cursor(buffered=True)
 			cursor.execute("SELECT time FROM `UPDATETIME` WHERE ID = 8 LIMIT 1")
 			db.commit()
 			result = cursor.fetchall()
 			for row in result:
 				lastquerytime[7] = time.time() + row[0]*60
-				break;
 		return 1;
 
 def receiverHandler():
