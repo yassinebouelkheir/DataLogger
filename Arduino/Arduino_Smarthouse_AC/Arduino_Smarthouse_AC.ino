@@ -23,70 +23,55 @@
 */
 
 #include <SPI.h>
-#include <nRF24L01.h>
 #include <printf.h>
-#include <RF24.h>
-#include <RF24_config.h>
-
-RF24 radio(9, 10);       
-const byte address[6] = "63257";
 
 void setup() 
 {
-    Serial.begin(9600);
-    radio.begin();
-              
-    radio.openReadingPipe(1, address);
-    //radio.disableAckPayload();
-
-    radio.setPALevel(RF24_PA_MAX);
-    radio.startListening();
-
     pinMode(2, OUTPUT);
     pinMode(3, OUTPUT);
-    pinMode(4, OUTPUT);
-    pinMode(5, OUTPUT);
-    
-    pinMode(6, OUTPUT);
-    pinMode(7, OUTPUT);
+
+    pinMode(4, INPUT);
+    pinMode(5, INPUT);
+    pinMode(6, INPUT);
 
     digitalWrite(2, LOW);
     digitalWrite(3, LOW);
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
     
-    digitalWrite(7, HIGH);
     analogWrite(6, 127);
 }
 void loop()
 {   
-    delay(10);
-    if (radio.available()) 
+    if(digitalRead(4) && !digitalRead(5)) // AC
     {
-        char text[24];
-        radio.read(&text, sizeof(text));
-        Serial.println(text);
-        String textouts = String(text);
-        int textout = textouts.toInt();
-        if(textout == 10) // AC
-        {
-            digitalWrite(3, HIGH);
-            digitalWrite(5, LOW); 
-        }
-        else if(textout == 01) // FAN
-        {
-            digitalWrite(3, LOW);
-            digitalWrite(5, HIGH); 
-        }
-        else if(textout == 11) // BOTH
-        {
-            digitalWrite(3, HIGH);
-            digitalWrite(5, HIGH); 
-        }
-        else // NOTHING
-        {
-            digitalWrite(3, LOW);
-            digitalWrite(5, LOW);
-        }
+        digitalWrite(2, HIGH);
+        digitalWrite(3, LOW); 
     }
+    else if(!digitalRead(4) && digitalRead(5)) // FAN
+    {
+        digitalWrite(2, LOW);
+        digitalWrite(3, HIGH); 
+    }
+    else if(digitalRead(4) && digitalRead(5)) // BOTH
+    {
+        digitalWrite(2, HIGH);
+        digitalWrite(3, HIGH); 
+    }
+    else // NOTHING
+    {
+        digitalWrite(2, LOW);
+        digitalWrite(3, LOW);
+    }
+
+    if(digitalRead(6)) openWindow();
+    else closeWindow();
+}
+
+void openWindow()
+{
+    return;
+}
+
+void closeWindow()
+{
+    return;
 }

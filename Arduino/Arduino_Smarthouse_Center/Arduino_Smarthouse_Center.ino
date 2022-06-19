@@ -25,18 +25,12 @@
 #include <SPI.h>
 #include <DHT.h>
 #include <DHT_U.h>
-#include <nRF24L01.h>
 #include <printf.h>
-#include <RF24.h>
-#include <RF24_config.h>
 #include <string.h>
 #include <Keypad.h>
 #include "CO2Sensor.h"
 
 #define DHTTYPE DHT11
-
-RF24 radio(9, 10);       
-const byte address1[6] = "63257";
 
 DHT dhtext(4, DHTTYPE);
 DHT dhtint(5, DHTTYPE);
@@ -46,34 +40,83 @@ bool cO2WindowClosed = true;
 
 CO2Sensor co2Sensor(A1, 0.99, 100);
 
+const byte ROWS = 4; //four rows
+const byte COLS = 3; //three columns
+char keys[ROWS][COLS] = {
+   {'1','2','3'},
+   {'4','5','6'},
+   {'7','8','9'},
+   {'*','0','#'}
+};
+byte rowPins[ROWS] = {25, 24, 23, 22};
+byte colPins[COLS] = {28, 27, 26}; 
+
+Keypad kpd = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+int keyCount = 0;
+char keyString[5] = "53678";
+char keyCumuled[5];
+
+unsigned long closeDoorTimer = 0;
+
 void setup() 
 {
-   radio.begin();
-
-   radio.openWritingPipe(address1);
-
-   radio.setPALevel(RF24_PA_MAX); 
-   radio.stopListening(); 
-
+   kpd.setDebounceTime(10);
    for(int i = 22; i < 30; i++) pinMode(i, OUTPUT);
    pinMode(2, OUTPUT);
    pinMode(3, OUTPUT);
+
    digitalWrite(3, LOW);
    digitalWrite(2, LOW);
    noTone(2);
+
    pinMode(4, INPUT_PULLUP);
    pinMode(5, INPUT_PULLUP);
+
+   pinMode(6, OUTPUT);
+   pinMode(7, OUTPUT);
+   pinMode(8, OUTPUT);
+
    dhtext.begin();
    dhtint.begin();
    co2Sensor.calibrate();
+
    Serial.begin(9600);
 }
 
 void loop() 
-{
-   char data[3];
-   sprintf(data, "00");
-   
+{  
+   if(closeDoorTimer < millis()) {
+      Serial.println("setsensor 21 0");
+      closeDoor();
+   }
+
+   char key = kpd.getKey();
+   if(key)
+   {
+      keyCumuled[keyCount] = key;
+      keyCount++;
+      if(keyCount == 4)
+      {
+         if(keyCumuled == keyString)
+         {
+            Serial.println("setsensor 21 1");
+            tone(2, 3000);
+            delay(100);
+            noTone(2);
+            delay(100);
+            tone(2, 3000);
+            delay(100);
+            noTone(2);
+            openDoor();
+            closeDoorTimer = millis() + 10000;
+         }
+         else tone(2, 500, 1000);
+         keyCumuled[] = "";
+         keyCount = 0;
+      }
+   }
+
    float tempext = dhtext.readTemperature();
    Serial.println("setsensor 14 " + String(tempext));
    float tempint = dhtint.readTemperature();
@@ -90,36 +133,28 @@ void loop()
             Serial.println("setsensor 22 1");
             Serial.println("setsensor 23 0");
             Serial.println("setsensor 24 1");
-            sprintf(data, "01");
-            openWindow();
+            digitalWrite(6, LOW);
+            digitalWrite(7, HIGH);
+            digitalWrite(8, HIGH);
          }
          else 
          {
             Serial.println("setsensor 22 1");
             Serial.println("setsensor 23 0");
             Serial.println("setsensor 24 0");
-            sprintf(data, "00"); 
-            openWindow();
+            digitalWrite(6, LOW);
+            digitalWrite(7, LOW);
+            digitalWrite(8, HIGH);
          }
       }
       else
       {
-         if(humidityint < 60) 
-         {
-            Serial.println("setsensor 22 0");
-            Serial.println("setsensor 23 1");
-            Serial.println("setsensor 24 1");
-            sprintf(data, "11"); // FAN & AC 
-            if(!cO2LevelHigh) closeWindow();
-         }
-         else 
-         {
-            Serial.println("setsensor 22 0");
-            Serial.println("setsensor 23 1");
-            Serial.println("setsensor 24 0");
-            sprintf(data, "10"); // AC
-            if(!cO2LevelHigh) closeWindow();   
-         }    
+         Serial.println("setsensor 22 0");
+         Serial.println("setsensor 23 1");
+         Serial.println("setsensor 24 1");
+         digitalWrite(6, HIGH);
+         digitalWrite(7, HIGH);
+         if(!cO2LevelHigh) digitalWrite(8, LOW);   
       }
    }
    else
@@ -129,19 +164,20 @@ void loop()
          Serial.println("setsensor 22 0");
          Serial.println("setsensor 23 0");
          Serial.println("setsensor 24 1");
-         sprintf(data, "01"); // FAN
-         if(!cO2LevelHigh) closeWindow();
+         digitalWrite(6, LOW);
+         digitalWrite(7, HIGH);
+         if(!cO2LevelHigh) digitalWrite(8, LOW);
       }
       else 
       {
          Serial.println("setsensor 22 0");
          Serial.println("setsensor 23 0");
          Serial.println("setsensor 24 0");
-         sprintf(data, "00"); // NOTHING
-         if(!cO2LevelHigh) closeWindow();
+         digitalWrite(6, LOW);
+         digitalWrite(7, LOW);
+         if(!cO2LevelHigh) digitalWrite(8, LOW);
       }
    }
-   radio.write(&data, sizeof(data));   
 
    float brightness = analogRead(A0);
    Serial.println("setsensor 19 " + String(brightness));
@@ -164,27 +200,17 @@ void loop()
       Serial.println("setsensor 22 1");
       cO2LevelHigh = true;
       cO2WindowClosed = false;
-      openWindow();
+      digitalWrite(8, HIGH);
    }         
    else
    {
       Serial.println("setsensor 22 0");
       cO2LevelHigh = false;
       if(cO2WindowClosed == false) {
-         closeWindow();
+         digitalWrite(8, LOW);
          cO2WindowClosed = true;
       }
    }
-}
-
-void openWindow()
-{
-   return;
-}
-
-void closeWindow()
-{
-   return;
 }
 
 void openDoor()

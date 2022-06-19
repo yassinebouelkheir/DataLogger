@@ -539,17 +539,17 @@
                 success: function (response) {
                     document.getElementById('batterie').innerHTML = response.battery + " %";
                     document.getElementById('batteriewidth').setAttribute("style", "width: " + response.batterywidth + "%; height: 6px;");
-                    if(response.batterie <= 20) {
+                    if(response.battery <= 20) {
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-danger");
                         document.getElementById('batterie').setAttribute("class", "counter text-danger");
                         document.getElementById('batterietitle').setAttribute("class", "text-danger");
                     }
-                    else if(response.batterie <= 50) {
+                    else if(response.battery <= 50) {
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-primary");
                         document.getElementById('batterie').setAttribute("class", "counter text-primary");
                         document.getElementById('batterietitle').setAttribute("class", "text-primary");
                     }
-                    else if(response.batterie > 50){
+                    else if(response.battery > 50){
                         document.getElementById('batteriewidth').setAttribute("class", "progress-bar bg-success");
                         document.getElementById('batterie').setAttribute("class", "counter text-success");
                         document.getElementById('batterietitle').setAttribute("class", "text-success");
