@@ -24,6 +24,10 @@
 
 #include <SPI.h>
 #include <printf.h>
+#include <AccelStepper.h>
+
+AccelStepper myStepper(1, 9, 10);
+bool windowisOpened = false;
 
 void setup() 
 {
@@ -42,9 +46,14 @@ void setup()
     
     digitalWrite(4, HIGH);
     analogWrite(5, 127);
+
+    myStepper.setMaxSpeed(1000);
+    myStepper.setAcceleration(50);
+    myStepper.setSpeed(200);
 }
 void loop()
 {   
+    myStepper.run();
     if(digitalRead(6) && !digitalRead(7)) // AC
     {
         digitalWrite(2, HIGH);
@@ -72,10 +81,20 @@ void loop()
 
 void openWindow()
 {
+    if(!windowisOpened)
+    {
+        myStepper.moveTo(50);
+        windowisOpened = true;
+    }
     return;
 }
 
 void closeWindow()
 {
+    if(windowisOpened)
+    {
+        myStepper.moveTo(-50);
+        windowisOpened = false;
+    }
     return;
 }
