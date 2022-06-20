@@ -49,9 +49,10 @@ void setup()
     radio.setPALevel(RF24_PA_MAX); 
     radio.stopListening();
 
-    pinMode(2, INPUT);
+    pinMode(3, INPUT);
     pinMode(4, OUTPUT);
-    attachInterrupt(digitalPinToInterrupt(2), readEncoder, RISING);
+    digitalWrite(4, LOW);
+    attachInterrupt(digitalPinToInterrupt(3), readEncoder, RISING);
 }
 
 void loop()
