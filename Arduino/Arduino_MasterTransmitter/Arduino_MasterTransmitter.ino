@@ -37,14 +37,11 @@ void setup()
     radio.begin();
 
     radio.openWritingPipe(address);                  
-//    radio.disableAckPayload();
 
     radio.setPALevel(RF24_PA_MAX);
     radio.stopListening(); 
 
     pinMode(2, OUTPUT);
-    pinMode(3, OUTPUT);
-    digitalWrite(3, LOW);
     digitalWrite(2, HIGH);
 }
 void loop()
@@ -56,7 +53,6 @@ void loop()
     char datax[24];
         
     if (data.length() > 1) {
-        digitalWrite(3, HIGH);
         while (data.length() > 0) 
         {
             int index = data.indexOf(' ');
@@ -75,7 +71,5 @@ void loop()
         char datax[24];
         sprintf(datax, "setcharge %d %d", int(Buff[1].toInt()), int(Buff[2].toInt()));
         radio.write(&datax, sizeof(datax));
-        digitalWrite(3, LOW);
-        //Serial.println("OK");
     }
 }

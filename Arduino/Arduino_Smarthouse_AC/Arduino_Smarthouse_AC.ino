@@ -29,29 +29,33 @@ void setup()
 {
     pinMode(2, OUTPUT);
     pinMode(3, OUTPUT);
+    
+    pinMode(4, OUTPUT);
+    pinMode(5, OUTPUT);
 
-    pinMode(4, INPUT);
-    pinMode(5, INPUT);
     pinMode(6, INPUT);
+    pinMode(7, INPUT);
+    pinMode(8, INPUT);
 
     digitalWrite(2, LOW);
     digitalWrite(3, LOW);
     
-    analogWrite(6, 127);
+    digitalWrite(4, HIGH);
+    analogWrite(5, 127);
 }
 void loop()
 {   
-    if(digitalRead(4) && !digitalRead(5)) // AC
+    if(digitalRead(6) && !digitalRead(7)) // AC
     {
         digitalWrite(2, HIGH);
         digitalWrite(3, LOW); 
     }
-    else if(!digitalRead(4) && digitalRead(5)) // FAN
+    else if(!digitalRead(6) && digitalRead(7)) // FAN
     {
         digitalWrite(2, LOW);
         digitalWrite(3, HIGH); 
     }
-    else if(digitalRead(4) && digitalRead(5)) // BOTH
+    else if(digitalRead(6) && digitalRead(7)) // BOTH
     {
         digitalWrite(2, HIGH);
         digitalWrite(3, HIGH); 
@@ -62,7 +66,7 @@ void loop()
         digitalWrite(3, LOW);
     }
 
-    if(digitalRead(6)) openWindow();
+    if(digitalRead(8)) openWindow();
     else closeWindow();
 }
 

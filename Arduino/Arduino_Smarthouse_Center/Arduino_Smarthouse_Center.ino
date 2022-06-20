@@ -28,6 +28,7 @@
 #include <printf.h>
 #include <string.h>
 #include <Keypad.h>
+#include <Servo.h>
 #include "CO2Sensor.h"
 
 #define DHTTYPE DHT11
@@ -59,10 +60,12 @@ char keyCumuled[5];
 
 unsigned long closeDoorTimer = 0;
 
+Servo myservo;
+
 void setup() 
 {
    kpd.setDebounceTime(10);
-   for(int i = 22; i < 30; i++) pinMode(i, OUTPUT);
+   for(int i = 22; i < 29; i++) pinMode(i, OUTPUT);
    pinMode(2, OUTPUT);
    pinMode(3, OUTPUT);
 
@@ -76,7 +79,11 @@ void setup()
    pinMode(6, OUTPUT);
    pinMode(7, OUTPUT);
    pinMode(8, OUTPUT);
+   pinMode(9, OUTPUT);
 
+   myservo.attach(9);
+   myservo.write(90);
+    
    dhtext.begin();
    dhtint.begin();
    co2Sensor.calibrate();
@@ -101,11 +108,11 @@ void loop()
          if(keyCumuled == keyString)
          {
             Serial.println("setsensor 21 1");
-            tone(2, 3000);
+            tone(2, 5000);
             delay(100);
             noTone(2);
             delay(100);
-            tone(2, 3000);
+            tone(2, 5000);
             delay(100);
             noTone(2);
             openDoor();
@@ -115,6 +122,7 @@ void loop()
          keyCumuled[] = "";
          keyCount = 0;
       }
+      else tone(2, 5000, 100);
    }
 
    float tempext = dhtext.readTemperature();
@@ -215,10 +223,12 @@ void loop()
 
 void openDoor()
 {
+   myservo.write(0); 
    return;
 }
 
 void closeDoor()
 {
+   myservo.write(90); 
    return;
 }

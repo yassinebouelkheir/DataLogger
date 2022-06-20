@@ -42,13 +42,10 @@ void setup()
     radio.startListening(); 
 
     pinMode(2, OUTPUT);
-    pinMode(3, OUTPUT);
-    digitalWrite(3, LOW);
     digitalWrite(2, HIGH);
 }
 void loop()
 {   
-    digitalWrite(3, HIGH);
     delay(13);
     if (radio.available()) 
     {
@@ -56,5 +53,4 @@ void loop()
         radio.read(&text, sizeof(text));
         Serial.println(text);
     }
-    digitalWrite(3, LOW);
 }

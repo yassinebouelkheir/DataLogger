@@ -60,8 +60,6 @@ def transmitterHandler():
 
 if __name__ == "__main__":
 	
-	GPIO.setwarnings(False)
-
 	reciever = threading.Thread(target=transmitterHandler)
 	reciever.start()
 

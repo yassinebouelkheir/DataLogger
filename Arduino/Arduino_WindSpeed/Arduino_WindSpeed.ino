@@ -32,7 +32,7 @@
 RF24 radio(9, 10);       
 const byte address[6] = "14863";
 
-ACS712 currentSensor1(ACS712_30A, A0);
+ACS712 currentSensor1(ACS712_30A, A3);
 
 long prevT;
 
@@ -89,13 +89,13 @@ void loop()
     sprintf(data, "setsensor 11 %s", str_temp);
     radio.write(&data, sizeof(data));   
 
-    V1 = getCurrentDC();
+    V1 = currentSensor1.getCurrentDC();
     dtostrf(V1, 1, 2, str_temp);
     sprintf(data, "setsensor 12 %s", currentSensor1.getCurrentDC());
     radio.write(&data, sizeof(data));             
     delay(1);
 
-    V2 = ((analogRead(A1)*5.0)/1024.0)/(7500.0/(37500.0));
+    V2 = ((analogRead(A4)*5.0)/1024.0)/(7500.0/(37500.0));
     dtostrf(V2, 1, 2, str_temp);
     sprintf(data, "setsensor 13 %s", str_temp);
     radio.write(&data, sizeof(data));             

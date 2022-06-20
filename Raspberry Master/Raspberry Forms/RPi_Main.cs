@@ -239,8 +239,6 @@ namespace RPi
             browseSelection -= 1;
             if (isGraphEnabled) if (browseSelection < 1) browseSelection = MaxSelection;
             else if (browseSelection < 0) browseSelection = MaxSelection;
-            //if (isGraphEnabled) UpdateGraphSelection();
-            //else
             UpdateSelection();
         }
 
@@ -251,9 +249,7 @@ namespace RPi
             {
                 if (isGraphEnabled) browseSelection = 1;
                 else browseSelection = 0;
-            }
-            //if (isGraphEnabled) UpdateGraphSelection();
-            //else 
+            } 
             UpdateSelection();
         }
 
@@ -275,7 +271,6 @@ namespace RPi
 
                     paramValue.Text = bat.ToString("0") + " %";
                     dr.Close();
-                    //Charts.Enabled = false;
                 }
                 else if (browseSelection == 1)
                 {
@@ -288,7 +283,6 @@ namespace RPi
 
                     paramValue.Text = dr.GetFloat(0).ToString("0.0") + " V";
                     dr.Close();
-                    //Charts.Enabled = true;
 
                 }
                 else if (browseSelection == 2)
@@ -302,7 +296,6 @@ namespace RPi
 
                     paramValue.Text = dr.GetFloat(0).ToString("0.00") + " A";
                     dr.Close();
-                    //Charts.Enabled = true;
                 }
                 else if (browseSelection == 3)
                 {
@@ -316,7 +309,6 @@ namespace RPi
                     else paramTitle.Text = "Puissance DC :";
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
-                    //Charts.Enabled = true;
                 }
             }
             else if (menuSelection == 1)
@@ -358,7 +350,6 @@ namespace RPi
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                 }
-                //Charts.Enabled = true;
             }
             else if (menuSelection == 2)
             {
@@ -400,7 +391,6 @@ namespace RPi
                     paramValue.Text = (voltage * dr.GetFloat(0)).ToString("0") + " W";
                     dr.Close();
                 }
-                //Charts.Enabled = true;
             }
             else if (menuSelection == 3)
             {
@@ -495,501 +485,9 @@ namespace RPi
                     paramValue.Text = dr.GetFloat(0).ToString("0") + " TR/MIN";
                     dr.Close();
                 }
-                //Charts.Enabled = true;
             }
             conn.Close();
         }
-        /*private void UpdateGraphSelection()
-        {
-            conn.Open();
-            if (menuSelection == 0)
-            {
-                if (browseSelection == 1)
-                {
-                    if (langSelected) label2.Text = "DC Voltage";
-                    else label2.Text = "Tension DC";
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 2 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("500x200") 
-                            .chxl("0:" + dates + "| 1:" + vals) 
-                            .toFile(chartPath);
-
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-                    dr.Close();
-                }
-                if (browseSelection == 2)
-                {
-                    if (langSelected) label2.Text = "DC Current";
-                    else label2.Text = "Courant DC";
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 1 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("500x200")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    pictureBox2.BackgroundImage = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-                    dr.Close();
-                }
-                else if (browseSelection == 3)
-                {
-                    if (langSelected) label2.Text = "DC Power";
-                    else label2.Text = "Puissance DC";
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 1 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-                    dr.Close();
-
-                    cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 2 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    dr = cmd.ExecuteReader();
-                    double[] vals1 = new double[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals1[i] = dr.GetFloat(0);
-                    }
-                    dr.Close();
-                }
-            }
-            else if (menuSelection == 1)
-            {
-                if (browseSelection == 0)
-                {
-                    if (langSelected) label2.Text = "AC Voltage";
-                    else label2.Text = "Tension AC";
-                    
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 4 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-                else if (browseSelection == 1)
-                {
-                    if (langSelected) label2.Text = "AC Current";
-                    else label2.Text = "Courant AC";
-
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 3 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-                else if (browseSelection == 2)
-                {
-                    if (langSelected) label2.Text = "AC Power";
-                    else label2.Text = "Puissance AC";
-                    
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 4 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-                    dr.Close();
-
-                    cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 3 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    dr = cmd.ExecuteReader();
-                    double[] vals1 = new double[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals1[i] = dr.GetFloat(0);
-                    }
-                    dr.Close();
-                }
-                Charts.Enabled = true;
-            }
-            else if (menuSelection == 2)
-            {
-                if (browseSelection == 0)
-                {
-                    if (langSelected) label2.Text = "DC Voltage";
-                    else label2.Text = "Tension DC";
-                    
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 13 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-                else if (browseSelection == 1)
-                {
-                    if (langSelected) label2.Text = "DC Current";
-                    else label2.Text = "Courant DC";
-
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-                else if (browseSelection == 2)
-                {
-                    if (langSelected) label2.Text = "DC Power";
-                    else label2.Text = "Puissance DC";
-                    
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 12 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals[i] = dr.GetFloat(0);
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-                    dr.Close();
-
-                    cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 13 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    dr = cmd.ExecuteReader();
-                    double[] vals1 = new double[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals1[i] = dr.GetFloat(0);
-                    }
-                    dr.Close();
-                }
-            }
-            else if (menuSelection == 3)
-            {
-                if (langSelected) label2.Text = "Ambient Temperature";
-                else label2.Text = "Température Ambiante";
-
-                if (browseSelection == 0)
-                {
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 5 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-                else if (browseSelection == 1)
-                {
-                    if (langSelected) label2.Text = "Panel Temperature";
-                    else label2.Text = "Température Panneau";
-
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 6 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-                else if (browseSelection == 2)
-                {
-                    if (langSelected) label2.Text = "Luminous Flow";
-                    else label2.Text = "Flux Lumineux";
-                    
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 7 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals[i] = ((2500 / (dr.GetFloat(0) * 0.0048828125) - 500) / 10);
-                        if (vals[i] > 9999) vals[i] = 9999;
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-                    dr.Close();
-                }
-                else if (browseSelection == 3)
-                {
-                    label2.Text = "Irradiation";
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 7 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals[i] = ((Math.Pow((1000 - dr.GetFloat(0)), 2) / 10) / (50));
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-                    dr.Close();
-                }
-                else if (browseSelection == 4)
-                {
-                    if (langSelected) label2.Text = "Relative Humidity";
-                    else label2.Text = "Humidité Relative";
-
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 8 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    double[] vals = new double[5];
-                    string[] dates = new string[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals[i] = (dr.GetFloat(0)*100)/1023;
-                        dates[i] = TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-                    dr.Close();
-                }
-                else if (browseSelection == 5)
-                {
-                    if (langSelected) label2.Text = "Speed of wind (Down)";
-                    else label2.Text = "Vitesse du vent (Aval)";
-
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 9 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-                else if (browseSelection == 6)
-                {
-                    if (langSelected) label2.Text = "Speed of wind (Up)";
-                    else label2.Text = "Vitesse du vent (Amon)";
-                    
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 10 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-                else if (browseSelection == 7)
-                {
-                    label2.Text = "Turbine";
-                    MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `UNIXDATE` FROM `SENSORS` WHERE ID = 11 ORDER BY `UNIXDATE` DESC LIMIT 5", conn);
-                    var dr = cmd.ExecuteReader();
-
-                    string vals = "";
-                    string dates = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        dr.Read();
-                        vals = vals + "|" + dr.GetFloat(0);
-                        dates = dates + "|" + TimeSpan.FromSeconds(dr.GetInt32(1)).ToString(@"hh\:mm");
-                    }
-
-                    string chartPath = "tmp/chart.png";
-                    new ImageCharts()
-                            .cht("ls")
-                            .chxt("x,y")
-                            .chd("t:10,40,25")
-                            .chs("412x162")
-                            .chxl("0:" + dates + "| 1:" + vals)
-                            .toFile(chartPath);
-
-                    Image image1 = Image.FromFile("tmp/chart.png");
-                    pictureBox2.BackgroundImage = image1;
-                    image1.Dispose();
-                    dr.Close();
-                }
-            }
-            conn.Close();
-        }*/
-
         private void UpdateChargeStatus()
         {
             conn.Open();
@@ -1101,8 +599,6 @@ namespace RPi
             else browseSelection = 1;
 
             MaxSelection = 4;
-            //if (isGraphEnabled) UpdateGraphSelection();
-            //else 
             UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 16, 103, 60);
@@ -1113,7 +609,6 @@ namespace RPi
 
             if (isChargePanelEnabled)
             {
-                //Charts.Enabled = true;
                 Left_Btn.Enabled = true;
                 Right_Btn.Enabled = true;
                 if (!isGraphEnabled)
@@ -1126,7 +621,6 @@ namespace RPi
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    //UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -1148,8 +642,6 @@ namespace RPi
             menuSelection = 1;
             browseSelection = 0;
             MaxSelection = 3;
-            //if (isGraphEnabled) UpdateGraphSelection();
-            //else 
             UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -1160,7 +652,6 @@ namespace RPi
 
             if (isChargePanelEnabled)
             {
-                //Charts.Enabled = true;
                 Left_Btn.Enabled = true;
                 Right_Btn.Enabled = true;
                 if (!isGraphEnabled)
@@ -1173,7 +664,6 @@ namespace RPi
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    //UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -1195,8 +685,6 @@ namespace RPi
             menuSelection = 2;
             browseSelection = 0;
             MaxSelection = 3;
-            //if (isGraphEnabled) UpdateGraphSelection();
-            //else 
             UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -1207,7 +695,6 @@ namespace RPi
 
             if (isChargePanelEnabled)
             {
-                //Charts.Enabled = true;
                 Left_Btn.Enabled = true;
                 Right_Btn.Enabled = true;
                 if (!isGraphEnabled)
@@ -1220,7 +707,6 @@ namespace RPi
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    //UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -1242,8 +728,6 @@ namespace RPi
             menuSelection = 3;
             browseSelection = 0;
             MaxSelection = 8;
-            //if (isGraphEnabled) UpdateGraphSelection();
-            //else 
             UpdateSelection();
 
             Courant_Faible.BackColor = Color.FromArgb(255, 24, 155, 90);
@@ -1254,7 +738,6 @@ namespace RPi
 
             if (isChargePanelEnabled)
             {
-                //Charts.Enabled = true;
                 Left_Btn.Enabled = true;
                 Right_Btn.Enabled = true;
                 if (!isGraphEnabled)
@@ -1267,7 +750,6 @@ namespace RPi
                 {
                     paramTitle.Visible = false;
                     paramValue.Visible = false;
-                    //UpdateGraphSelection();
                 }
 
                 label2.Visible = false;
@@ -1302,22 +784,13 @@ namespace RPi
         {
             if (!isGraphEnabled)
             {
-                /*isGraphEnabled = true;
-                pictureBox2.Visible = true;
-                if (langSelected) Charts.Text = "Switch to numeric mode";
-                else Charts.Text = "Passer en mode numérique";*/
                 paramTitle.Visible = false;
                 paramValue.Visible = false;
                 label2.Text = paramTitle.Text.Replace(":", "");
                 label2.Visible = true;
-                //UpdateGraphSelection();
             }
             else
             {
-                /*isGraphEnabled = false;
-                pictureBox2.Visible = false;
-                if (langSelected) Charts.Text = "Switch to chart mode";
-                else Charts.Text = "Passer en mode graphique";*/
                 paramTitle.Visible = true;
                 paramValue.Visible = true;
                 if (langSelected) label2.Text = "Relay control panel";
@@ -1331,10 +804,6 @@ namespace RPi
         {
             if (!isChargePanelEnabled)
             {
-                /*Charts.Enabled = false;
-                if (isGraphEnabled) pictureBox2.Visible = false;
-                if (langSelected) Charts.Text = "Switch to chart mode";
-                else Charts.Text = "Passer en mode graphique";*/
 
                 isGraphEnabled = false;
                 Left_Btn.Enabled = false;
@@ -1460,8 +929,6 @@ namespace RPi
         {
             if(langSelected)
             {
-                /*if (isGraphEnabled) Charts.Text = "Passer en mode numérique";
-                else Charts.Text = "Passer en mode graphique";*/
                 if (isChargePanelEnabled)
                 {
                     label2.Text = "Panneau de contrôle des charges";
@@ -1478,8 +945,6 @@ namespace RPi
             }
             else
             {
-                /*if (isGraphEnabled) Charts.Text = "Switch to numeric mode";
-                else Charts.Text = "Switch to chart mode";*/
                 if (isChargePanelEnabled)
                 {
                     label2.Text = "Relay control panel";

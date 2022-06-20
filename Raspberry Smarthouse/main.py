@@ -92,16 +92,10 @@ def receiverHandler():
 			print("KeyboardInterrupt has been caught.")
 
 if __name__ == "__main__":
-	
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setwarnings(False)
-	GPIO.setup(21, GPIO.OUT)
-	GPIO.output(21, GPIO.LOW)
 
 	reciever = threading.Thread(target=receiverHandler)
 	reciever.start()
 
 	print("Data Logger v2.0 python script - PFE 2021/2022");
-	GPIO.output(21, GPIO.HIGH)
 
 	reciever.join()
