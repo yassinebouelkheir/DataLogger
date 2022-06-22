@@ -45,7 +45,7 @@ void setup()
     digitalWrite(3, LOW);
     
     digitalWrite(4, HIGH);
-    analogWrite(5, 127);
+    analogWrite(5, 180);
 
     myStepper.setMaxSpeed(1000);
     myStepper.setAcceleration(50);

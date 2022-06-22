@@ -38,6 +38,7 @@ DHT dhtint(5, DHTTYPE);
 
 bool cO2LevelHigh = false;
 bool cO2WindowClosed = true; 
+bool doorClosed = true;
 
 CO2Sensor co2Sensor(A1, 0.99, 100);
 
@@ -69,9 +70,9 @@ void setup()
    pinMode(2, OUTPUT);
    pinMode(3, OUTPUT);
 
-   digitalWrite(3, LOW);
-   digitalWrite(2, LOW);
-   noTone(2);
+   digitalWrite(3, HIGH);
+   //digitalWrite(2, LOW);
+   tone(2, 3000);
 
    pinMode(4, INPUT_PULLUP);
    pinMode(5, INPUT_PULLUP);
@@ -82,7 +83,7 @@ void setup()
    pinMode(9, OUTPUT);
 
    myservo.attach(9);
-   myservo.write(90);
+   myservo.write(80);
     
    dhtext.begin();
    dhtint.begin();
@@ -93,37 +94,28 @@ void setup()
 
 void loop() 
 {  
-   if(closeDoorTimer < millis()) {
-      Serial.println("setsensor 21 0");
+   if(closeDoorTimer < millis() && !doorClosed) {
+      //Serial.println("setsensor 21 0");
       closeDoor();
+      doorClosed = true;
    }
 
    char key = kpd.getKey();
-   if(key)
+   if(key && doorClosed)
    {
-      keyCumuled[keyCount] = key;
-      keyCount++;
-      if(keyCount == 4)
-      {
-         if(keyCumuled == keyString)
-         {
-            Serial.println("setsensor 21 1");
-            tone(2, 5000);
-            delay(100);
-            noTone(2);
-            delay(100);
-            tone(2, 5000);
-            delay(100);
-            noTone(2);
-            openDoor();
-            closeDoorTimer = millis() + 10000;
-         }
-         else tone(2, 500, 1000);
-         keyCumuled[] = "";
-         keyCount = 0;
-      }
-      else tone(2, 5000, 100);
-   }
+      tone(2, 5000);
+      delay(100);
+      noTone(2);
+      delay(100);
+      tone(2, 5000);
+      delay(100);
+      noTone(2);
+      openDoor();
+      doorClosed = false;
+      closeDoorTimer = millis() + 10000;
+   } 
+   if(doorClosed) Serial.println("setsensor 21 0");
+   else Serial.println("setsensor 21 1");
 
    float tempext = dhtext.readTemperature();
    Serial.println("setsensor 14 " + String(tempext));
@@ -132,9 +124,9 @@ void loop()
    float humidityint = 100 - dhtint.readHumidity();
    Serial.println("setsensor 16 " + String(humidityint));
 
-   if(tempint > 24)
+   if(tempint > 22)
    {
-      if(tempext < 24)
+      if(tempext < 22)
       {
          if(humidityint < 60) // FAN
          {
@@ -191,12 +183,12 @@ void loop()
    Serial.println("setsensor 19 " + String(brightness));
    if(brightness < 210)
    {
-      digitalWrite(3, HIGH);
+      digitalWrite(3, LOW);
       Serial.println("setsensor 20 1");
    }
    else 
    {
-      digitalWrite(3, LOW);   
+      digitalWrite(3, HIGH);   
       Serial.println("setsensor 20 0"); 
    }    
 
@@ -229,6 +221,6 @@ void openDoor()
 
 void closeDoor()
 {
-   myservo.write(90); 
+   myservo.write(80); 
    return;
 }
