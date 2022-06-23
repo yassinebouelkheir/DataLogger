@@ -36,6 +36,7 @@ lastquerytime = 1.0
 queryCount = 0
 def receiverHandler():
 	global lastquerytime
+	global queryCount
 	print('recieverHandler Running. Press CTRL-C to exit.')
 	time.sleep(0.1) 
 	if arduino.isOpen():
