@@ -594,7 +594,7 @@
         <script src="../dist/js/custom.min.js"></script>
         <script src="../assets/node_modules/raphael/raphael-min.js"></script>
         <script src="../assets/node_modules/morrisjs/morris.min.js"></script>
-        <script type="text/javascript">
+<script type="text/javascript">
             $(function () {
                 "use strict";
                 Morris.Area({
@@ -648,7 +648,6 @@
                     , ykeys: ['int', 'ext']
                     , labels: ['Int.Temp', 'Ext.Temp']
                     , parseTime: false
-                    , ymax: 25
                     , pointSize: 3
                     , fillOpacity: 0
                     , pointStrokeColors: ['#ab8ce4', '#ab8ce4']
@@ -710,7 +709,6 @@
                     , ykeys: ['int', 'ext']
                     , labels: ['Int.CO2', 'RR.Gauzes']
                     , parseTime: false
-                    , ymax: 25
                     , pointSize: 3
                     , fillOpacity: 0
                     , pointStrokeColors: ['#ab8ce4', '#ab8ce4']
@@ -763,7 +761,6 @@
                     , ykeys: ['int']
                     , labels: ['Humidity']
                     , parseTime: false
-                    , ymax: 25
                     , pointSize: 3
                     , fillOpacity: 0
                     , pointStrokeColors: ['#ab8ce4']
@@ -816,7 +813,6 @@
                     , ykeys: ['int']
                     , labels: ['Luminous Flow']
                     , parseTime: false
-                    , ymax: 25
                     , pointSize: 3
                     , fillOpacity: 0
                     , pointStrokeColors: ['#ab8ce4']
@@ -852,26 +848,26 @@
                             document.getElementById('doorheader').setAttribute("class", "card-header bg-success");
                             document.getElementById('door').setAttribute("class", "counter text-success");
                             document.getElementById('doortitle').setAttribute("class", "text-success");
-                            document.getElementById('door').innerHTML = "OUVERTE";
+                            document.getElementById('door').innerHTML = "OPENED";
                         }
                         else {
                             document.getElementById('doorheader').setAttribute("class", "card-header bg-danger");
                             document.getElementById('door').setAttribute("class", "counter text-danger");
                             document.getElementById('doortitle').setAttribute("class", "text-danger");
-                            document.getElementById('door').innerHTML = "FERMÉE";
+                            document.getElementById('door').innerHTML = "CLOSED";
                         }
 
                         if(response.interiorWindow == 1) {
                             document.getElementById('windowheader').setAttribute("class", "card-header bg-success");
                             document.getElementById('window').setAttribute("class", "counter text-success");
                             document.getElementById('windowtitle').setAttribute("class", "text-success");
-                            document.getElementById('window').innerHTML = "OUVERTE";
+                            document.getElementById('window').innerHTML = "OPENED";
                         }
                         else {
                             document.getElementById('windowheader').setAttribute("class", "card-header bg-danger");
                             document.getElementById('window').setAttribute("class", "counter text-danger");
                             document.getElementById('windowtitle').setAttribute("class", "text-danger");
-                            document.getElementById('window').innerHTML = "FERMÉE";
+                            document.getElementById('window').innerHTML = "CLOSED";
                         }
 
                         if(response.ac == 1) {
@@ -917,13 +913,13 @@
                             document.getElementById('moveheader').setAttribute("class", "card-header bg-success");
                             document.getElementById('movement').setAttribute("class", "counter text-success");
                             document.getElementById('movetitle').setAttribute("class", "text-success");
-                            document.getElementById('movement').innerHTML = "OUI";
+                            document.getElementById('movement').innerHTML = "YES";
                         }
                         else {
                             document.getElementById('moveheader').setAttribute("class", "card-header bg-danger");
                             document.getElementById('movement').setAttribute("class", "counter text-danger");
                             document.getElementById('movetitle').setAttribute("class", "text-danger");
-                            document.getElementById('movement').innerHTML = "NON";
+                            document.getElementById('movement').innerHTML = "NO";
                         }
 
                         document.getElementById('tempext').innerHTML = response.tempint + " °C";
@@ -964,17 +960,17 @@
 
                         document.getElementById('inthumidity').innerHTML = response.humidityint + " %RH";
                         document.getElementById('inthumiditywidth').setAttribute("style", "width: " + response.humidityintwidth + "%; height: 6px;");
-                        if(response.humidityint > 60) {
+                        if(response.humidityint > 50) {
                             document.getElementById('inthumiditywidth').setAttribute("class", "progress-bar bg-success");
                             document.getElementById('inthumidity').setAttribute("class", "counter text-success");
                             document.getElementById('inthumiditytitle').setAttribute("class", "text-success");
                         }
-                        else if(response.humidityint >= 40) {
+                        else if(response.humidityint >= 30) {
                             document.getElementById('inthumiditywidth').setAttribute("class", "progress-bar bg-primary");
                             document.getElementById('inthumidity').setAttribute("class", "counter text-primary");
                             document.getElementById('inthumiditytitle').setAttribute("class", "text-primary");
                         }
-                        else if(response.humidityint < 40) {
+                        else if(response.humidityint < 30) {
                             document.getElementById('inthumiditywidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('inthumidity').setAttribute("class", "counter text-danger");
                             document.getElementById('inthumiditytitle').setAttribute("class", "text-danger");
@@ -982,17 +978,17 @@
 
                         document.getElementById('co2level').innerHTML = response.co2level + " PPM";
                         document.getElementById('co2levelwidth').setAttribute("style", "width: " + response.co2levelwidth + "%; height: 6px;");
-                        if(response.co2level < 400) {
+                        if(response.co2level < 700) {
                             document.getElementById('co2levelwidth').setAttribute("class", "progress-bar bg-success");
                             document.getElementById('co2level').setAttribute("class", "counter text-success");
                             document.getElementById('co2leveltitle').setAttribute("class", "text-success");
                         }
-                        else if(response.co2level < 700) {
+                        else if(response.co2level < 1000) {
                             document.getElementById('co2levelwidth').setAttribute("class", "progress-bar bg-primary");
                             document.getElementById('co2level').setAttribute("class", "counter text-primary");
                             document.getElementById('co2leveltitle').setAttribute("class", "text-primary");
                         }
-                        else if(response.co2level >= 700) {
+                        else if(response.co2level >= 1000) {
                             document.getElementById('co2levelwidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('co2level').setAttribute("class", "counter text-danger");
                             document.getElementById('co2leveltitle').setAttribute("class", "text-danger");
@@ -1005,12 +1001,12 @@
                             document.getElementById('gauzeslevel').setAttribute("class", "counter text-success");
                             document.getElementById('gauzesleveltitle').setAttribute("class", "text-success");
                         }
-                        else if(response.gauzeslevel < 700) {
+                        else if(response.gauzeslevel < 800) {
                             document.getElementById('gauzeslevelwidth').setAttribute("class", "progress-bar bg-primary");
                             document.getElementById('gauzeslevel').setAttribute("class", "counter text-primary");
                             document.getElementById('gauzesleveltitle').setAttribute("class", "text-primary");
                         }
-                        else if(response.gauzeslevel >= 700) {
+                        else if(response.gauzeslevel >= 1000) {
                             document.getElementById('gauzeslevelwidth').setAttribute("class", "progress-bar bg-danger");
                             document.getElementById('gauzeslevel').setAttribute("class", "counter text-danger");
                             document.getElementById('gauzesleveltitle').setAttribute("class", "text-danger");

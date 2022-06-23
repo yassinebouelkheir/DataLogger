@@ -1,5 +1,9 @@
 <?php
     error_reporting(0);
+
+    function map($x, $in_min, $in_max, $out_min, $out_max) {
+        return ($x - $in_min) * ($out_max - $out_min) / ($in_max - $in_min) + $out_min;
+    }
     $mysqli = new mysqli("localhost", "adminpi", "adminpi", "PFE"); 
     $query = 'SELECT * FROM `SENSORS_STATIC` WHERE 1 ORDER BY `ID` ASC';
     $result = $mysqli->query($query);
@@ -65,16 +69,16 @@
     $data['tempintwidth'] = (($staticrows[14]['VALUE']*100)/60);
 
     $data['humidityint'] = number_format($staticrows[15]['VALUE'], 0);
-    $data['humidityintwidth'] = $staticrows[15]['VALUE'];
+    $data['humidityintwidth'] = $staticrows[15]['VALUE']
 
     $data['co2level'] = number_format($staticrows[16]['VALUE'], 0);
-    $data['co2levelwidth'] = $staticrows[16]['VALUE'];
+    $data['co2levelwidth'] = map($staticrows[16]['VALUE'], 0, 2000, 0, 100);
 
     $data['gauzeslevel'] = number_format($staticrows[17]['VALUE'], 0);
-    $data['gauzeslevelwidth'] = $staticrows[17]['VALUE'];
+    $data['gauzeslevelwidth'] = map($staticrows[17]['VALUE'], 0, 2000, 0, 100);
 
-    $data['luminousflow'] = number_format(round(((2500/($staticrows[18]['VALUE']*0.0048828125)-500)/10)), 0);
-    $data['luminousflowwidth'] = 1000-$staticrows[18]['VALUE'];
+    $data['luminousflow'] = number_format(round(((2500/((512-$staticrows[18]['VALUE'])*0.0048828125)-500)/10)), 0);
+    $data['luminousflowwidth'] = map($staticrows[18]['VALUE'], 0, 512, 0, 100);
 
     $data['lights'] = number_format(round($staticrows[19]['VALUE']), 0);
     $data['exteriorDoor'] = number_format(round($staticrows[20]['VALUE']), 0);
