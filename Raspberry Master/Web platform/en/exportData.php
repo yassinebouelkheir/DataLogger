@@ -347,13 +347,12 @@
                     $objPHPExcel->getActiveSheet()->mergeCells('F'.(13+$i).':G'.(13+$i).'');
                     $objPHPExcel->getActiveSheet()->mergeCells('H'.(13+$i).':I'.(13+$i).'');
 
-                    if($k == 0) 
+                    if($k == 1) 
                     {
-                        $objPHPExcel->getActiveSheet()->setCellValue('A'.(13+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
-                         $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
+                        $objPHPExcel->getActiveSheet()->setCellValue('D'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
                     }
-                    else if($k == 1) $objPHPExcel->getActiveSheet()->setCellValue('E'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
-                    else if($k == 2) {
+                    else if($k == 2) $objPHPExcel->getActiveSheet()->setCellValue('E'.(13+$i).'', number_format($row['VALUE'], 1).' °C');
+                    else if($k == 3) {
                         $data = number_format(((2500/($row['VALUE']*0.0048828125)-500)/10), 1);
                         if($data < 0) $data = 0;
                         $objPHPExcel->getActiveSheet()->setCellValue('F'.(13+$i).'', $data.' LUX');
@@ -362,9 +361,10 @@
                         if($data < 0) $data = 0;
                         $objPHPExcel->getActiveSheet()->setCellValue('H'.(13+$i).'', $data.' W/m²');
                     }
-                    else if($k == 3) {
+                    else if($k == 0) {
                         $data = number_format(round($row['VALUE']*100/1023.0), 0);
                         $objPHPExcel->getActiveSheet()->setCellValue('C'.(13+$i).'', $data.' %');
+                        $objPHPExcel->getActiveSheet()->setCellValue('A'.(13+$i).'', ''.gmdate("d/m/Y H:i", $row['UNIXDATE']).'');
                     }
 
                     $objPHPExcel->getActiveSheet()->getStyle('A'.(13+$i).':I'.(13+$i).'')->applyFromArray(array('borders' => array (
