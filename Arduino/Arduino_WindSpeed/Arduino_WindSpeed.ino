@@ -22,17 +22,17 @@
    Developers    : BOUELKHEIR Yassine
 */
 
-#include <SPI.h>
-#include <nRF24L01.h>
-#include <printf.h>
-#include <RF24.h>
-#include <RF24_config.h>
-#include "ACS712.h"
+//#include <SPI.h>
+//#include <nRF24L01.h>
+//#include <printf.h>
+//#include <RF24.h>
+//#include <RF24_config.h>
+//#include "ACS712.h"
 
-RF24 radio(9, 10);       
+//RF24 radio(9, 10);       
 const byte address[6] = "14863";
 
-ACS712 currentSensor1(ACS712_30A, A3);
+//ACS712 currentSensor1(ACS712_30A, A3);
 
 long prevT;
 
@@ -44,10 +44,10 @@ float R2 = 7500.0;
 void setup() 
 {
     Serial.begin(9600);
-    radio.begin();                  
-    radio.openWritingPipe(address); 
-    radio.setPALevel(RF24_PA_MAX); 
-    radio.stopListening();
+    //radio.begin();                  
+    //radio.openWritingPipe(address); 
+    //radio.setPALevel(RF24_PA_MAX); 
+    //radio.stopListening();
 
     pinMode(3, INPUT);
     pinMode(4, OUTPUT);
@@ -80,27 +80,27 @@ void loop()
 
     dtostrf(V1, 1, 2, str_temp);
     sprintf(data, "setsensor 9 %s", str_temp);
-    radio.write(&data, sizeof(data));             
-
+    //radio.write(&data, sizeof(data));             
+    //Serial.println(data);
     dtostrf(V2, 1, 2, str_temp);
     sprintf(data, "setsensor 10 %s", str_temp);
-    radio.write(&data, sizeof(data));             
-
+    //radio.write(&data, sizeof(data));             
+    //Serial.println(data);
     dtostrf(velocity, 1, 2, str_temp);
     sprintf(data, "setsensor 11 %s", str_temp);
-    radio.write(&data, sizeof(data));   
-
-    V1 = currentSensor1.getCurrentDC();
+    //radio.write(&data, sizeof(data));   
+    //Serial.println(data);
+    V1 = velocity/250.0;
     dtostrf(V1, 1, 2, str_temp);
-    sprintf(data, "setsensor 12 %s", currentSensor1.getCurrentDC());
-    radio.write(&data, sizeof(data));             
-    delay(1);
+    sprintf(data, "setsensor 12 %s", V1);
+    //radio.write(&data, sizeof(data));             
+    //delay(1);
 
-    V2 = ((analogRead(A4)*5.0)/1024.0)/(7500.0/(37500.0));
+    V2 = velocity/25.0;
     dtostrf(V2, 1, 2, str_temp);
     sprintf(data, "setsensor 13 %s", str_temp);
-    radio.write(&data, sizeof(data));             
-    delay(1);          
+    //radio.write(&data, sizeof(data));             
+    //delay(250);          
 }
 
 void readEncoder()

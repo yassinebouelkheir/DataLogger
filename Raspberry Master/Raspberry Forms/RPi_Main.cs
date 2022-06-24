@@ -46,7 +46,7 @@ namespace RPi
 
         private void RPI_Main_Load(object sender, EventArgs e)
         {
-            string myConnectionString = "server=localhost;uid=adminpi;pwd=adminpi;database=PFE";
+            string myConnectionString = "server=localhost;uid=adminpi;pwd=adminpi;database=PFE;";
             try
             {
                 conn = new MySql.Data.MySqlClient.MySqlConnection
@@ -60,20 +60,6 @@ namespace RPi
                 System.Windows.Forms.Application.Exit();
             }
             conn.Close();
-
-            try
-            {
-                connInsert = new MySql.Data.MySqlClient.MySqlConnection
-                {
-                    ConnectionString = myConnectionString
-                };
-                connInsert.Open();
-            }
-            catch (MySql.Data.MySqlClient.MySqlException)
-            {
-                System.Windows.Forms.Application.Exit();
-            }
-            connInsert.Close();
 
             if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
@@ -90,190 +76,212 @@ namespace RPi
             conn.Open();
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT `ID`, `PARAM`, `CONDITIONS`, `VALUE`, `RELAY`, `FNCT` FROM `FUNCTIONS` WHERE 1", conn);
             var dr = cmd.ExecuteReader();
+            int[]
+                l_id = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                l_paramid = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                l_condition = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                l_relay = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                l_fnct = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            double[]
+                l_value = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            int i = 0;
             while (dr.Read())
             {
-                int
-                    id = dr.GetInt32(0),
-                    paramid = dr.GetInt32(1),
-                    relay = dr.GetInt32(4),
-                    fnct = dr.GetInt32(5);
-
-                double 
-                    value = dr.GetFloat(3),
-                    param = 0.0;
+                l_id[i] = dr.GetInt32(0);
+                l_condition[i] = dr.GetInt32(2);
+                l_paramid[i] = dr.GetInt32(1);
+                l_relay[i] = dr.GetInt32(4);
+                l_fnct[i] = dr.GetInt32(5);
+                l_value[i] = dr.GetFloat(3);
+                i++;
+            }
+            dr.Close();
+            conn.Close();
+            for (int j = 0; j < i; j++)
+            {
+                int id = l_id[j];
+                int condition = l_condition[j];
+                int paramid = l_paramid[j];
+                int relay = l_relay[j];
+                int fnct = l_fnct[j];
+                double value = l_value[j];
+                double param = 0.0;
 
                 if (paramid < 14 && (paramid != 7 && paramid != 8))
                 {
-                    connInsert.Open();
-                    MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE `ID` = "+paramid, connInsert);
+                    conn.Open();
+                    MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE `ID` = " + paramid, conn);
                     var dr1 = cmd3.ExecuteReader();
                     dr1.Read();
                     param = dr1.GetFloat(0);
                     dr1.Close();
-                    connInsert.Close();
+                    conn.Close();
                 }
                 else
                 {
                     switch (paramid)
                     {
                         case 7:
-                        {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE `ID` = 7", conn);
-                            var dr1 = cmd3.ExecuteReader();
-                            dr1.Read();
-                            param = ((2500 / (dr.GetFloat(0) * 0.0048828125) - 500) / 10);
-                            if (param > 9999) param = 9999;
-                            dr1.Close();
-                            connInsert.Close();
-                            break;
-                        }
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE `ID` = 7", conn);
+                                var dr1 = cmd3.ExecuteReader();
+                                dr1.Read();
+                                param = ((2500 / (dr1.GetFloat(0) * 0.0048828125) - 500) / 10);
+                                if (param > 9999) param = 9999;
+                                dr1.Close();
+                                conn.Close();
+                                break;
+                            }
                         case 8:
-                        {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE `ID` = 8", conn);
-                            var dr1 = cmd3.ExecuteReader();
-                            dr1.Read();
-                            param = ((dr1.GetFloat(0)*100)/1023);
-                            dr1.Close();
-                            connInsert.Close();
-                            break;
-                        }
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE `ID` = 8", conn);
+                                var dr1 = cmd3.ExecuteReader();
+                                dr1.Read();
+                                param = ((dr1.GetFloat(0) * 100) / 1023);
+                                dr1.Close();
+                                conn.Close();
+                                break;
+                            }
                         case 14:
-                        {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE `ID` = 2", conn);
-                            var dr1 = cmd3.ExecuteReader();
-                            dr1.Read();
-                            param = dr1.GetFloat(0);
-                            dr1.Close();
-                            connInsert.Close();
-                            break;
-                        }
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE` FROM `SENSORS_STATIC` WHERE `ID` = 2", conn);
+                                var dr1 = cmd3.ExecuteReader();
+                                dr1.Read();
+                                param = dr1.GetFloat(0);
+                                dr1.Close();
+                                conn.Close();
+                                break;
+                            }
                         case 15:
-                        {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `ID` FROM `SENSORS_STATIC` WHERE `ID` = (`ID` = 1 OR `ID` = 2) ORDER BY `ID` ASC", conn);
-                            var dr1 = cmd3.ExecuteReader();
-                            dr1.Read();
-                            float courant = dr1.GetFloat(0);
-                            dr1.Read();
-                            param = (dr1.GetFloat(0)*courant);
-                            dr1.Close();
-                            connInsert.Close();
-                            break;
-                        }
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `ID` FROM `SENSORS_STATIC` WHERE `ID` = (`ID` = 1 OR `ID` = 2) ORDER BY `ID` ASC", conn);
+                                var dr1 = cmd3.ExecuteReader();
+                                dr1.Read();
+                                float courant = dr1.GetFloat(0);
+                                dr1.Read();
+                                param = (dr1.GetFloat(0) * courant);
+                                dr1.Close();
+                                conn.Close();
+                                break;
+                            }
                         case 16:
-                        {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `ID` FROM `SENSORS_STATIC` WHERE `ID` = (`ID` = 3 OR `ID` = 4) ORDER BY `ID` ASC", conn);
-                            var dr1 = cmd3.ExecuteReader();
-                            dr1.Read();
-                            param = (dr1.GetFloat(0)*220);
-                            dr1.Close();
-                            connInsert.Close();
-                            break;
-                        }
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `ID` FROM `SENSORS_STATIC` WHERE `ID` = (`ID` = 3 OR `ID` = 4) ORDER BY `ID` ASC", conn);
+                                var dr1 = cmd3.ExecuteReader();
+                                dr1.Read();
+                                param = (dr1.GetFloat(0) * 220);
+                                dr1.Close();
+                                conn.Close();
+                                break;
+                            }
                         case 17:
-                        {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `ID` FROM `SENSORS_STATIC` WHERE (`ID` = 12 OR `ID` = 13) ORDER BY `ID` ASC", conn);
-                            var dr1 = cmd3.ExecuteReader();
-                            dr1.Read();
-                            float courant = dr1.GetFloat(0);
-                            dr1.Read();
-                            param = (dr1.GetFloat(0) * courant);
-                            dr1.Close();
-                            connInsert.Close();
-                            break;
-                        }
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `ID` FROM `SENSORS_STATIC` WHERE (`ID` = 12 OR `ID` = 13) ORDER BY `ID` ASC", conn);
+                                var dr1 = cmd3.ExecuteReader();
+                                dr1.Read();
+                                float courant = dr1.GetFloat(0);
+                                dr1.Read();
+                                param = (dr1.GetFloat(0) * courant);
+                                dr1.Close();
+                                conn.Close();
+                                break;
+                            }
                         case 18:
-                        {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `ID` FROM `SENSORS_STATIC` WHERE `ID` = 7", conn);
-                            var dr1 = cmd3.ExecuteReader();
-                            dr1.Read();
-                            param = ((Math.Pow((1000 - dr1.GetFloat(0)), 2) / 10) / (50));
-                            dr1.Close();
-                            connInsert.Close();
-                            break;
-                        }
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd3 = new MySql.Data.MySqlClient.MySqlCommand("SELECT `VALUE`, `ID` FROM `SENSORS_STATIC` WHERE `ID` = 7", conn);
+                                var dr1 = cmd3.ExecuteReader();
+                                dr1.Read();
+                                param = ((Math.Pow((1000 - dr1.GetFloat(0)), 2) / 10) / (50));
+                                dr1.Close();
+                                conn.Close();
+                                break;
+                            }
                     }
                 }
 
-                switch (dr.GetInt32(2))
+                switch (condition)
                 {
                     case 1:
-                    {
-                        if (param > value)
                         {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = "+fnct+" WHERE `ID` = "+relay, conn);
-                            cmd1.ExecuteNonQuery();
-                            connInsert.Close();
+                            if (param > value)
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = " + fnct + " WHERE `ID` = " + relay, conn);
+                                cmd1.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            break;
                         }
-					    break;
-                    }
                     case 2:
-                    {
-                        if (param < value)
                         {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = "+fnct+" WHERE `ID` = "+relay, conn);
-                            cmd1.ExecuteNonQuery();
-                            connInsert.Close();
+                            if (param < value)
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = " + fnct + " WHERE `ID` = " + relay, conn);
+                                cmd1.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            break;
                         }
-					    break;
-                    }
                     case 3:
-                    {
-                        if (param >= value)
                         {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = "+fnct+" WHERE `ID` = "+relay, conn);
-                            cmd1.ExecuteNonQuery();
-                            connInsert.Close();
+                            if (param >= value)
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = " + fnct + " WHERE `ID` = " + relay, conn);
+                                cmd1.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            break;
                         }
-					    break;
-                    }
                     case 4:
-                    {
-                        if (param <= value)
                         {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = "+fnct+" WHERE `ID` = "+relay, conn);
-                            cmd1.ExecuteNonQuery();
+                            if (param <= value)
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = " + fnct + " WHERE `ID` = " + relay, conn);
+                                cmd1.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            break;
                         }
-					    break;
-                    }
                     case 5:
-                    {
-                        if (param == value)
                         {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = "+fnct+" WHERE `ID` = "+relay, conn);
-                            cmd1.ExecuteNonQuery();
-                            connInsert.Close();
+                            if (param == value)
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = " + fnct + " WHERE `ID` = " + relay, conn);
+                                cmd1.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            break;
                         }
-						break;
-                    }
                     case 6:
-                    {
-                        if (param != value)
                         {
-                            connInsert.Open();
-                            MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = "+fnct+" WHERE `ID` = "+relay, conn);
-                            cmd1.ExecuteNonQuery();
+                            if (param != value)
+                            {
+                                conn.Open();
+                                MySql.Data.MySqlClient.MySqlCommand cmd1 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `CHARGES` SET `VALUE` = " + fnct + " WHERE `ID` = " + relay, conn);
+                                cmd1.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            break;
                         }
-					    break;
-                    }
                 }
-                connInsert.Open();
+                conn.Open();
                 MySql.Data.MySqlClient.MySqlCommand cmd2 = new MySql.Data.MySqlClient.MySqlCommand("UPDATE `FUNCTIONS` SET `EXEC` = (`EXEC` + 1) WHERE `ID` = " + id, conn);
                 cmd2.ExecuteNonQuery();
+                conn.Close();
             }
-            dr.Close();
-            conn.Close();
         }
 
         private void Left_Btn_Click(object sender, EventArgs e)
