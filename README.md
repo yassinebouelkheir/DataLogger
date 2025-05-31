@@ -1,5 +1,7 @@
 # DataLogger – Smart Solar Energy Monitoring System
-
+![GitHub repo size](https://img.shields.io/github/repo-size/yassinebouelkheir/DataLogger)
+![GitHub contributors](https://img.shields.io/github/contributors/yassinebouelkheir/DataLogger)
+![GitHub stars](https://img.shields.io/github/stars/yassinebouelkheir/DataLogger?style=social)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## 📋 Overview
