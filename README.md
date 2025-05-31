@@ -24,7 +24,8 @@ It combines data acquisition, smart control, and intuitive visualization to opti
 ## 🔧 Hardware Components
 
 - **Arduino Mega 2560**
-- **Raspberry Pi 3**
+- **8x Arduino Uno/Arduino**
+- **2x Raspberry Pi 3**
 - **3.5” TFT LCD Touchscreen Display**
 - **Current Sensor**: ACS712-30A
 - **Voltage Sensor**: 0–25V AC Sensor
@@ -37,6 +38,7 @@ It combines data acquisition, smart control, and intuitive visualization to opti
 - **4-Channel Relay Module**
 - **Fuses and Circuit Breaker**
 - **Solar panels**
+- **720p USB Camera**
 
 ---
 
@@ -70,7 +72,7 @@ It combines data acquisition, smart control, and intuitive visualization to opti
 ## 🕸️ System Architecture
 
 ```
-Sensors → Arduino Mega → Raspberry Pi (via USB Serial) → MySQL → Web Interface + LCD Display
+Sensors → Arduino → Raspberry Pi (via USB Serial) → MySQL → Web Interface + LCD Display
 ```
 
 - Arduino handles sensor readings and forwards data to Raspberry.
@@ -84,9 +86,9 @@ Sensors → Arduino Mega → Raspberry Pi (via USB Serial) → MySQL → Web Int
 
 - 📟 LCD and Raspberry GUI with charts and sensor values.
 - 📈 Web dashboard with:
-  - Instant data display
-  - 9 types of interactive charts
-  - Relay control interface
+- Instant data display
+- 9 types of interactive charts
+- Relay control interface
 - 📤 Export button to download Excel files
 
 ---
