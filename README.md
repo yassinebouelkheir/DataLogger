@@ -2,7 +2,6 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/yassinebouelkheir/DataLogger)
 ![GitHub contributors](https://img.shields.io/github/contributors/yassinebouelkheir/DataLogger)
 ![GitHub stars](https://img.shields.io/github/stars/yassinebouelkheir/DataLogger?style=social)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## 📋 Overview
 
@@ -153,7 +152,7 @@ Sensors → Arduino → Raspberry Pi (via USB Serial) → MySQL → Web Interfac
 
 ## 📜 License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for more details.
+This project is licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for more details.
 
 ---
 
